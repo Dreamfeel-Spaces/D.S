@@ -1,0 +1,308 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./.sqlite"
+}
+
+model ComponentChild {
+  id          String    @id @default(cuid())
+  component   Component @relation(fields: [componentId], references: [id])
+  componentId String
+}
+
+model ComponentDataItem {
+  id              String     @id @default(cuid())
+  componentDataId String?
+  key             String?
+  value           String?
+  component       Component? @relation(fields: [componentId], references: [id])
+  componentId     String?
+}
+
+model ComponentData {
+  id          String     @id @default(cuid())
+  component   Component? @relation(fields: [componentId], references: [id])
+  componentId String?
+  key         String?
+  value       String?
+}
+
+model Component {
+  id         String              @id @default(cuid())
+  type       String?             @default("section")
+  Page       Page?               @relation(fields: [pageId], references: [id])
+  pageId     String?
+  name       String?
+  icon       String?
+  variant    String              @default("default")
+  data       ComponentData[]
+  items      ComponentDataItem[]
+  children   ComponentChild[]
+  classNames String?
+}
+
+model Page {
+  id               String         @id @default(cuid())
+  version          SpaceUIVersion @relation(fields: [spaceUIVersionId], references: [id])
+  spaceUIVersionId String
+  name             String
+  icon             String?
+  path             String?
+  components       Component[]
+}
+
+model ConfigVars {
+  id               String          @id @default(cuid())
+  key              String
+  value            String
+  uiVersion        SpaceUIVersion? @relation(fields: [spaceUIVersionId], references: [id])
+  spaceUIVersionId String?
+  space            Space?          @relation(fields: [spaceId], references: [id])
+  spaceId          String?
+  createdBy        User            @relation(fields: [userId], references: [id])
+  userId           String
+}
+
+model SpaceUIVersion {
+  id          String       @id @default(cuid())
+  version     Int
+  space       SpaceUI?     @relation(fields: [spaceUIId], references: [id])
+  spaceUIId   String?
+  dateCreated DateTime     @default(now())
+  updatedAt   DateTime     @default(now()) @updatedAt
+  deleted     Boolean      @default(false)
+  status      String?      @default("draft")
+  pages       Page[]
+  default     Boolean      @default(false)
+  configVars  ConfigVars[]
+  createdBy   User?        @relation(fields: [userId], references: [id])
+  userId      String?
+}
+
+model SpaceUI {
+  id             String           @id @default(cuid())
+  space          Space?           @relation(fields: [spaceId], references: [id])
+  spaceId        String?
+  name           String           @default("dawn")
+  spaceUIVersion SpaceUIVersion[]
+  template       Boolean          @default(false)
+  user           User?            @relation(fields: [userId], references: [id])
+  userId         String?
+}
+
+model TableData {
+  id       String  @id @default(cuid())
+  row      Row?    @relation(fields: [rowId], references: [id])
+  rowId    String?
+  column   String
+  data     String
+  type     String  @default("string")
+  rel      String?
+  multiple Boolean @default(false)
+  required Boolean @default(false)
+}
+
+model Row {
+  id           String      @id @default(cuid())
+  table        SpaceTable  @relation(fields: [spaceTableId], references: [id])
+  spaceTableId String
+  tableData    TableData[]
+}
+
+model ColumnSelectOptions {
+  id       String @id @default(cuid())
+  column   Column @relation(fields: [columnId], references: [id])
+  columnId String
+  label    String
+  value    String
+}
+
+model Column {
+  id              String                @id @default(cuid())
+  table           SpaceTable?           @relation(fields: [spaceTableId], references: [id])
+  spaceTableId    String?
+  name            String?
+  type            String?               @default("string")
+  regex           String?
+  rel             String?
+  multiple        Boolean               @default(false)
+  required        Boolean               @default(false)
+  options         ColumnSelectOptions[]
+  dateTimeDefault String?               @default("custom")
+  defaultOn       Boolean               @default(false)
+}
+
+model Relations {
+  id           String     @id @default(cuid())
+  type         String     @default("one-to-may")
+  left         SpaceTable @relation(fields: [spaceTableId], references: [id])
+  spaceTableId String
+  right        String?
+}
+
+model TableFilter {
+  id String @id @default(cuid())
+}
+
+model SpaceTable {
+  id          String      @id @default(cuid())
+  name        String
+  columns     Column[]
+  rows        Row[]
+  relations   Relations[]
+  createdBy   User?       @relation(fields: [userId], references: [id])
+  userId      String
+  space       Space?      @relation(fields: [tableSpace], references: [id])
+  tableSpace  String?
+  displayName String?
+}
+
+model Admin {
+  id             String        @id @default(cuid())
+  user           User          @relation(fields: [userId], references: [id])
+  userId         String
+  space          Space         @relation(fields: [spaceId], references: [id])
+  spaceId        String
+  apiKeys        SpaceAPIKeys? @relation(fields: [spaceAPIKeysId], references: [id])
+  spaceAPIKeysId String?
+  rules          APIRule[]
+  dateCreated    DateTime      @default(now())
+  updatedAt      DateTime?     @default(now()) @updatedAt
+}
+
+model SpaceUpdate {
+  id      String   @id @default(cuid())
+  user    User     @relation(fields: [userId], references: [id])
+  userId  String
+  time    DateTime @default(now())
+  fields  String?
+  space   Space?   @relation(fields: [spaceId], references: [id])
+  spaceId String?
+}
+
+model SpaceAPIKeys {
+  id          String    @id @default(cuid())
+  key         String
+  dateCreated DateTime  @default(now())
+  space       Space?    @relation(fields: [spaceId], references: [id])
+  spaceId     String?
+  admins      Admin[]
+  createdBy   User?     @relation(fields: [userId], references: [id])
+  userId      String?
+  expires     DateTime?
+}
+
+model Permission {
+  id        String   @id @default(cuid())
+  apiRule   APIRule? @relation(fields: [aPIRuleId], references: [id])
+  aPIRuleId String?
+}
+
+model APIRule {
+  id          String       @id @default(cuid())
+  name        String?
+  permissions Permission[]
+  admin       Admin?       @relation(fields: [adminId], references: [id])
+  adminId     String?
+}
+
+model SpaceUser {
+  id       String   @id @default(cuid())
+  created  DateTime @default(now())
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String
+  space    Space    @relation(fields: [spaceId], references: [id])
+  spaceId  String
+  username String?
+  password String?
+  email    String?
+}
+
+model Space {
+  id                       String         @id @default(cuid())
+  appId                    String         @unique
+  name                     String?
+  icon                     String?
+  owner                    User?          @relation(fields: [userId], references: [id])
+  userId                   String?
+  active                   Boolean        @default(false)
+  admins                   Admin[]
+  updates                  SpaceUpdate[]
+  tables                   SpaceTable[]
+  spaceUis                 SpaceUI[]
+  apiKeys                  SpaceAPIKeys[]
+  users                    SpaceUser[]
+  configVars               ConfigVars[]
+  secret                   String
+  miniAppChannel           Boolean        @default(false)
+  apiChannel               Boolean        @default(false)
+  subdomainChannel         Boolean        @default(false)
+  customDomainChannel      Boolean        @default(false)
+  standaloneMobileChannel  Boolean        @default(false)
+  standaloneDesktopChannel Boolean        @default(false)
+  uploadProvider           String?        @default("cloudinary")
+  template                 Boolean        @default(false)
+}
+
+model Example {
+  id       String  @id @default(cuid())
+  property String?
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String  @map("user_id")
+  type               String
+  provider           String
+  providerAccountId  String  @map("provider_account_id")
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+  oauth_token_secret String?
+  oauth_token        String?
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id             String           @id @default(cuid())
+  name           String?
+  email          String?          @unique
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  spaces         Space[]
+  admins         Admin[]
+  spaceUpdates   SpaceUpdate[]
+  spaceUser      SpaceUser[]
+  spaceAPIKeys   SpaceAPIKeys[]
+  spaceTables    SpaceTable[]
+  configVars     ConfigVars[]
+  spaceUIVersion SpaceUIVersion[]
+  spaceUI        SpaceUI[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
