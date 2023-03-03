@@ -4,12 +4,14 @@
 	import { page } from '$app/stores';
 </script>
 
-<div class="px-6 lg:px-48 py-6">
+<div class="px-6 py-6">
 	{#if form?.success}
 		<Alert>
 			<b>Ui saved</b>
 			<div>
-				<a href={`/editor/${$page.params.id}/builder${form?.data?.version?.id}/`}>Open in builder</a>
+				<a rel="external" href={`/editor/${$page.params.id}/${form?.data?.version?.id}/`}
+					>Open in builder</a
+				>
 			</div></Alert
 		>
 	{/if}

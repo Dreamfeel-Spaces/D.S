@@ -6,7 +6,7 @@ export const actions: Actions = {
 	async default({ request, params, locals }) {
 		const spaceId = params.id;
 		const space = await prisma.space.findFirst({
-			where: { id: spaceId }
+			where: { appId: spaceId }
 		});
 		if (!space) throw error(404, 'Space not found');
 

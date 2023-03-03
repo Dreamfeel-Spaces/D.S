@@ -7,6 +7,12 @@ datasource db {
   url      = "file:./.sqlite"
 }
 
+model uiDraft {
+  id    String  @id @default(cuid())
+  vId   String?
+  draft String?
+}
+
 model ComponentChild {
   id          String    @id @default(cuid())
   component   Component @relation(fields: [componentId], references: [id])
@@ -110,6 +116,8 @@ model Row {
   table        SpaceTable  @relation(fields: [spaceTableId], references: [id])
   spaceTableId String
   tableData    TableData[]
+  dateCreated  DateTime    @default(now())
+  updatedAt    DateTime    @default(now()) @updatedAt
 }
 
 model ColumnSelectOptions {
@@ -133,6 +141,8 @@ model Column {
   options         ColumnSelectOptions[]
   dateTimeDefault String?               @default("custom")
   defaultOn       Boolean               @default(false)
+  reportField     ReportField[]
+  reportFilters   ReportFilter[]
 }
 
 model Relations {
@@ -147,30 +157,123 @@ model TableFilter {
   id String @id @default(cuid())
 }
 
-model SpaceTable {
-  id          String      @id @default(cuid())
+model Chart {
+  id          String         @id @default(cuid())
   name        String
-  columns     Column[]
-  rows        Row[]
-  relations   Relations[]
-  createdBy   User?       @relation(fields: [userId], references: [id])
-  userId      String
-  space       Space?      @relation(fields: [tableSpace], references: [id])
-  tableSpace  String?
-  displayName String?
+  table       SpaceTable?    @relation(fields: [tableId], references: [id])
+  tableId     String?
+  type        String?
+  description String?
+  fields      ReportField[]
+  labelKey    String?
+  valueKey    String?
+  filters     ReportFilter[]
+}
+
+model DashboardForm {
+  id          String        @id @default(cuid())
+  name        String
+  table       SpaceTable?   @relation(fields: [tableId], references: [id])
+  tableId     String?
+  type        String?
+  description String?
+  fields      ReportField[]
+}
+
+model ReportField {
+  id              String         @id @default(cuid())
+  field           Column         @relation(fields: [columnId], references: [id])
+  columnId        String
+  report          Report?        @relation(fields: [reportId], references: [id])
+  reportId        String?
+  chart           Chart?         @relation(fields: [chartId], references: [id])
+  chartId         String?
+  dashboardForm   DashboardForm? @relation(fields: [dashboardFormId], references: [id])
+  dashboardFormId String?
+}
+
+model Report {
+  id          String         @id @default(cuid())
+  name        String
+  table       SpaceTable?    @relation(fields: [tableId], references: [id])
+  tableId     String?
+  fields      ReportField[]
+  description String?
+  sort        String?
+  sortBy      String?        @default("none")
+  layout      String?        @default("tabular")
+  orientation String?        @default("landscape")
+  filters     ReportFilter[]
+}
+
+model ReportFilter {
+  id              String  @id @default(cuid())
+  column          Column? @relation(fields: [columnId], references: [id])
+  columnId        String?
+  compare         String?
+  operand         String?
+  compareColumnId String?
+  compareValue    String?
+  report          Report? @relation(fields: [reportId], references: [id])
+  reportId        String?
+  chart           Chart?  @relation(fields: [chartId], references: [id])
+  chartId         String?
+  enabled         Boolean @default(true)
+}
+
+model SpaceTable {
+  id                  String          @id @default(cuid())
+  name                String
+  columns             Column[]
+  rows                Row[]
+  relations           Relations[]
+  createdBy           User?           @relation(fields: [userId], references: [id])
+  userId              String
+  space               Space?          @relation(fields: [tableSpace], references: [id])
+  tableSpace          String?
+  displayName         String?
+  reports             Report[]
+  charts              Chart[]
+  requiredPermissions String?         @default("[]")
+  dashboardForms      DashboardForm[]
+  disableApi          Boolean         @default(false)
+}
+
+model Role {
+  id   String       @id @default(cuid())
+  name String
+  role Permission[]
+}
+
+model SpaceSession {
+  id           String    @id @default(cuid())
+  sessionToken String    @unique
+  expires      DateTime?
+  admin        Admin?    @relation(fields: [adminId], references: [id])
+  adminId      String?
+  dateCreated  DateTime  @default(now())
+  space        Space     @relation(fields: [spaceId], references: [id])
+  spaceId      String
 }
 
 model Admin {
-  id             String        @id @default(cuid())
-  user           User          @relation(fields: [userId], references: [id])
-  userId         String
-  space          Space         @relation(fields: [spaceId], references: [id])
-  spaceId        String
-  apiKeys        SpaceAPIKeys? @relation(fields: [spaceAPIKeysId], references: [id])
-  spaceAPIKeysId String?
-  rules          APIRule[]
-  dateCreated    DateTime      @default(now())
-  updatedAt      DateTime?     @default(now()) @updatedAt
+  id                     String         @id @default(cuid())
+  user                   User?          @relation(fields: [userId], references: [id])
+  userId                 String?
+  space                  Space          @relation(fields: [spaceId], references: [id])
+  spaceId                String
+  apiKeys                SpaceAPIKeys?  @relation(fields: [spaceAPIKeysId], references: [id])
+  spaceAPIKeysId         String?
+  rules                  APIRule[]
+  dateCreated            DateTime       @default(now())
+  updatedAt              DateTime?      @default(now()) @updatedAt
+  password               String?
+  role                   String?        @default("user")
+  username               String?
+  sessions               SpaceSession[]
+  status                 String         @default("pending-confirmation")
+  defaultPasswordUpdated Boolean        @default(false)
+  name                   String?
 }
 
 model SpaceUpdate {
@@ -183,6 +286,20 @@ model SpaceUpdate {
   spaceId String?
 }
 
+model Log {
+  id        String   @id @default(cuid())
+  url       String?
+  session   String?
+  tablId    String?
+  severity  String   @default("info") // error // warning
+  client    Boolean  @default(false)
+  trigger   String?
+  timestamp DateTime @default(now())
+  space     Space?   @relation(fields: [spaceId], references: [id])
+  spaceId   String?
+  resolved  Boolean  @default(false)
+}
+
 model SpaceAPIKeys {
   id          String    @id @default(cuid())
   key         String
@@ -193,12 +310,22 @@ model SpaceAPIKeys {
   createdBy   User?     @relation(fields: [userId], references: [id])
   userId      String?
   expires     DateTime?
+  name        String?
+  hits        Int       @default(0)
 }
 
 model Permission {
-  id        String   @id @default(cuid())
-  apiRule   APIRule? @relation(fields: [aPIRuleId], references: [id])
-  aPIRuleId String?
+  id          String   @id @default(cuid())
+  name        String
+  apiRule     APIRule? @relation(fields: [aPIRuleId], references: [id])
+  aPIRuleId   String?
+  space       Space?   @relation(fields: [spaceId], references: [id])
+  spaceId     String?
+  description String?
+  created     DateTime @default(now())
+  updated     DateTime @default(now()) @updatedAt
+  Role        Role?    @relation(fields: [roleId], references: [id])
+  roleId      String?
 }
 
 model APIRule {
@@ -207,6 +334,11 @@ model APIRule {
   permissions Permission[]
   admin       Admin?       @relation(fields: [adminId], references: [id])
   adminId     String?
+  space       Space?       @relation(fields: [spaceId], references: [id])
+  spaceId     String?
+  description String?
+  created     DateTime     @default(now())
+  updated     DateTime     @default(now()) @updatedAt
 }
 
 model SpaceUser {
@@ -219,6 +351,14 @@ model SpaceUser {
   username String?
   password String?
   email    String?
+}
+
+model Dashboard {
+  id          String  @id @default(cuid())
+  space       Space   @relation(fields: [spaceId], references: [id])
+  name        String
+  spaceId     String
+  description String?
 }
 
 model Space {
@@ -245,6 +385,14 @@ model Space {
   standaloneDesktopChannel Boolean        @default(false)
   uploadProvider           String?        @default("cloudinary")
   template                 Boolean        @default(false)
+  rules                    APIRule[]
+  permissions              Permission[]
+  defaultUIId              String?
+  deactivated              Boolean?       @default(false)
+  dashboards               Dashboard[]
+  spaceSessions            SpaceSession[]
+  superAdminSecret         String?
+  logs                     Log[]
 }
 
 model Example {

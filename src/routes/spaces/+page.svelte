@@ -2,8 +2,8 @@
 	import { Button, Card } from 'flowbite-svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	const { apps = [] } = data;
-	const hasApps = Boolean(apps.length);
+	let { apps = [] } = data;
+	let hasApps = Boolean(apps.length);
 </script>
 
 {#if !hasApps}

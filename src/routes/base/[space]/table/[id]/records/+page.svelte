@@ -13,11 +13,11 @@
 	} from 'flowbite-svelte';
 	import { goto } from '$app/navigation';
 
-	const space = $page.params.space;
-	const table = $page.params.id;
+	let space = $page.params.space;
+	let table = $page.params.id;
 
-	const hasRecords = Boolean(data.rows.length);
-	const hasColumns = Boolean(data.columns.length);
+	let hasRecords = Boolean(data.rows.length);
+	let hasColumns = Boolean(data.columns.length);
 
 	function navigateToTableDetail(item: string) {
 		goto(`/base/${space}/table/${table}/records/${item}/`);

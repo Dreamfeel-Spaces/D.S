@@ -9,7 +9,7 @@ export const actions: Actions = {
 		const data = await request.formData();
 		const spaceId = params.id;
 
-		const space = await prisma.space.findUnique({ where: { id: spaceId } });
+		const space = await prisma.space.findUnique({ where: { appId: spaceId } });
 
 		if (!space) throw error(404, 'Space not found');
 
@@ -28,7 +28,7 @@ export const actions: Actions = {
 		const name = String(data.get('name'));
 
 		const ui = await prisma.spaceUI.create({
-			data: { spaceId: String(spaceId), name, userId: String(user.id) }
+			data: { spaceId: String(space.id), name, userId: String(user.id) }
 		});
 
 		const versionOne = await prisma.spaceUIVersion.create({

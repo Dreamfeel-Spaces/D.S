@@ -11,7 +11,7 @@ export async function load({ locals, params }) {
 	const spaceId = params.id;
 
 	let space = await prisma.space.findFirst({
-		where: { id: spaceId },
+		where: { appId: spaceId },
 		include: { admins: true, apiKeys: true }
 	});
 
@@ -34,18 +34,21 @@ export async function load({ locals, params }) {
 }
 
 export const actions: Actions = {
-	async default({ params, locals }) {
+	async default({ params, locals, request }) {
 		const session = await locals.getSession();
 		if (!session) throw error(403, 'You must be signed in to view this page');
 
 		const spaceId = params.id;
 
 		let space = await prisma.space.findFirst({
-			where: { id: spaceId },
+			where: { appId: spaceId },
 			include: { admins: true, apiKeys: true }
 		});
 
 		if (!space) throw error(404, 'Space not found');
+
+		if (space.apiKeys.length)
+			throw error(403, 'API Key already exist. Delete existing key and try again');
 
 		let user = await prisma.user.findFirst({
 			where: {
@@ -62,15 +65,19 @@ export const actions: Actions = {
 
 		const token = new Token();
 		const unencryptedToken = await token.randomToken();
-		const formatted = `${space.appId}--${space.id}--${unencryptedToken}`;
+		const formatted = `Basic ${space.appId}#${unencryptedToken}`;
 
 		const encrypted = await token.encryptSync(formatted);
+
+		const data = await request.formData();
+		const name = String(data.get('name'));
 
 		const apiKey = await prisma.spaceAPIKeys.create({
 			data: {
 				spaceId: space.id,
 				userId: user.id,
-				key: encrypted
+				key: encrypted,
+				name: name
 			}
 		});
 

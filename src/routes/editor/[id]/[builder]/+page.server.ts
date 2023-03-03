@@ -1,4 +1,5 @@
 import { prisma } from '$lib/db/prisma';
+import { error } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
 
 export async function load({ params }: RequestEvent) {
@@ -7,9 +8,11 @@ export async function load({ params }: RequestEvent) {
 
 	const space = await prisma.space.findUnique({
 		where: {
-			id: spaceId
+			appId: spaceId
 		}
 	});
+
+	if (!space) throw error(404, 'Space not found.');
 
 	const ui = await prisma.spaceUIVersion.findUnique({
 		where: {
@@ -24,7 +27,17 @@ export async function load({ params }: RequestEvent) {
 		}
 	});
 
-	return { space, ui };
+	const tables = await prisma.spaceTable.findMany({
+		where: {
+			tableSpace: space.id
+		},
+		include: {
+			columns: true,
+			rows: true
+		}
+	});
+
+	return { space, ui, tables };
 }
 
 export const actions: Actions = {

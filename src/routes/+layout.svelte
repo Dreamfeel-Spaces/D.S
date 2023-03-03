@@ -16,7 +16,6 @@
 
 	import { sineIn } from 'svelte/easing';
 	let hidden2 = true;
-	let spanClass = 'flex-1 ml-3 whitespace-nowrap';
 	let transitionParams = {
 		x: -320,
 		duration: 200,
@@ -24,7 +23,13 @@
 	};
 	import { page } from '$app/stores';
 	const pathname = $page.url.pathname;
-	const isPreview = /\/preview/.test(pathname);
+	let isPreview = /\/preview/.test(pathname);
+	let isDashboard = /\/dashboards/.test(pathname);
+	let isEditor = /\/editor/.test(pathname);
+	let isBase = /\/base/.test(pathname);
+	let isSpaces = /\/spaces/.test(pathname);
+	let spaceId = isBase ? $page.params.space : $page.params.id;
+	let session = $page.data.session
 </script>
 
 <svelte:head>
@@ -43,6 +48,7 @@
 		>
 			<div class="flex w-full flex-wrap items-center justify-between px-6">
 				<button
+					on:click={() => (hidden2 = false)}
 					class="block border-0 bg-transparent py-2 px-2.5 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
 					type="button"
 					data-te-collapse-init
@@ -80,6 +86,7 @@
 					</div>
 
 					<a
+						rel="external"
 						class="mt-2 mr-2 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mt-0"
 						href="/"
 					>
@@ -192,7 +199,7 @@
 					<div class="relative" data-te-dropdown-ref>
 						<a
 							class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
-							href="/"
+							href="/account"
 							id="dropdownMenuButton2"
 							role="button"
 							data-te-dropdown-toggle-ref
@@ -254,7 +261,11 @@
 		<Sidebar>
 			<SidebarWrapper divClass="overflow-y-auto py-4 px-3 rounded dark:bg-gray-800">
 				<SidebarGroup>
-					<SidebarItem on:click={() => (hidden2 = true)} href="/" label="Home">
+					<SidebarItem active={!isPreview &&
+						!isDashboard &&
+						!isEditor &&
+						!isBase && 
+						isSpaces} on:click={() => (hidden2 = true)} href="/" rel="external" label="Home">
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -275,7 +286,7 @@
 							>
 						</svelte:fragment>
 					</SidebarItem>
-					<SidebarDropdownWrapper label="Your Spaces">
+					<SidebarDropdownWrapper isOpen={isSpaces} label="Your Spaces">
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -295,42 +306,20 @@
 							on:click={() => (hidden2 = true)}
 							href={`/spaces/create`}
 							label={'Create space'}
+							rel="external"
+							active={isSpaces && /\/create/.test(pathname)}
 						/>
 						{#each $page.data.myapps as app}
 							<SidebarDropdownItem
 								on:click={() => (hidden2 = true)}
-								href={`/spaces/${app.id}`}
+								href={`/spaces/${app.appId}`}
 								label={app.name}
 								rel="external"
+								active={isSpaces && spaceId === app.appId}
 							/>
 						{/each}
 					</SidebarDropdownWrapper>
-					<SidebarDropdownWrapper label="Apis">
-						<svelte:fragment slot="icon">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-6 h-6"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-								/></svg
-							>
-						</svelte:fragment>
-						{#each $page.data.myapps.filter((app) => app.apiChannel) as app}
-							<SidebarDropdownItem
-								on:click={() => (hidden2 = true)}
-								href={`/base/${app.id}`}
-								label={app.name}
-								rel="external"
-							/>
-						{/each}
-					</SidebarDropdownWrapper>
-					<SidebarDropdownWrapper label="Dashboards">
+					<SidebarDropdownWrapper isOpen={isBase} label="Apis">
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -349,13 +338,41 @@
 						{#each $page.data.myapps as app}
 							<SidebarDropdownItem
 								on:click={() => (hidden2 = true)}
-								href={`/dashboards/${app.id}`}
+								href={`/base/${app.appId}`}
 								label={app.name}
+								rel="external"
+								active={isBase && spaceId === app.appId}
+							/>
+						{/each}
+					</SidebarDropdownWrapper>
+					<SidebarDropdownWrapper isOpen={isDashboard} label="Dashboards">
+						<svelte:fragment slot="icon">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								class="w-6 h-6"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+								/></svg
+							>
+						</svelte:fragment>
+
+						{#each $page.data.myapps as app}
+							<SidebarDropdownItem
+								on:click={() => (hidden2 = true)}
+								href={`/dashboards/${app.appId}`}
+								label={app.name}
+								active={isDashboard && spaceId === app.appId}
 								rel="external"
 							/>
 						{/each}
 					</SidebarDropdownWrapper>
-					<SidebarDropdownWrapper label="Editor">
+					<SidebarDropdownWrapper isOpen={isEditor} label="Editor">
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -374,8 +391,9 @@
 						{#each $page.data.myapps as app}
 							<SidebarDropdownItem
 								on:click={() => (hidden2 = true)}
-								href={`/editor/${app.id}`}
+								href={`/editor/${app.appId}`}
 								label={app.name}
+								active={isEditor && spaceId === app.appId}
 								rel="external"
 							/>
 						{/each}
@@ -443,7 +461,7 @@
 						>
 					</svelte:fragment>
 				</SidebarItem> -->
-					<SidebarItem label="Sign In">
+					<SidebarItem label={Boolean(session) ?"Sign out": "Sign In"}>
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"

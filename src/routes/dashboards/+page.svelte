@@ -1,1 +1,1 @@
-<p>Editor</p>
+Lorem ipsum dolor sit amet consectetur, adipisicing elit. Error eum ullam, facilis, dolores nulla enim necessitatibus odit cupiditate pariatur eligendi inventore voluptate repellat expedita neque eos illo accusantium ab impedit!

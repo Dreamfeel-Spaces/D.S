@@ -1,7 +1,7 @@
 <script>
     //@ts-nocheck
 	export let data = { example: { property: '' } };
-	const { example } = data;
+	let { example } = data;
 </script>
 
 <div>

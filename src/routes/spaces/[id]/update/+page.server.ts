@@ -12,7 +12,7 @@ export const actions = {
 		const spaceId = params.id;
 
 		let space = await prisma.space.findFirst({
-			where: { id: spaceId },
+			where: { appId: spaceId },
 			include: { admins: true }
 		});
 

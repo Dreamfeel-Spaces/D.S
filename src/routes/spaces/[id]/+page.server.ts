@@ -1,7 +1,9 @@
 //@ts-nocheck
 
 import { prisma } from '$lib/db/prisma';
-import { error } from '@sveltejs/kit';
+import { Token } from '$lib/token/Token';
+import { convertToSlug } from '$lib/util/slugit';
+import { error, redirect } from '@sveltejs/kit';
 import type { RequestEvent, Actions } from './$types';
 
 export const actions: Actions = {
@@ -12,7 +14,7 @@ export const actions: Actions = {
 
 		const space = await prisma.space.findUnique({
 			where: {
-				id: String(appId)
+				appId: String(appId)
 			}
 		});
 
@@ -42,21 +44,51 @@ export const actions: Actions = {
 	async addAdmin({ request, params }) {
 		const data = await request.formData();
 		const email = String(data.get('email'));
+		const name = String(data.get('name'));
 		const user = await prisma.user.findUnique({
 			where: {
 				email: email
 			}
 		});
 
+		const token = new Token();
+
 		if (!user) {
 			// send signup email and invite
-			return { adminSuccess: true, emailSent: true };
+			const space = await prisma.space.findUnique({
+				where: {
+					appId: params.id
+				},
+				include: {
+					admins: {
+						include: {
+							user: true
+						}
+					}
+				}
+			});
+			const admins = space?.admins ?? [];
+
+			const existingAdmin = admins.find((admin) => admin.username === email);
+
+			if (existingAdmin) throw error(400, 'Admin already exists in this space');
+
+			const admin = await prisma.admin.create({
+				data: {
+					username: email,
+					password: await token.createAdminPass(),
+					role: 'admin',
+					spaceId: space.id,
+					name
+				}
+			});
+			return { adminSuccess: true, emailSent: true, data: admin };
 		} else {
 			const spaceId = params.id;
 
 			const space = await prisma.space.findUnique({
 				where: {
-					id: spaceId
+					appId: spaceId
 				},
 				include: {
 					admins: {
@@ -69,26 +101,136 @@ export const actions: Actions = {
 
 			const admins = space?.admins ?? [];
 
-			const existingAdmin = admins.find((admin) => admin.user.email === email);
+			const existingAdmin = admins.find((admin) => admin.username === email);
 
 			if (existingAdmin) throw error(400, 'Admin already exists in this space');
 
 			const admin = await prisma.admin.create({
 				data: {
-					userId: user.id,
-					spaceId: space.id
+					userId: String(user.id),
+					username: user.email,
+					spaceId: space.id,
+					password: await token.createAdminPass(),
+					name
 				}
 			});
 
 			return { adminSuccess: true, data: admin };
 		}
+	},
+	async addPermissions({ request, params }) {
+		const data = await request.formData();
+		const spaceId = String(params.id);
+		const space = await prisma.space.findUnique({
+			where: {
+				appId: spaceId
+			}
+		});
+		const name = String(data.get('name'));
+		const description = String(data.get('description'));
+		const permission = await prisma.permission.create({
+			data: {
+				spaceId: String(space?.id),
+				name: convertToSlug(name),
+				description
+			}
+		});
+		return { permissionSuccess: true, data: permission };
+	},
+	async addDashboards({ request, params }) {
+		const data = await request.formData();
+		const spaceId = String(params.id);
+		const space = await prisma.space.findUnique({
+			where: {
+				appId: spaceId
+			}
+		});
+
+		const name = String(data.get('name'));
+
+		const existingDashboard = await prisma.dashboard.findFirst({
+			where: {
+				name: convertToSlug(name),
+				spaceId: space.id
+			}
+		});
+
+		if (existingDashboard) {
+			throw error(400, 'Dashboard already exist');
+		}
+
+		const description = String(data.get('description'));
+		const permission = await prisma.dashboard.create({
+			data: {
+				spaceId: String(space?.id),
+				name: convertToSlug(name),
+				description
+			}
+		});
+		return { dashboardSuccess: true, data: permission };
+	},
+	async deleteSpace({ params, request }) {
+		const data = await request.formData();
+		const confirmed = String(data.get('confirmedSpaceDeletion') ?? 'false');
+		const isConfirmed = JSON.parse(confirmed);
+		// if (!isConfirmed) {
+		// 	return { requireConfirmation: true, data: params.id };
+		// }
+		const spa = await prisma.space.update({
+			where: { appId: params.id },
+			data: {
+				deactivated: true
+			}
+		});
+
+		if (spa) {
+			throw redirect(302, `/deactivated/${spa?.id}`);
+		}
+	},
+	async deleteApiKey({ request }) {
+		const data = await request.formData();
+		const id = String(data.get('id'));
+		await prisma.spaceAPIKeys.delete({
+			where: { id }
+		});
+		return { deleteApiSuccess: true };
+	},
+	async updatePassword({ params, request }) {
+		const spaceId = params.id;
+
+		const data = await request.formData();
+
+		const password = String(data.get('password'));
+
+		const space = await prisma.space.findUnique({
+			where: {
+				appId: spaceId
+			}
+		});
+
+		if (!space) {
+			throw error(404, 'Space not found');
+		}
+
+		const token = new Token();
+
+		await prisma.space.update({
+			where: {
+				id: space.id
+			},
+			data: {
+				superAdminSecret: await token.encryptSync(password)
+			}
+		});
+
+		return { passwordUpdate: true };
 	}
 };
 
-export async function load({ params }: RequestEvent) {
+export async function load({ params, cookies, locals }: RequestEvent) {
 	const spaceId = params.id;
 	const space = await prisma.space.findUnique({
-		where: { id: spaceId },
+		where: { appId: spaceId },
 		include: {
 			owner: true,
 			apiKeys: {
@@ -101,8 +243,46 @@ export async function load({ params }: RequestEvent) {
 				include: {
 					user: true
 				}
-			}
+			},
+			permissions: true,
+			dashboards: true
 		}
 	});
-	return { space };
+
+	if (!space) throw error(404, 'Space not found');
+
+	const session = await locals.getSession();
+
+	if (session?.user) {
+		const user = await prisma.user.findUnique({
+			where: {
+				email: String(session?.user?.email)
+			}
+		});
+
+		if (user && user.id === space.userId) {
+			return { space, userRole: { superAdmin: true } };
+		}
+		throw redirect(302, `/spaces/${space?.appId}/login`);
+	}
+
+	const userToken = cookies.get(`${space?.appId}-accessToken`);
+
+	if (!userToken) throw redirect(302, `/spaces/${space?.appId}/login`);
+
+	console.log(userToken);
+
+	const token = await prisma.spaceSession.findUnique({
+		where: {
+			sessionToken: userToken
+		}
+	});
+
+	const tk = new Token();
+
+	if (token?.spaceId !== space.id) throw redirect(302, `/spaces/${space.appId}/login`);
+
+	const admin = await tk.verifyJwt(token?.sessionToken);
+
+	return { space, admin };
 }

@@ -1,7 +1,15 @@
 <script lang="ts">
 	export let form: any;
-	import { Input, Button, Alert } from 'flowbite-svelte';
+	import { Button, Alert, Breadcrumb, BreadcrumbItem } from 'flowbite-svelte';
 </script>
+
+<Breadcrumb>
+	<BreadcrumbItem>Home</BreadcrumbItem>
+	<BreadcrumbItem>Editor</BreadcrumbItem>
+	<BreadcrumbItem>Space</BreadcrumbItem>
+	<BreadcrumbItem>UI's</BreadcrumbItem>
+	<BreadcrumbItem>Create</BreadcrumbItem>
+</Breadcrumb>
 
 <div class="text-lg p-3">New ui version</div>
 
@@ -11,7 +19,7 @@
 	</div>
 {/if}
 
-<div>
+<div class="px-6">
 	<form method="post">
 		<Button type="submit">Create</Button>
 	</form>

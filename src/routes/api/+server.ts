@@ -1,30 +1,39 @@
 import { prisma } from '$lib/db/prisma';
+import { Logger } from '$lib/logger/Logger';
 import { Token } from '$lib/token/Token';
+import { errorCatch } from '$lib/util/slugit';
 import { error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
-export async function GET({ request: { headers } }: RequestEvent) {
+export async function GET({ request: { headers }, locals }: RequestEvent) {
 	const apiKey = headers.get('x-api-key');
-	const authorization = headers.get('authorization');
+	const authorization = String(headers.get('Authorization'));
 
 	if (!apiKey || !authorization) throw error(403, 'Api key / authorization token required');
 
-	const spaceId = (apiKey?.split('--') ?? [])[1];
-
-	let space = await prisma.space.findUnique({
-		where: { id: spaceId },
-		include: { apiKeys: true }
-	});
-
 	const token = new Token();
-	const verifiedToken = await token.findAndVerifyKey(space?.apiKeys, String(apiKey));
+	const logger = new Logger();
 
-	if (!verifiedToken) throw error(403, 'Unable to verify api keys');
+	let [space, spaceError] = await errorCatch(token.verifyApiKey(apiKey));
+
+	const [apiSession, apiSessionError] = await errorCatch(
+		token.decodeUserToken(authorization, space)
+	);
+
+	if (apiSessionError) {
+		await logger.error({});
+	}
+
+	if (spaceError) {
+		await logger.error({});
+		throw error(403, 'Unable to verify api keys');
+	}
 
 	delete (space ?? {})['secret'];
 	delete (space ?? {})['apiKeys'];
 
 	const response = new Response(JSON.stringify(space));
 	response.headers.append('Access-Control-Allow-Origin', '*');
+	logger.success({});
 	return response;
 }

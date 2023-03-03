@@ -2,8 +2,8 @@
 	//@ts-nocheck
 	import { page } from '$app/stores';
 	export let data = { examples: [], count: 0, page: 1, pages: 0, skip: 0 };
-	const { examples = [] } = data;
-	const currPage = $page.url.searchParams.get('page') ?? 1;
+	let { examples = [] } = data;
+	let currPage = $page.url.searchParams.get('page') ?? 1;
 </script>
 
 

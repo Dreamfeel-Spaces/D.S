@@ -5,8 +5,8 @@
 	import { page } from '$app/stores';
 	import FileDropzone from '$lib/components/FileDropzone.svelte';
 	import DateTimeInput from '$lib/components/DateTimeInput.svelte';
-	const space = $page.params.space;
-	const table = $page.params.id;
+	let space = $page.params.space;
+	let table = $page.params.id;
 	export let data: PageData;
 	export let form: any;
 	let selectedOptions: any = {};

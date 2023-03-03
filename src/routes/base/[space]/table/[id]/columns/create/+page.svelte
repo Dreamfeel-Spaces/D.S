@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { Input, Select, Button, Checkbox } from 'flowbite-svelte';
+	import { Input, Select, Button, Checkbox, Breadcrumb, BreadcrumbItem } from 'flowbite-svelte';
 	import { columnTypes } from '$lib/coltypes/columnTypes';
 	import type { PageData } from './$types';
 	import { page } from '$app/stores';
-
-	const spaceId = $page.params.space;
-	const table = $page.params.id;
+	const tableName = $page.params.id;
+	const spaceName = $page.params.space;
+	let spaceId = $page.params.space;
+	let table = $page.params.id;
 
 	export let data: PageData;
 	export let form: any;
@@ -38,17 +39,29 @@
 	}
 </script>
 
-<div class="text-center text-lg mt-4">
-	<p>Columns</p>
+<div class="mt-3 px-6">
+	<Breadcrumb>
+		<BreadcrumbItem>Home</BreadcrumbItem>
+		<BreadcrumbItem>Api</BreadcrumbItem>
+		<BreadcrumbItem>
+			{spaceName}
+		</BreadcrumbItem>
+		<BreadcrumbItem>
+			{tableName}
+		</BreadcrumbItem>
+		<BreadcrumbItem>
+			Create columns
+		</BreadcrumbItem>
+	</Breadcrumb>
 </div>
 
 {#if form?.success}
 	<div class="my-3 mx-20 lg:mx-48">Columns saved</div>
-	<a href={`/base/${spaceId}/table/${table}/records`}>Go to table</a>
+	<a href={`/dashboard/${spaceId}/${table}`}>Go to table</a>
 {/if}
 
 {#each columns as column, index}
-	<div class="mb-9 mt-5 lg:mx-48">
+	<div class="mb-9 mt-5 ">
 		<div class="mb-4 mx-20 ">
 			<label for="type">Type</label>
 			<Select

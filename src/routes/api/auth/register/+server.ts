@@ -1,33 +1,52 @@
 import { prisma } from '$lib/db/prisma';
+import { Logger } from '$lib/logger/Logger';
 import { Token } from '$lib/token/Token';
+import { errorCatch } from '$lib/util/slugit';
 import { error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
-export async function POST({ request: { headers, json } }: RequestEvent) {
-	const apiKey = headers.get('x-api-key');
-
+export async function POST({ request }: RequestEvent) {
+	const apiKey = request.headers.get('x-api-key');
 	if (!apiKey) throw error(403, 'Api key / authorization token required');
+	const data = await request.json();
+	const token = new Token();
+	const logger = new Logger();
+	const [space, spaceError] = await errorCatch(token.verifyApiKey(apiKey));
 
-	try {
-		const data = await json();
-		console.log(data);
-	} catch (error) {
-		console.log(error);
+	if (spaceError) {
+		await logger.error(spaceError);
+		throw error(403, 'Invalid access token provided');
 	}
 
-	const spaceId = (apiKey?.split('--') ?? [])[1];
+	const username = data.username || data.email;
+	const password = data.password;
+	const name = data.name;
 
-	let space = await prisma.space.findUnique({
-		where: { id: spaceId },
-		include: { apiKeys: true }
+	if (!username || !password || !name) {
+		await logger.error({});
+		throw error(400, 'Username (email), password and name are required');
+	}
+
+	const admin = await prisma.admin.create({
+		data: {
+			spaceId: String(space.id),
+			role: 'user',
+			username: String(username),
+			password: await token.encryptSync(password),
+			name: String(name)
+		}
 	});
 
-	const token = new Token();
-	const verifiedToken = await token.findAndVerifyKey(space?.apiKeys, String(apiKey));
+	const sessionToken = await token.createUserToken(admin);
+	await prisma.spaceSession.create({
+		data: {
+			adminId: String(admin.id),
+			sessionToken,
+			spaceId: String(space.id)
+		}
+	});
 
-	if (!verifiedToken) throw error(403, 'Unable to verify api keys');
+	logger.success({});
 
-	const response = new Response(JSON.stringify("data"));
-	response.headers.append('Access-Control-Allow-Origin', '*');
-	return response;
+	return new Response(JSON.stringify({ accessToken: sessionToken }));
 }

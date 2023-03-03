@@ -12,12 +12,13 @@
 	import { page } from '$app/stores';
 
 	let spaceId = $page.params.id;
+	const uiId = $page.params.builder
 
-	let activeSpace = data?.myapps?.find(({ id }: any) => id === spaceId);
+	let activeSpace = data?.myapps?.find(({ appId }: any) => appId === spaceId);
 
-	const url = $page.url.pathname;
+	let url = $page.url.pathname;
 
-	const isPreview = /\/preview/.test(url);
+	let isPreview = /\/preview/.test(url) || Boolean(uiId);
 </script>
 
 {#if isPreview}
@@ -26,11 +27,11 @@
 
 {#if !isPreview}
 	<div class="flex">
-		<div style="max-height:88vh; overflow:scroll" class="max-h-full overflow-y-auto">
-			<Sidebar class="min-h-96">
+		<div class=" hidden lg:flex  overflow-y-auto">
+			<Sidebar>
 				<SidebarWrapper>
-					<SidebarGroup>
-						<SidebarItem label="Overview">
+					<SidebarGroup style="min-height:88vh; overflow:auto">
+						<SidebarItem href="/editor" label="Overview">
 							<svelte:fragment slot="icon">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"

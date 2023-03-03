@@ -1,4 +1,4 @@
 <script>
 	export let data = { admins: [] };
-	const admins = data;
+	let admins = data;
 </script>

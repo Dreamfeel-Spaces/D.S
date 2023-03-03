@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.gjs-cv-canvas {
+	top: 0 !important;
+	width: 100% !important;
+	height: 100% !important;
+}
+
+.gjs-one-bg {
+	background-color: #b1b695 !important;
+}
+
+/* Secondary color for the text color */
+.gjs-two-color {
+	color: #5e4b56 !important;
+}
+
+/* Tertiary color for the background */
+.gjs-three-bg {
+	background-color: #11001c !important;
+	color: white;
+}
+
+/* Quaternary color for the text color */
+.gjs-four-color,
+.gjs-four-color-h:hover {
+	color: #11001c;
+}

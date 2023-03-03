@@ -1,11 +1,27 @@
 import { prisma } from '$lib/db/prisma';
+import { Logger } from '$lib/logger/Logger';
+import { Token } from '$lib/token/Token';
+import { errorCatch } from '$lib/util/slugit';
+import { error } from '@sveltejs/kit';
 import type { RequestEvent } from '../$types';
 
-export async function GET({ params }: RequestEvent) {
+export async function GET({ params, request }: RequestEvent) {
 	const tableName = params.table;
+	const apiKey = request.headers.get('x-api-key');
+	const authorization = request.headers.get('authorization');
+
+	if (!apiKey) throw error(403, 'Api key / authorization token required');
+
+	const token = new Token();
+	const logger = new Logger(request);
+	let [space, spaceError] = await errorCatch(token.verifyApiKey(apiKey));
+
+	if (spaceError) throw error(403, 'Unable to verify api keys');
+
 	const table = await prisma.spaceTable.findFirst({
 		where: {
-			name: tableName
+			name: tableName,
+			tableSpace: space?.id
 		},
 		include: {
 			columns: true
@@ -13,8 +29,8 @@ export async function GET({ params }: RequestEvent) {
 	});
 
 	const formattedSchema = table?.columns?.map((col) => {
-		return { field: col.fieldName, type: col.fiedType };
+		return { field: col.name, type: col.type };
 	});
 
-    return new Response(JSON.stringify(formattedSchema))
+	return new Response(JSON.stringify(formattedSchema));
 }

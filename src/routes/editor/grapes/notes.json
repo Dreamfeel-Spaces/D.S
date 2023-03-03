@@ -1,0 +1,706 @@
+[
+	{
+		"classes": ["s-hWij4LRyDzGm"],
+		"components": [
+			{
+				"tagName": "section",
+				"classes": ["mb-40", "s-hWij4LRyDzGm"],
+				"components": [
+					{
+						"type": "text",
+						"classes": [
+							"text-center",
+							"bg-gray-50",
+							"text-gray-800",
+							"py-24",
+							"px-6",
+							"s-hWij4LRyDzGm"
+						],
+						"components": [
+							{
+								"tagName": "h1",
+								"type": "text",
+								"classes": [
+									"text-5xl",
+									"md:text-6xl",
+									"xl:text-7xl",
+									"font-bold",
+									"tracking-tight",
+									"mb-12",
+									"s-hWij4LRyDzGm"
+								],
+								"components": [
+									{ "type": "textnode", "content": "The best offer on the market " },
+									{ "tagName": "br", "void": true, "classes": ["s-hWij4LRyDzGm"] },
+									{
+										"tagName": "span",
+										"type": "text",
+										"classes": ["text-blue-600", "s-hWij4LRyDzGm"],
+										"components": [
+											{ "type": "textnode", "content": "for your busioiuyxfcguvhbjlnkmness" }
+										]
+									}
+								]
+							},
+							{ "type": "textnode", "content": " " },
+							{
+								"type": "link",
+								"classes": [
+									"inline-block",
+									"px-7",
+									"py-3",
+									"mr-2",
+									"bg-blue-600",
+									"text-white",
+									"font-medium",
+									"text-sm",
+									"leading-snug",
+									"uppercase",
+									"rounded",
+									"shadow-md",
+									"hover:bg-blue-700",
+									"hover:shadow-lg",
+									"focus:bg-blue-700",
+									"focus:shadow-lg",
+									"focus:outline-none",
+									"focus:ring-0",
+									"active:bg-blue-800",
+									"active:shadow-lg",
+									"transition",
+									"duration-150",
+									"ease-in-out",
+									"s-hWij4LRyDzGm"
+								],
+								"attributes": {
+									"data-mdb-ripple": "true",
+									"data-mdb-ripple-color": "light",
+									"href": "#!",
+									"role": "button"
+								},
+								"components": [{ "type": "textnode", "content": "Get started" }]
+							},
+							{ "type": "textnode", "content": " " },
+							{
+								"type": "link",
+								"classes": [
+									"inline-block",
+									"px-7",
+									"py-3",
+									"bg-transparent",
+									"text-blue-600",
+									"font-medium",
+									"text-sm",
+									"leading-snug",
+									"uppercase",
+									"rounded",
+									"hover:text-blue-700",
+									"hover:bg-gray-100",
+									"focus:bg-gray-100",
+									"focus:outline-none",
+									"focus:ring-0",
+									"active:bg-gray-200",
+									"transition",
+									"duration-150",
+									"ease-in-out",
+									"s-hWij4LRyDzGm"
+								],
+								"attributes": {
+									"data-mdb-ripple": "true",
+									"data-mdb-ripple-color": "light",
+									"href": "#!",
+									"role": "button"
+								},
+								"components": [{ "type": "textnode", "content": "Learn more" }]
+							},
+							{ "type": "textnode", "content": "hbhhbhibuopjk';lkj" }
+						]
+					},
+					{
+						"type": "text",
+						"classes": [
+							"text-center",
+							"bg-gray-50",
+							"text-gray-800",
+							"py-24",
+							"px-6",
+							"s-hWij4LRyDzGm"
+						],
+						"components": [
+							{
+								"tagName": "h1",
+								"type": "text",
+								"classes": [
+									"text-5xl",
+									"md:text-6xl",
+									"xl:text-7xl",
+									"font-bold",
+									"tracking-tight",
+									"mb-12",
+									"s-hWij4LRyDzGm"
+								],
+								"components": [
+									{ "type": "textnode", "content": "The best offer on the market " },
+									{ "tagName": "br", "void": true, "classes": ["s-hWij4LRyDzGm"] },
+									{
+										"tagName": "span",
+										"type": "text",
+										"classes": ["text-blue-600", "s-hWij4LRyDzGm"],
+										"components": [
+											{ "type": "textnode", "content": "for your busioiuyxfcguvhbjlnkmness" }
+										]
+									}
+								]
+							},
+							{ "type": "textnode", "content": " " },
+							{
+								"type": "link",
+								"classes": [
+									"inline-block",
+									"px-7",
+									"py-3",
+									"mr-2",
+									"bg-blue-600",
+									"text-white",
+									"font-medium",
+									"text-sm",
+									"leading-snug",
+									"uppercase",
+									"rounded",
+									"shadow-md",
+									"hover:bg-blue-700",
+									"hover:shadow-lg",
+									"focus:bg-blue-700",
+									"focus:shadow-lg",
+									"focus:outline-none",
+									"focus:ring-0",
+									"active:bg-blue-800",
+									"active:shadow-lg",
+									"transition",
+									"duration-150",
+									"ease-in-out",
+									"s-hWij4LRyDzGm"
+								],
+								"attributes": {
+									"data-mdb-ripple": "true",
+									"data-mdb-ripple-color": "light",
+									"href": "#!",
+									"role": "button"
+								},
+								"components": [{ "type": "textnode", "content": "Get started" }]
+							},
+							{ "type": "textnode", "content": " " },
+							{
+								"type": "link",
+								"classes": [
+									"inline-block",
+									"px-7",
+									"py-3",
+									"bg-transparent",
+									"text-blue-600",
+									"font-medium",
+									"text-sm",
+									"leading-snug",
+									"uppercase",
+									"rounded",
+									"hover:text-blue-700",
+									"hover:bg-gray-100",
+									"focus:bg-gray-100",
+									"focus:outline-none",
+									"focus:ring-0",
+									"active:bg-gray-200",
+									"transition",
+									"duration-150",
+									"ease-in-out",
+									"s-hWij4LRyDzGm"
+								],
+								"attributes": {
+									"data-mdb-ripple": "true",
+									"data-mdb-ripple-color": "light",
+									"href": "#!",
+									"role": "button"
+								},
+								"components": [{ "type": "textnode", "content": "Learn more" }]
+							},
+							{ "type": "textnode", "content": "hbhhbhibuopjk';lkj" }
+						]
+					},
+					{
+						"type": "text",
+						"classes": [
+							"text-center",
+							"bg-gray-50",
+							"text-gray-800",
+							"py-24",
+							"px-6",
+							"s-hWij4LRyDzGm"
+						],
+						"components": [
+							{
+								"tagName": "h1",
+								"type": "text",
+								"classes": [
+									"text-5xl",
+									"md:text-6xl",
+									"xl:text-7xl",
+									"font-bold",
+									"tracking-tight",
+									"mb-12",
+									"s-hWij4LRyDzGm"
+								],
+								"components": [
+									{ "type": "textnode", "content": "The best offer on the market " },
+									{ "tagName": "br", "void": true, "classes": ["s-hWij4LRyDzGm"] },
+									{
+										"tagName": "span",
+										"type": "text",
+										"classes": ["text-blue-600", "s-hWij4LRyDzGm"],
+										"components": [
+											{ "type": "textnode", "content": "for your busioiuyxfcguvhbjlnkmness" }
+										]
+									}
+								]
+							},
+							{ "type": "textnode", "content": " " },
+							{
+								"type": "link",
+								"classes": [
+									"inline-block",
+									"px-7",
+									"py-3",
+									"mr-2",
+									"bg-blue-600",
+									"text-white",
+									"font-medium",
+									"text-sm",
+									"leading-snug",
+									"uppercase",
+									"rounded",
+									"shadow-md",
+									"hover:bg-blue-700",
+									"hover:shadow-lg",
+									"focus:bg-blue-700",
+									"focus:shadow-lg",
+									"focus:outline-none",
+									"focus:ring-0",
+									"active:bg-blue-800",
+									"active:shadow-lg",
+									"transition",
+									"duration-150",
+									"ease-in-out",
+									"s-hWij4LRyDzGm"
+								],
+								"attributes": {
+									"data-mdb-ripple": "true",
+									"data-mdb-ripple-color": "light",
+									"href": "#!",
+									"role": "button"
+								},
+								"components": [{ "type": "textnode", "content": "Get started" }]
+							},
+							{ "type": "textnode", "content": " " },
+							{
+								"type": "link",
+								"classes": [
+									"inline-block",
+									"px-7",
+									"py-3",
+									"bg-transparent",
+									"text-blue-600",
+									"font-medium",
+									"text-sm",
+									"leading-snug",
+									"uppercase",
+									"rounded",
+									"hover:text-blue-700",
+									"hover:bg-gray-100",
+									"focus:bg-gray-100",
+									"focus:outline-none",
+									"focus:ring-0",
+									"active:bg-gray-200",
+									"transition",
+									"duration-150",
+									"ease-in-out",
+									"s-hWij4LRyDzGm"
+								],
+								"attributes": {
+									"data-mdb-ripple": "true",
+									"data-mdb-ripple-color": "light",
+									"href": "#!",
+									"role": "button"
+								},
+								"components": [{ "type": "textnode", "content": "Learn more" }]
+							},
+							{ "type": "textnode", "content": "hbhhbhibuopjk';lkj" }
+						]
+					},
+					{
+						"type": "text",
+						"classes": [
+							"text-center",
+							"bg-gray-50",
+							"text-gray-800",
+							"py-24",
+							"px-6",
+							"s-hWij4LRyDzGm"
+						],
+						"components": [
+							{
+								"tagName": "h1",
+								"type": "text",
+								"classes": [
+									"text-5xl",
+									"md:text-6xl",
+									"xl:text-7xl",
+									"font-bold",
+									"tracking-tight",
+									"mb-12",
+									"s-hWij4LRyDzGm"
+								],
+								"components": [
+									{ "type": "textnode", "content": "The best offer on the market " },
+									{ "tagName": "br", "void": true, "classes": ["s-hWij4LRyDzGm"] },
+									{
+										"tagName": "span",
+										"type": "text",
+										"classes": ["text-blue-600", "s-hWij4LRyDzGm"],
+										"components": [
+											{ "type": "textnode", "content": "for your busioiuyxfcguvhbjlnkmness" }
+										]
+									}
+								]
+							},
+							{ "type": "textnode", "content": " " },
+							{
+								"type": "link",
+								"classes": [
+									"inline-block",
+									"px-7",
+									"py-3",
+									"mr-2",
+									"bg-blue-600",
+									"text-white",
+									"font-medium",
+									"text-sm",
+									"leading-snug",
+									"uppercase",
+									"rounded",
+									"shadow-md",
+									"hover:bg-blue-700",
+									"hover:shadow-lg",
+									"focus:bg-blue-700",
+									"focus:shadow-lg",
+									"focus:outline-none",
+									"focus:ring-0",
+									"active:bg-blue-800",
+									"active:shadow-lg",
+									"transition",
+									"duration-150",
+									"ease-in-out",
+									"s-hWij4LRyDzGm"
+								],
+								"attributes": {
+									"data-mdb-ripple": "true",
+									"data-mdb-ripple-color": "light",
+									"href": "#!",
+									"role": "button"
+								},
+								"components": [{ "type": "textnode", "content": "Get started" }]
+							},
+							{ "type": "textnode", "content": " " },
+							{
+								"type": "link",
+								"classes": [
+									"inline-block",
+									"px-7",
+									"py-3",
+									"bg-transparent",
+									"text-blue-600",
+									"font-medium",
+									"text-sm",
+									"leading-snug",
+									"uppercase",
+									"rounded",
+									"hover:text-blue-700",
+									"hover:bg-gray-100",
+									"focus:bg-gray-100",
+									"focus:outline-none",
+									"focus:ring-0",
+									"active:bg-gray-200",
+									"transition",
+									"duration-150",
+									"ease-in-out",
+									"s-hWij4LRyDzGm"
+								],
+								"attributes": {
+									"data-mdb-ripple": "true",
+									"data-mdb-ripple-color": "light",
+									"href": "#!",
+									"role": "button"
+								},
+								"components": [{ "type": "textnode", "content": "Learn more" }]
+							},
+							{ "type": "textnode", "content": "hbhhbhibuopjk';lkj" }
+						]
+					},
+					{
+						"type": "text",
+						"classes": [
+							"text-center",
+							"bg-gray-50",
+							"text-gray-800",
+							"py-24",
+							"px-6",
+							"s-hWij4LRyDzGm"
+						],
+						"components": [
+							{
+								"tagName": "h1",
+								"type": "text",
+								"classes": [
+									"text-5xl",
+									"md:text-6xl",
+									"xl:text-7xl",
+									"font-bold",
+									"tracking-tight",
+									"mb-12",
+									"s-hWij4LRyDzGm"
+								],
+								"components": [
+									{ "type": "textnode", "content": "The best offer on the market " },
+									{ "tagName": "br", "void": true, "classes": ["s-hWij4LRyDzGm"] },
+									{
+										"tagName": "span",
+										"type": "text",
+										"classes": ["text-blue-600", "s-hWij4LRyDzGm"],
+										"components": [
+											{ "type": "textnode", "content": "for your busioiuyxfcguvhbjlnkmness" }
+										]
+									}
+								]
+							},
+							{ "type": "textnode", "content": " " },
+							{
+								"type": "link",
+								"classes": [
+									"inline-block",
+									"px-7",
+									"py-3",
+									"mr-2",
+									"bg-blue-600",
+									"text-white",
+									"font-medium",
+									"text-sm",
+									"leading-snug",
+									"uppercase",
+									"rounded",
+									"shadow-md",
+									"hover:bg-blue-700",
+									"hover:shadow-lg",
+									"focus:bg-blue-700",
+									"focus:shadow-lg",
+									"focus:outline-none",
+									"focus:ring-0",
+									"active:bg-blue-800",
+									"active:shadow-lg",
+									"transition",
+									"duration-150",
+									"ease-in-out",
+									"s-hWij4LRyDzGm"
+								],
+								"attributes": {
+									"data-mdb-ripple": "true",
+									"data-mdb-ripple-color": "light",
+									"href": "#!",
+									"role": "button"
+								},
+								"components": [{ "type": "textnode", "content": "Get started" }]
+							},
+							{ "type": "textnode", "content": " " },
+							{
+								"type": "link",
+								"classes": [
+									"inline-block",
+									"px-7",
+									"py-3",
+									"bg-transparent",
+									"text-blue-600",
+									"font-medium",
+									"text-sm",
+									"leading-snug",
+									"uppercase",
+									"rounded",
+									"hover:text-blue-700",
+									"hover:bg-gray-100",
+									"focus:bg-gray-100",
+									"focus:outline-none",
+									"focus:ring-0",
+									"active:bg-gray-200",
+									"transition",
+									"duration-150",
+									"ease-in-out",
+									"s-hWij4LRyDzGm"
+								],
+								"attributes": {
+									"data-mdb-ripple": "true",
+									"data-mdb-ripple-color": "light",
+									"href": "#!",
+									"role": "button"
+								},
+								"components": [{ "type": "textnode", "content": "Learn more" }]
+							},
+							{ "type": "textnode", "content": "hbhhbhibuopjk';lkj" }
+						]
+					},
+					{
+						"type": "text",
+						"classes": [
+							"text-center",
+							"bg-gray-50",
+							"text-gray-800",
+							"py-24",
+							"px-6",
+							"s-hWij4LRyDzGm"
+						],
+						"components": [
+							{
+								"tagName": "h1",
+								"type": "text",
+								"classes": [
+									"text-5xl",
+									"md:text-6xl",
+									"xl:text-7xl",
+									"font-bold",
+									"tracking-tight",
+									"mb-12",
+									"s-hWij4LRyDzGm"
+								],
+								"components": [
+									{ "type": "textnode", "content": "The best offer on the market " },
+									{ "tagName": "br", "void": true, "classes": ["s-hWij4LRyDzGm"] },
+									{
+										"tagName": "span",
+										"type": "text",
+										"classes": ["text-blue-600", "s-hWij4LRyDzGm"],
+										"components": [
+											{ "type": "textnode", "content": "for your busioiuyxfcguvhbjlnkmness" }
+										]
+									}
+								]
+							},
+							{ "type": "textnode", "content": " " },
+							{
+								"type": "link",
+								"classes": [
+									"inline-block",
+									"px-7",
+									"py-3",
+									"mr-2",
+									"bg-blue-600",
+									"text-white",
+									"font-medium",
+									"text-sm",
+									"leading-snug",
+									"uppercase",
+									"rounded",
+									"shadow-md",
+									"hover:bg-blue-700",
+									"hover:shadow-lg",
+									"focus:bg-blue-700",
+									"focus:shadow-lg",
+									"focus:outline-none",
+									"focus:ring-0",
+									"active:bg-blue-800",
+									"active:shadow-lg",
+									"transition",
+									"duration-150",
+									"ease-in-out",
+									"s-hWij4LRyDzGm"
+								],
+								"attributes": {
+									"data-mdb-ripple": "true",
+									"data-mdb-ripple-color": "light",
+									"href": "#!",
+									"role": "button"
+								},
+								"components": [{ "type": "textnode", "content": "Get started" }]
+							},
+							{ "type": "textnode", "content": " " },
+							{
+								"type": "link",
+								"classes": [
+									"inline-block",
+									"px-7",
+									"py-3",
+									"bg-transparent",
+									"text-blue-600",
+									"font-medium",
+									"text-sm",
+									"leading-snug",
+									"uppercase",
+									"rounded",
+									"hover:text-blue-700",
+									"hover:bg-gray-100",
+									"focus:bg-gray-100",
+									"focus:outline-none",
+									"focus:ring-0",
+									"active:bg-gray-200",
+									"transition",
+									"duration-150",
+									"ease-in-out",
+									"s-hWij4LRyDzGm"
+								],
+								"attributes": {
+									"data-mdb-ripple": "true",
+									"data-mdb-ripple-color": "light",
+									"href": "#!",
+									"role": "button"
+								},
+								"components": [{ "type": "textnode", "content": "Learn more" }]
+							},
+							{ "type": "textnode", "content": "hbhhbhibuopjk';lkj" }
+						]
+					}
+				]
+			}
+		]
+	},
+	{
+		"tagName": "section",
+		"components": [
+			{
+				"tagName": "h1",
+				"type": "text",
+				"components": [{ "type": "textnode", "content": "This is a simple title" }]
+			},
+			{
+				"type": "text",
+				"components": [
+					{ "type": "textnode", "content": "This is just a Lorem text: Lorem ipsum dolor sit amet" }
+				]
+			}
+		]
+	},
+	{
+		"type": "image",
+		"resizable": { "ratioDefault": 1 },
+		"attributes": {
+			"src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3R5bGU9ImZpbGw6IHJnYmEoMCwwLDAsMC4xNSk7IHRyYW5zZm9ybTogc2NhbGUoMC43NSkiPgogICAgICAgIDxwYXRoIGQ9Ik04LjUgMTMuNWwyLjUgMyAzLjUtNC41IDQuNSA2SDVtMTYgMVY1YTIgMiAwIDAgMC0yLTJINWMtMS4xIDAtMiAuOS0yIDJ2MTRjMCAxLjEuOSAyIDIgMmgxNGMxLjEgMCAyLS45IDItMnoiPjwvcGF0aD4KICAgICAgPC9zdmc+"
+		}
+	},
+	{
+		"type": "image",
+		"resizable": { "ratioDefault": 1 },
+		"attributes": {
+			"src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3R5bGU9ImZpbGw6IHJnYmEoMCwwLDAsMC4xNSk7IHRyYW5zZm9ybTogc2NhbGUoMC43NSkiPgogICAgICAgIDxwYXRoIGQ9Ik04LjUgMTMuNWwyLjUgMyAzLjUtNC41IDQuNSA2SDVtMTYgMVY1YTIgMiAwIDAgMC0yLTJINWMtMS4xIDAtMiAuOS0yIDJ2MTRjMCAxLjEuOSAyIDIgMmgxNGMxLjEgMCAyLS45IDItMnoiPjwvcGF0aD4KICAgICAgPC9zdmc+",
+			"id": "inw7d"
+		}
+	},
+	{ "type": "text", "components": [{ "type": "textnode", "content": "Insert your text here" }] },
+	{
+		"type": "image",
+		"resizable": { "ratioDefault": 1 },
+		"attributes": {
+			"src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3R5bGU9ImZpbGw6IHJnYmEoMCwwLDAsMC4xNSk7IHRyYW5zZm9ybTogc2NhbGUoMC43NSkiPgogICAgICAgIDxwYXRoIGQ9Ik04LjUgMTMuNWwyLjUgMyAzLjUtNC41IDQuNSA2SDVtMTYgMVY1YTIgMiAwIDAgMC0yLTJINWMtMS4xIDAtMiAuOS0yIDJ2MTRjMCAxLjEuOSAyIDIgMmgxNGMxLjEgMCAyLS45IDItMnoiPjwvcGF0aD4KICAgICAgPC9zdmc+"
+		}
+	}
+]

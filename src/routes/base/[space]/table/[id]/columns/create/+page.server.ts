@@ -28,7 +28,7 @@ export const actions = {
 		if (!isAdmin()) throw error(403, 'You are unauthorized to view this page');
 
 		const table = await prisma.spaceTable.findFirst({
-			where: { name: tableId },
+			where: { name: tableId, tableSpace: space.id },
 			include: {
 				rows: {
 					include: {
@@ -58,7 +58,7 @@ export const actions = {
 					multiple: Boolean(column.multiple),
 					spaceTableId: table.id,
 					defaultOn: Boolean(column.defaultOn),
-					dateTimeDefault:column.dateTimeDefault
+					dateTimeDefault: column.dateTimeDefault
 				}
 			});
 
@@ -83,6 +83,8 @@ export const actions = {
 				displayName: String(displayName)
 			}
 		});
+
+		console.log(fields);
 
 		return { success: true, data: { fields, table: updatedTable } };
 	}
