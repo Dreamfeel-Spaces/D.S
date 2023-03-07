@@ -1,8 +1,16 @@
 <script lang="ts">
 	import heroImage from '../assets/hero.png';
+	export let form: any;
+	import { Alert } from 'flowbite-svelte';
 </script>
 
-<section class="mb-40">
+{#if form?.feedbackSuccess}
+	<Alert dismissable class="mx-6 mt-2">
+		<div class="m4-9">Your feedback has been received, thank you.</div>
+	</Alert>
+{/if}
+
+<!-- <section class="mb-40">
 	<div class="px-6 py-12 md:px-12 text-gray-800 text-center lg:text-left">
 		<div class="container mx-auto xl:px-32">
 			<div class="grid lg:grid-cols-2  items-center">
@@ -36,6 +44,200 @@
 				<div class="md:mb-12 lg:mb-0">
 					<img src={heroImage} class="w-full rounded-lg shadow-lg" alt="Hero" />
 				</div>
+			</div>
+		</div>
+	</div>
+</section> -->
+
+<section class="bg-white dark:bg-gray-900">
+	<div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+		<div class="mr-auto place-self-center lg:col-span-7">
+			<h1
+				class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-gray-700 dark:text-white"
+			>
+				The No Code Platform for software companies
+			</h1>
+			<p
+				class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
+			>
+				From realtime APIs, fully rich customizable dashboards, interactive website builder and
+				countless integration, including with native device technology companies around the world
+				use Dreamfeel.ai to build blazingly fast apps.
+			</p>
+			<a
+				href="/signup"
+				class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
+			>
+				Get started
+				<svg
+					class="w-5 h-5 ml-2 -mr-1"
+					fill="currentColor"
+					viewBox="0 0 20 20"
+					xmlns="http://www.w3.org/2000/svg"
+					><path
+						fill-rule="evenodd"
+						d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+						clip-rule="evenodd"
+					/></svg
+				>
+			</a>
+			<a
+				target="blank"
+				href="http://demo.localhost:5173"
+				class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+			>
+				Live demo
+			</a>
+		</div>
+		<div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
+			<img src={heroImage} alt="mockup" loading="lazy" />
+		</div>
+	</div>
+</section>
+
+<section class="bg-white dark:bg-gray-900">
+	<div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+		<div class="max-w-screen-md mb-8 lg:mb-16">
+			<h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-700 dark:text-white">
+				Designed for fast moving teams, like yours
+			</h2>
+			<p class="text-gray-500 sm:text-xl dark:text-gray-400">
+				Here at Dreamfeel we focus on the heavy-lifting with the tools you'll ever require, the
+				stability, so you can focus on more on the innovation, and iterate faster.
+			</p>
+		</div>
+		<div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+			<div>
+				<div
+					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900"
+				>
+					<svg
+						class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+						fill="currentColor"
+						viewBox="0 0 20 20"
+						xmlns="http://www.w3.org/2000/svg"
+						><path
+							fill-rule="evenodd"
+							d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
+							clip-rule="evenodd"
+						/></svg
+					>
+				</div>
+				<h3 class="mb-2 text-xl font-bold dark:text-white">Marketing</h3>
+				<p class="text-gray-500 dark:text-gray-400">
+					Plan it, create it, launch it. Collaborate seamlessly with all the organization and hit
+					your marketing goals every month with our marketing plan.
+				</p>
+			</div>
+			<div>
+				<div
+					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900"
+				>
+					<svg
+						class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+						fill="currentColor"
+						viewBox="0 0 20 20"
+						xmlns="http://www.w3.org/2000/svg"
+						><path
+							d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"
+						/></svg
+					>
+				</div>
+				<h3 class="mb-2 text-xl font-bold dark:text-white">Legal</h3>
+				<p class="text-gray-500 dark:text-gray-400">
+					Protect your organization, devices and stay compliant with our structured workflows and
+					custom permissions made for you.
+				</p>
+			</div>
+			<div>
+				<div
+					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900"
+				>
+					<svg
+						class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+						fill="currentColor"
+						viewBox="0 0 20 20"
+						xmlns="http://www.w3.org/2000/svg"
+						><path
+							fill-rule="evenodd"
+							d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
+							clip-rule="evenodd"
+						/><path
+							d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"
+						/></svg
+					>
+				</div>
+				<h3 class="mb-2 text-xl font-bold dark:text-white">Business Automation</h3>
+				<p class="text-gray-500 dark:text-gray-400">
+					Auto-assign tasks, send Slack messages, and much more. Now power up with hundreds of new
+					templates to help you get started.
+				</p>
+			</div>
+			<div>
+				<div
+					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900"
+				>
+					<svg
+						class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+						fill="currentColor"
+						viewBox="0 0 20 20"
+						xmlns="http://www.w3.org/2000/svg"
+						><path
+							d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"
+						/><path
+							fill-rule="evenodd"
+							d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z"
+							clip-rule="evenodd"
+						/></svg
+					>
+				</div>
+				<h3 class="mb-2 text-xl font-bold dark:text-white">Finance</h3>
+				<p class="text-gray-500 dark:text-gray-400">
+					Audit-proof software built for critical financial operations like month-end close and
+					quarterly budgeting.
+				</p>
+			</div>
+			<div>
+				<div
+					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900"
+				>
+					<svg
+						class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+						fill="currentColor"
+						viewBox="0 0 20 20"
+						xmlns="http://www.w3.org/2000/svg"
+						><path
+							d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"
+						/></svg
+					>
+				</div>
+				<h3 class="mb-2 text-xl font-bold dark:text-white">Enterprise Design</h3>
+				<p class="text-gray-500 dark:text-gray-400">
+					Craft beautiful, delightful experiences for both marketing and product with real
+					cross-company collaboration.
+				</p>
+			</div>
+			<div>
+				<div
+					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900"
+				>
+					<svg
+						class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+						fill="currentColor"
+						viewBox="0 0 20 20"
+						xmlns="http://www.w3.org/2000/svg"
+						><path
+							fill-rule="evenodd"
+							d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+							clip-rule="evenodd"
+						/></svg
+					>
+				</div>
+				<h3 class="mb-2 text-xl font-bold dark:text-white">Operations</h3>
+				<p class="text-gray-500 dark:text-gray-400">
+					Keep your company’s lights on with customizable, iterative, and structured workflows built
+					for all efficient teams and individual.
+				</p>
 			</div>
 		</div>
 	</div>
@@ -103,7 +305,155 @@
 	<!-- Section: Design Block -->
 </div>
 
-<section class="mb-32 text-gray-800 text-center lg:text-left">
+<section class="bg-white dark:bg-gray-900">
+	<div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
+		<div class="mx-auto max-w-screen-sm">
+			<h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+				Testimonials
+			</h2>
+			<p class="mb-8 font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">
+				Explore the whole collection of open-source web components and elements built with the
+				utility classes from Tailwind
+			</p>
+		</div>
+		<div class="grid mb-8 lg:mb-12 lg:grid-cols-2">
+			<figure
+				class="flex flex-col justify-center items-center p-8 text-center bg-gray-50 border-b border-gray-200 md:p-12 lg:border-r dark:bg-gray-800 dark:border-gray-700"
+			>
+				<blockquote class="mx-auto mb-8 max-w-2xl text-gray-500 dark:text-gray-400">
+					<h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+						Speechless with how easy this was to integrate
+					</h3>
+					<p class="my-4">
+						"I recently got my hands on Flowbite Pro, and holy crap, I'm speechless with how easy
+						this was to integrate within my application. Most templates are a pain, code is
+						scattered, and near impossible to theme.
+					</p>
+					<p class="my-4">
+						Flowbite has code in one place and I'm not joking when I say it took me a matter of
+						minutes to copy the code, customise it and integrate within a Laravel + Vue application.
+					</p>
+					<p class="my-4">If you care for your time, I hands down would go with this."</p>
+				</blockquote>
+				<figcaption class="flex justify-center items-center space-x-3">
+					<img
+						class="w-9 h-9 rounded-full"
+						src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png"
+						alt="profile picture"
+					/>
+					<div class="space-y-0.5 font-medium dark:text-white text-left">
+						<div>Bonnie Green</div>
+						<div class="text-sm font-light text-gray-500 dark:text-gray-400">
+							Developer at Open AI
+						</div>
+					</div>
+				</figcaption>
+			</figure>
+			<figure
+				class="flex flex-col justify-center items-center p-8 text-center bg-gray-50 border-b border-gray-200 md:p-12 dark:bg-gray-800 dark:border-gray-700"
+			>
+				<blockquote class="mx-auto mb-8 max-w-2xl text-gray-500 dark:text-gray-400">
+					<h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+						Solid foundation for any project
+					</h3>
+					<p class="my-4">
+						"FlowBite provides a robust set of design tokens and components based on the popular
+						Tailwind CSS framework. From the most used UI components like forms and navigation bars
+						to the whole app screens designed both for desktop and mobile, this UI kit provides a
+						solid foundation for any project.
+					</p>
+					<p class="my-4">
+						Designing with Figma components that can be easily translated to the utility classes of
+						Tailwind CSS is a huge timesaver!"
+					</p>
+				</blockquote>
+				<figcaption class="flex justify-center items-center space-x-3">
+					<img
+						class="w-9 h-9 rounded-full"
+						src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png"
+						alt="profile picture"
+					/>
+					<div class="space-y-0.5 font-medium dark:text-white text-left">
+						<div>Roberta Casas</div>
+						<div class="text-sm font-light text-gray-500 dark:text-gray-400">
+							Lead designer at Dropbox
+						</div>
+					</div>
+				</figcaption>
+			</figure>
+			<figure
+				class="flex flex-col justify-center items-center p-8 text-center bg-gray-50 border-b border-gray-200 lg:border-b-0 md:p-12 lg:border-r dark:bg-gray-800 dark:border-gray-700"
+			>
+				<blockquote class="mx-auto mb-8 max-w-2xl text-gray-500 dark:text-gray-400">
+					<h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+						Mindblowing workflow and variants
+					</h3>
+					<p class="my-4">
+						"As someone who mainly designs in the browser, I've been a casual user of Figma, but as
+						soon as I saw and started playing with FlowBite my mind was 🤯.
+					</p>
+					<p class="my-4">
+						Everything is so well structured and simple to use (I've learnt so much about Figma by
+						just using the toolkit).
+					</p>
+					<p class="my-4">
+						Aesthetically, the well designed components are beautiful and will undoubtedly level up
+						your next application."
+					</p>
+				</blockquote>
+				<figcaption class="flex justify-center items-center space-x-3">
+					<img
+						class="w-9 h-9 rounded-full"
+						src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
+						alt="profile picture"
+					/>
+					<div class="space-y-0.5 font-medium dark:text-white text-left">
+						<div>Jese Leos</div>
+						<div class="text-sm font-light text-gray-500 dark:text-gray-400">
+							Software Engineer at Facebook
+						</div>
+					</div>
+				</figcaption>
+			</figure>
+			<figure
+				class="flex flex-col justify-center items-center p-8 text-center bg-gray-50 border-gray-200 md:p-12 dark:bg-gray-800 dark:border-gray-700"
+			>
+				<blockquote class="mx-auto mb-8 max-w-2xl text-gray-500 dark:text-gray-400">
+					<h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+						Efficient Collaborating
+					</h3>
+					<p class="my-4">
+						"This is a very complex and beautiful set of elements. Under the hood it comes with the
+						best things from 2 different worlds: Figma and Tailwind.
+					</p>
+					<p class="my-4">
+						You have many examples that can be used to create a fast prototype for your team."
+					</p>
+				</blockquote>
+				<figcaption class="flex justify-center items-center space-x-3">
+					<img
+						class="w-9 h-9 rounded-full"
+						src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png"
+						alt="profile picture"
+					/>
+					<div class="space-y-0.5 font-medium dark:text-white text-left">
+						<div>Joseph McFall</div>
+						<div class="text-sm font-light text-gray-500 dark:text-gray-400">CTO at Google</div>
+					</div>
+				</figcaption>
+			</figure>
+		</div>
+		<div class="text-center">
+			<a
+				href="#"
+				class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+				>Show more...</a
+			>
+		</div>
+	</div>
+</section>
+
+<!-- <section class="mb-32 text-gray-800 text-center lg:text-left">
 	<div class="md:px-6 py-12 ">
 		<div class="container mx-auto xl:px-32">
 			<div class="grid lg:grid-cols-2  items-center">
@@ -268,7 +618,7 @@
 			</div>
 		</div>
 	</div>
-</section>
+</section> -->
 
 <div class="container my-24 px-6 mx-auto">
 	<!-- Section: Design Block -->
@@ -655,60 +1005,248 @@
 	<!-- Section: Design Block -->
 </div>
 
-<div class="container my-24 px-6 mx-auto">
-	<!-- Section: Design Block -->
-	<section class="mb-32 text-gray-800">
-		<!-- Jumbotron -->
-		<div class="container mx-auto xl:px-32 text-center lg:text-left">
-			<div class="grid lg:grid-cols-2 flex items-center">
-				<div class="mb-12 lg:mb-0">
-					<div
-						class="block rounded-lg shadow-lg px-6 py-12 lg:py-6 xl:py-12 md:px-12 lg:-mr-14"
-						style="background: hsla(0, 0%, 100%, 0.55); backdrop-filter: blur(30px)"
-					>
-						<h3 class="text-2xl font-bold mb-3">We know how valuable your time is</h3>
-						<h5 class="text-lg text-blue-600 font-bold mb-12 lg:mb-10 xl:mb-12">
-							Let us answer your questions
-						</h5>
-
-						<p class="font-bold mb-4">Anim pariatur cliche reprehenderit?</p>
-						<p class="text-gra-500 mb-6">
-							Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt autem numquam dolore
-							molestias aperiam culpa alias veritatis architecto eos, molestiae vitae ex eligendi
-							libero eveniet dolorem, doloremque rem aliquid perferendis.
-						</p>
-
-						<p class="font-bold mb-4">Non cupidatat skateboard dolor brunch?</p>
-						<p class="text-gra-500 mb-6">
-							Distinctio corporis, iure facere ducimus quos consectetur ipsa ut magnam autem
-							doloremque ex! Id, sequi. Voluptatum magnam sed fugit iusto minus et suscipit? Minima
-							sunt at nulla tenetur, numquam unde quod modi magnam ab deserunt ipsam sint aliquid
-							dolores libero repellendus cupiditate mollitia quidem dolorem odit
-						</p>
-
-						<p class="font-bold mb-4">
-							Praesentium voluptatibus temporibus consequatur non aspernatur?
-						</p>
-						<p class="text-gra-500">
-							Minima sunt at nulla tenetur, numquam unde quod modi magnam ab deserunt ipsam sint
-							aliquid dolores libero repellendus cupiditate mollitia quidem dolorem.
-						</p>
-					</div>
+<section class="bg-white dark:bg-gray-900">
+	<div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+		<h2 class="mb-8 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+			Frequently asked questions
+		</h2>
+		<div
+			class="grid pt-8 text-left border-t border-gray-200 md:gap-16 dark:border-gray-700 md:grid-cols-2"
+		>
+			<div>
+				<div class="mb-10">
+					<h3 class="flex items-center mb-4 text-lg font-medium text-gray-900 dark:text-white">
+						<svg
+							class="flex-shrink-0 mr-2 w-5 h-5 text-gray-500 dark:text-gray-400"
+							fill="currentColor"
+							viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg"
+							><path
+								fill-rule="evenodd"
+								d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+								clip-rule="evenodd"
+							/></svg
+						>
+						What do you mean by "Figma assets"?
+					</h3>
+					<p class="text-gray-500 dark:text-gray-400">
+						You will have access to download the full Figma project including all of the pages, the
+						components, responsive pages, and also the icons, illustrations, and images included in
+						the screens.
+					</p>
 				</div>
-
-				<div>
-					<img
-						src="https://mdbootstrap.com/img/new/ecommerce/vertical/075.jpg"
-						class="w-full rounded-lg shadow-lg"
-						alt=""
-					/>
+				<div class="mb-10">
+					<h3 class="flex items-center mb-4 text-lg font-medium text-gray-900 dark:text-white">
+						<svg
+							class="flex-shrink-0 mr-2 w-5 h-5 text-gray-500 dark:text-gray-400"
+							fill="currentColor"
+							viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg"
+							><path
+								fill-rule="evenodd"
+								d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+								clip-rule="evenodd"
+							/></svg
+						>
+						What does "lifetime access" exactly mean?
+					</h3>
+					<p class="text-gray-500 dark:text-gray-400">
+						Once you have purchased either the design, code, or both packages, you will have access
+						to all of the future updates based on the roadmap, free of charge.
+					</p>
+				</div>
+				<div class="mb-10">
+					<h3 class="flex items-center mb-4 text-lg font-medium text-gray-900 dark:text-white">
+						<svg
+							class="flex-shrink-0 mr-2 w-5 h-5 text-gray-500 dark:text-gray-400"
+							fill="currentColor"
+							viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg"
+							><path
+								fill-rule="evenodd"
+								d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+								clip-rule="evenodd"
+							/></svg
+						>
+						How does support work?
+					</h3>
+					<p class="text-gray-500 dark:text-gray-400">
+						We're aware of the importance of well qualified support, that is why we decided that
+						support will only be provided by the authors that actually worked on this project.
+					</p>
+					<p class="text-gray-500 dark:text-gray-400">
+						Feel free to <a
+							href="#"
+							class="font-medium underline text-primary-600 dark:text-primary-500 hover:no-underline"
+							target="_blank"
+							rel="noreferrer">contact us</a
+						> and we'll help you out as soon as we can.
+					</p>
+				</div>
+				<div class="mb-10">
+					<h3 class="flex items-center mb-4 text-lg font-medium text-gray-900 dark:text-white">
+						<svg
+							class="flex-shrink-0 mr-2 w-5 h-5 text-gray-500 dark:text-gray-400"
+							fill="currentColor"
+							viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg"
+							><path
+								fill-rule="evenodd"
+								d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+								clip-rule="evenodd"
+							/></svg
+						>
+						I want to build more than one project. Is that allowed?
+					</h3>
+					<p class="text-gray-500 dark:text-gray-400">
+						You can use Windster for an unlimited amount of projects, whether it's a personal
+						website, a SaaS app, or a website for a client. As long as you don't build a product
+						that will directly compete with Windster either as a UI kit, theme, or template, it's
+						fine.
+					</p>
+					<p class="text-gray-500 dark:text-gray-400">
+						Find out more information by <a
+							href="#"
+							class="font-medium underline text-primary-600 dark:text-primary-500 hover:no-underline"
+							>reading the license</a
+						>.
+					</p>
+				</div>
+			</div>
+			<div>
+				<div class="mb-10">
+					<h3 class="flex items-center mb-4 text-lg font-medium text-gray-900 dark:text-white">
+						<svg
+							class="flex-shrink-0 mr-2 w-5 h-5 text-gray-500 dark:text-gray-400"
+							fill="currentColor"
+							viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg"
+							><path
+								fill-rule="evenodd"
+								d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+								clip-rule="evenodd"
+							/></svg
+						>
+						What does "free updates" include?
+					</h3>
+					<p class="text-gray-500 dark:text-gray-400">
+						The free updates that will be provided is based on the <a
+							href="#"
+							class="font-medium underline text-primary-600 dark:text-primary-500 hover:no-underline"
+							>roadmap</a
+						> that we have laid out for this project. It is also possible that we will provide extra
+						updates outside of the roadmap as well.
+					</p>
+				</div>
+				<div class="mb-10">
+					<h3 class="flex items-center mb-4 text-lg font-medium text-gray-900 dark:text-white">
+						<svg
+							class="flex-shrink-0 mr-2 w-5 h-5 text-gray-500 dark:text-gray-400"
+							fill="currentColor"
+							viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg"
+							><path
+								fill-rule="evenodd"
+								d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+								clip-rule="evenodd"
+							/></svg
+						>
+						What does the free version include?
+					</h3>
+					<p class="text-gray-500 dark:text-gray-400">
+						The <a
+							href="#"
+							class="font-medium underline text-primary-600 dark:text-primary-500 hover:no-underline"
+							>free version</a
+						> of Windster includes a minimal style guidelines, component variants, and a dashboard page
+						with the mobile version alongside it.
+					</p>
+					<p class="text-gray-500 dark:text-gray-400">
+						You can use this version for any purposes, because it is open-source under the MIT
+						license.
+					</p>
+				</div>
+				<div class="mb-10">
+					<h3 class="flex items-center mb-4 text-lg font-medium text-gray-900 dark:text-white">
+						<svg
+							class="flex-shrink-0 mr-2 w-5 h-5 text-gray-500 dark:text-gray-400"
+							fill="currentColor"
+							viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg"
+							><path
+								fill-rule="evenodd"
+								d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+								clip-rule="evenodd"
+							/></svg
+						>
+						What is the difference between Windster and Tailwind UI?
+					</h3>
+					<p class="text-gray-500 dark:text-gray-400">
+						Although both Windster and Tailwind UI are built for integration with Tailwind CSS, the
+						main difference is in the design, the pages, the extra components and UI elements that
+						Windster includes.
+					</p>
+					<p class="text-gray-500 dark:text-gray-400">
+						Additionally, Windster is a project that is still in development, and later it will
+						include both the application, marketing, and e-commerce UI interfaces.
+					</p>
+				</div>
+				<div class="mb-10">
+					<h3 class="flex items-center mb-4 text-lg font-medium text-gray-900 dark:text-white">
+						<svg
+							class="flex-shrink-0 mr-2 w-5 h-5 text-gray-500 dark:text-gray-400"
+							fill="currentColor"
+							viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg"
+							><path
+								fill-rule="evenodd"
+								d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+								clip-rule="evenodd"
+							/></svg
+						>
+						Can I use Windster in open-source projects?
+					</h3>
+					<p class="text-gray-500 dark:text-gray-400">
+						Generally, it is accepted to use Windster in open-source projects, as long as it is not
+						a UI library, a theme, a template, a page-builder that would be considered as an
+						alternative to Windster itself.
+					</p>
+					<p class="text-gray-500 dark:text-gray-400">
+						With that being said, feel free to use this design kit for your open-source projects.
+					</p>
+					<p class="text-gray-500 dark:text-gray-400">
+						Find out more information by <a
+							href="#"
+							class="font-medium underline text-primary-600 dark:text-primary-500 hover:no-underline"
+							>reading the license</a
+						>.
+					</p>
 				</div>
 			</div>
 		</div>
-		<!-- Jumbotron -->
-	</section>
-	<!-- Section: Design Block -->
-</div>
+	</div>
+</section>
+
+<section class="bg-white dark:bg-gray-900">
+	<div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+		<div class="mx-auto max-w-screen-sm text-center">
+			<h2
+				class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-gray-900 dark:text-white"
+			>
+				Start your free trial today
+			</h2>
+			<p class="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">
+				Try Flowbite Platform for 30 days. No credit card required.
+			</p>
+			<a
+				href="#"
+				class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+				>Free trial for 30 days</a
+			>
+		</div>
+	</div>
+</section>
+
 <div class="container my-24 px-6 mx-auto">
 	<section class="mb-32 text-gray-800">
 		<div
@@ -722,9 +1260,10 @@
 			>
 				<div class="flex flex-wrap">
 					<div class="grow-0 shrink-0 basis-auto w-full xl:w-5/12 px-3 lg:px-6 mb-12 xl:mb-0">
-						<form>
+						<form action="?/feedback" method="post">
 							<div class="form-group mb-6">
 								<input
+									required
 									type="text"
 									class="form-control block
                   w-full
@@ -741,11 +1280,14 @@
                   m-0
                   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
 									id="exampleInput7"
+									name="name"
 									placeholder="Name"
 								/>
 							</div>
 							<div class="form-group mb-6">
 								<input
+									required
+									name="email"
 									type="email"
 									class="form-control block
                   w-full
@@ -767,6 +1309,8 @@
 							</div>
 							<div class="form-group mb-6">
 								<textarea
+									required
+									name="message"
 									class="
                   form-control
                   block
@@ -1015,234 +1559,158 @@
 	<!-- Section: Design Block -->
 </div>
 
-<div class="container mt-24 px-6 mx-auto">
-	<section>
-		<div class="grid lg:grid-cols-2 gap-6">
-			<div class="grid md:grid-cols-2 gap-6">
-				<div class="px-6">
-					<h6 class="uppercase font-semibold text-gray-500 pt-12 mt-2 mb-6">Useful links</h6>
-					<ul class="lg:pb-12">
-						<li class="flex items-center mb-6">
-							<svg
-								class="w-5 h-5 mr-3 text-gray-400"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 512 512"
-							>
-								<path
-									fill="currentColor"
-									d="M488.6 250.2L392 214V105.5c0-15-9.3-28.4-23.4-33.7l-100-37.5c-8.1-3.1-17.1-3.1-25.3 0l-100 37.5c-14.1 5.3-23.4 18.7-23.4 33.7V214l-96.6 36.2C9.3 255.5 0 268.9 0 283.9V394c0 13.6 7.7 26.1 19.9 32.2l100 50c10.1 5.1 22.1 5.1 32.2 0l103.9-52 103.9 52c10.1 5.1 22.1 5.1 32.2 0l100-50c12.2-6.1 19.9-18.6 19.9-32.2V283.9c0-15-9.3-28.4-23.4-33.7zM358 214.8l-85 31.9v-68.2l85-37v73.3zM154 104.1l102-38.2 102 38.2v.6l-102 41.4-102-41.4v-.6zm84 291.1l-85 42.5v-79.1l85-38.8v75.4zm0-112l-102 41.4-102-41.4v-.6l102-38.2 102 38.2v.6zm240 112l-85 42.5v-79.1l85-38.8v75.4zm0-112l-102 41.4-102-41.4v-.6l102-38.2 102 38.2v.6z"
-								/>
-							</svg><span class="font-medium text-gray-800">Projects</span>
-						</li>
-						<li class="flex items-center mb-6">
-							<svg
-								class="w-5 h-5 mr-3 text-gray-400"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 544 512"
-							>
-								<path
-									fill="currentColor"
-									d="M527.79 288H290.5l158.03 158.03c6.04 6.04 15.98 6.53 22.19.68 38.7-36.46 65.32-85.61 73.13-140.86 1.34-9.46-6.51-17.85-16.06-17.85zm-15.83-64.8C503.72 103.74 408.26 8.28 288.8.04 279.68-.59 272 7.1 272 16.24V240h223.77c9.14 0 16.82-7.68 16.19-16.8zM224 288V50.71c0-9.55-8.39-17.4-17.84-16.06C86.99 51.49-4.1 155.6.14 280.37 4.5 408.51 114.83 513.59 243.03 511.98c50.4-.63 96.97-16.87 135.26-44.03 7.9-5.6 8.42-17.23 1.57-24.08L224 288z"
-								/>
-							</svg><span class="font-medium text-gray-800">Analytics</span>
-						</li>
-						<li class="flex items-center mb-6">
-							<svg
-								class="w-5 h-5 mr-3 text-gray-400"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 512 512"
-							>
-								<path
-									fill="currentColor"
-									d="M192 208c0-17.67-14.33-32-32-32h-16c-35.35 0-64 28.65-64 64v48c0 35.35 28.65 64 64 64h16c17.67 0 32-14.33 32-32V208zm176 144c35.35 0 64-28.65 64-64v-48c0-35.35-28.65-64-64-64h-16c-17.67 0-32 14.33-32 32v112c0 17.67 14.33 32 32 32h16zM256 0C113.18 0 4.58 118.83 0 256v16c0 8.84 7.16 16 16 16h16c8.84 0 16-7.16 16-16v-16c0-114.69 93.31-208 208-208s208 93.31 208 208h-.12c.08 2.43.12 165.72.12 165.72 0 23.35-18.93 42.28-42.28 42.28H320c0-26.51-21.49-48-48-48h-32c-26.51 0-48 21.49-48 48s21.49 48 48 48h181.72c49.86 0 90.28-40.42 90.28-90.28V256C507.42 118.83 398.82 0 256 0z"
-								/>
-							</svg><span class="font-medium text-gray-800">Support</span>
-						</li>
-						<li class="flex items-center mb-6">
-							<svg
-								class="w-5 h-5 mr-3 text-gray-400"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 384 512"
-							>
-								<!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
-								<path
-									fill="currentColor"
-									d="M320,32a32,32,0,0,0-64,0v96h64Zm48,128H16A16,16,0,0,0,0,176v32a16,16,0,0,0,16,16H32v32A160.07,160.07,0,0,0,160,412.8V512h64V412.8A160.07,160.07,0,0,0,352,256V224h16a16,16,0,0,0,16-16V176A16,16,0,0,0,368,160ZM128,32a32,32,0,0,0-64,0v96h64Z"
-								/>
-							</svg><span class="font-medium text-gray-800">Plugins</span>
-						</li>
-						<li class="flex items-center mb-6">
-							<svg
-								class="w-5 h-5 mr-3 text-gray-400"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 512 512"
-							>
-								<!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
-								<path
-									fill="currentColor"
-									d="M501.1 395.7L384 278.6c-23.1-23.1-57.6-27.6-85.4-13.9L192 158.1V96L64 0 0 64l96 128h62.1l106.6 106.6c-13.6 27.8-9.2 62.3 13.9 85.4l117.1 117.1c14.6 14.6 38.2 14.6 52.7 0l52.7-52.7c14.5-14.6 14.5-38.2 0-52.7zM331.7 225c28.3 0 54.9 11 74.9 31l19.4 19.4c15.8-6.9 30.8-16.5 43.8-29.5 37.1-37.1 49.7-89.3 37.9-136.7-2.2-9-13.5-12.1-20.1-5.5l-74.4 74.4-67.9-11.3L334 98.9l74.4-74.4c6.6-6.6 3.4-17.9-5.7-20.2-47.4-11.7-99.6.9-136.6 37.9-28.5 28.5-41.9 66.1-41.2 103.6l82.1 82.1c8.1-1.9 16.5-2.9 24.7-2.9zm-103.9 82l-56.7-56.7L18.7 402.8c-25 25-25 65.5 0 90.5s65.5 25 90.5 0l123.6-123.6c-7.6-19.9-9.9-41.6-5-62.7zM64 472c-13.2 0-24-10.8-24-24 0-13.3 10.7-24 24-24s24 10.7 24 24c0 13.2-10.7 24-24 24z"
-								/>
-							</svg><span class="font-medium text-gray-800">Tools</span>
-						</li>
-						<li class="flex items-center">
-							<svg
-								class="w-5 h-5 mr-3 text-gray-400"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 640 512"
-							>
-								<path
-									fill="currentColor"
-									d="M96 224c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm448 0c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm32 32h-64c-17.6 0-33.5 7.1-45.1 18.6 40.3 22.1 68.9 62 75.1 109.4h66c17.7 0 32-14.3 32-32v-32c0-35.3-28.7-64-64-64zm-256 0c61.9 0 112-50.1 112-112S381.9 32 320 32 208 82.1 208 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C179.6 288 128 339.6 128 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zm-223.7-13.4C161.5 263.1 145.6 256 128 256H64c-35.3 0-64 28.7-64 64v32c0 17.7 14.3 32 32 32h65.9c6.3-47.4 34.9-87.3 75.2-109.4z"
-								/>
-							</svg><span class="font-medium text-gray-800">Customers</span>
-						</li>
-					</ul>
-				</div>
-				<div class="px-6">
-					<h6 class="uppercase font-semibold text-gray-500 pt-12 mt-2 mb-6">For media</h6>
-					<ul class="lg:pb-12">
-						<li class="flex items-center mb-6">
-							<svg
-								class="w-5 h-5 mr-3 text-gray-400"
-								role="img"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 576 512"
-							>
-								<path
-									fill="currentColor"
-									d="M485.5 0L576 160H474.9L405.7 0h79.8zm-128 0l69.2 160H149.3L218.5 0h139zm-267 0h79.8l-69.2 160H0L90.5 0zM0 192h100.7l123 251.7c1.5 3.1-2.7 5.9-5 3.3L0 192zm148.2 0h279.6l-137 318.2c-1 2.4-4.5 2.4-5.5 0L148.2 192zm204.1 251.7l123-251.7H576L357.3 446.9c-2.3 2.7-6.5-.1-5-3.2z"
-								/>
-							</svg><span class="font-medium text-gray-800">Awards</span>
-						</li>
-						<li class="flex items-center mb-6">
-							<svg
-								class="w-5 h-5 mr-3 text-gray-400"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 576 512"
-							>
-								<!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
-								<path
-									fill="currentColor"
-									d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-								/>
-							</svg><span class="font-medium text-gray-800">Mentions</span>
-						</li>
-						<li class="flex items-center mb-6">
-							<svg
-								class="w-5 h-5 mr-3 text-gray-400"
-								role="img"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 512 512"
-							>
-								<path
-									fill="currentColor"
-									d="M371.7 238l-176-107c-15.8-8.8-35.7 2.5-35.7 21v208c0 18.4 19.8 29.8 35.7 21l176-101c16.4-9.1 16.4-32.8 0-42zM504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256z"
-								/>
-							</svg><span class="font-medium text-gray-800">Videos</span>
-						</li>
-						<li class="flex items-center mb-6">
-							<svg
-								class="w-5 h-5 mr-3 text-gray-400"
-								role="img"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 576 512"
-							>
-								<path
-									fill="currentColor"
-									d="M576 240c0-23.63-12.95-44.04-32-55.12V32.01C544 23.26 537.02 0 512 0c-7.12 0-14.19 2.38-19.98 7.02l-85.03 68.03C364.28 109.19 310.66 128 256 128H64c-35.35 0-64 28.65-64 64v96c0 35.35 28.65 64 64 64h33.7c-1.39 10.48-2.18 21.14-2.18 32 0 39.77 9.26 77.35 25.56 110.94 5.19 10.69 16.52 17.06 28.4 17.06h74.28c26.05 0 41.69-29.84 25.9-50.56-16.4-21.52-26.15-48.36-26.15-77.44 0-11.11 1.62-21.79 4.41-32H256c54.66 0 108.28 18.81 150.98 52.95l85.03 68.03a32.023 32.023 0 0 0 19.98 7.02c24.92 0 32-22.78 32-32V295.13C563.05 284.04 576 263.63 576 240zm-96 141.42l-33.05-26.44C392.95 311.78 325.12 288 256 288v-96c69.12 0 136.95-23.78 190.95-66.98L480 98.58v282.84z"
-								/>
-							</svg><span class="font-medium text-gray-800">Advertising</span>
-						</li>
-						<li class="flex items-center mb-6">
-							<svg
-								class="w-5 h-5 mr-3 text-gray-400"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 512 512"
-							>
-								<path
-									fill="currentColor"
-									d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"
-								/>
-							</svg><span class="font-medium text-gray-800">Contact</span>
-						</li>
-						<li class="flex items-center mb-6">
-							<svg
-								class="w-5 h-5 mr-3 text-gray-400"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 496 512"
-							>
-								<path
-									fill="currentColor"
-									d="M336.5 160C322 70.7 287.8 8 248 8s-74 62.7-88.5 152h177zM152 256c0 22.2 1.2 43.5 3.3 64h185.3c2.1-20.5 3.3-41.8 3.3-64s-1.2-43.5-3.3-64H155.3c-2.1 20.5-3.3 41.8-3.3 64zm324.7-96c-28.6-67.9-86.5-120.4-158-141.6 24.4 33.8 41.2 84.7 50 141.6h108zM177.2 18.4C105.8 39.6 47.8 92.1 19.3 160h108c8.7-56.9 25.5-107.8 49.9-141.6zM487.4 192H372.7c2.1 21 3.3 42.5 3.3 64s-1.2 43-3.3 64h114.6c5.5-20.5 8.6-41.8 8.6-64s-3.1-43.5-8.5-64zM120 256c0-21.5 1.2-43 3.3-64H8.6C3.2 212.5 0 233.8 0 256s3.2 43.5 8.6 64h114.6c-2-21-3.2-42.5-3.2-64zm39.5 96c14.5 89.3 48.7 152 88.5 152s74-62.7 88.5-152h-177zm159.3 141.6c71.4-21.2 129.4-73.7 158-141.6h-108c-8.8 56.9-25.6 107.8-50 141.6zM19.3 352c28.6 67.9 86.5 120.4 158 141.6-24.4-33.8-41.2-84.7-50-141.6h-108z"
-								/>
-							</svg><span class="font-medium text-gray-800">Network</span>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div
-				class="px-6 lg:px-12 rounded-b-lg lg:rounded-bl-none lg:rounded-br-lg"
-				style="background-color: #f9fafc"
-			>
-				<h6 class="uppercase font-semibold text-gray-500 pt-12 mt-2 mb-6">News</h6>
-				<div class="flex items-center mb-6">
-					<div class="shrink-0">
-						<img
-							src="https://i.ibb.co/hX6pfms/img32.jpg"
-							class="rounded-lg mr-3"
-							style="width: 135px"
-							alt="Generic placeholder"
-						/>
-					</div>
-					<div class="grow ml-3">
-						<p class="mb-1 font-medium text-gray-800">Chasing the sun</p>
-						<p class="text-gray-500 text-sm">
-							Amet consectetur adipisicing elit consectetur dolorum placeat corporis quasi debitis
-							hic reprehenderit ullam.
-						</p>
-					</div>
-				</div>
-				<div class="flex items-center mb-6">
-					<div class="shrink-0">
-						<img
-							src="https://i.ibb.co/TcHPmw0/img33.jpg"
-							class="rounded-lg mr-3"
-							style="width: 135px"
-							alt="Generic placeholder"
-						/>
-					</div>
-					<div class="grow ml-3">
-						<p class="mb-1 font-medium text-gray-800">Stock market boom</p>
-						<p class="text-gray-500 text-sm">
-							Maecenas auctor, quam eget tincidunt pretium, felis diam semper turpis, sed
-							scelerisque diam libero facilisis libero. Quisque vitae semper metus.
-						</p>
-					</div>
-				</div>
-				<div class="pb-12">
-					<a
-						class="inline-block px-6 py-2.5 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out flex items-center"
-						href="/"
-						role="button"
+<footer class="p-4 md:p-8 lg:p-10 bg-gray-800">
+	<div class="mx-auto max-w-screen-xl text-center">
+		<a
+			href="#"
+			class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white"
+		>
+			<svg class="mr-2 h-8" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path
+					d="M25.2696 13.126C25.1955 13.6364 24.8589 14.3299 24.4728 14.9328C23.9856 15.6936 23.2125 16.2264 22.3276 16.4114L18.43 17.2265C17.8035 17.3575 17.2355 17.6853 16.8089 18.1621L14.2533 21.0188C13.773 21.5556 13.4373 21.4276 13.4373 20.7075C13.4315 20.7342 12.1689 23.9903 15.5149 25.9202C16.8005 26.6618 18.6511 26.3953 19.9367 25.6538L26.7486 21.7247C29.2961 20.2553 31.0948 17.7695 31.6926 14.892C31.7163 14.7781 31.7345 14.6639 31.7542 14.5498L25.2696 13.126Z"
+					fill="url(#paint0_linear_11430_22515)"
+				/><path
+					d="M23.5028 9.20133C24.7884 9.94288 25.3137 11.0469 25.3137 12.53C25.3137 12.7313 25.2979 12.9302 25.2694 13.1261L28.0141 14.3051L31.754 14.5499C32.2329 11.7784 31.2944 8.92561 29.612 6.65804C28.3459 4.9516 26.7167 3.47073 24.7581 2.34097C23.167 1.42325 21.5136 0.818599 19.8525 0.486816L17.9861 2.90382L17.3965 5.67918L23.5028 9.20133Z"
+					fill="url(#paint1_linear_11430_22515)"
+				/><path
+					d="M1.5336 11.2352C1.5329 11.2373 1.53483 11.238 1.53556 11.2358C1.67958 10.8038 1.86018 10.3219 2.08564 9.80704C3.26334 7.11765 5.53286 5.32397 8.32492 4.40943C11.117 3.49491 14.1655 3.81547 16.7101 5.28323L17.3965 5.67913L19.8525 0.486761C12.041 -1.07341 4.05728 3.51588 1.54353 11.2051C1.54233 11.2087 1.53796 11.2216 1.5336 11.2352Z"
+					fill="url(#paint2_linear_11430_22515)"
+				/><path
+					d="M19.6699 25.6538C18.3843 26.3953 16.8003 26.3953 15.5147 25.6538C15.3402 25.5531 15.1757 25.4399 15.0201 25.3174L12.7591 26.8719L10.8103 30.0209C12.9733 31.821 15.7821 32.3997 18.589 32.0779C20.7013 31.8357 22.7995 31.1665 24.7582 30.0368C26.3492 29.1191 27.7 27.9909 28.8182 26.7195L27.6563 23.8962L25.7762 22.1316L19.6699 25.6538Z"
+					fill="url(#paint3_linear_11430_22515)"
+				/><path
+					d="M15.0201 25.3175C14.0296 24.5373 13.4371 23.3406 13.4371 22.0588V21.931V11.2558C13.4371 10.6521 13.615 10.5494 14.1384 10.8513C13.3323 10.3864 11.4703 8.79036 9.17118 10.1165C7.88557 10.858 6.8269 12.4949 6.8269 13.978V21.8362C6.8269 24.775 8.34906 27.8406 10.5445 29.7966C10.6313 29.874 10.7212 29.9469 10.8103 30.0211L15.0201 25.3175Z"
+					fill="url(#paint4_linear_11430_22515)"
+				/><path
+					d="M28.6604 5.49565C28.6589 5.49395 28.6573 5.49532 28.6589 5.49703C28.9613 5.83763 29.2888 6.23485 29.6223 6.68734C31.3648 9.05099 32.0158 12.0447 31.4126 14.9176C30.8093 17.7906 29.0071 20.2679 26.4625 21.7357L25.7761 22.1316L28.8181 26.7195C34.0764 20.741 34.09 11.5388 28.6815 5.51929C28.6789 5.51641 28.67 5.50622 28.6604 5.49565Z"
+					fill="url(#paint5_linear_11430_22515)"
+				/><path
+					d="M7.09355 13.978C7.09354 12.4949 7.88551 11.1244 9.17113 10.3829C9.34564 10.2822 9.52601 10.1965 9.71002 10.1231L9.49304 7.38962L7.96861 4.26221C5.32671 5.23364 3.1897 7.24125 2.06528 9.83067C1.2191 11.7793 0.75001 13.9294 0.75 16.1888C0.75 18.0243 1.05255 19.7571 1.59553 21.3603L4.62391 21.7666L7.09355 21.0223V13.978Z"
+					fill="url(#paint6_linear_11430_22515)"
+				/><path
+					d="M9.71016 10.1231C10.8817 9.65623 12.2153 9.74199 13.3264 10.3829L13.4372 10.4468L22.3326 15.5777C22.9566 15.9376 22.8999 16.2918 22.1946 16.4392L22.7078 16.332C23.383 16.1908 23.9999 15.8457 24.4717 15.3428C25.2828 14.4782 25.5806 13.4351 25.5806 12.5299C25.5806 11.0468 24.7886 9.67634 23.503 8.93479L16.6911 5.00568C14.1436 3.53627 11.0895 3.22294 8.29622 4.14442C8.18572 4.18087 8.07756 4.2222 7.96875 4.26221L9.71016 10.1231Z"
+					fill="url(#paint7_linear_11430_22515)"
+				/><path
+					d="M20.0721 31.8357C20.0744 31.8352 20.0739 31.8332 20.0717 31.8337C19.6252 31.925 19.1172 32.0097 18.5581 32.0721C15.638 32.3978 12.7174 31.4643 10.5286 29.5059C8.33986 27.5474 7.09347 24.7495 7.09348 21.814L7.09347 21.0222L1.59546 21.3602C4.1488 28.8989 12.1189 33.5118 20.0411 31.8421C20.0449 31.8413 20.0582 31.8387 20.0721 31.8357Z"
+					fill="url(#paint8_linear_11430_22515)"
+				/>
+				<defs>
+					<linearGradient
+						id="paint0_linear_11430_22515"
+						x1="20.8102"
+						y1="23.9532"
+						x2="23.9577"
+						y2="12.9901"
+						gradientUnits="userSpaceOnUse"
+						><stop stop-color="#1724C9" /><stop offset="1" stop-color="#1C64F2" /></linearGradient
 					>
-						Read more<svg
-							class="w-3 ml-2"
-							role="img"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 448 512"
-						>
-							<path
-								fill="currentColor"
-								d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"
-							/>
-						</svg>
-					</a>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- Section: Design Block -->
-</div>
+					<linearGradient
+						id="paint1_linear_11430_22515"
+						x1="28.0593"
+						y1="10.5837"
+						x2="19.7797"
+						y2="2.33321"
+						gradientUnits="userSpaceOnUse"
+						><stop stop-color="#1C64F2" /><stop offset="1" stop-color="#0092FF" /></linearGradient
+					>
+					<linearGradient
+						id="paint2_linear_11430_22515"
+						x1="16.9145"
+						y1="5.2045"
+						x2="4.42432"
+						y2="5.99375"
+						gradientUnits="userSpaceOnUse"
+						><stop stop-color="#0092FF" /><stop offset="1" stop-color="#45B2FF" /></linearGradient
+					>
+					<linearGradient
+						id="paint3_linear_11430_22515"
+						x1="16.0698"
+						y1="28.846"
+						x2="27.2866"
+						y2="25.8192"
+						gradientUnits="userSpaceOnUse"
+						><stop stop-color="#1C64F2" /><stop offset="1" stop-color="#0092FF" /></linearGradient
+					>
+					<linearGradient
+						id="paint4_linear_11430_22515"
+						x1="8.01881"
+						y1="15.8661"
+						x2="15.9825"
+						y2="24.1181"
+						gradientUnits="userSpaceOnUse"
+						><stop stop-color="#1724C9" /><stop offset="1" stop-color="#1C64F2" /></linearGradient
+					>
+					<linearGradient
+						id="paint5_linear_11430_22515"
+						x1="26.2004"
+						y1="21.8189"
+						x2="31.7569"
+						y2="10.6178"
+						gradientUnits="userSpaceOnUse"
+						><stop stop-color="#0092FF" /><stop offset="1" stop-color="#45B2FF" /></linearGradient
+					>
+					<linearGradient
+						id="paint6_linear_11430_22515"
+						x1="6.11387"
+						y1="9.31427"
+						x2="3.14054"
+						y2="20.4898"
+						gradientUnits="userSpaceOnUse"
+						><stop stop-color="#1C64F2" /><stop offset="1" stop-color="#0092FF" /></linearGradient
+					>
+					<linearGradient
+						id="paint7_linear_11430_22515"
+						x1="21.2932"
+						y1="8.78271"
+						x2="10.4278"
+						y2="11.488"
+						gradientUnits="userSpaceOnUse"
+						><stop stop-color="#1724C9" /><stop offset="1" stop-color="#1C64F2" /></linearGradient
+					>
+					<linearGradient
+						id="paint8_linear_11430_22515"
+						x1="7.15667"
+						y1="21.5399"
+						x2="14.0824"
+						y2="31.9579"
+						gradientUnits="userSpaceOnUse"
+						><stop stop-color="#0092FF" /><stop offset="1" stop-color="#45B2FF" /></linearGradient
+					>
+				</defs>
+			</svg>
+			Flowbite
+		</a>
+		<p class="my-6 text-gray-500 dark:text-gray-400">
+			Open-source library of over 400+ web components and interactive elements built for better web.
+		</p>
+		<ul class="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white">
+			<li>
+				<a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+			</li>
+			<li>
+				<a href="#" class="mr-4 hover:underline md:mr-6">Premium</a>
+			</li>
+			<li>
+				<a href="#" class="mr-4 hover:underline md:mr-6 ">Campaigns</a>
+			</li>
+			<li>
+				<a href="#" class="mr-4 hover:underline md:mr-6">Blog</a>
+			</li>
+			<li>
+				<a href="#" class="mr-4 hover:underline md:mr-6">Affiliate Program</a>
+			</li>
+			<li>
+				<a href="#" class="mr-4 hover:underline md:mr-6">FAQs</a>
+			</li>
+			<li>
+				<a href="#" class="mr-4 hover:underline md:mr-6">Contact</a>
+			</li>
+		</ul>
+		<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
+			>© 2021-2022 <a href="#" class="hover:underline">Flowbite™</a>. All Rights Reserved.</span
+		>
+	</div>
+</footer>
 
 <!-- Container for demo purpose -->
 <style>

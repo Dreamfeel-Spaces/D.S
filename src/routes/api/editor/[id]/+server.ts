@@ -1,66 +1,15 @@
 import { prisma } from '$lib/db/prisma';
 import type { RequestEvent } from './$types';
-import { JSDOM } from 'jsdom';
+import { transformHtmlString } from '$lib/util/transformHtmlString';
 
 export async function GET({ params }: RequestEvent) {
 	const uiDraft = await prisma.uiDraft.findFirst({
 		where: { vId: params.id }
 	});
-	const htmlBody = JSON.parse(uiDraft?.draft ?? '{}')?.html;
-	console.log(uiDraft);
+	const html = JSON.parse(uiDraft?.draft ?? '{}')?.html;
 	const css = JSON.parse(uiDraft?.draft ?? '{}')?.css;
-	const html = `
-    	<!doctype html>
-    	<html>
-    		<head>
-  				<meta charset="UTF-8">
-  				<meta name="viewport" content="width=device-width, initial-scale=1.0">
-  				<script src="https://cdn.tailwindcss.com"></script>
-			</head>
-    		<style>${css}</style>
-    		${htmlBody}
-    	</html>
-    `;
-
-	const dom = new JSDOM(html);
-
-	const document = dom.window.document;
-	const withAPIs = document.querySelectorAll('[__data__api]');
-
-	for (let apiComponent of withAPIs) {
-		const space = apiComponent.getAttribute('__data__api');
-		const table = apiComponent.getAttribute('__data__table');
-
-		const _space = await prisma.space.findUnique({
-			where: {
-				appId: String(space)
-			}
-		});
-
-		const spaceTable = await prisma.spaceTable.findFirst({
-			where: {
-				tableSpace: String(_space?.id),
-				id: String(table)
-			},
-			include: {
-				rows: true,
-				columns: true
-			}
-		});
-
-		for (let row of spaceTable?.rows ?? []) {
-			if (apiComponent.hasChildNodes()) {
-				let child = apiComponent.children[0];
-				if (child) {
-					child.id = Math.random() + '';
-					apiComponent.appendChild(child);
-				}
-			}
-		}
-	}
-
-	const serializedHTML = dom.serialize();
-	const response = new Response(serializedHTML);
+	const renderedHTML = await transformHtmlString(html, css);
+	const response = new Response(renderedHTML);
 	response.headers.set('content-type', 'text/html');
 	return response;
 }

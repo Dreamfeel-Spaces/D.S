@@ -57,7 +57,10 @@
 		/<b class="text-3xl text-gray-500 mx-2">{tableName}</b>
 	</div>
 	<div class="px-9 text-end text-lg">
-		<a href={`/base/${spaceName}/${tableName}`}>Schema</a>
+		<a
+			class="bg-blue-700 px-3  text-white rounded-3xl py-2 text-xs"
+			href={`/base/${spaceName}/${tableName}`}>Schema</a
+		>
 	</div>
 </div>
 
@@ -87,11 +90,7 @@
 	</div>
 {/if}
 
-<div class="my-4 px-6 text-gray-500 ">
-	<div class="text-3xl">Create schema</div>
-</div>
-
-<div class="grid gap-4 px-6 grid-cols-3  mb-6 ">
+<div class="grid gap-4 px-6 grid-cols-2  my-6 ">
 	{#each columns as column, index}
 		<Card>
 			<div class="flex justify-between">

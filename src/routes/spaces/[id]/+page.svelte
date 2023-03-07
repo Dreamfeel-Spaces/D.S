@@ -32,87 +32,97 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import DashboardDialog from './DashboardDialog.svelte';
-	let activeTab = $page.url.searchParams.get('tab') ?? 'channels';
+	let activeTab = $page.url.searchParams.get('tab') ?? 'logs';
 	let password = '';
 	let confirmPassword = '';
 </script>
-
-<div class="my-3 mx-9  text-3xl text-gray-500">
-	{space?.name}
-</div>
 
 <div class="flex">
 	<div class="flex-1" style="max-height:85vh; overflow:auto">
 		<div class="px-6 mt-3">
 			<Breadcrumb>
-				<BreadcrumbItem>Home</BreadcrumbItem>
-				<BreadcrumbItem>Spaces</BreadcrumbItem>
-				<BreadcrumbItem>Item</BreadcrumbItem>
+				<BreadcrumbItem href="/" rel="external">Home</BreadcrumbItem>
+				<BreadcrumbItem href="/spaces" rel="external">Spaces</BreadcrumbItem>
+				<BreadcrumbItem rel="external" href={`/spaces/${data?.space.appId}`}
+					>{data.space.name}</BreadcrumbItem
+				>
 				<BreadcrumbItem disabled>Admin</BreadcrumbItem>
 			</Breadcrumb>
 			<Tabs class="mt-4">
 				<TabItem
 					open={activeTab === 'channels'}
 					on:click={() => goto('?tab=channels')}
-					title="Channels"
+					title="Dashboards"
 				>
 					<p class="text-sm text-gray-500 dark:text-gray-400">
-						<b>Channels:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua.
+						<b>Chann</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+						incididunt ut labore et dolore magna aliqua.
 					</p>
-
-					<div class="my-9">
-						<form method="POST" action="?/updateChannels">
-							{#if form?.apiUpdateSuccess}
-								<div class="my-9">
-									<Alert>Channels have been updated</Alert>
-								</div>
-							{/if}
-							<Checkbox
-								bind:checked={space.apiChannel}
-								bind:value={space.apiChannel}
-								name="apiChannel"
-								id="apiChannel"
-								class="mb-4 text-gray-500">Rest API</Checkbox
-							>
-							<Checkbox
-								bind:checked={space.miniAppChannel}
-								bind:value={space.miniAppChannel}
-								id="miniAppChannel"
-								name="miniAppChannel"
-								class="mb-4 text-gray-500">Spaces super app</Checkbox
-							>
-							<Checkbox
-								bind:checked={space.subdomainChannel}
-								id="subdomainChannel"
-								name="subdomainChannel"
-								bind:value={space.subdomainChannel}
-								class="mb-4 text-gray-500">Spaces Subdomain</Checkbox
-							>
-							<Checkbox
-								bind:checked={space.customDomainChannel}
-								bind:value={space.customDomainChannel}
-								id="customDomainChannel"
-								name="customDomainChannel"
-								class="mb-4 text-gray-500">Custom domain</Checkbox
-							>
-							<Checkbox
-								bind:checked={space.standaloneMobileChannel}
-								bind:value={space.standaloneMobileChannel}
-								id="standaloneMobileChannel"
-								name="standaloneMobileChannel"
-								class="mb-4 text-gray-500">Standalone mobile</Checkbox
-							>
-							<Checkbox
-								bind:checked={space.standaloneDesktopChannel}
-								bind:value={space.standaloneDesktopChannel}
-								name="standaloneDesktopChannel"
-								id="standaloneDesktopChannel"
-								class="mb-4 text-gray-500">Standalone desktop</Checkbox
-							>
-							<Button type="submit">Update</Button>
-						</form>
+					<div class="flex mb-6">
+						<div class="flex-1" />
+						<div class="mt-9">
+							<DashboardDialog permissions={data.space.permissions} />
+						</div>
 					</div>
+					<Accordion>
+						<AccordionItem header="oij">
+							<svelte:fragment slot="header">
+								<div class="flex">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										stroke="currentColor"
+										class="w-6 h-6"
+										><path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+										/></svg
+									>
+									<div class="ml-2">Default</div>
+								</div>
+							</svelte:fragment>
+							<div>
+								<Checkbox disabled value={'true'} checked={true}>Space Owner</Checkbox>
+								{#each data?.space?.permissions ?? [] as permission}
+									<Checkbox class="mb-3">{permission.name}</Checkbox>
+								{/each}
+								<Button>Update</Button>
+							</div>
+						</AccordionItem>
+						{#each data?.space?.dashboards ?? [] as dashboard}
+							<AccordionItem header="oij">
+								<svelte:fragment slot="header">
+									<div class="flex">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke-width="1.5"
+											stroke="currentColor"
+											class="w-6 h-6"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+											/></svg
+										>
+										<div class="ml-2">{dashboard.name}</div>
+									</div>
+								</svelte:fragment>
+								<div>
+									<Checkbox disabled value={true} checked={true}>Space Owner</Checkbox>
+									<Checkbox>Admin</Checkbox>
+									{#each data?.space?.permissions ?? [] as permission}
+										<Checkbox class="mb-3">{permission.name}</Checkbox>
+									{/each}
+									<Button>Update</Button>
+								</div>
+							</AccordionItem>
+						{/each}
+					</Accordion>
 				</TabItem>
 				<TabItem
 					open={activeTab === 'apikeys'}
@@ -125,10 +135,8 @@
 					</p>
 					{#if data.space.apiChannel}
 						<div class="mt-6 text-right">
-							<a
-								class="px-3 bg-blue-800 text-white py-3 rounded-xl "
-								rel="external"
-								href={`/spaces/${data?.space?.appId}/apikeys`}>Add Api Key</a
+							<a rel="external" href={`/spaces/${data?.space?.appId}/apikeys`}>
+								<Button size="xs" pill gradient>Add Api Key</Button></a
 							>
 						</div>
 
@@ -170,53 +178,25 @@
 						</div>
 					{/if}
 				</TabItem>
-				<!-- <TabItem title="Config vars">
+				<TabItem open={activeTab === 'logs'}
+				on:click={() => goto('?tab=logs')}  title="Logs">
 					<p class="text-sm text-gray-500 dark:text-gray-400">
-						<b>Users:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+						<b>Logs:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 						incididunt ut labore et dolore magna aliqua.
 					</p>
 					<div class="my-6">
 						<a href={`/spaces/${data?.space?.appId}/config-vars`}>Add</a>
 					</div>
 		
-					{#each data?.space?.configVars ?? [] as item}
+					<!-- {#each data?.space?.configVars ?? [] as item}
 						<div class="mb-6 text-gray-500">
 							<p class="text-lg"><b>{item.key}:</b> {item.value}</p>
 							<Button class="my-2 w-full">Delete</Button>
 							<hr />
 						</div>
-					{/each}
-				</TabItem> -->
-				<TabItem
-					open={activeTab === 'files'}
-					on:click={() => goto('?tab=files')}
-					title="Media/Files"
-				>
-					<p class="text-sm text-gray-500 dark:text-gray-400">
-						<b>Users:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-						incididunt ut labore et dolore magna aliqua.
-					</p>
-					<div class="my-6">
-						<Select
-							bind:value={space.uploadProvider}
-							items={[
-								{
-									name: 'AWS',
-									value: 'aws'
-								},
-								{
-									name: 'Cloudinary (images only)',
-									value: 'cloudinary'
-								},
-								{
-									name: 'Azure',
-									value: 'azure'
-								}
-							]}
-						/>
-					</div>
-					<Button class="w-full">Save</Button>
+					{/each} -->
 				</TabItem>
+
 				<TabItem open={activeTab === 'admins'} on:click={() => goto('?tab=admins')} title="Admins">
 					<p class="text-sm text-gray-500 dark:text-gray-400">
 						<b>Users:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -257,16 +237,11 @@
 						</TableBody>
 					</Table>
 				</TabItem>
-				<TabItem open={activeTab === 'mail'} on:click={() => goto('?tab=mail')} title="Mail">
-					<p class="text-sm text-gray-500 dark:text-gray-400">
-						<b>Users:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-						incididunt ut labore et dolore magna aliqua.
-					</p>
-				</TabItem>
+
 				<TabItem
 					open={activeTab === 'rules'}
 					on:click={() => goto('?tab=rules')}
-					title="Permissions"
+					title="Authorization"
 				>
 					<div class="flex">
 						<div class="flex-1" />
@@ -275,41 +250,52 @@
 							<PermissionDialog />
 						</div> -->
 					</div>
-					<div class="mt-3">
-						{#each data?.space?.permissions ?? [] as permission}
-							<Card size="xl">
-								<div class="flex justify-between">
-									<p class="text-l">
-										{permission.name}
-									</p>
-									<CloseButton />
-								</div>
-							</Card>
-						{/each}
+					<Accordion class="mt-6">
+						<AccordionItem>
+							<svelte:fragment slot="header">Roles</svelte:fragment>
+							{#each data?.space?.permissions ?? [] as permission}
+								<Card size="xl">
+									<div class="flex justify-between">
+										<div>
+											<p class="text-l">
+												{permission.name}
+											</p>
+											<small>{permission.description}</small>
+										</div>
 
-						{#if !data?.space?.permissions.length}
-							<div>No permissions have been added</div>
-						{/if}
-					</div>
+										<CloseButton />
+									</div>
+								</Card>
+								{#if !data?.space?.permissions.length}
+									<div>No permissions have been added</div>
+								{/if}
+							{/each}
+						</AccordionItem>
+						<AccordionItem>
+							<svelte:fragment slot="header">Providers</svelte:fragment>
+							<div class="mt-3">
+								<Card size="xl">
+									<p>Auth providers</p>
+									<div class="mt-6">
+										<Select />
+									</div>
+								</Card>
+							</div>
+						</AccordionItem>
+						<AccordionItem>
+							<svelte:fragment slot="header">Token Options</svelte:fragment>
+							<div class="mt-3">
+								<Card size="xl">
+									<p>Auth providers</p>
+									<div class="mt-6">
+										<Select />
+									</div>
+								</Card>
+							</div>
+						</AccordionItem>
+					</Accordion>
 				</TabItem>
-				<TabItem
-					open={activeTab === 'authentication'}
-					on:click={() => goto('?tab=authentication')}
-					title="Authentication"
-				>
-					<Card size="xl">
-						<p>Auth providers</p>
-						<div class="mt-6">
-							<Select />
-						</div>
-					</Card>
-					<Card class="mt-3" size="xl">
-						<p>Token options</p>
-						<div class="mt-6">
-							<Select />
-						</div>
-					</Card>
-				</TabItem>
+
 				<TabItem
 					open={activeTab === 'settings'}
 					on:click={() => goto('?tab=settings')}
@@ -324,7 +310,79 @@
 						<p>Password updated</p>
 					{/if}
 					<div class="mt-9">
+						{#if form?.apiUpdateSuccess}
+							<div class="my-9">
+								<Alert>Channels have been updated</Alert>
+							</div>
+						{/if}
 						<Accordion>
+							<AccordionItem>
+								<svelte:fragment slot="header">
+									<div class="flex">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke-width="1.5"
+											stroke="currentColor"
+											class="w-6 h-6"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+											/></svg
+										>
+										<div class="ml-2">Channels</div>
+									</div>
+								</svelte:fragment>
+								<div class="my-9">
+									<form method="POST" action="?/settings">
+										<Checkbox
+											bind:checked={space.apiChannel}
+											bind:value={space.apiChannel}
+											name="apiChannel"
+											id="apiChannel"
+											class="mb-4 text-gray-500">Rest API</Checkbox
+										>
+										<Checkbox
+											bind:checked={space.miniAppChannel}
+											bind:value={space.miniAppChannel}
+											id="miniAppChannel"
+											name="miniAppChannel"
+											class="mb-4 text-gray-500">Spaces super app</Checkbox
+										>
+										<Checkbox
+											bind:checked={space.subdomainChannel}
+											id="subdomainChannel"
+											name="subdomainChannel"
+											bind:value={space.subdomainChannel}
+											class="mb-4 text-gray-500">Spaces Subdomain</Checkbox
+										>
+										<Checkbox
+											bind:checked={space.customDomainChannel}
+											bind:value={space.customDomainChannel}
+											id="customDomainChannel"
+											name="customDomainChannel"
+											class="mb-4 text-gray-500">Custom domain</Checkbox
+										>
+										<Checkbox
+											bind:checked={space.standaloneMobileChannel}
+											bind:value={space.standaloneMobileChannel}
+											id="standaloneMobileChannel"
+											name="standaloneMobileChannel"
+											class="mb-4 text-gray-500">Standalone mobile</Checkbox
+										>
+										<Checkbox
+											bind:checked={space.standaloneDesktopChannel}
+											bind:value={space.standaloneDesktopChannel}
+											name="standaloneDesktopChannel"
+											id="standaloneDesktopChannel"
+											class="mb-4 text-gray-500">Standalone desktop</Checkbox
+										>
+										<Button type="submit">Update</Button>
+									</form>
+								</div>
+							</AccordionItem>
 							<AccordionItem header="oij">
 								<svelte:fragment slot="header">
 									<div class="flex">
@@ -341,7 +399,7 @@
 												d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
 											/></svg
 										>
-										<div class="ml-2">Administrator password</div>
+										<div class="ml-2">Password</div>
 									</div>
 								</svelte:fragment>
 								<div class="my-6">Set super admin password for authorization in spaces API.</div>
@@ -373,75 +431,107 @@
 									</div>
 								</form>
 							</AccordionItem>
-						</Accordion>
-						<Card size="xl">
-							<div class="flex">
-								<div class="text-2xl flex-1 text-gray-500">Dashboards</div>
-								<div>
-									<DashboardDialog permissions={data.space.permissions} />
-								</div>
-							</div>
-							<hr class="my-2" />
-							<Accordion>
-								<AccordionItem header="oij">
-									<svelte:fragment slot="header">
-										<div class="flex">
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												fill="none"
-												viewBox="0 0 24 24"
-												stroke-width="1.5"
-												stroke="currentColor"
-												class="w-6 h-6"
-												><path
-													stroke-linecap="round"
-													stroke-linejoin="round"
-													d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-												/></svg
-											>
-											<div class="ml-2">Default</div>
-										</div>
-									</svelte:fragment>
-									<div>
-										<Checkbox disabled value={'true'} checked={true}>Space Owner</Checkbox>
-										{#each data?.space?.permissions ?? [] as permission}
-											<Checkbox class="mb-3">{permission.name}</Checkbox>
-										{/each}
-										<Button>Update</Button>
+							<AccordionItem>
+								<svelte:fragment slot="header">
+									<div class="flex">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke-width="1.5"
+											stroke="currentColor"
+											class="w-6 h-6"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+											/></svg
+										>
+										<div class="ml-2">Mail</div>
 									</div>
-								</AccordionItem>
-								{#each data?.space?.dashboards ?? [] as dashboard}
-									<AccordionItem header="oij">
-										<svelte:fragment slot="header">
-											<div class="flex">
-												<svg
-													xmlns="http://www.w3.org/2000/svg"
-													fill="none"
-													viewBox="0 0 24 24"
-													stroke-width="1.5"
-													stroke="currentColor"
-													class="w-6 h-6"
-													><path
-														stroke-linecap="round"
-														stroke-linejoin="round"
-														d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-													/></svg
-												>
-												<div class="ml-2">{dashboard.name}</div>
-											</div>
-										</svelte:fragment>
-										<div>
-											<Checkbox disabled value={true} checked={true}>Space Owner</Checkbox>
-											<Checkbox>Admin</Checkbox>
-											{#each data?.space?.permissions ?? [] as permission}
-												<Checkbox class="mb-3">{permission.name}</Checkbox>
-											{/each}
-											<Button>Update</Button>
-										</div>
-									</AccordionItem>
-								{/each}
-							</Accordion>
-						</Card>
+								</svelte:fragment>
+							</AccordionItem>
+							<AccordionItem>
+								<svelte:fragment slot="header">
+									<div class="flex">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke-width="1.5"
+											stroke="currentColor"
+											class="w-6 h-6"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+											/></svg
+										>
+										<div class="ml-2">SMS</div>
+									</div>
+								</svelte:fragment>
+							</AccordionItem>
+							<AccordionItem>
+								<svelte:fragment slot="header">
+									<div class="flex">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke-width="1.5"
+											stroke="currentColor"
+											class="w-6 h-6"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+											/></svg
+										>
+										<div class="ml-2">Storage (files/media)</div>
+									</div>
+								</svelte:fragment>
+							</AccordionItem>
+							<AccordionItem>
+								<svelte:fragment slot="header">
+									<div class="flex">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke-width="1.5"
+											stroke="currentColor"
+											class="w-6 h-6"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+											/></svg
+										>
+										<div class="ml-2">Payment providers</div>
+									</div>
+								</svelte:fragment>
+							</AccordionItem>
+							<AccordionItem>
+								<svelte:fragment slot="header">
+									<div class="flex">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke-width="1.5"
+											stroke="currentColor"
+											class="w-6 h-6"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+											/></svg
+										>
+										<div class="ml-2">Logistics providers</div>
+									</div>
+								</svelte:fragment>
+							</AccordionItem>
+						</Accordion>
 					</div>
 
 					{#if form?.requireConfirmation}
@@ -465,16 +555,25 @@
 			</Tabs>
 		</div>
 	</div>
-	<div class="w-48  border mr-4  hidden md:flex lg:flex rounded align-middle justify-center h-72">
+	<div class="w-36  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
 		<div>
 			<div class="mt-20">
-				<a class="hover:underline text-blue" href={`/base/${$page.params.id}`}>Collections API</a>
+				<a class="hover:underline text-blue" rel="external" href={`/base/${$page.params.id}`}
+					>Collections API</a
+				>
 			</div>
 			<div class="mt-6">
-				<a class="hover:underline text-blue" href={`/dashboards/${$page.params.id}`}>Dashboard</a>
+				<a class="hover:underline text-blue" rel="external" href={`/dashboards/${$page.params.id}`}
+					>Dashboard</a
+				>
 			</div>
 			<div class="mt-6">
-				<a class="hover:underline text-blue" href={`/editor/${$page.params.id}`}>UI Builder</a>
+				<a class="hover:underline text-blue" rel="external" href={`/editor/${$page.params.id}`}
+					>UI Builder</a
+				>
+			</div>
+			<div class="mt-6">
+				<a class="hover:underline text-blue" rel="external" href={`/${$page.params.id}`}>Website</a>
 			</div>
 		</div>
 	</div>

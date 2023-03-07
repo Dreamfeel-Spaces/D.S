@@ -4,7 +4,7 @@
 	import grapesjs from 'grapesjs';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import axios from "axios"
+	import axios from 'axios';
 
 	import { Select, Button, Input, Checkbox, Radio } from 'flowbite-svelte';
 
@@ -381,7 +381,17 @@
 		editor.Commands.add('set-device-mobile', {
 			run: (editor) => editor.setDevice('Mobile')
 		});
+
+		// setInterval(() => handleSave(), 10000);
 	});
+
+	async function handleSave() {
+		let html = editor?.getHtml();
+		let css = editor?.getCss();
+		const instance = axios.create({
+			baseUrl: '/'
+		});
+	}
 
 	async function appendAPI(e) {
 		e?.preventDefault();
@@ -389,19 +399,13 @@
 		// Get all attributes
 
 		// Add attributes
-		component.addAttributes({
+		component?.addAttributes({
 			['__data__api']: spaceId,
 			['__data__table']: table,
 			['__api__type']: isList
 		});
-		const attrs = component.getAttributes();
-
-		let html = editor?.getHtml();
-		let css = editor?.getCss();
-
-		const res = await axios.patch(`/api/editor/${$page.params.builder}`, { html, css });
-
-		console.log(res.data);
+		const attrs = component?.getAttributes();
+		await instance.patch(`/api/editor/${$page.params.builder}`, { html, css });
 	}
 </script>
 

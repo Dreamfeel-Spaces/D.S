@@ -1,15 +1,24 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
 
-import { Server } from 'socket.io';
+import { WebSocketServer } from 'ws';
 
 export const websocketServer = {
 	name: 'wsservrer',
 	configureServer(server: any) {
-		const io = new Server(server.httpServer);
-		io.on('connect', (socket: any) => {
-			socket.emit('ping', 'ping');
-		});
+		// const wss = new WebSocketServer({ port: 5174 });
+		// console.log('websocket started');
+		// wss.on('connection', function connection(ws: any) {
+		// 	ws.on('error', console.error);
+
+		// 	ws.on('message', function message(data: any) {
+		// 		console.log('received: %s', data);
+		// 	});
+
+		// 	ws.send("ping", "ping")
+
+		// 	ws.send('something');
+		// });
 	}
 };
 

@@ -1,5 +1,5 @@
 import { prisma } from '$lib/db/prisma';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
 
 export async function load({ params }: RequestEvent) {
@@ -27,17 +27,35 @@ export async function load({ params }: RequestEvent) {
 		}
 	});
 
-	const tables = await prisma.spaceTable.findMany({
-		where: {
-			tableSpace: space.id
-		},
-		include: {
-			columns: true,
-			rows: true
-		}
-	});
+	if (!ui) {
+		throw error(404, 'Pages not found.');
+	}
 
-	return { space, ui, tables };
+	if (!ui?.pages?.length) {
+		const indexPage = await prisma.page.create({
+			data: {
+				name: 'Index',
+				path: '/',
+				spaceUIVersionId: String(ui.id)
+			}
+		});
+		throw redirect(302, `/editor/${params.id}/${params.builder}/${indexPage.id}`)
+	}
+
+	const index= ui.pages.find((page) => page.path === '/')?.id ?? ui.pages[0]?.id
+	throw redirect(302, `/editor/${params.id}/${params.builder}/${index}`)
+
+	// const tables = await prisma.spaceTable.findMany({
+	// 	where: {
+	// 		tableSpace: space.id
+	// 	},
+	// 	include: {
+	// 		columns: true,
+	// 		rows: true
+	// 	}
+	// });
+
+	return { space, ui };
 }
 
 export const actions: Actions = {

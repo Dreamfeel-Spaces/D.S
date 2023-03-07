@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { page } from '$app/stores';
+	import { Button } from 'flowbite-svelte';
 	const spaceName = $page.params.space;
 	import { Table, TableBody, Card, Breadcrumb, BreadcrumbItem } from 'flowbite-svelte';
 
@@ -24,13 +25,6 @@
 	</title>
 </svelte:head>
 
-<div class="my-3 mx-6  flex justify-between text-3xl text-gray-500">
-	<p>
-		{spaceName}
-	</p>
-	<a class="text-lg" href={`/base/${spaceId}/table/create`}>Add collections</a>
-</div>
-
 <div class="flex justify-between mt-4 pr-4 flex-wrap">
 	<div class="flex-1 px-6">
 		<Breadcrumb>
@@ -42,6 +36,9 @@
 			<BreadcrumbItem>Collections</BreadcrumbItem>
 		</Breadcrumb>
 	</div>
+	<a class="text-lg" href={`/base/${spaceId}/table/create`}>
+		<Button pill gradient size="xs">Add collections</Button>
+	</a>
 </div>
 
 {#if !hasTables}
@@ -52,10 +49,10 @@
 {/if}
 
 {#if hasTables}
-	<div class="mt-3 px-3">
+	<div class="mt-3 px-3 grid grid-cols-2 gap-3 max-h-96 overflow-auto">
 		{#each data.tables as table}
 			<Card size="xl">
-				<b class="text-3xl" >{table.name}</b>
+				<b class="text-3xl">{table.name}</b>
 				<div class="my-3 text-2xl">{table.rows?.length} Items</div>
 				<div class="flex justify-between">
 					<a rel="external" href={`/dashboards/${spaceId}/${table.name}/overview`}>Overview</a>

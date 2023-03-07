@@ -12,13 +12,13 @@
 	import { page } from '$app/stores';
 
 	let spaceId = $page.params.id;
-	const uiId = $page.params.builder
+	const uiId = $page.params.builder;
 
 	let activeSpace = data?.myapps?.find(({ appId }: any) => appId === spaceId);
 
 	let url = $page.url.pathname;
 
-	let isPreview = /\/preview/.test(url) || Boolean(uiId);
+	let isPreview = /\/preview/.test(url) || (Boolean(uiId) && !/\/settings/.test(url));
 </script>
 
 {#if isPreview}
@@ -88,8 +88,24 @@
 				</SidebarWrapper>
 			</Sidebar>
 		</div>
-		<div style="max-height:88vh; overflow:scroll" class="flex-1">
+		<div class="flex-1">
 			<slot />
+		</div>
+		<div class="w-36  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
+			<div>
+				<div class="mt-20">
+					<a class="hover:underline text-blue" href={`/base/${$page.params.space}`}>Dashboards</a>
+				</div>
+				<div class="mt-6">
+					<a class="hover:underline text-blue" href={`/spaces/${$page.params.space}`}>Admin</a>
+				</div>
+				<div class="mt-6">
+					<a class="hover:underline text-blue" href={`/editor/${$page.params.space}`}>UI Builder</a>
+				</div>
+				<div class="mt-6">
+					<a class="hover:underline text-blue" href={`/${$page.params.space}`}>Website</a>
+				</div>
+			</div>
 		</div>
 	</div>
 {/if}

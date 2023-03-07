@@ -6,8 +6,11 @@ import type { Adapter } from '@auth/core/adapters';
 
 import { GITHUB_ID, GITHUB_SECRET } from '$env/static/private';
 import { prisma } from './lib/db/prisma';
+import { sequence } from '@sveltejs/kit/hooks';
+import type { Handle, HandleFetch, HandleServerError } from '@sveltejs/kit';
+import { Pages } from '$lib/plugins/pages/Pages';
 
-export const handle = SvelteKitAuth({
+export const authHandle = SvelteKitAuth({
 	adapter: PrismaAdapter(prisma) as Adapter<boolean>,
 	session: {
 		strategy: 'database',
@@ -28,41 +31,60 @@ export const handle = SvelteKitAuth({
 	}
 });
 
-export async function jwtHandler({ event, resolve }) {
-	const { headers } = event.request;
-	const cookies = parse(headers.get('cookie') ?? '');
+export const withSpaceRouter = async ({ event, resolve }: Handle) => {
+	const pathname = event.url.pathname;
 
-	if (cookies.AuthorizationToken) {
-		const token = cookies.AuthorizationToken.split(' ')[1];
-		try {
-			const jwtUser = jwt.verify(token, import.meta.env.VITE_JWT_ACCESS_SECRET);
-			if (typeof jwtUser === 'string') {
-				throw new Error('Something went wrong');
-			}
+	let isAccounts = /^\/accounts/.test(pathname);
+	let isAdmin = /^\/admin/.test(pathname);
+	let isApi = /^\/api/.test(pathname);
+	let isApps = /^\/apps/.test(pathname);
+	let isBase = /^\/base/.test(pathname);
+	let isSpaces = /^\/spaces/.test(pathname);
+	let isBlog = /^\/blog/.test(pathname);
+	let isDashboards = /^\/dashboards/.test(pathname);
+	let isDeactivated = /^\/deactivated/.test(pathname);
+	let isEditor = /^\/editor/.test(pathname);
+	let isExample = /^\/example/.test(pathname);
+	let isPdf = /^\/pdf/.test(pathname);
+	let isHome = /^\/$/.test(pathname);
 
-			const user = await db.user.findUnique({
-				where: {
-					id: jwtUser.id
-				}
-			});
+	let reservedRoutes = [
+		isAccounts,
+		isAdmin,
+		isApi,
+		isApps,
+		isBase,
+		isBlog,
+		isDashboards,
+		isDeactivated,
+		isEditor,
+		isExample,
+		isPdf,
+		isSpaces,
+		isHome
+	];
 
-			if (!user) {
-				throw new Error('User not found');
-			}
+	const isReserved = reservedRoutes.filter(Boolean).length;
 
-			const sessionUser: SessionUser = {
-				id: user.id,
-				email: user.email
-			};
+	const pageManager = new Pages({ url: event.url });
 
-			event.locals.user = sessionUser;
-	} catch (error) {
-			console.error(error);
-		}
+	if (isReserved && !pageManager.isValidSubdomain) return resolve(event);
+
+	if (pageManager.isValidSubdomain) {
+		const [html, htmlError] = await pageManager.renderPage({
+			renderSubdomainApp: true,
+			subdomain: pageManager.sbd
+		});
+		if (htmlError) throw htmlError;
+		let response = new Response(html);
+		response.headers.set('content-type', 'text/html');
+		return response;
 	}
-	return await resolve(event)
-}
+	const [html, htmlError] = await pageManager.renderPage({});
+	if (htmlError) throw htmlError;
+	let response = new Response(html);
+	response.headers.set('content-type', 'text/html');
+	return response;
+};
 
-function parse(cookie) {
-	return cookie;
-}
+export const handle = sequence(authHandle, withSpaceRouter);

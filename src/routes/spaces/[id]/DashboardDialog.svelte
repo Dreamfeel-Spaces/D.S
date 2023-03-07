@@ -6,7 +6,7 @@
 
 <div>
 	<div>
-		<Button on:click={() => (formModal = true)}>
+		<Button pill gradient size="xs" on:click={() => (formModal = true)}>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -29,7 +29,7 @@
 	</div>
 </div>
 <Modal bind:open={formModal} size="xs" autoclose={false} class="w-full">
-	<form class="flex flex-col space-y-6" action="?/addDashboards&tab=settings" method="POST">
+	<form class="flex flex-col space-y-6" action="?/addDashboards&tab=channels" method="POST">
 		<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Add Permission</h3>
 		<Label class="space-y-2">
 			<span>Name</span>

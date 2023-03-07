@@ -1,24 +1,57 @@
 <script lang="ts">
+	import {
+		Input,
+		Select,
+		Button,
+		Checkbox,
+		Breadcrumb,
+		BreadcrumbItem,
+		Alert,
+		Card,
+		CloseButton
+	} from 'flowbite-svelte';
+	import { columnTypes } from '$lib/coltypes/columnTypes';
 	import type { PageData } from './$types';
-	export let data: PageData;
-	import { Input, Breadcrumb, BreadcrumbItem, Card, Alert } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	const tableName = $page.params.table;
 	const spaceName = $page.params.space;
-	let columns: any = data?.table?.columns ?? [];
+	let spaceId = $page.params.space;
+	let table = $page.params.table;
+
+	export let data: PageData;
+	export let form: any;
+	let displayName: string;
+
+	const option = {
+		label: '',
+		value: ''
+	};
+
+	const col = {
+		type: '',
+		name: '',
+		regex: '',
+		rel: '',
+		multiple: false,
+		required: true,
+		defaultOn: false,
+		options: [{ ...option }],
+		dateTimeDefault: 'custom'
+	};
+	let columns: (typeof col)[] = [{ ...col }];
+	function addColumn() {
+		columns = [...columns, { ...col }];
+	}
+	function removeColumn(index: number) {
+		let all = [...columns];
+		all.splice(index, 1);
+		columns = [...all];
+	}
 </script>
 
-<div class="my-3 mx-6  flex  text-2xl text-gray-500">
-	<p class="mr-2">
-		{spaceName}
-	</p>
-	/
-	<b class="text-3xl ml-2">{tableName}</b>
-</div>
-
-<div>
-	<div class="flex justify-between px-3 mt-6 text-lg my-3">
-		<div>
+<div class="bg-gray-200 py-2 ">
+	<div class="flex my-2">
+		<div class=" flex-1 text-xl px-6 text-gray-500">
 			<Breadcrumb>
 				<BreadcrumbItem>Home</BreadcrumbItem>
 				<BreadcrumbItem>Api</BreadcrumbItem>
@@ -31,44 +64,211 @@
 				<BreadcrumbItem>Schema</BreadcrumbItem>
 			</Breadcrumb>
 		</div>
-		<a href={`/base/${spaceName}/${tableName}/schema/create`}>Add schema</a>
+		<div class="px-9 text-end text-lg">
+			<a
+				class="bg-blue-700 px-3  text-white rounded-3xl py-2 text-xs"
+				href={`/base/${spaceName}/${tableName}/schema/create`}>Add columns</a
+			>
+		</div>
 	</div>
 
-	{#if !columns.length}
-		<div class="my-6 mx-6">
+	<div class="mt-4 px-6" />
+</div>
+
+<div style="max-height: 80vh" class=" overflow-auto pb-12 bg-gray-50">
+	{#if form?.success}
+		<div class="mt-3 px-6">
 			<Alert>
-				<p><b>Configuration error</b></p>
-				<p class="my-3">Missing schema</p>
-				<a class="hover:underline" href={`/base/${spaceName}/${tableName}/schema/create`}
-					>Add schema</a
-				>
+				<div class="my-3 "><b>Schema saved</b></div>
+				<div class="mb-3">
+					<a class="hover:underline" href={`/base/${spaceId}/${table}`}>View schema</a>
+				</div>
+				<a class="hover:underline" href={`/base/${spaceId}/${table}/api`}>Configure Rest API</a>
 			</Alert>
 		</div>
 	{/if}
-	<div class="grid gap-4 px-3 grid-cols-3">
-		{#each columns as column}
+
+	<div class="grid gap-4 px-6 grid-cols-2  mb-6 mt-6 ">
+		{#each columns as column, index}
 			<Card>
-				<div class="text-2xl  text-gray-500">
-					{column.name}
+				<div class="flex justify-between">
+					<div class=" text-xl">
+						Col {index + 1}
+					</div>
+					<div>
+						<CloseButton on:click={() => removeColumn(index)} />
+					</div>
 				</div>
-				<form class="my-3  rounded " action="">
-					<div class="mb-5">
-						<label for="name">Name</label>
-						<Input id="name" name="name" bind:value={column.name} />
-					</div>
-					<div class="mb-5">
+				<div class="mb-9 mt-5 container  ">
+					<div class="mb-4 ">
 						<label for="type">Type</label>
-						<Input id="type" name="type" bind:value={column.type} />
+						<Select
+							autofocus
+							placeholder="Choose column type"
+							name="type"
+							bind:value={column.type}
+							items={[...columnTypes]}
+						/>
 					</div>
-					<div class="flex justify-between">
-						<button>Update column</button>
+					{#if column.type === 'datetime'}
+						<div class="mb-4 ">
+							<label for="type">Format</label>
+							<Select
+								autofocus
+								placeholder="Choose format"
+								name="type"
+								bind:value={column.dateTimeDefault}
+								items={[
+									{
+										name: 'Date Created',
+										value: 'created'
+									},
+									{
+										name: 'Date Updated',
+										value: 'updated'
+									},
+									{
+										name: 'Custom',
+										value: 'custom'
+									},
+									{
+										name: 'Date only',
+										value: 'date_only'
+									},
+									{
+										name: 'Time only',
+										value: 'time_only'
+									}
+								]}
+							/>
+						</div>
+					{/if}
+					{#if column.type === 'rel'}
+						<div class="mb-4 ">
+							<label for="table">Table</label>
+							<Select
+								placeholder="Choose table"
+								name="table"
+								bind:value={column.rel}
+								items={[...data.tables]}
+							/>
+							<div class="mt-4">
+								<label for="multiple">Multiple Values</label>
+								<Checkbox bind:checked={column.multiple} id="multiple" />
+							</div>
+						</div>
+					{/if}
+					<div class="mb-4 ">
+						<label for="type">Name</label>
+						<Input required bind:value={column.name} placeholder="Name" class="w-full" />
+						{#if column.name && columns.filter((c) => c.name === column.name).length > 1}
+							<div class="text-red-800">
+								<small>Duplicate column name</small>
+							</div>
+						{/if}
 					</div>
-				</form>
-				<div class=" mb-6">
-					<button>Delete {column.name}</button>
+					<div class="mb-4 ">
+						<label for="multiple">Required</label>
+						<Checkbox bind:checked={column.required} id="multiple" />
+					</div>
+					{#if column.type === 'toggle'}
+						<div class="mb-4 ">
+							<label for="multiple">Default on</label>
+							<Checkbox bind:checked={column.defaultOn} id="multiple" />
+						</div>
+					{/if}
+					{#if column.type === 'string' || column.type === 'number' || column.type === 'password'}
+						<div class="mb-4  ">
+							<label for="type">Validation Regex pattern (optional)</label>
+							<Input
+								required
+								bind:value={column.regex}
+								placeholder="Regex pattern"
+								type="text"
+								class="w-full"
+							/>
+						</div>
+					{/if}
+					{#if column.type === 'select'}
+						<div class="mb-4  ">
+							<div class="my-2 text-lg">Add options</div>
+							{#each column.options as _option, idx}
+								<div class="grid mt-4  grid-cols-2 gap-2">
+									<div>
+										<label for="type">Label</label>
+										<Input
+											required
+											bind:value={_option.label}
+											placeholder="Label"
+											type="text"
+											class="w-full"
+										/>
+									</div>
+									<div>
+										<label for="type">Value</label>
+										<Input
+											required
+											bind:value={_option.value}
+											placeholder="Value"
+											type="text"
+											class="w-full"
+										/>
+									</div>
+								</div>
+								<Button
+									on:click={() => {
+										let options = [...columns[index].options];
+										options.splice(idx, 1);
+										columns[index].options = [...options];
+									}}
+									class="mt-2">Remove option</Button
+								>
+							{/each}
+							<div class="flex justify-between">
+								<Button
+									on:click={() => {
+										columns[index] = {
+											...columns[index],
+											options: [...columns[index].options, { ...option }]
+										};
+									}}
+									class="mt-2">Add option</Button
+								>
+								<div />
+							</div>
+						</div>
+					{/if}
 					<hr />
 				</div>
 			</Card>
 		{/each}
+		<Card>
+			<button class="h-full text-7xl" on:click={addColumn}>
+				<div class="text-center">
+					<p>+</p>
+					<small class="text-lg">Add column</small>
+				</div>
+			</button>
+		</Card>
+	</div>
+
+	<div class="px-6 mt-6">
+		<form method="POST">
+			<div class="mb-4  ">
+				<label for="displayName " class="text-3xl  text-gray-500">Display name</label>
+				<Select
+					placeholder="Choose column type"
+					name="displayName"
+					class="mt-4"
+					id="displayName"
+					bind:value={displayName}
+					items={columns.map((c) => {
+						return { name: c.name, value: c.name };
+					})}
+				/>
+			</div>
+			<input id="columns" name="columns" value={JSON.stringify(columns)} type="hidden" />
+			<Button type="submit" class="mt-3 w-full">Save columns</Button>
+		</form>
 	</div>
 </div>

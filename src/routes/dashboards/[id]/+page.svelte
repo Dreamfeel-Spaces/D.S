@@ -30,15 +30,25 @@
 		</Alert>
 	</div>
 {/if}
-<div class="grid lg:grid-cols-2 gap-4 px-6 ">
+<div class="grid lg:grid-cols-2 max-h-96 overflow-auto gap-4 px-6 ">
 	{#each data?.space?.tables ?? [] as table}
 		<Card size="lg">
 			<b>{table.name}</b>
-			<div class="my-3 text-3xl">{table.rows?.length} Items</div>
+			<div class="my-3 text-3xl"><span class="text-sm">Count: </span> {table.rows?.length}</div>
 			<div class="flex justify-between">
-				<a rel="external" href={`/dashboards/${spaceId}/${table.name}/overview`}>Overview</a>
-				<a rel="external" href={`/dashboards/${spaceId}/${table.name}/create`}>Add</a>
-				<a rel="external" href={`/dashboards/${spaceId}/${table.name}`}>Table</a>
+				<a
+					rel="external"
+					class="hover:underline"
+					href={`/dashboards/${spaceId}/${table.name}/overview`}>Overview</a
+				>
+				<a
+					rel="external"
+					class="hover:underline"
+					href={`/dashboards/${spaceId}/${table.name}/create`}>Add {table.name}</a
+				>
+				<a rel="external" class="hover:underline" href={`/dashboards/${spaceId}/${table.name}`}
+					>View table</a
+				>
 			</div>
 		</Card>
 	{/each}

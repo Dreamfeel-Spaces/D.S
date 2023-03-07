@@ -29,7 +29,13 @@ export const actions: Actions = {
 				userId: String(user.id)
 			}
 		});
-
+		const page = await prisma.page.create({
+			data: {
+				spaceUIVersionId: uiVersion.id,
+				name: 'index',
+				path: '/'
+			}
+		});
 		return { success: true, data: uiVersion };
 	}
 };

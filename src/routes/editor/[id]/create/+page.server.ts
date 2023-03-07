@@ -39,6 +39,14 @@ export const actions: Actions = {
 			}
 		});
 
+		const page = await prisma.page.create({
+			data: {
+				spaceUIVersionId: versionOne.id,
+				name: 'index',
+				path: '/'
+			}
+		});
+
 		return { success: true, data: { ...ui, version: versionOne } };
 	}
 };

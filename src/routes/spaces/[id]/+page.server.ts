@@ -1,6 +1,7 @@
 //@ts-nocheck
 
 import { prisma } from '$lib/db/prisma';
+import { gmailTransporter } from '$lib/mail';
 import { Token } from '$lib/token/Token';
 import { convertToSlug } from '$lib/util/slugit';
 import { error, redirect } from '@sveltejs/kit';
@@ -105,15 +106,27 @@ export const actions: Actions = {
 
 			if (existingAdmin) throw error(400, 'Admin already exists in this space');
 
+			let adminPassword = token.createAdminPass();
+
 			const admin = await prisma.admin.create({
 				data: {
 					userId: String(user.id),
 					username: user.email,
 					spaceId: space.id,
-					password: await token.createAdminPass(),
+					password: adminPassword,
 					name
 				}
 			});
+
+			// let info = await gmailTransporter.sendMail({
+			// 	from: '"Fred Foo " info@dreamfeel.io', // sender address
+			// 	to: user?.email, // list of receivers
+			// 	subject: 'Hello ✔. ',
+			// 	text: 'Hello world?',
+			// 	html: `<p>Default password: <b>${adminPassword}</b>   for space ${space.appId} </p>. Please update.`
+			// });
+
+			// console.log('Message sent: %s', info.messageId);
 
 			return { adminSuccess: true, data: admin };
 		}

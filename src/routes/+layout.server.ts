@@ -1,8 +1,13 @@
 // @ts-nocheck
 import { prisma } from '$lib/db/prisma';
+import { Pages } from '$lib/plugins/pages/Pages';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async ({ locals }) => {
+export const csr = true;
+
+export const load: LayoutServerLoad = async ({ locals, url }) => {
+	
+
 	const session = await locals.getSession();
 	if (session) {
 		const user = await prisma.user.findUnique({

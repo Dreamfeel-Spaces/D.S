@@ -23,27 +23,39 @@
 	};
 	import { page } from '$app/stores';
 	const pathname = $page.url.pathname;
-	let isPreview = /\/preview/.test(pathname);
 	let isDashboard = /\/dashboards/.test(pathname);
 	let isEditor = /\/editor/.test(pathname);
 	let isBase = /\/base/.test(pathname);
 	let isSpaces = /\/spaces/.test(pathname);
 	let spaceId = isBase ? $page.params.space : $page.params.id;
-	let session = $page.data.session
+	let session = $page.data.session;
+
+	let subdomain = $page.data.subdomain;
+
+	let isPreview = /\/preview/.test(pathname) || $page.params.appId;
+
+	import logo from '../assets/logo.png';
+	import Rt from '$lib/ws/Rt.svelte';
 </script>
+
+<Rt />
 
 <svelte:head>
 	<title>Dreamfeel spaces</title>
 </svelte:head>
 
-{#if isPreview}
+{#if subdomain}
+	{@html $page.data.html}
+{/if}
+
+{#if isPreview && !subdomain}
 	<slot />
 {/if}
 
-{#if !isPreview}
+{#if !isPreview && !subdomain}
 	<div>
 		<nav
-			class="flex-no-wrap relative flex w-full items-center justify-between bg-neutral-100 py-4 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start"
+			class="flex-no-wrap relative flex w-full items-center justify-between bg-neutral-100 py-4 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
 			data-te-navbar-ref
 		>
 			<div class="flex w-full flex-wrap items-center justify-between px-6">
@@ -90,37 +102,43 @@
 						class="mt-2 mr-2 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mt-0"
 						href="/"
 					>
-						<img
-							src="https://tecdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.png"
-							style="height: 15px"
-							alt=""
-							loading="lazy"
-						/>
+						<img src={logo} style="height: 30px" alt="logo transparent" loading="lazy" />
 					</a>
 					<!-- Left links -->
-					<!-- <ul class="list-style-none mr-auto flex flex-col pl-0 lg:flex-row" data-te-navbar-nav-ref>
-					<li class="lg:pr-2" data-te-nav-item-ref>
-						<a
-							class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
-							href="/"
-							data-te-nav-link-ref>Dashboard</a
-						>
-					</li>
-					<li class="lg:pr-2" data-te-nav-item-ref>
-						<a
-							class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-							href="/"
-							data-te-nav-link-ref>Team</a
-						>
-					</li>
-					<li class="lg:pr-2" data-te-nav-item-ref>
-						<a
-							class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-							href="/"
-							data-te-nav-link-ref>Projects</a
-						>
-					</li>
-				</ul> -->
+					<ul class="list-style-none mr-auto flex flex-col pl-0 lg:flex-row" data-te-navbar-nav-ref>
+						<li class="lg:pr-2" data-te-nav-item-ref>
+							<a
+								rel="external"
+								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
+								href="/base"
+								data-te-nav-link-ref>API's</a
+							>
+						</li>
+						<li class="lg:pr-2" data-te-nav-item-ref>
+							<a
+								rel="external"
+								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+								href="/dashboards"
+								data-te-nav-link-ref>Dashboards</a
+							>
+						</li>
+						<li class="lg:pr-2" data-te-nav-item-ref>
+							<a
+								rel="external"
+								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+								href="/editor"
+								data-te-nav-link-ref>Editor</a
+							>
+						</li>
+						<li class="lg:pr-2" data-te-nav-item-ref>
+							<a
+								rel="external"
+								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+								href="/spaces"
+								data-te-nav-link-ref>Organizations</a
+							>
+						</li>
+					</ul>
 					<!-- Left links -->
 				</div>
 				<!-- Collapsible wrapper -->
@@ -129,8 +147,20 @@
 				<div class="relative flex items-center">
 					<!-- Icon -->
 					<a
+						rel="external"
+						class="hidden-arrow mr-4 flex items-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+						href="/blog"
+						id="dropdownMenuButton1"
+						role="button"
+						data-te-dropdown-toggle-ref
+						aria-expanded="false"
+					>
+						Blog
+					</a>
+					<a
+						rel="external"
 						class="mr-4 text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-						href="/spaces"
+						href="/apps"
 					>
 						<span class="[&>svg]:w-5">
 							<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24">
@@ -141,33 +171,6 @@
 						</span>
 					</a>
 					<div class="relative" data-te-dropdown-ref>
-						<!-- <a
-						class="hidden-arrow mr-4 flex items-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-						href="/"
-						id="dropdownMenuButton1"
-						role="button"
-						data-te-dropdown-toggle-ref
-						aria-expanded="false"
-					>
-						<span class="[&>svg]:w-5">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 24 24"
-								fill="currentColor"
-								class="h-5 w-5"
-							>
-								<path
-									fill-rule="evenodd"
-									d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
-									clip-rule="evenodd"
-								/>
-							</svg>
-						</span>
-						<span
-							class="absolute -mt-2.5 ml-2 rounded-full bg-red-700 py-0 px-1.5 text-xs text-white"
-							>1</span
-						>
-					</a> -->
 						<ul
 							class="absolute left-auto right-0 z-[1000] float-left m-0 mt-1 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
 							aria-labelledby="dropdownMenuButton1"
@@ -206,7 +209,7 @@
 							aria-expanded="false"
 						>
 							<img
-								src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg"
+								src={$page.data.session?.user?.image}
 								class="rounded-full"
 								style="height: 25px; width: 25px"
 								alt=""
@@ -250,22 +253,25 @@
 	<slot />
 	<Drawer transitionType="fly" {transitionParams} bind:hidden={hidden2} id="sidebar2">
 		<div class="flex items-center">
-			<h5
-				id="drawer-navigation-label-3"
-				class="text-base font-semibold text-gray-500 uppercase dark:text-gray-400"
-			>
-				Menu
-			</h5>
+			<img src={logo} style="height: 40px" alt="logo transparent" loading="lazy" />
 			<CloseButton on:click={() => (hidden2 = true)} class="mb-4 dark:text-white" />
 		</div>
 		<Sidebar>
 			<SidebarWrapper divClass="overflow-y-auto py-4 px-3 rounded dark:bg-gray-800">
 				<SidebarGroup>
-					<SidebarItem active={!isPreview &&
-						!isDashboard &&
-						!isEditor &&
-						!isBase && 
-						isSpaces} on:click={() => (hidden2 = true)} href="/" rel="external" label="Home">
+					<SidebarItem
+						active={!isPreview &&
+							!isDashboard &&
+							!isEditor &&
+							!isBase &&
+							!isSpaces &&
+							!/\/admin/.test(pathname) &&
+							!/\/blog/.test(pathname)}
+						on:click={() => (hidden2 = true)}
+						href="/"
+						rel="external"
+						label="Home"
+					>
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -286,7 +292,34 @@
 							>
 						</svelte:fragment>
 					</SidebarItem>
-					<SidebarDropdownWrapper isOpen={isSpaces} label="Your Spaces">
+					<SidebarItem
+						active={/\/admin/.test(pathname)}
+						on:click={() => (hidden2 = true)}
+						href="/admin"
+						rel="external"
+						label="Admin"
+					>
+						<svelte:fragment slot="icon">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								class="w-6 h-6"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z"
+								/><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z"
+								/></svg
+							>
+						</svelte:fragment>
+					</SidebarItem>
+					<SidebarDropdownWrapper isOpen={isSpaces} label="Your Organizations">
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -398,6 +431,37 @@
 							/>
 						{/each}
 					</SidebarDropdownWrapper>
+					<SidebarDropdownWrapper isOpen={/\/blog/.test(pathname)} label="Blog">
+						<svelte:fragment slot="icon">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								class="w-6 h-6"
+								><path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+								/></svg
+							>
+						</svelte:fragment>
+						<SidebarDropdownItem
+							on:click={() => (hidden2 = true)}
+							label="Your posts"
+							rel="external"
+							href="/blog/my-posts"
+							active={/\/blog\/my-posts/.test(pathname)}
+						/>
+						<SidebarDropdownItem
+							on:click={() => (hidden2 = true)}
+							label="Your drafts"
+							href="/blog/drafts"
+							rel="external"
+							active={/\/blog\/drafts/.test(pathname)}
+						/>
+					</SidebarDropdownWrapper>
 					<!-- <SidebarItem label="Kanban" {spanClass}>
 					<svelte:fragment slot="icon">
 						<svg
@@ -461,7 +525,7 @@
 						>
 					</svelte:fragment>
 				</SidebarItem> -->
-					<SidebarItem label={Boolean(session) ?"Sign out": "Sign In"}>
+					<SidebarItem label={Boolean(session) ? 'Sign out' : 'Sign In'}>
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"

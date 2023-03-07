@@ -58,6 +58,8 @@ model Page {
   icon             String?
   path             String?
   components       Component[]
+  html             String?
+  pathRegexp       String
 }
 
 model ConfigVars {
@@ -143,6 +145,42 @@ model Column {
   defaultOn       Boolean               @default(false)
   reportField     ReportField[]
   reportFilters   ReportFilter[]
+}
+
+model MsgFeedback {
+  id           String  @id @default(cuid())
+  name         String
+  email        String
+  message      String
+  screenshot   String
+  space        Space?  @relation(fields: [spaceId], references: [id])
+  spaceId      String?
+  customerCopy Boolean @default(false)
+}
+
+model BlogContent {
+  id         String    @id() @default(cuid())
+  title      String?
+  coverImage String?
+  content    String
+  author     User?     @relation(fields: [userId], references: [id])
+  userId     String?
+  published  Boolean   @default(false)
+  flagged    Boolean   @default(false)
+  slug       String    @unique
+  comments   Comment[]
+}
+
+model Comment {
+  id            String      @id() @default(cuid())
+  blog          BlogContent @relation(fields: [blogContentId], references: [id])
+  content       String
+  blogContentId String
+  authorName    String
+  authorEmail   String
+  flagged       Boolean?    @default(false)
+  user          User        @relation(fields: [userId], references: [id])
+  userId        String
 }
 
 model Relations {
@@ -256,6 +294,13 @@ model SpaceSession {
   spaceId      String
 }
 
+model Geo {
+  id    String  @id @default(cuid())
+  lat   Float
+  lng   Float
+  admin Admin[]
+}
+
 model Admin {
   id                     String         @id @default(cuid())
   user                   User?          @relation(fields: [userId], references: [id])
@@ -274,6 +319,9 @@ model Admin {
   status                 String         @default("pending-confirmation")
   defaultPasswordUpdated Boolean        @default(false)
   name                   String?
+  avatar                 String?
+  geo                    Geo?           @relation(fields: [geoId], references: [id])
+  geoId                  String?
 }
 
 model SpaceUpdate {
@@ -361,6 +409,11 @@ model Dashboard {
   description String?
 }
 
+model Subscription {
+  id    String @id() @default(cuid())
+  email String @unique
+}
+
 model Space {
   id                       String         @id @default(cuid())
   appId                    String         @unique
@@ -393,6 +446,8 @@ model Space {
   spaceSessions            SpaceSession[]
   superAdminSecret         String?
   logs                     Log[]
+  uiVid                    String?
+  feedbacks                MsgFeedback[]
 }
 
 model Example {
@@ -445,6 +500,8 @@ model User {
   configVars     ConfigVars[]
   spaceUIVersion SpaceUIVersion[]
   spaceUI        SpaceUI[]
+  BlogContent    BlogContent[]
+  comments       Comment[]
 }
 
 model VerificationToken {

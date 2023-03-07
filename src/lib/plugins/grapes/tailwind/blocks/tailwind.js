@@ -673,6 +673,7 @@ export default (editor, options = {}) => {
   sources.forEach((s) => {
     bm.add(s.id, {
       label: s.label,
+      type: "space-commerce-list",
       attributes: { class: `${s.class} block-full-width w-full`, iterable: s.iterable },
       content: s.content,
       category: { label: s.category, open: s.category === 'Header' },
