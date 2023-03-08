@@ -1,5 +1,6 @@
 //@ts-nocheck
 import { prisma } from '$lib/db/prisma';
+import { transformRows } from '$lib/rows/transform';
 import type { RequestEvent } from '../$types';
 
 export async function POST({ request }: RequestEvent) {
@@ -72,12 +73,7 @@ export async function GET({ params, url, request }: RequestEvent) {
 		return prev + `${curr},`;
 	}, '');
 
-	const rows = table?.rows.map((row) => {
-		return {
-			...row,
-			...row.tableData.reduce((p, c) => ({ ...p, [c.column]: c.data }), {})
-		};
-	});
+	const rows = transformRows(table?.rows);
 
 	const formattedRows = rows?.map((row: any) => {
 		return headerArray?.map((header, index) => {

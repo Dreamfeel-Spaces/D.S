@@ -1,5 +1,6 @@
 //@ts-nocheck
 import { prisma } from '$lib/db/prisma';
+import { transformRows } from '$lib/rows/transform';
 import { error } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
 
@@ -44,12 +45,7 @@ export async function load({ params }: RequestEvent) {
 				}
 			}
 		});
-		const formattedRows = table?.rows.map((row) => {
-			const formattedData = row.tableData.reduce((prev, curr) => {
-				return { ...prev, [curr.column]: curr.data, id: row.id };
-			}, {});
-			return formattedData;
-		});
+		const formattedRows = transformRows(table?.rows)
 
 		const labelAndValues = formattedRows?.map((row) => ({
 			label: (row as any)[table?.displayName as any],

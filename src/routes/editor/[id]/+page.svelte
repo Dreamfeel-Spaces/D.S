@@ -18,9 +18,6 @@
 	export let form: any;
 </script>
 
-
-
-
 <div class="my-3 text-xl px-6 flex justify-between text-gray-500">
 	<Breadcrumb>
 		<BreadcrumbItem>Home</BreadcrumbItem>
@@ -87,9 +84,7 @@
 												color={data?.space?.uiVid === version.id ? 'green' : 'blue'}
 												outline={data?.space?.uiVid !== version.id}
 												size="xs"
-												>{data?.space?.uiVid === version.id
-													? 'Default'
-													: `Set v.${version.version}`}</Button
+												>{data?.space?.uiVid === version.id ? 'Deployed' : `Deploy`}</Button
 											>
 											<a href={`/editor/${$page.params.id}/${version.id}/settings`}>
 												<Button pill outline gradient size="xs">Settings</Button>

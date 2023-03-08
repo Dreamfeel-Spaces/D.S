@@ -64,33 +64,34 @@
 	</div>
 {/if}
 
-{#if data?.table?.columns?.length && data?.space?.apiChannel}
-	<div class="mt-6 px-6">
-		<Card class="text-left" size="xl" padding="xl">
-			<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Find Many</h5>
-			<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}`}</b></p>
-			<Tabs>
-				<TabItem open title="cURL" />
-				<TabItem title="JS">
-					<div class="mb-4">Vanilla js</div>
-					<!-- <Prism language="javascript">
+<div class="max-h-99 overflow-auto">
+	{#if data?.table?.columns?.length && data?.space?.apiChannel}
+		<div class="mt-6 px-6 max-h-99 overflow-auto">
+			<Card class="text-left" size="xl" padding="xl">
+				<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Find Many</h5>
+				<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}`}</b></p>
+				<Tabs>
+					<TabItem open title="cURL" />
+					<TabItem title="JS">
+						<div class="mb-4">Vanilla js</div>
+						<!-- <Prism language="javascript">
 						{`test('Check title', async () => {
 							const title = await firstWindow.title();
 							expect(title).toBe('MEMENTO - Svelte, TailwindCSS, Electron and TypeScript');
 						});`}
 					</Prism> -->
-				</TabItem>
-				<TabItem title="PY" />
-				<TabItem title="Rust" />
-				<TabItem title="PHP" />
-				<TabItem title="C#" />
-				<TabItem title="Java" />
-			</Tabs>
-			<!-- <div class="my-3">
+					</TabItem>
+					<TabItem title="PY" />
+					<TabItem title="Rust" />
+					<TabItem title="PHP" />
+					<TabItem title="C#" />
+					<TabItem title="Java" />
+				</Tabs>
+				<!-- <div class="my-3">
 				<Toggle>Disable</Toggle>
 			</div> -->
-			<div>
-				<!-- <p class="mb-3">Allowed filters</p>
+				<div>
+					<!-- <p class="mb-3">Allowed filters</p>
 
 				<div class="grid grid-cols-4 gap-4 ">
 					<Checkbox>Limit</Checkbox>
@@ -103,17 +104,17 @@
 						</div>
 					{/each}
 				</div> -->
-			</div>
-			<div class="mt-3">
-				<p class="mb-3">Require permissions</p>
-				{#each data?.table?.requiredPermission ?? [] as permission}
-					<div>
-						<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
-							{permission.name}
-						</Checkbox>
-					</div>
-				{/each}
-				<!-- <div class="my-3">
+				</div>
+				<div class="mt-3">
+					<p class="mb-3">Require permissions</p>
+					{#each data?.table?.requiredPermission ?? [] as permission}
+						<div>
+							<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
+								{permission.name}
+							</Checkbox>
+						</div>
+					{/each}
+					<!-- <div class="my-3">
 					<hr />
 				</div>
 				{#each data?.permissions ?? [] as column}
@@ -123,26 +124,26 @@
 						</Checkbox>
 					</div>
 				{/each} -->
-			</div>
-		</Card>
-	</div>
-	<div class="mt-6 px-6">
-		<Card class="text-left" size="xl" padding="xl">
-			<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Find First</h5>
-			<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}`}</b></p>
-			<Tabs>
-				<TabItem open title="cURL" />
-				<TabItem title="JS" />
-				<TabItem title="PY" />
-				<TabItem title="Rust" />
-				<TabItem title="PHP" />
-				<TabItem title="C#" />
-				<TabItem title="Java" />
-			</Tabs>
-			<!-- <div class="my-3">
+				</div>
+			</Card>
+		</div>
+		<div class="mt-6 px-6">
+			<Card class="text-left" size="xl" padding="xl">
+				<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Find First</h5>
+				<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}`}</b></p>
+				<Tabs>
+					<TabItem open title="cURL" />
+					<TabItem title="JS" />
+					<TabItem title="PY" />
+					<TabItem title="Rust" />
+					<TabItem title="PHP" />
+					<TabItem title="C#" />
+					<TabItem title="Java" />
+				</Tabs>
+				<!-- <div class="my-3">
 				<Toggle>Disable</Toggle>
 			</div> -->
-			<!-- <div>
+				<!-- <div>
 				<div class="grid grid-cols-4 gap-4 ">
 					{#each table?.columns?.filter((item) => item.type !== 'password') ?? [] as column}
 						<div>
@@ -153,37 +154,37 @@
 					{/each}
 				</div>
 			</div> -->
-			<div class="mt-3">
-				<p class="mb-3">Require permissions</p>
-				{#each data?.table?.requiredPermission ?? [] as permission}
-					<div>
-						<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
-							{permission.name}
-						</Checkbox>
-					</div>
-				{/each}
-			</div>
-		</Card>
-	</div>
+				<div class="mt-3">
+					<p class="mb-3">Require permissions</p>
+					{#each data?.table?.requiredPermission ?? [] as permission}
+						<div>
+							<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
+								{permission.name}
+							</Checkbox>
+						</div>
+					{/each}
+				</div>
+			</Card>
+		</div>
 
-	<div class="mt-6 px-6">
-		<Card class="text-left" size="xl" padding="xl">
-			<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Find Unique</h5>
-			<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}`}</b></p>
-			<Tabs>
-				<TabItem open title="cURL" />
-				<TabItem title="JS" />
-				<TabItem title="PY" />
-				<TabItem title="Rust" />
-				<TabItem title="PHP" />
-				<TabItem title="C#" />
-				<TabItem title="Java" />
-			</Tabs>
-			<!-- <div class="my-3">
+		<div class="mt-6 px-6">
+			<Card class="text-left" size="xl" padding="xl">
+				<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Find Unique</h5>
+				<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}`}</b></p>
+				<Tabs>
+					<TabItem open title="cURL" />
+					<TabItem title="JS" />
+					<TabItem title="PY" />
+					<TabItem title="Rust" />
+					<TabItem title="PHP" />
+					<TabItem title="C#" />
+					<TabItem title="Java" />
+				</Tabs>
+				<!-- <div class="my-3">
 				<Toggle>Disable</Toggle>
 			</div> -->
-			<div>
-				<!-- <p class="mb-3">Allowed filters</p>
+				<div>
+					<!-- <p class="mb-3">Allowed filters</p>
 
 				<div class="grid grid-cols-4 gap-4 ">
 					{#each table?.columns?.filter((item) => item.type !== 'password') ?? [] as column}
@@ -194,38 +195,38 @@
 						</div>
 					{/each}
 				</div> -->
-			</div>
-			<div class="mt-3">
-				<p class="mb-3">Require permissions</p>
-				{#each data?.table?.requiredPermission ?? [] as permission}
-					<div>
-						<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
-							{permission.name}
-						</Checkbox>
-					</div>
-				{/each}
-			</div>
-		</Card>
-	</div>
+				</div>
+				<div class="mt-3">
+					<p class="mb-3">Require permissions</p>
+					{#each data?.table?.requiredPermission ?? [] as permission}
+						<div>
+							<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
+								{permission.name}
+							</Checkbox>
+						</div>
+					{/each}
+				</div>
+			</Card>
+		</div>
 
-	<div class="mt-6 px-6">
-		<Card class="text-left" size="xl" padding="xl">
-			<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Update</h5>
-			<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}/:id`}</b></p>
-			<Tabs>
-				<TabItem open title="cURL" />
-				<TabItem title="JS" />
-				<TabItem title="PY" />
-				<TabItem title="Rust" />
-				<TabItem title="PHP" />
-				<TabItem title="C#" />
-				<TabItem title="Java" />
-			</Tabs>
-			<!-- <div class="my-3">
+		<div class="mt-6 px-6">
+			<Card class="text-left" size="xl" padding="xl">
+				<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Update</h5>
+				<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}/:id`}</b></p>
+				<Tabs>
+					<TabItem open title="cURL" />
+					<TabItem title="JS" />
+					<TabItem title="PY" />
+					<TabItem title="Rust" />
+					<TabItem title="PHP" />
+					<TabItem title="C#" />
+					<TabItem title="Java" />
+				</Tabs>
+				<!-- <div class="my-3">
 				<Toggle>Disable</Toggle>
 			</div> -->
-			<div>
-				<!-- <p class="mb-3">Allowed filters</p>
+				<div>
+					<!-- <p class="mb-3">Allowed filters</p>
 
 				<div class="grid grid-cols-4 gap-4 ">
 					{#each table?.columns?.filter((item) => item.type !== 'password') ?? [] as column}
@@ -236,38 +237,38 @@
 						</div>
 					{/each}
 				</div> -->
-			</div>
-			<div class="mt-3">
-				<p class="mb-3">Require permissions</p>
-				{#each data?.table?.requiredPermission ?? [] as permission}
-					<div>
-						<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
-							{permission.name}
-						</Checkbox>
-					</div>
-				{/each}
-			</div>
-		</Card>
-	</div>
+				</div>
+				<div class="mt-3">
+					<p class="mb-3">Require permissions</p>
+					{#each data?.table?.requiredPermission ?? [] as permission}
+						<div>
+							<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
+								{permission.name}
+							</Checkbox>
+						</div>
+					{/each}
+				</div>
+			</Card>
+		</div>
 
-	<div class="mt-6 px-6">
-		<Card class="text-left" size="xl" padding="xl">
-			<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Delete</h5>
-			<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}`}</b></p>
-			<Tabs>
-				<TabItem open title="cURL" />
-				<TabItem title="JS" />
-				<TabItem title="PY" />
-				<TabItem title="Rust" />
-				<TabItem title="PHP" />
-				<TabItem title="C#" />
-				<TabItem title="Java" />
-			</Tabs>
-			<!-- <div class="my-3">
+		<div class="mt-6 px-6">
+			<Card class="text-left" size="xl" padding="xl">
+				<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Delete</h5>
+				<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}`}</b></p>
+				<Tabs>
+					<TabItem open title="cURL" />
+					<TabItem title="JS" />
+					<TabItem title="PY" />
+					<TabItem title="Rust" />
+					<TabItem title="PHP" />
+					<TabItem title="C#" />
+					<TabItem title="Java" />
+				</Tabs>
+				<!-- <div class="my-3">
 				<Toggle>Disable</Toggle>
 			</div> -->
-			<div>
-				<!-- <p class="mb-3">Allowed filters</p>
+				<div>
+					<!-- <p class="mb-3">Allowed filters</p>
 
 				<div class="grid grid-cols-4 gap-4 ">
 					{#each table?.columns?.filter((item) => item.type !== 'password') ?? [] as column}
@@ -278,17 +279,18 @@
 						</div>
 					{/each}
 				</div> -->
-			</div>
-			<div class="mt-3">
-				<p class="mb-3">Require permissions</p>
-				{#each data?.table?.requiredPermission ?? [] as permission}
-					<div>
-						<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
-							{permission.name}
-						</Checkbox>
-					</div>
-				{/each}
-			</div>
-		</Card>
-	</div>
-{/if}
+				</div>
+				<div class="mt-3">
+					<p class="mb-3">Require permissions</p>
+					{#each data?.table?.requiredPermission ?? [] as permission}
+						<div>
+							<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
+								{permission.name}
+							</Checkbox>
+						</div>
+					{/each}
+				</div>
+			</Card>
+		</div>
+	{/if}
+</div>

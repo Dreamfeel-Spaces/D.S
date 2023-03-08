@@ -138,6 +138,12 @@
 	<div class="w-36  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
 		<div>
 			<div class="mt-20">
+				<a class="hover:underline text-blue" href={`/docs`}>Collection docs</a>
+			</div>
+			<div class="mt-6">
+				<a class="hover:underline text-blue" href={`/${$page.params.space}`}>Update rules</a>
+			</div>
+			<div class="mt-6">
 				<a class="hover:underline text-blue" href={`/base/${$page.params.space}`}>Dashboards</a>
 			</div>
 			<div class="mt-6">

@@ -49,7 +49,7 @@
 	}
 </script>
 
-<div class="bg-gray-200 py-2 ">
+<div class="py-2 ">
 	<div class="flex my-2">
 		<div class=" flex-1 text-xl px-6 text-gray-500">
 			<Breadcrumb>

@@ -135,7 +135,7 @@
 								rel="external"
 								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 								href="/spaces"
-								data-te-nav-link-ref>Organizations</a
+								data-te-nav-link-ref>Spaces</a
 							>
 						</li>
 					</ul>
@@ -149,6 +149,28 @@
 					<a
 						rel="external"
 						class="hidden-arrow mr-4 flex items-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+						href="/about"
+						id="dropdownMenuButton1"
+						role="button"
+						data-te-dropdown-toggle-ref
+						aria-expanded="false"
+					>
+						About us
+					</a>
+					<a
+						rel="external"
+						class="hidden-arrow mr-4 flex items-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+						href="/docs"
+						id="dropdownMenuButton1"
+						role="button"
+						data-te-dropdown-toggle-ref
+						aria-expanded="false"
+					>
+						Docs
+					</a>
+					<a
+						rel="external"
+						class="hidden-arrow mr-4 flex items-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 						href="/blog"
 						id="dropdownMenuButton1"
 						role="button"
@@ -157,6 +179,7 @@
 					>
 						Blog
 					</a>
+
 					<a
 						rel="external"
 						class="mr-4 text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
@@ -319,7 +342,7 @@
 							>
 						</svelte:fragment>
 					</SidebarItem>
-					<SidebarDropdownWrapper isOpen={isSpaces} label="Your Organizations">
+					<SidebarDropdownWrapper isOpen={isSpaces} label="Spaces">
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"

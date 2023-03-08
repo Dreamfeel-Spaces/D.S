@@ -1,4 +1,5 @@
 import { prisma } from '$lib/db/prisma';
+import { transformRows } from '$lib/rows/transform';
 import { error } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
 
@@ -33,11 +34,29 @@ export async function load({ params }: RequestEvent) {
 		},
 		include: {
 			columns: true,
-			rows: true
+			rows: {
+				include: {
+					tableData: true
+				}
+			}
+		}
+	});
+	const withRows = tables.reduce((prev, curr) => {
+		return { ...prev, [curr.id]: transformRows(curr.rows) };
+	}, {});
+
+	const page = await prisma.page.findUnique({
+		where: {
+			id: params.path
 		}
 	});
 
-	return { space, ui, tables };
+	return {
+		space,
+		ui,
+		tables: tables,
+		rows: withRows
+	};
 }
 
 export const actions: Actions = {

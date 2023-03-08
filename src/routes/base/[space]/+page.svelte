@@ -1,9 +1,16 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { page } from '$app/stores';
-	import { Button } from 'flowbite-svelte';
 	const spaceName = $page.params.space;
-	import { Table, TableBody, Card, Breadcrumb, BreadcrumbItem } from 'flowbite-svelte';
+	import {
+		Checkbox,
+		Button,
+		Card,
+		Breadcrumb,
+		BreadcrumbItem,
+		Accordion,
+		AccordionItem
+	} from 'flowbite-svelte';
 
 	export let data: PageData;
 
@@ -37,7 +44,7 @@
 		</Breadcrumb>
 	</div>
 	<a class="text-lg" href={`/base/${spaceId}/table/create`}>
-		<Button pill gradient size="xs">Add collections</Button>
+		<Button pill color="pinkToOrange" gradient size="xs">Add collections</Button>
 	</a>
 </div>
 
@@ -49,15 +56,63 @@
 {/if}
 
 {#if hasTables}
-	<div class="mt-3 px-3 grid grid-cols-2 gap-3 max-h-96 overflow-auto">
+	<div class="mt-3 px-3 grid grid-cols-2 gap-3 max-h-99 overflow-auto">
 		{#each data.tables as table}
 			<Card size="xl">
 				<b class="text-3xl">{table.name}</b>
-				<div class="my-3 text-2xl">{table.rows?.length} Items</div>
-				<div class="flex justify-between">
-					<a rel="external" href={`/dashboards/${spaceId}/${table.name}/overview`}>Overview</a>
-					<a rel="external" href={`/dashboards/${spaceId}/${table.name}/create`}>Add</a>
-					<a rel="external" href={`/dashboards/${spaceId}/${table.name}`}>Table</a>
+				<div class="my-3 flex text-2xl">{table.rows?.length} Items</div>
+
+				<Accordion>
+					<AccordionItem>
+						<svelte:fragment slot="header">Rules</svelte:fragment>
+						<div>
+							<div>
+								<p>Create</p>
+								{#each JSON.parse(table?.requiredPermissions ?? '[]') as permission}
+									<div>
+										<Checkbox checked={permission.checked}>{permission.name}</Checkbox>
+									</div>
+								{/each}
+							</div>
+							<div>
+								<p>Read</p>
+								{#each JSON.parse(table?.requiredPermissions ?? '[]') as permission}
+									<div>
+										<Checkbox checked={permission.checked}>{permission.name}</Checkbox>
+									</div>
+								{/each}
+							</div>
+							<div>
+								<p>Update</p>
+								{#each JSON.parse(table?.requiredPermissions ?? '[]') as permission}
+									<div>
+										<Checkbox checked={permission.checked}>{permission.name}</Checkbox>
+									</div>
+								{/each}
+							</div>
+							<div>
+								<p>Delete</p>
+								{#each JSON.parse(table?.requiredPermissions ?? '[]') as permission}
+									<div>
+										<Checkbox checked={permission.checked}>{permission.name}</Checkbox>
+									</div>
+								{/each}
+							</div>
+						</div>
+					</AccordionItem>
+				</Accordion>
+				<div class="flex mt-6">
+					<a rel="external" class="flex-1" href={`/base/${spaceId}/${table.name}`}
+						><Button gradient color="pinkToOrange" pill size="xs">Schema</Button></a
+					>
+					<div class="flex justify-end">
+						<a rel="external"  href={`/base/${spaceId}/${table.name}/api`}
+							><Button gradient pill size="xs">REST API</Button></a
+						>
+						<a rel="external" class="ml-3" href={`/dashboards/${spaceId}/${table.name}/overview`}>
+							<Button gradient pill size="xs">Dashboards</Button>
+						</a>
+					</div>
 				</div>
 			</Card>
 		{/each}

@@ -8,19 +8,35 @@
 </script>
 
 {#if form?.success}
-	<div class="px-6 mt-9">
+	<div class="px-6 mt-9 lg:px-64">
 		<Alert>
 			<div class="mb-3">
-				<b>Space saved!</b>
+				<b>Space created!</b>
 			</div>
-			<a class="hover:underline" rel="external" href={`/spaces/${form?.data?.appId}`}
-				>View details</a
+			<a class="hover:underline" rel="external" href={`/spaces/${form?.data?.appId}?tab=settings`}
+				>Configure space</a
 			>
 		</Alert>
 	</div>
 {/if}
-<div class="text-3xl text-gray-500 mt-9  text-center ">Create space</div>
-<div class="mt-9 px-6 mx-2 lg:px-72">
+
+<section class="bg-white dark:bg-gray-900">
+	<div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
+		<h1
+			class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-700 md:text-5xl lg:text-6xl dark:text-white"
+		>
+			Create a spaces app
+		</h1>
+		<p
+			class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400"
+		>
+			Here at Dreamfeel we focus on markets where technology, innovation, and capital can unlock
+			long-term value and drive economic growth.
+		</p>
+	</div>
+</section>
+
+<div class="px-6 mx-2 lg:px-72">
 	<form method="POST" use:enhance>
 		<div class="mb-6 w-full">
 			<label for="name">Name</label>

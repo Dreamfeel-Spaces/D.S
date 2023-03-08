@@ -47,6 +47,8 @@ export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 	let isExample = /^\/example/.test(pathname);
 	let isPdf = /^\/pdf/.test(pathname);
 	let isHome = /^\/$/.test(pathname);
+	let isAbout = /^\/about/.test(pathname);
+	let isDocs = /^\/docs/.test(pathname);
 
 	let reservedRoutes = [
 		isAccounts,
@@ -61,7 +63,10 @@ export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 		isExample,
 		isPdf,
 		isSpaces,
-		isHome
+		isHome,
+		isAbout,
+		isBlog,
+		isDocs
 	];
 
 	const isReserved = reservedRoutes.filter(Boolean).length;
@@ -85,6 +90,11 @@ export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 	let response = new Response(html);
 	response.headers.set('content-type', 'text/html');
 	return response;
+};
+
+export const errorHandle: HandleServerError = ({ error }) => {
+	console.log(error);
+	return { message: 'Error' };
 };
 
 export const handle = sequence(authHandle, withSpaceRouter);

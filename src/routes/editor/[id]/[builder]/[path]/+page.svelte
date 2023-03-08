@@ -17,7 +17,8 @@
 	import {
 		spaceCommerceItem,
 		spaceCommerceList,
-		spaceCommercePrice
+		spaceCommercePrice,
+		spaceTestPlugin
 	} from '$lib/plugins/grapes/space-ui';
 	import { addGpanels, gPanels } from '$lib/plugins/util/panels';
 	import { addGCommands } from '$lib/plugins/util/commands';
@@ -51,9 +52,7 @@
 				(editor) => spaceCommerceItem(editor),
 				(editor) => spaceCommerceList(editor, data?.tables),
 				spaceCommercePrice,
-				(editor) => {
-					editor.getWrapper;
-				}
+				(editor) => spaceTestPlugin(editor, data?.tables, data?.rows)
 			],
 			layerManager: {
 				appendTo: '.layers-container'
@@ -77,20 +76,12 @@
 		addGpanels(editor);
 		addGCommands(editor);
 
-		// editor.Commands.add('manual-save', {
-		// 	run: (editor: any) => {
-		// 		editor.Modal.setTitle('Components JSON')
-		// 			.setContent(
-		// 				`<textarea style="width:100%; height: 250px;">
-		// 		${JSON.stringify(editor.getComponents())}
-		// 	  </textarea>`
-		// 			)
-		// 			.open();
-		// 	}
-		// });
-
 		editor.Commands.add('manual-save', {
 			run: (editor: any) => handleSave()
+		});
+
+		editor.Commands.add('canvas-clear', {
+			// run: editor=>editor.
 		});
 	});
 
@@ -101,13 +92,13 @@
 		let css = editor?.getCss();
 		let js = editor?.getJs();
 
-		console.log(editor?.getSelected());
+		const uiDef = editor.getProjectData();
 
 		saving = true;
 		try {
 			const res = await axios.post(
 				`/editor/${$page.params.id}/${$page.params.builder}/${$page.params.path}/server`,
-				{ html, css, js }
+				{ html, css, js, uiDef }
 			);
 			saving = false;
 		} catch (e) {
@@ -134,113 +125,7 @@
 		<div class="traits-container" />
 		<div class="layers-container" />
 		<div class="styles-container" />
-		<!-- <form action="?/savePageData" method="post">
-			<div class="api-container text-left px-4">
-				{console.log(editor?.getHtml())}
-				<input value={editor?.getHtml()} name="html" type="hidden" />
-				<input value={editor?.getCss()} name="css" type="hidden" />
-				<input value={editor?.getJs()} name="js" type="hidden" />
-				<div class="mb-9 text-2xl ">Spaces api</div>
-				<label for="table">Select collection</label>
-				<Select
-					size="sm"
-					id="table"
-					name="table"
-					required
-					bind:value={table}
-					bind:selected={table}
-					placeholder="Select table"
-					items={data.tables.map((table) => {
-						return {
-							name: table.name,
-							value: table.id
-						};
-					})}
-					class="mt-3 bg-inherit"
-				/>
-				<div class="mt-3">
-					<div class="mb-3 flex">
-						<Radio value="list" on:change={(e) => (isList = e.target.value)} name="list">List</Radio
-						>
-						<Radio
-							class="ml-3"
-							value="detail"
-							on:change={(e) => (isList = e.target.value)}
-							name="list">Detail</Radio
-						>
-					</div>
-					{#if isList === 'list'}
-						<Checkbox bind:checked={paginate} bind:value={paginate}
-							><span class="text-gray-600">Paginate</span></Checkbox
-						>
-						<Checkbox class="bg-inherit" bind:checked={sort} bind:value={sort}
-							><span class="text-gray-600">Sort</span></Checkbox
-						>
-					{/if}
-				</div>
-				{#if paginate}
-					<div class="my-2">
-						<div>
-							<label for="">Limit per page</label>
-							<Input class="bg-inherit" size="sm" required placeholder="10" />
-						</div>
-					</div>
-				{/if}
-				{#if sort}
-					<div class="flex mt-3 gap-3">
-						<div class="w-full">
-							<label for="">Sort</label>
-							<Select
-								required
-								size="sm"
-								class="bg-inherit"
-								id="sort"
-								name="sort"
-								bind:value={sortField}
-								placeholder="Select"
-								items={data.tables.map((table) => {
-									return {
-										name: table.name,
-										id: table.id
-									};
-								})}
-							/>
-						</div>
 
-						<div class="w-full">
-							<div>
-								<label for="">Order by</label>
-								<Select
-									id="sort_by"
-									size="sm"
-									required
-									class="bg-inherit"
-									name="sort_by"
-									bind:value={sortOpion}
-									placeholder="Sort by"
-									items={[
-										{
-											name: 'Ascending',
-											value: 'asc'
-										},
-										{
-											name: 'Descending',
-											value: 'desc'
-										}
-									]}
-								/>
-							</div>
-						</div>
-					</div>
-				{/if}
-				<div class="my-4" />
-				{#if saving}
-					<Spinner />
-				{:else}
-					<Button on:click={handleSave} class="mt-3 w-full">Apply</Button>
-				{/if}
-			</div>
-		</form> -->
 		<div class="blocks-container">
 			<div id="blocks" />
 		</div>

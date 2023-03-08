@@ -2,16 +2,66 @@ import { prisma } from '$lib/db/prisma';
 import type { RequestEvent } from './$types';
 import { transformHtmlString } from '$lib/util/transformHtmlString';
 
+import { JSDOM } from 'jsdom';
+import grapesjs from 'grapesjs';
+import { DOMParser } from 'xmldom';
+import { spaceTestPlugin } from '$lib/plugins/grapes/space-ui';
+
+// https://unpkg.com/tailwindcss@2.1.2/dist/tailwind.min.css
+
 export async function GET({ params }: RequestEvent) {
-	const uiDraft = await prisma.uiDraft.findFirst({
-		where: { vId: params.id }
+	const parser = new DOMParser();
+
+	const data = await prisma.page.findUnique({
+		where: {
+			id: params.id
+		}
 	});
-	const html = JSON.parse(uiDraft?.draft ?? '{}')?.html;
-	const css = JSON.parse(uiDraft?.draft ?? '{}')?.css;
-	const renderedHTML = await transformHtmlString(html, css);
-	const response = new Response(renderedHTML);
+
+	const uiDraft = data?.html ?? '';
+
+	let parsed = JSON.parse(uiDraft);
+
+	const ui = parsed.uiDef;
+
+	const editor = grapesjs.init({
+		headless: true,
+		plugins: [(editor) => spaceTestPlugin(editor, [], [])]
+	});
+
+	editor.loadProjectData(ui);
+
+	const html = editor.getHtml();
+
+	const dom = new JSDOM(html);
+
+	const document = dom.window.document;
+
+	const tailwind = await fetch('https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css');
+	const css = await tailwind.text();
+
+	const style = document.createElement('style');
+	style.textContent = css;
+
+	document.head.appendChild(style);
+
+	const serializedDom = dom.serialize();
+
+	const response = new Response(serializedDom);
+
 	response.headers.set('content-type', 'text/html');
+
 	return response;
+
+	// const uiDraft = await prisma.uiDraft.findFirst({
+	// 	where: { vId: params.id }
+	// });
+	// const html = JSON.parse(uiDraft?.draft ?? '{}')?.html;
+	// const css = JSON.parse(uiDraft?.draft ?? '{}')?.css;
+	// const renderedHTML = await transformHtmlString(html, css);
+	// const response = new Response(renderedHTML);
+	// response.headers.set('content-type', 'text/html');
+	// return response;
 }
 
 export async function PATCH({ params, request }: RequestEvent) {

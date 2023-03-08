@@ -1,4 +1,5 @@
 import { prisma } from '$lib/db/prisma';
+import { transformRows } from '$lib/rows/transform';
 import { Token } from '$lib/token/Token';
 import { errorCatch } from '$lib/util/slugit';
 import { error } from '@sveltejs/kit';
@@ -54,19 +55,7 @@ export async function GET({ params, url, request }: RequestEvent) {
 			}
 		});
 
-	const formattedRows = rows.map((row) => {
-		row = { ...row };
-		let tabledata = [...row.tableData];
-		delete (row as any)['tableData'];
-		return {
-			...row,
-			...{
-				...tabledata.reduce((prev, curr) => {
-					return { ...prev, [curr.column]: curr.data };
-				}, {})
-			}
-		};
-	});
+	const formattedRows = transformRows(rows);
 
 	const formattedResponse = {
 		count,

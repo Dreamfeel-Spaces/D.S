@@ -336,7 +336,7 @@
 									</div>
 								</svelte:fragment>
 								<div class="my-9">
-									<form method="POST" action="?/settings">
+									<form method="POST" action="?/updateChannels&tab=settings">
 										<Checkbox
 											bind:checked={space.apiChannel}
 											bind:value={space.apiChannel}

@@ -60,6 +60,7 @@ model Page {
   components       Component[]
   html             String?
   pathRegexp       String
+  uiDef            String?
 }
 
 model ConfigVars {

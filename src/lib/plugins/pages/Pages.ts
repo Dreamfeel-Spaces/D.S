@@ -60,8 +60,14 @@ export class Pages {
 
 		const html = JSON.parse(draft ?? '{}')?.html;
 		const css = JSON.parse(draft ?? '{}')?.css;
+		const uiDef = JSON.parse(draft ?? '{}')?.css;
 		const renderedHTML = await transformHtmlString(html, css, tempId, renderSubdomainApp);
 
 		return [renderedHTML, null];
+	}
+
+
+	renderGrapes(){
+
 	}
 }
