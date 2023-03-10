@@ -20,7 +20,10 @@ export class Pages {
 
 	get isValidSubdomain() {
 		return (
-			this.subdomain && this.subdomain !== this.url?.toJSON() && this.url?.toJSON().includes('.')
+			this.subdomain &&
+			this.subdomain !== this.url?.toJSON() &&
+			this.url?.toJSON().includes('.') &&
+			this.subdomain !== 'upgraded-journey'
 		);
 	}
 
@@ -66,8 +69,5 @@ export class Pages {
 		return [renderedHTML, null];
 	}
 
-
-	renderGrapes(){
-
-	}
+	renderGrapes() {}
 }

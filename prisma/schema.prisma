@@ -23,6 +23,8 @@ model ComponentChild {
   id          String    @id @default(cuid())
   component   Component @relation(fields: [componentId], references: [id])
   componentId String
+
+  @@index([componentId])
 }
 
 model ComponentDataItem {
@@ -32,6 +34,8 @@ model ComponentDataItem {
   value           String?
   component       Component? @relation(fields: [componentId], references: [id])
   componentId     String?
+
+  @@index([componentId])
 }
 
 model ComponentData {
@@ -40,6 +44,8 @@ model ComponentData {
   componentId String?
   key         String?
   value       String?
+
+  @@index([componentId])
 }
 
 model Component {
@@ -54,6 +60,8 @@ model Component {
   items      ComponentDataItem[]
   children   ComponentChild[]
   classNames String?
+
+  @@index([pageId])
 }
 
 model Page {
@@ -67,6 +75,8 @@ model Page {
   html             String?
   pathRegexp       String?
   uiDef            String?
+
+  @@index([spaceUIVersionId])
 }
 
 model ConfigVars {
@@ -79,6 +89,10 @@ model ConfigVars {
   spaceId          String?
   createdBy        User            @relation(fields: [userId], references: [id])
   userId           String
+
+  @@index([spaceUIVersionId])
+  @@index([spaceId])
+  @@index([userId])
 }
 
 model SpaceUIVersion {
@@ -95,6 +109,9 @@ model SpaceUIVersion {
   configVars  ConfigVars[]
   createdBy   User?        @relation(fields: [userId], references: [id])
   userId      String?
+
+  @@index([spaceUIId])
+  @@index([userId])
 }
 
 model SpaceUI {
@@ -106,6 +123,9 @@ model SpaceUI {
   template       Boolean          @default(false)
   user           User?            @relation(fields: [userId], references: [id])
   userId         String?
+
+  @@index([spaceId])
+  @@index([userId])
 }
 
 model TableData {
@@ -118,6 +138,8 @@ model TableData {
   rel      String?
   multiple Boolean @default(false)
   required Boolean @default(false)
+
+  @@index([rowId])
 }
 
 model Row {
@@ -127,6 +149,8 @@ model Row {
   tableData    TableData[]
   dateCreated  DateTime    @default(now())
   updatedAt    DateTime    @default(now()) @updatedAt
+
+  @@index([spaceTableId])
 }
 
 model ColumnSelectOptions {
@@ -135,6 +159,8 @@ model ColumnSelectOptions {
   columnId String
   label    String
   value    String
+
+  @@index([columnId])
 }
 
 model Column {
@@ -152,6 +178,8 @@ model Column {
   defaultOn       Boolean               @default(false)
   reportField     ReportField[]
   reportFilters   ReportFilter[]
+
+  @@index([spaceTableId])
 }
 
 model MsgFeedback {
