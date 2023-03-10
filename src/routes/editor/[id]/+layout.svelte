@@ -30,7 +30,7 @@
 		<div class=" hidden lg:flex  overflow-y-auto">
 			<Sidebar>
 				<SidebarWrapper>
-					<SidebarGroup style="min-height:88vh; overflow:auto">
+					<SidebarGroup class="max-h-99" style="min-height:88vh;  overflow:auto">
 						<SidebarItem href="/editor" label="Overview">
 							<svelte:fragment slot="icon">
 								<svg

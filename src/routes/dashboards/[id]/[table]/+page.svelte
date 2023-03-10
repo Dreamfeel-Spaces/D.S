@@ -96,35 +96,38 @@
 		</div>
 	{/if}
 
-	{#if hasRecords && hasColumns}
-		<Table class="mt-9" striped={true}>
-			<TableHead>
-				{#each data.columns as column}
-					<TableHeadCell>{column}</TableHeadCell>
-				{/each}
-				<TableHeadCell>
-					<span class="sr-only"> Edit </span>
-				</TableHeadCell>
-			</TableHead>
-			<TableBody class="divide-y">
-				{#each data.rows as row}
-					<TableBodyRow on:click={() => navigateToTableDetail(row.id)}>
-						{#each data.columns as column}
-							<TableBodyCell>{row[column]}</TableBodyCell>
-						{/each}
-						<TableBodyCell>
-							<a
-								href={`/dashboards/${space}/${table}/${row.id}/update`}
-								class="font-medium text-blue-600 hover:underline dark:text-blue-500"
-							>
-								Edit
-							</a>
-						</TableBodyCell>
-					</TableBodyRow>
-				{/each}
-			</TableBody>
-		</Table>
-	{/if}
+	<div class="max-h-96 overflow-auto">
+		{#if hasRecords && hasColumns}
+			<Table class="mt-9" striped={true}>
+				<TableHead>
+					{#each data.columns as column}
+						<TableHeadCell>{column}</TableHeadCell>
+					{/each}
+					<TableHeadCell>
+						<span class="sr-only"> Edit </span>
+					</TableHeadCell>
+				</TableHead>
+				<TableBody class="divide-y">
+					{#each data.rows as row}
+						<TableBodyRow on:click={() => navigateToTableDetail(row.id)}>
+							{#each data.columns as column}
+								<TableBodyCell>{row[column]}</TableBodyCell>
+							{/each}
+							<TableBodyCell>
+								<a
+									href={`/dashboards/${space}/${table}/${row.id}/update`}
+									class="font-medium text-blue-600 hover:underline dark:text-blue-500"
+								>
+									Edit
+								</a>
+							</TableBodyCell>
+						</TableBodyRow>
+					{/each}
+				</TableBody>
+			</Table>
+		{/if}
+	</div>
+
 	<div class="mt-3">
 		<Pagination>
 			<PaginationItem active>

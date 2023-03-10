@@ -7,10 +7,10 @@
 		Card,
 		Breadcrumb,
 		BreadcrumbItem,
-		Toggle,
+		Accordion,
 		Tabs,
 		TabItem,
-		Button,
+		AccordionItem,
 		Checkbox,
 		Alert
 	} from 'flowbite-svelte';
@@ -18,7 +18,6 @@
 	const tableName = $page.params.table;
 	const spaceName = $page.params.space;
 	const table = data?.table;
-	console.log(table);
 </script>
 
 <div class="my-3 mx-6  flex  text-2xl text-gray-500">
@@ -105,15 +104,24 @@
 					{/each}
 				</div> -->
 				</div>
-				<div class="mt-3">
-					<p class="mb-3">Require permissions</p>
-					{#each data?.table?.requiredPermission ?? [] as permission}
-						<div>
-							<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
-								{permission.name}
+				<Accordion>
+					<AccordionItem>
+						<svelte:fragment slot="header">
+							<p class="mb-3">Permissions</p>
+						</svelte:fragment>
+						{#each data?.permissions.map((perm, index) => {
+							const withVals = data.table.requiredPermission.find((i) => perm.name === i.name);
+							return { ...perm, ...withVals };
+						}) ?? [] as permission}
+							<div>
+								<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
+									{permission.name}
 							</Checkbox>
-						</div>
-					{/each}
+							</div>
+						{/each}
+					</AccordionItem>
+				</Accordion>
+				<div class="mt-3">
 					<!-- <div class="my-3">
 					<hr />
 				</div>

@@ -2,9 +2,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// datasource db {
+//   provider = "sqlite"
+//   url      = "file:./.sqlite"
+// }
+
 datasource db {
-  provider = "cockroachdb"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model uiDraft {
@@ -59,7 +65,7 @@ model Page {
   path             String?
   components       Component[]
   html             String?
-  pathRegexp       String
+  pathRegexp       String?
   uiDef            String?
 }
 
@@ -207,6 +213,7 @@ model Chart {
   labelKey    String?
   valueKey    String?
   filters     ReportFilter[]
+  SQT         SQT[]
 }
 
 model DashboardForm {
@@ -217,6 +224,28 @@ model DashboardForm {
   type        String?
   description String?
   fields      ReportField[]
+  SQT         SQT[]
+}
+
+model SQT {
+  id              String         @id @default(cuid())
+  form            DashboardForm? @relation(fields: [dashboardFormId], references: [id])
+  dashboardFormId String?
+  report          Report?        @relation(fields: [reportId], references: [id])
+  reportId        String?
+  chart           Chart?         @relation(fields: [chartId], references: [id])
+  chartId         String?
+  recipientType   String?
+  recipients      String         @default("[]")
+  coverImage      String?
+  title           String?
+  description     String?
+  via             String?        @default("external")
+  emailList       String?
+  collection      SpaceTable?    @relation(fields: [spaceTableId], references: [id])
+  spaceTableId    String?
+  tableEmailCol   String?
+  shareWith       String?
 }
 
 model ReportField {
@@ -243,6 +272,8 @@ model Report {
   layout      String?        @default("tabular")
   orientation String?        @default("landscape")
   filters     ReportFilter[]
+  SQT         SQT[]
+  charts      String?        @default("[]")
 }
 
 model ReportFilter {
@@ -276,6 +307,14 @@ model SpaceTable {
   requiredPermissions String?         @default("[]")
   dashboardForms      DashboardForm[]
   disableApi          Boolean         @default(false)
+  dataRules           DataRules[]
+  SQT                 SQT[]
+}
+
+model DataRules {
+  id           String     @id @default(cuid())
+  table        SpaceTable @relation(fields: [spaceTableId], references: [id])
+  spaceTableId String
 }
 
 model Role {

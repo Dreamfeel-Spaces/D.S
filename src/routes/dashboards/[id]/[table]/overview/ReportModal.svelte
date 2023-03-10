@@ -18,13 +18,18 @@
 		sort: '',
 		sortBy: '',
 		layout: '',
-		orientation: ''
+		orientation: '',
+
+		includeChart: false
 	};
 	let filters = [{ customValue: '' }];
+	let charts = [{ labelKey: '', valueKey: '', chartType: '' }];
 </script>
 
 <div class="text-end">
-	<Button on:click={() => (formModal = true)}>Create report</Button>
+	<Button size="xs" pill gradient color="pinkToOrange" on:click={() => (formModal = true)}
+		>Create report</Button
+	>
 </div>
 <Modal bind:open={formModal} autoclose={false} class="w-full">
 	<form class="flex flex-col space-y-3" action="?/addReport&tab=reports" method="POST">
@@ -47,12 +52,101 @@
 				}}>Select all</Checkbox
 			>
 		</div>
-		<div class="mflex gap-2 wrap">
+		<div class=" gap-2 wrap">
 			{#each columns as column}
 				<Checkbox bind:checked={column.checked} bind:value={column.checked}>{column.name}</Checkbox>
 			{/each}
 		</div>
-
+		<hr />
+		<div class="mb-4">
+			<Checkbox
+				name="includeChart"
+				bind:checked={metaData.includeChart}
+				bind:value={metaData.includeChart}>Include charts</Checkbox
+			>
+			{#if metaData.includeChart}
+				<div>
+					<div class="mb-2 mt-6">
+						<p>Chart options</p>
+						<input type="hidden" name="charts" value={JSON.stringify(charts)} />
+					</div>
+					{#each charts as chart}
+						<div class="mb-3 flex gap-2 wrap">
+							<Select
+								placeholder="Chart type"
+								required
+								bind:value={chart.type}
+								items={[
+									{
+										name: 'Bar',
+										value: 'bar'
+									},
+									{
+										name: 'Line',
+										value: 'line'
+									},
+									{
+										name: 'Pie',
+										value: 'pie'
+									},
+									{
+										name: 'Scatter',
+										value: 'scatter'
+									}
+								]}
+								name="type"
+							/>
+							<Select
+								required
+								name="labelKey"
+								bind:value={chart.labelKey}
+								items={[...columns]
+									.map((col) => {
+										return {
+											name: col.name,
+											value: col.name
+										};
+									})
+									.concat([
+										{
+											name: 'Date created',
+											value: 'dateCreated'
+										}
+									])}
+								placeholder="Label"
+								class=""
+							/>
+							<Select
+								required
+								name="valueKey"
+								bind:value={chart.valueKey}
+								items={[...columns]
+									.map((col) => {
+										return {
+											name: col.name,
+											value: col.name
+										};
+									})
+									.concat([
+										{
+											name: 'Date created',
+											value: 'dateCreated'
+										}
+									])}
+								placeholder="Value"
+							/>
+						</div>
+					{/each}
+					<button
+						type="button"
+						on:click={() => {
+							charts = [...charts, { labelKey: '', valueKey: '', chartType: '' }];
+						}}>Add chart</button
+					>
+				</div>
+			{/if}
+		</div>
+		<hr />
 		<div class="flex">
 			<div class=" flex-1">Sort and order</div>
 		</div>
@@ -98,7 +192,7 @@
 				placeholder="Select Order"
 			/>
 		</div>
-
+		<hr />
 		<div class="flex">
 			<div class=" flex-1">Filters</div>
 		</div>
@@ -197,6 +291,7 @@
 				}}>Add filter</button
 			>
 		</div>
+		<hr />
 		<div class="flex">
 			<div class=" flex-1">Layout</div>
 		</div>

@@ -18,7 +18,7 @@
 	export let form: any;
 </script>
 
-<div class="my-3 text-xl px-6 flex justify-between text-gray-500">
+<div class="mt-3 text-xl px-6 flex justify-between text-gray-500">
 	<Breadcrumb>
 		<BreadcrumbItem>Home</BreadcrumbItem>
 		<BreadcrumbItem>Editor</BreadcrumbItem>
@@ -27,16 +27,16 @@
 	<a href={`/editor/${$page.params.id}/create`}><Button pill gradient size="xs">Add UI</Button></a>
 </div>
 
-<div class="my-9 text-center">
-	{#if !uis.length}
+{#if !uis.length}
+	<div class="my-9 text-center">
 		<div>No UIS have been added</div>
 		<div class="mt-9 ">
 			<a class="hover:underline" href={`/editor/${$page.params.id}/create`}>
 				<Button>Add UI</Button></a
 			>
 		</div>
-	{/if}
-</div>
+	</div>
+{/if}
 
 {#if form?.defaultUiSuccess}
 	<div class="my-6 px-6">
@@ -44,7 +44,7 @@
 	</div>
 {/if}
 
-<div class="px-6 grid lg:grid-cols-2 gap-2 max-h-96 overflow-auto ">
+<div class="px-6 grid lg:grid-cols-2 gap-2 max-h-99 overflow-auto ">
 	{#each uis as ui}
 		<Card size="lg">
 			<div class="flex">

@@ -28,3 +28,7 @@
 .gjs-four-color-h:hover {
 	color: #11001c;
 }
+
+.panel__previews {
+	position: initial;
+}

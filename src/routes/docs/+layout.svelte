@@ -8,7 +8,6 @@
 		SidebarDropdownWrapper
 	} from 'flowbite-svelte';
 	let spanClass = 'flex-1 ml-3 whitespace-nowrap';
-	export let data;
 	import { page } from '$app/stores';
 </script>
 

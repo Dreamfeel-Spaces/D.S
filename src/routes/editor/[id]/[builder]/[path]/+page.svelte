@@ -14,18 +14,14 @@
 	import gjsForms from 'grapesjs-plugin-forms';
 	import gjsTabs from 'grapesjs-tabs';
 	import gjsTailwind from '$lib/plugins/grapes/tailwind';
-	import {
-		spaceCommerceItem,
-		spaceCommerceList,
-		spaceCommercePrice,
-		spaceTestPlugin
-	} from '$lib/plugins/grapes/space-ui';
+	import { spaceTestPlugin } from '$lib/plugins/grapes/space-ui';
 	import { addGpanels, gPanels } from '$lib/plugins/util/panels';
 	import { addGCommands } from '$lib/plugins/util/commands';
 	import { gStyles } from '$lib/plugins/util/styles';
 	import { gDevices } from '$lib/plugins/util/devices';
 	import { gStorage } from '$lib/plugins/util/storage';
 	import gBasic from 'grapesjs-blocks-basic';
+	import { cardPlugin } from '$lib/plugins/grapes/space-ui/w-copilot';
 	// import gjsProject from 'grapesjs-project-manager';
 
 	let editor: grapesjs.Editor;
@@ -49,10 +45,14 @@
 				(editor) => gjsForms(editor),
 				(editor) => gjsTabs(editor),
 				(editor) => gBasic(editor),
-				(editor) => spaceCommerceItem(editor),
-				(editor) => spaceCommerceList(editor, data?.tables),
-				spaceCommercePrice,
-				(editor) => spaceTestPlugin(editor, data?.tables, data?.rows)
+				// (editor) => spaceCommerceItem(editor),
+				// (editor) => spaceCommerceList(editor, data?.tables),
+				// spaceCommercePrice,
+				(editor) => spaceTestPlugin(editor, { tables: data?.tables, rows: data.rows }),
+				(editor) => cardPlugin(editor, data?.tables, data?.rows),
+				editor=>{
+					// editor.addComponents()
+				}
 			],
 			layerManager: {
 				appendTo: '.layers-container'
@@ -78,10 +78,6 @@
 
 		editor.Commands.add('manual-save', {
 			run: (editor: any) => handleSave()
-		});
-
-		editor.Commands.add('canvas-clear', {
-			// run: editor=>editor.
 		});
 	});
 
@@ -171,9 +167,6 @@
 	}
 
 	.panel__devices {
-		position: initial;
-	}
-	.panel__previews {
 		position: initial;
 	}
 </style>

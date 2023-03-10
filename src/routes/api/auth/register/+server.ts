@@ -5,18 +5,16 @@ import { errorCatch } from '$lib/util/slugit';
 import { error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
-export async function POST({ request }: RequestEvent) {
+export async function POST(event: RequestEvent) {
+	const { request, locals } = event;
 	const apiKey = request.headers.get('x-api-key');
 	if (!apiKey) throw error(403, 'Api key / authorization token required');
 	const data = await request.json();
 	const token = new Token();
 	const logger = new Logger();
-	const [space, spaceError] = await errorCatch(token.verifyApiKey(apiKey));
 
-	if (spaceError) {
-		await logger.error(spaceError);
-		throw error(403, 'Invalid access token provided');
-	}
+	// @ts-ignore
+	const space = locals.space;
 
 	const username = data.username || data.email;
 	const password = data.password;

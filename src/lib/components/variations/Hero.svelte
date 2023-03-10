@@ -34,7 +34,7 @@
 		<section class="mb-40">
 			<div class="px-6 py-12 md:px-12 bg-gray-50 text-gray-800 text-center lg:text-left">
 				<div class="container mx-auto xl:px-32">
-					<div class="grid lg:grid-cols-2 gap-12 flex items-center">
+					<div class="grid lg:grid-cols-2 gap-12  items-center">
 						<div class="mt-12 lg:mt-0">
 							<h1 class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">
 								The best offer <br /><span class="text-blue-600">for your business</span>
@@ -73,7 +73,7 @@
 		<section class="mb-40">
 			<div class="px-6 py-12 md:px-12 bg-gray-100 text-gray-800 text-center lg:text-left">
 				<div class="container mx-auto xl:px-32">
-					<div class="grid lg:grid-cols-2 gap-12 flex items-center">
+					<div class="grid lg:grid-cols-2 gap-12 items-center">
 						<div class="mt-12 lg:mt-0">
 							<h1 class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">
 								The best offer <br /><span class="text-blue-600">for your business</span>
@@ -373,7 +373,7 @@
 								/>
 							</svg>
 						</button>
-						<a class="navbar-brand text-blue-600" href="#!">
+						<a class="navbar-brand text-blue-600" href="/">
 							<svg
 								class="w-5 h-5 ml-2 lg:ml-0 mr-2"
 								xmlns="http://www.w3.org/2000/svg"
@@ -453,7 +453,7 @@
 
 			<div class="px-6 py-12 lg:my-12 md:px-12 text-gray-800 text-center lg:text-left">
 				<div class="container mx-auto xl:px-32">
-					<div class="grid lg:grid-cols-2 gap-12 flex items-center">
+					<div class="grid lg:grid-cols-2 gap-12  items-center">
 						<div class="mt-12 lg:mt-0">
 							<h1 class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">
 								The best offer <br /><span class="text-blue-600">for your business</span>
@@ -668,14 +668,14 @@
 							class="inline-block px-7 py-3 mb-2 md:mb-0 mr-0 md:mr-2 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
 							data-mdb-ripple="true"
 							data-mdb-ripple-color="light"
-							href="#!"
+							href="/"
 							role="button">Get started</a
 						>
 						<a
-							class="inline-block px-7 py-3 text-white font-medium text-sm leading-snug bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out"
+							class="inline-block px-7 py-3 text-white font-medium text-sm leading-snug bg-transparent  uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out"
 							data-mdb-ripple="true"
 							data-mdb-ripple-color="light"
-							href="#!"
+							href="/"
 							role="button">Learn more</a
 						>
 					</div>
@@ -799,7 +799,7 @@
 
 			<div class="px-6 py-12 md:px-12 text-center lg:text-left">
 				<div class="container mx-auto xl:px-32">
-					<div class="grid lg:grid-cols-2 gap-12 flex items-center">
+					<div class="grid lg:grid-cols-2 gap-12  items-center">
 						<div class="mt-12 lg:mt-0">
 							<h1
 								class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12"
@@ -1627,7 +1627,7 @@
 
 			<div class="px-6 py-12 lg:my-12 md:px-12 text-gray-800 text-center lg:text-left">
 				<div class="container mx-auto xl:px-32">
-					<div class="grid lg:grid-cols-2 gap-12 flex items-center">
+					<div class="grid lg:grid-cols-2 gap-12  items-center">
 						<div class="mt-12 lg:mt-0">
 							<h1 class="text-4xl md:text-5xl xl:text-6xl font-bold tracking-tight mb-12">
 								Are you ready <br /><span class="text-blue-600">for an adventure?</span>
@@ -1652,6 +1652,7 @@
 								style="padding-top: 56.25%"
 							>
 								<iframe
+								title="Jerp"
 									class="embed-responsive-item absolute top-0 right-0 bottom-0 left-0 w-full h-full"
 									src="https://www.youtube.com/embed/vlDzYIIOYmM?enablejsapi=1&amp;origin=https%3A%2F%2Fmdbootstrap.com"
 									allowfullscreen=""

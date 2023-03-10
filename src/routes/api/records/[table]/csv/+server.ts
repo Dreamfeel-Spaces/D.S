@@ -7,7 +7,7 @@ export async function POST({ request }: RequestEvent) {
 	const data = request.json();
 }
 
-export async function GET({ params, url, request }: RequestEvent) {
+export async function GET({ params, url, request, locals }: RequestEvent) {
 	const tableName = params.table;
 
 	const take = url.searchParams.get('take');
@@ -19,9 +19,9 @@ export async function GET({ params, url, request }: RequestEvent) {
 	if (!apiKey) throw error(403, 'Api key / authorization token required');
 
 	const token = new Token();
-	let [space, spaceError] = await errorCatch(token.verifyApiKey(apiKey));
 
-	if (spaceError) throw error(403, 'Unable to verify api keys');
+	// @ts-ignore
+	const space = locals.space;
 
 	const excludeFields = url.searchParams.get('exclude-fields');
 

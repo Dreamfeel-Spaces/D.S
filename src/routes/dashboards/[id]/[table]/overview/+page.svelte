@@ -20,18 +20,18 @@
 		NumberInput,
 		Select,
 		TableBodyCell,
-		Card,
-		Alert
+		Alert,
+		Card
 	} from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import FileDropzone from '$lib/components/FileDropzone.svelte';
 	import DateTimeInput from '$lib/components/DateTimeInput.svelte';
-	import { cleanData } from '$lib/util/slugit';
 	import ReportModal from './ReportModal.svelte';
 	import ChartModal from './ChartModal.svelte';
 	import SpaceChart from './SpaceChart.svelte';
 	import FormModal from './FormModal.svelte';
+	import ShareformModal from './ShareformModal.svelte';
 	import SpaceCsv from './SpaceCSV.svelte';
 	import SpaceJson from './SpaceJSON.svelte';
 	const spaceName = $page.params.id;
@@ -58,12 +58,21 @@
 	</div>
 </div>
 
-<div class="px-6">
+<div class="px-6 max-h-99 overflow-auto">
 	<Tabs>
 		<TabItem open={activeTab === 'reports'} on:click={() => goto('?tab=reports')} title="Reports">
 			<ReportModal columns={data.columns} />
 			{#if form?.reportSuccess}
 				Report has been saved
+			{/if}
+			{#if form?.shareReportSuccess}
+				<Alert>
+					<p>
+						Report has been shared with {form?.data?.sharedWith}
+					</p>
+					<p>Link to report: {`${$page.url.origin}/reports/${form?.data.id}`}</p>
+					<a target="blank" href={`/reports/${form?.data?.id}`}>View report</a>
+				</Alert>
 			{/if}
 			{#if !data.reports?.length}
 				<div class="my-12">No reports have been added</div>
@@ -80,8 +89,18 @@
 						<div class="flex justify-between">
 							<div>
 								<a href="/">Print</a>
-								<a class="ml-4" href="/">Share</a>
-								<a class="ml-4" href="/">Export as</a>
+							</div>
+							<div>
+								<ShareformModal
+									type="report"
+									tab="reports"
+									title={report.name}
+									description={report.description}
+									itemId={report.id}
+									reports={data.reports}
+									tables={data.space.tables}
+									permissions={data.permissions}
+								/>
 							</div>
 						</div>
 
@@ -90,6 +109,20 @@
 								<TableHead>
 									<TableHeadCell class="text-gray-500" align="right" colspan={report.columns.length}
 										>{'>'} {data.space.name} / {data?.table?.name} / {report?.name}
+									</TableHeadCell>
+								</TableHead>
+
+								<TableHead>
+									<TableHeadCell colspan={report.columns.length}>
+										{#each report.charts as chart}
+											<div class="text-2xl text-gray-500">
+												<SpaceChart
+													noDelete
+													rows={report.rows}
+													chart={{ ...chart, fields: report.fields, name: '', description: '' }}
+												/>
+											</div>
+										{/each}
 									</TableHeadCell>
 								</TableHead>
 
@@ -118,6 +151,7 @@
 											{/each}
 										</TableBodyRow>
 									{/each}
+
 									<TableBodyRow>
 										<TableBodyCell colspan={report.columns.length}>
 											<span class="text-xs text-gray-500">{new Date()} - {report.description}</span>
@@ -159,20 +193,43 @@
 				Form has been saved
 			{/if}
 
+			{#if form?.shareFormSuccess}
+				<div>
+					<Alert>
+						<p>
+							Form has been shared with {form?.data?.sharedWith}
+						</p>
+						<p>Link to form: {`${$page.url.origin}/forms/${form?.data.id}`}</p>
+						<a target="blank" href={`/forms/${form?.data?.id}`}>View form</a>
+					</Alert>
+				</div>
+			{/if}
+
 			{#if form?.miniFormUpdateSuccess}
 				<div>Record updated</div>
 			{/if}
 			{#if !data.forms.length}
 				<div class="my-12">No forms have been added</div>
 			{/if}
+
 			<Accordion class="mt-3">
 				{#each data.forms as form}
 					<AccordionItem>
 						<svelte:fragment slot="header">
 							{form.name}
 						</svelte:fragment>
-						<div>
+						<div class="flex justify-between">
 							<div class="text-small text-gray-500">{form.description}</div>
+							<ShareformModal
+								type="form"
+								tab="forms"
+								title={form.name}
+								description={form.description}
+								itemId={form.id}
+								reports={data.reports}
+								tables={data.space.tables}
+								permissions={data.permissions}
+							/>
 						</div>
 						<form action="?/saveMiniform&tab=forms" method="POST">
 							<input type="hidden" value={form.id} name="form-id" id="form-id" />

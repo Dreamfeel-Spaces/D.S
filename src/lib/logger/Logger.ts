@@ -5,13 +5,16 @@ export class Logger {
 		// console.log(req.)
 	}
 
-	async info(logInfo: any) {
-		if (logInfo.persist) {
+	async info(event: any, spaceId: string = '') {
+		if (spaceId) {
 			const log = await prisma.log.create({
-				data: {}
+				data: {
+					url: event.url.pathname,
+					severity: 'info',
+					spaceId
+				}
 			});
 		}
-		if (logInfo.console) console.info(logInfo);
 	}
 
 	async error(log: any) {

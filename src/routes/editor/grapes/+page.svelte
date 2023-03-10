@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import 'grapesjs/dist/css/grapes.min.css';
 	import grapesjs from 'grapesjs';
 	import { onMount } from 'svelte';
@@ -357,11 +357,6 @@
 		width: 100%;
 	}
 
-	.gjs-cv-canvas {
-		top: 0;
-		width: 100%;
-		height: 100%;
-	}
 	.gjs-block {
 		width: auto;
 		height: auto;
@@ -423,4 +418,4 @@
 	.gjs-four-color-h:hover {
 		color: #ec5896;
 	}
-</style>
+</style> -->

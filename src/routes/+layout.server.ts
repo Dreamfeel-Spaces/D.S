@@ -6,8 +6,6 @@ import type { LayoutServerLoad } from './$types';
 export const csr = true;
 
 export const load: LayoutServerLoad = async ({ locals, url }) => {
-	
-
 	const session = await locals.getSession();
 	if (session) {
 		const user = await prisma.user.findUnique({

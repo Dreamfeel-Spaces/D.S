@@ -32,7 +32,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import DashboardDialog from './DashboardDialog.svelte';
-	let activeTab = $page.url.searchParams.get('tab') ?? 'logs';
+	let activeTab = $page.url.searchParams.get('tab') ?? 'settings';
 	let password = '';
 	let confirmPassword = '';
 </script>
@@ -178,24 +178,7 @@
 						</div>
 					{/if}
 				</TabItem>
-				<TabItem open={activeTab === 'logs'}
-				on:click={() => goto('?tab=logs')}  title="Logs">
-					<p class="text-sm text-gray-500 dark:text-gray-400">
-						<b>Logs:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-						incididunt ut labore et dolore magna aliqua.
-					</p>
-					<div class="my-6">
-						<a href={`/spaces/${data?.space?.appId}/config-vars`}>Add</a>
-					</div>
-		
-					<!-- {#each data?.space?.configVars ?? [] as item}
-						<div class="mb-6 text-gray-500">
-							<p class="text-lg"><b>{item.key}:</b> {item.value}</p>
-							<Button class="my-2 w-full">Delete</Button>
-							<hr />
-						</div>
-					{/each} -->
-				</TabItem>
+			
 
 				<TabItem open={activeTab === 'admins'} on:click={() => goto('?tab=admins')} title="Admins">
 					<p class="text-sm text-gray-500 dark:text-gray-400">

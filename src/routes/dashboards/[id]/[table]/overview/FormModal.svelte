@@ -12,7 +12,7 @@
 </script>
 
 <div class="text-end">
-	<Button on:click={() => (formModal = true)}>Create form</Button>
+	<Button size="xs" pill gradient color="pinkToOrange" on:click={() => (formModal = true)}>Create form</Button>
 </div>
 <Modal bind:open={formModal} autoclose={false} class="w-full">
 	<form class="flex flex-col space-y-3" action="?/addForm&tab=forms" method="POST">

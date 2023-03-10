@@ -5,7 +5,8 @@ import { errorCatch } from '$lib/util/slugit';
 import { error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
-export async function GET({ params, url, request }: RequestEvent) {
+export async function GET(event: RequestEvent) {
+	const { params, url, request, locals } = event;
 	const tableName = params.table;
 
 	const apiKey = request.headers.get('x-api-key');
@@ -14,9 +15,9 @@ export async function GET({ params, url, request }: RequestEvent) {
 	if (!apiKey) throw error(403, 'Api key / authorization token required');
 
 	const token = new Token();
-	let [space, spaceError] = await errorCatch(token.verifyApiKey(apiKey));
 
-	if (spaceError) throw error(403, 'Unable to verify api keys');
+	// @ts-ignore
+	const space = locals.space;
 
 	const take = url.searchParams.get('take');
 	const skip = url.searchParams.get('skip');
@@ -66,7 +67,8 @@ export async function GET({ params, url, request }: RequestEvent) {
 	return new Response(JSON.stringify(formattedResponse));
 }
 
-export async function POST({ request, params }: RequestEvent) {
+export async function POST(event: RequestEvent) {
+	const { request, params, locals } = event;
 	const tableName = params.table;
 	const apiKey = request.headers.get('x-api-key');
 	const authorization = request.headers.get('authorization');
@@ -74,9 +76,10 @@ export async function POST({ request, params }: RequestEvent) {
 	if (!apiKey) throw error(403, 'Api key / authorization token required');
 
 	const token = new Token();
-	let [space, spaceError] = await errorCatch(token.verifyApiKey(apiKey));
+	
 
-	if (spaceError) throw error(403, 'Unable to verify api keys');
+	//@ts-ignore
+	const space = locals.space
 
 	const table = await prisma.spaceTable.findFirst({
 		where: {

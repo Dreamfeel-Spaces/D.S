@@ -9,7 +9,7 @@ export async function load({ params }: RequestEvent) {
 		where: {
 			appId: params.id
 		},
-		include: { permissions: true, dashboards: true }
+		include: { permissions: true, dashboards: true, tables: true }
 	});
 
 	if (!space) throw error(404, 'Space not found');
@@ -93,7 +93,8 @@ export async function load({ params }: RequestEvent) {
 				return [...prev, curr.field];
 			}, []);
 			let rows = cleanData(rep.filters, rep.fields, formattedRows);
-			return { ...rep, columns: cols, rows };
+			const charts = JSON.parse(String(rep.charts));
+			return { ...rep, columns: cols, rows, charts, fields:rep.fields };
 		}) ?? [];
 
 	const chartColumns =
@@ -111,9 +112,6 @@ export async function load({ params }: RequestEvent) {
 			}, []);
 			return { ...rep, columns: cols };
 		}) ?? [];
-
-
-        console.log(columns)
 
 	return {
 		count,
@@ -160,6 +158,8 @@ export const actions: Actions = {
 		const layout = String(data.get('layout'));
 		const orientation = String(data.get('orientation'));
 
+		const charts = String(data.get('charts' ?? '[]'));
+
 		const columnMetaData = JSON.parse(String(data.get('columnMetaData') ?? '[]'));
 		const filters = JSON.parse(String(data.get('__report_filters') ?? '[]'));
 
@@ -172,7 +172,8 @@ export const actions: Actions = {
 				sortBy,
 				layout,
 				orientation,
-				tableId: String(table?.id)
+				tableId: String(table?.id),
+				charts
 			}
 		});
 
@@ -397,5 +398,68 @@ export const actions: Actions = {
 			}
 		});
 		return { deleteSuccess: true };
+	},
+	async createSharable({ request, params }) {
+		const data = await request.formData();
+
+		const itemId = String(data.get('id'));
+
+		const type = String(data.get('type'));
+		const via = String(data.get('via'));
+		const shareWith = String(data.get('shareWith'));
+		const rolesStr = String(data.get('roles') ?? '[]');
+		const collection = String(data.get('collection')); //id
+		const emailField = String(data.get('field'));
+		const report = String(data.get('report'));
+		const title = String(data.get('title'));
+		const description = String(data.get('description'));
+		const coverimage = String(data.get('coverImage'));
+		const userListStr = String(data.get('users') ?? '[]');
+
+		const roles = JSON.parse(rolesStr);
+		const users = JSON.parse(userListStr);
+
+		switch (type) {
+			case 'form': {
+				const data = {
+					formId: itemId,
+					via,
+					title,
+					description,
+					shareWith
+				};
+
+				const shared = await prisma.sQT.create({
+					data: {
+						...data
+					}
+				});
+
+				return { shareFormSuccess: true, data: shared };
+			}
+			case 'chart': {
+				break;
+			}
+			case 'report': {
+				const data = {
+					reportId: itemId,
+					via,
+					title,
+					description,
+					shareWith
+				};
+
+				const shared = await prisma.sQT.create({
+					data: {
+						...data
+					}
+				});
+
+				return { shareReportSuccess: true, data: shared };
+			}
+			default: {
+				return { newSharableError: true };
+			}
+		}
 	}
 };

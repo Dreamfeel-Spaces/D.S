@@ -5,7 +5,8 @@ import { errorCatch } from '$lib/util/slugit';
 import { error } from '@sveltejs/kit';
 import type { RequestEvent } from '../$types';
 
-export async function GET({ params, request }: RequestEvent) {
+export async function GET(event: RequestEvent) {
+	const { params, request, locals } = event;
 	const tableName = params.table;
 	const apiKey = request.headers.get('x-api-key');
 	const authorization = request.headers.get('authorization');
@@ -14,9 +15,9 @@ export async function GET({ params, request }: RequestEvent) {
 
 	const token = new Token();
 	const logger = new Logger(request);
-	let [space, spaceError] = await errorCatch(token.verifyApiKey(apiKey));
 
-	if (spaceError) throw error(403, 'Unable to verify api keys');
+	// @ts-ignore
+	const space = locals.space;
 
 	const table = await prisma.spaceTable.findFirst({
 		where: {

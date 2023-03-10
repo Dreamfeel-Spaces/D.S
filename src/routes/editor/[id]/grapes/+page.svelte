@@ -30,9 +30,4 @@
 		border: 3px solid #444;
 	}
 
-	.gjs-cv-canvas {
-		top: 0;
-		width: 100%;
-		height: 100%;
-	}
 </style>

@@ -573,7 +573,5 @@
 	.panel__devices {
 		position: initial;
 	}
-	.panel__previews {
-		position: initial;
-	}
+	
 </style>

@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	import { CloseButton } from 'flowbite-svelte';
-	import { FY2021 as satisfactionData2021 } from '$lib/chart.json';
 	import '@fontsource/merriweather';
 	import { Chart, registerables } from 'chart.js';
 	import { onMount } from 'svelte';
@@ -9,6 +7,8 @@
 	export let rows: any = [];
 
 	export let chart: any = {};
+
+	export let noDelete = false;
 
 	const fields = chart.fields.map((field: any) => field.field);
 
@@ -85,16 +85,18 @@
 <main class="main-container">
 	<div class="flex mb-6">
 		<small class="flex-1">{chart.name}</small>
-		<form method="POST" action="?/deleteChart&tab=charts">
-			<input name="id" value={chart.id} type="hidden" />
-			<button type="submit">x</button>
-		</form>
+		{#if !noDelete}
+			<form method="POST" action="?/deleteChart&tab=charts">
+				<input name="id" value={chart.id} type="hidden" />
+				<button type="submit">x</button>
+			</form>
+		{/if}
 	</div>
-	<section  class="max-h-64 flex justify-center" >
+	<section class="max-h-64 flex justify-center">
 		<canvas bind:this={barChartElement} />
 	</section>
 	<div class="mt-3 text-xs">
-		<hr class="mb-2"  />
+		<hr class="mb-2" />
 		- {chart?.description}
 	</div>
 </main>

@@ -9,6 +9,8 @@ import { prisma } from './lib/db/prisma';
 import { sequence } from '@sveltejs/kit/hooks';
 import type { Handle, HandleFetch, HandleServerError } from '@sveltejs/kit';
 import { Pages } from '$lib/plugins/pages/Pages';
+import { errorCatch } from '$lib/util/slugit';
+import { Token } from '$lib/token/Token';
 
 export const authHandle = SvelteKitAuth({
 	adapter: PrismaAdapter(prisma) as Adapter<boolean>,
@@ -49,6 +51,8 @@ export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 	let isHome = /^\/$/.test(pathname);
 	let isAbout = /^\/about/.test(pathname);
 	let isDocs = /^\/docs/.test(pathname);
+	let isForms = /^\/forms/.test(pathname);
+	let isReports = /^\/reports/.test(pathname);
 
 	let reservedRoutes = [
 		isAccounts,
@@ -66,10 +70,12 @@ export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 		isHome,
 		isAbout,
 		isBlog,
-		isDocs
+		isDocs,
+		isForms,
+		isReports
 	];
 
-	const isReserved = reservedRoutes.filter(Boolean).length;
+	const isReserved = reservedRoutes.find(Boolean);
 
 	const pageManager = new Pages({ url: event.url });
 
@@ -97,4 +103,28 @@ export const errorHandle: HandleServerError = ({ error }) => {
 	return { message: 'Error' };
 };
 
-export const handle = sequence(authHandle, withSpaceRouter);
+export const apiAuth: Handle = async ({ event, resolve }) => {
+	if (!/^\/api?/.test(event.url.pathname)) return resolve(event);
+	const {
+		request: { headers },
+		locals
+	} = event;
+	const apiKey = headers.get('x-api-key');
+	const authorization = String(headers.get('Authorization'));
+
+	const token = new Token();
+	const logger = new Error();
+	try {
+		const [space, spaceError] = await errorCatch(token.verifyApiKey(apiKey, event));
+		if (spaceError) throw spaceError;
+		const [session, sessionError] = await errorCatch(token.decodeUserToken(authorization, space));
+		if (sessionError) throw sessionError;
+		event.locals.space = space;
+		event.locals.session = { ...session, api: true };
+		return resolve(event);
+	} catch (e) {
+		throw e;
+	}
+};
+
+export const handle = sequence(apiAuth, authHandle, withSpaceRouter);

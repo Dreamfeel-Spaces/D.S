@@ -4,7 +4,8 @@ import { errorCatch } from '$lib/util/slugit';
 import { error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
-export async function POST({ request }: RequestEvent) {
+export async function POST(event: RequestEvent) {
+	const { request, locals } = event;
 	const data = await request.json();
 	const username = data.username || data.email;
 	const password = data.password;
@@ -12,9 +13,9 @@ export async function POST({ request }: RequestEvent) {
 	const apiKey = request.headers.get('x-api-key');
 
 	const token = new Token();
-	let [space, spaceError] = await errorCatch(token.verifyApiKey(String(apiKey)));
 
-	if (spaceError) throw error(403, 'Unable to verify api keys');
+	// @ts-ignore
+	const space = locals.space;
 
 	const user = await prisma.user.findUnique({
 		where: {

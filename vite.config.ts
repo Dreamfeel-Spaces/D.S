@@ -7,7 +7,7 @@ export const websocketServer = {
 	name: 'wsservrer',
 	configureServer(server: any) {
 		// const wss = new WebSocketServer({ port: 5174 });
-		// console.log('websocket started');
+	// console.log('websocket started');
 		// wss.on('connection', function connection(ws: any) {
 		// 	ws.on('error', console.error);
 

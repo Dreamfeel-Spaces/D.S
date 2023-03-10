@@ -32,7 +32,7 @@
 
 	let subdomain = $page.data.subdomain;
 
-	let isPreview = /\/preview/.test(pathname) || $page.params.appId;
+	let isPreview = /\/preview/.test(pathname) || $page.params.appId || /^\/forms\/(.+)\/?/.test(pathname) || /^\/reports\/(.+)\/?/.test(pathname)
 
 	import logo from '../assets/logo.png';
 	import Rt from '$lib/ws/Rt.svelte';
@@ -273,14 +273,13 @@
 		</nav>
 	</div>
 
-	<slot />
-	<Drawer transitionType="fly" {transitionParams} bind:hidden={hidden2} id="sidebar2">
+	<Drawer  transitionType="fly" {transitionParams} bind:hidden={hidden2} id="sidebar2">
 		<div class="flex items-center">
 			<img src={logo} style="height: 40px" alt="logo transparent" loading="lazy" />
 			<CloseButton on:click={() => (hidden2 = true)} class="mb-4 dark:text-white" />
 		</div>
 		<Sidebar>
-			<SidebarWrapper divClass="overflow-y-auto py-4 px-3 rounded dark:bg-gray-800">
+			<SidebarWrapper divClass="overflow-y-auto py-4 px-3 rounded0">
 				<SidebarGroup>
 					<SidebarItem
 						active={!isPreview &&
@@ -289,7 +288,8 @@
 							!isBase &&
 							!isSpaces &&
 							!/\/admin/.test(pathname) &&
-							!/\/blog/.test(pathname)}
+							!/\/blog/.test(pathname) &&
+							!/\/logs/.test(pathname)}
 						on:click={() => (hidden2 = true)}
 						href="/"
 						rel="external"
@@ -569,4 +569,5 @@
 			</SidebarWrapper>
 		</Sidebar>
 	</Drawer>
+	<slot />
 {/if}

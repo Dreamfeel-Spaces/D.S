@@ -4,7 +4,8 @@ import { errorCatch } from '$lib/util/slugit';
 import { error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
-export async function GET({ params, request }: RequestEvent) {
+export async function GET(event: RequestEvent) {
+	const { params, request, locals } = event;
 	const tableName = params.table;
 	const recordId = params.id;
 	const apiKey = request.headers.get('x-api-key');
@@ -13,9 +14,9 @@ export async function GET({ params, request }: RequestEvent) {
 	if (!apiKey) throw error(403, 'Api key / authorization token required');
 
 	const token = new Token();
-	let [space, spaceError] = await errorCatch(token.verifyApiKey(apiKey));
 
-	if (spaceError) throw error(403, 'Unable to verify api keys');
+	// @ts-ignore
+	const space = locals.space;
 
 	const table = await prisma.spaceTable.findFirst({
 		where: {
@@ -47,7 +48,8 @@ export async function GET({ params, request }: RequestEvent) {
 	return new Response(JSON.stringify(formattedResponse));
 }
 
-export async function PUT({ request, params }: RequestEvent) {
+export async function PUT(event: RequestEvent) {
+	const { request, params, locals } = event;
 	const tableName = params.table;
 	const itemId = params.id;
 
@@ -59,9 +61,9 @@ export async function PUT({ request, params }: RequestEvent) {
 	if (!apiKey) throw error(403, 'Api key / authorization token required');
 
 	const token = new Token();
-	let [space, spaceError] = await errorCatch(token.verifyApiKey(apiKey));
 
-	if (spaceError) throw error(403, 'Unable to verify api keys');
+	// @ts-ignore
+	const space = locals.space;
 
 	const table = await prisma.spaceTable.findFirst({
 		where: {
@@ -116,7 +118,8 @@ export async function PUT({ request, params }: RequestEvent) {
 	return new Response(JSON.stringify({ ...formattedResponse, ...row }));
 }
 
-export async function PATCH({ request, params }: RequestEvent) {
+export async function PATCH(event: RequestEvent) {
+	const { request, params, locals } = event;
 	const tableName = params.table;
 	const itemId = params.id;
 
@@ -128,9 +131,9 @@ export async function PATCH({ request, params }: RequestEvent) {
 	if (!apiKey) throw error(403, 'Api key / authorization token required');
 
 	const token = new Token();
-	let [space, spaceError] = await errorCatch(token.verifyApiKey(apiKey));
 
-	if (spaceError) throw error(403, 'Unable to verify api keys');
+	// @ts-ignore
+	const space = locals.space;
 
 	const table = await prisma.spaceTable.findFirst({
 		where: {

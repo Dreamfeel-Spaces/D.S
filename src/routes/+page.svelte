@@ -111,10 +111,10 @@
 		<div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
 			<div>
 				<div
-					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900"
+					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-pink-100 lg:h-12 lg:w-12 dark:bg-pink-900"
 				>
 					<svg
-						class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+						class="w-5 h-5 text-pink-600 lg:w-6 lg:h-6 dark:text-pink-300"
 						fill="currentColor"
 						viewBox="0 0 20 20"
 						xmlns="http://www.w3.org/2000/svg"
@@ -133,10 +133,10 @@
 			</div>
 			<div>
 				<div
-					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900"
+					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-pink-100 lg:h-12 lg:w-12 dark:bg-pink-900"
 				>
 					<svg
-						class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+						class="w-5 h-5 text-pink-600 lg:w-6 lg:h-6 dark:text-pink-300"
 						fill="currentColor"
 						viewBox="0 0 20 20"
 						xmlns="http://www.w3.org/2000/svg"
@@ -153,10 +153,10 @@
 			</div>
 			<div>
 				<div
-					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900"
+					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-pink-100 lg:h-12 lg:w-12 dark:bg-pink-900"
 				>
 					<svg
-						class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+						class="w-5 h-5 text-pink-600 lg:w-6 lg:h-6 dark:text-pink-300"
 						fill="currentColor"
 						viewBox="0 0 20 20"
 						xmlns="http://www.w3.org/2000/svg"
@@ -177,10 +177,10 @@
 			</div>
 			<div>
 				<div
-					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900"
+					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-pink-100 lg:h-12 lg:w-12 dark:bg-pink-900"
 				>
 					<svg
-						class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+						class="w-5 h-5 text-pink-600 lg:w-6 lg:h-6 dark:text-pink-300"
 						fill="currentColor"
 						viewBox="0 0 20 20"
 						xmlns="http://www.w3.org/2000/svg"
@@ -201,10 +201,10 @@
 			</div>
 			<div>
 				<div
-					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900"
+					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-pink-100 lg:h-12 lg:w-12 dark:bg-pink-900"
 				>
 					<svg
-						class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+						class="w-5 h-5 text-pink-600 lg:w-6 lg:h-6 dark:text-pink-300"
 						fill="currentColor"
 						viewBox="0 0 20 20"
 						xmlns="http://www.w3.org/2000/svg"
@@ -221,10 +221,10 @@
 			</div>
 			<div>
 				<div
-					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900"
+					class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-pink-100 lg:h-12 lg:w-12 dark:bg-pink-900"
 				>
 					<svg
-						class="w-5 h-5 text-primary-600 lg:w-6 lg:h-6 dark:text-primary-300"
+						class="w-5 h-5 text-pink-600 lg:w-6 lg:h-6 dark:text-pink-300"
 						fill="currentColor"
 						viewBox="0 0 20 20"
 						xmlns="http://www.w3.org/2000/svg"
@@ -310,7 +310,7 @@
 <section class="bg-white dark:bg-gray-900">
 	<div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
 		<div class="mx-auto max-w-screen-sm">
-			<h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+			<h2 class="mb-4 text-4xl tracking-tight font-extrabold text-pink-700 dark:text-white">
 				Testimonials
 			</h2>
 			<p class="mb-8 font-light text-gray-500 lg:mb-16 sm:text-xl dark:text-gray-400">
@@ -341,7 +341,7 @@
 					<img
 						class="w-9 h-9 rounded-full"
 						src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png"
-						alt="profile picture"
+						alt="profile"
 					/>
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
 						<div>Bonnie Green</div>
@@ -373,7 +373,7 @@
 					<img
 						class="w-9 h-9 rounded-full"
 						src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png"
-						alt="profile picture"
+						alt="profile"
 					/>
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
 						<div>Roberta Casas</div>
@@ -407,7 +407,7 @@
 					<img
 						class="w-9 h-9 rounded-full"
 						src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
-						alt="profile picture"
+						alt="profile"
 					/>
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
 						<div>Jese Leos</div>
@@ -436,7 +436,7 @@
 					<img
 						class="w-9 h-9 rounded-full"
 						src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png"
-						alt="profile picture"
+						alt="profile"
 					/>
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
 						<div>Joseph McFall</div>
@@ -447,7 +447,7 @@
 		</div>
 		<div class="text-center">
 			<a
-				href="#"
+				href="/"
 				class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
 				>Show more...</a
 			>
@@ -1078,7 +1078,7 @@
 					</p>
 					<p class="text-gray-500 dark:text-gray-400">
 						Feel free to <a
-							href="#"
+							href="/"
 							class="font-medium underline text-primary-600 dark:text-primary-500 hover:no-underline"
 							target="_blank"
 							rel="noreferrer">contact us</a
@@ -1108,7 +1108,7 @@
 					</p>
 					<p class="text-gray-500 dark:text-gray-400">
 						Find out more information by <a
-							href="#"
+							href="/"
 							class="font-medium underline text-primary-600 dark:text-primary-500 hover:no-underline"
 							>reading the license</a
 						>.
@@ -1133,7 +1133,7 @@
 					</h3>
 					<p class="text-gray-500 dark:text-gray-400">
 						The free updates that will be provided is based on the <a
-							href="#"
+							href="/"
 							class="font-medium underline text-primary-600 dark:text-primary-500 hover:no-underline"
 							>roadmap</a
 						> that we have laid out for this project. It is also possible that we will provide extra
@@ -1157,7 +1157,7 @@
 					</h3>
 					<p class="text-gray-500 dark:text-gray-400">
 						The <a
-							href="#"
+							href="/"
 							class="font-medium underline text-primary-600 dark:text-primary-500 hover:no-underline"
 							>free version</a
 						> of Windster includes a minimal style guidelines, component variants, and a dashboard page
@@ -1218,7 +1218,7 @@
 					</p>
 					<p class="text-gray-500 dark:text-gray-400">
 						Find out more information by <a
-							href="#"
+							href="/"
 							class="font-medium underline text-primary-600 dark:text-primary-500 hover:no-underline"
 							>reading the license</a
 						>.
@@ -1241,7 +1241,7 @@
 				No credit card required.
 			</p>
 			<a
-				href="#"
+				href="/"
 				class="text-white py-4 bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5  mr-2 mb-2 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800"
 				>Free trial for 30 days</a
 			>
@@ -1269,7 +1269,7 @@
 				<div
 					class="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full"
 				>
-					<a class="text-indigo-500 inline-flex items-center"
+					<a  href="/" class="text-indigo-500 inline-flex items-center"
 						>Learn More<svg
 							class="w-4 h-4 ml-2"
 							viewBox="0 0 24 24"
@@ -1310,7 +1310,7 @@
 						>6</span
 					>
 				</div>
-				<a class="inline-flex items-center"
+				<a href="/" class="inline-flex items-center"
 					><img
 						alt="blog"
 						src="https://dummyimage.com/104x104"
@@ -1338,7 +1338,7 @@
 				<div
 					class="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full"
 				>
-					<a class="text-indigo-500 inline-flex items-center"
+					<a href="/" class="text-indigo-500 inline-flex items-center"
 						>Learn More<svg
 							class="w-4 h-4 ml-2"
 							viewBox="0 0 24 24"
@@ -1379,7 +1379,7 @@
 						>6</span
 					>
 				</div>
-				<a class="inline-flex items-center"
+				<a href="/" class="inline-flex items-center"
 					><img
 						alt="blog"
 						src="https://dummyimage.com/103x103"
@@ -1705,7 +1705,7 @@
 <footer class="p-4 md:p-8 lg:p-10 bg-pink-300">
 	<div class="mx-auto max-w-screen-xl text-center">
 		<a
-			href="#"
+			href="/"
 			class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white"
 		>
 			<div class="text-center">
@@ -1721,34 +1721,34 @@
 		</p>
 		<ul class="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white">
 			<li>
-				<a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+				<a href="/" class="mr-4 hover:underline md:mr-6 ">About</a>
 			</li>
 			<li>
-				<a href="#" class="mr-4 hover:underline md:mr-6">Premium</a>
+				<a href="/" class="mr-4 hover:underline md:mr-6">Premium</a>
 			</li>
 			<li>
-				<a href="#" class="mr-4 hover:underline md:mr-6 ">Campaigns</a>
+				<a href="/" class="mr-4 hover:underline md:mr-6 ">Campaigns</a>
 			</li>
 			<li>
-				<a href="#" class="mr-4 hover:underline md:mr-6">Blog</a>
+				<a href="/" class="mr-4 hover:underline md:mr-6">Blog</a>
 			</li>
 			<li>
-				<a href="#" class="mr-4 hover:underline md:mr-6">Affiliate Program</a>
+				<a href="/" class="mr-4 hover:underline md:mr-6">Affiliate Program</a>
 			</li>
 			<li>
-				<a href="#" class="mr-4 hover:underline md:mr-6">FAQs</a>
+				<a href="/" class="mr-4 hover:underline md:mr-6">FAQs</a>
 			</li>
 			<li>
-				<a href="#" class="mr-4 hover:underline md:mr-6">Contact</a>
+				<a href="/" class="mr-4 hover:underline md:mr-6">Contact</a>
 			</li>
 		</ul>
 		<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
-			>© 2021-2022 <a href="#" class="hover:underline">Flowbite™</a>. All Rights Reserved.</span
+			>© 2021-2022 <a href="/" class="hover:underline">Flowbite™</a>. All Rights Reserved.</span
 		>
 	</div>
 </footer>
 
-<!-- Container for demo purpose -->
+Container for demo purpose
 <style>
 	@media (min-width: 992px) {
 		.rotate-lg-6 {

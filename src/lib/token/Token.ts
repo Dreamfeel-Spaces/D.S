@@ -1,5 +1,6 @@
 import { AUTH_SECRET } from '$env/static/private';
 import { prisma } from '$lib/db/prisma';
+import { Logger } from '$lib/logger/Logger';
 import { error } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -30,15 +31,18 @@ export class Token {
 	async verifyJwt(tk: string) {
 		return jwt.verify(tk, AUTH_SECRET);
 	}
-	async verifyApiKey(apiKey: string) {
+	async verifyApiKey(apiKey: string = '', event: any) {
+		if (!Boolean(apiKey)) throw error(403, 'Missing API Key');
 		return new Promise(async (res, rej) => {
-			if (!apiKey.startsWith('Basic ')) {
+			if (!apiKey?.startsWith('Basic ')) {
 				rej('Authorization failed');
 			}
-			let tokenWithId = apiKey.split(' ')[1];
+
+			let tokenWithId = apiKey.split(' ')[1] || '#';
 			const splitToken = tokenWithId.split('#');
 			const appId = splitToken[0];
 			const token = splitToken[0];
+
 			const space = await prisma.space.findUnique({
 				where: {
 					appId: String(appId)
@@ -47,6 +51,9 @@ export class Token {
 					apiKeys: true
 				}
 			});
+
+			const logger = new Logger();
+			logger.info(event, space?.id);
 
 			if (!space?.apiChannel) {
 				rej('API endpoints not allowed');
@@ -60,21 +67,27 @@ export class Token {
 
 			const reqKey = apiKeys.find((key) => this.verify(key.key, apiKey));
 
+			const newHit = (reqKey?.hits ?? 0) + 1;
+
 			if (!reqKey) {
 				rej('Failed to validate accessToken');
 			}
+			try {
+				// const updatedKey = await prisma.spaceAPIKeys.update({
+				// 	where: {
+				// 		id: String(reqKey?.id)
+				// 	},
+				// 	data: {
+				// 		hits: newHit
+				// 	}
+				// });
 
-			const updatedKey = await prisma.spaceAPIKeys.update({
-				where: {
-					id: reqKey?.id
-				},
-				data: {
-					hits: (reqKey?.hits ?? 0) + 1
-				}
-			});
-			let spaceData = { ...space };
-			delete spaceData['apiKeys'];
-			res(spaceData);
+				let spaceData = { ...space };
+				delete spaceData['apiKeys'];
+				res(spaceData);
+			} catch (e) {
+				console.log(e);
+			}
 		});
 	}
 	async createAdminPass() {
@@ -87,19 +100,19 @@ export class Token {
 		return jwt.sign(user, AUTH_SECRET);
 	}
 
-	async decodeUserToken(accessToken: string, space: any) {
-		if (!accessToken.startsWith('Bearer ')) {
-			throw error(403, 'Invalid access token provided');
+	async decodeUserToken(accessToken: string = '', space: any) {
+		if (!accessToken?.startsWith('Bearer ')) {
+			return [null];
 		}
-		let token = accessToken.split(' ')[1];
+		let token = accessToken.split(' ')[1] ?? '';
 		const verified: any = jwt.verify(token, AUTH_SECRET);
 		return new Promise(async (res, rej) => {
 			if (!verified) {
-				rej('Invalid access token');
+				res([null]);
 			}
 
 			if (verified.spaceId !== space.id) {
-				rej('Invalid access token provided');
+				res([null]);
 			}
 
 			if (verified.role === 'owner') {
@@ -111,7 +124,7 @@ export class Token {
 
 				// if(await bcrypt.compareSync())
 
-				res({ ...user, role: 'owner' });
+				res([{ ...user, role: 'owner' }]);
 			}
 
 			const session = await prisma.spaceSession.findFirst({
@@ -125,10 +138,10 @@ export class Token {
 			});
 
 			if (!session) {
-				throw error(403, 'Session missing or expired. Log in and try again');
+				res([]);
 			}
 
-			res(session?.admin);
+			res([session?.admin]);
 		});
 	}
 }

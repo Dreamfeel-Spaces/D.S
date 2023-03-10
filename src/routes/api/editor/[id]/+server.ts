@@ -7,6 +7,18 @@ import grapesjs from 'grapesjs';
 import { DOMParser } from 'xmldom';
 import { spaceTestPlugin } from '$lib/plugins/grapes/space-ui';
 
+
+
+
+export async function Editor(){
+
+// grapes js table
+
+}
+
+
+
+
 // https://unpkg.com/tailwindcss@2.1.2/dist/tailwind.min.css
 
 export async function GET({ params }: RequestEvent) {
@@ -26,7 +38,7 @@ export async function GET({ params }: RequestEvent) {
 
 	const editor = grapesjs.init({
 		headless: true,
-		plugins: [(editor) => spaceTestPlugin(editor, [], [])]
+		plugins: [(editor) => spaceTestPlugin(editor, [],)]
 	});
 
 	editor.loadProjectData(ui);
