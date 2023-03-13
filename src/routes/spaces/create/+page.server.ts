@@ -1,11 +1,16 @@
 //@ts-nocheck
 
 import { prisma } from '$lib/db/prisma';
-import { gmailTransporter } from '$lib/mail';
-import { Mailer } from '$lib/mail/Mailer';
 import { Token } from '$lib/token/Token';
 import { convertToSlug } from '$lib/util/slugit';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
+import type { RequestEvent } from './$types';
+
+export async function load({ locals }: RequestEvent) {
+	const session = await locals.getSession();
+
+	if (!session) throw redirect(302, `/accounts`);
+}
 
 export const actions = {
 	async default({ request, locals }) {
@@ -40,7 +45,7 @@ export const actions = {
 		const token = new Token();
 		const adminPassword = await token.createAdminPass();
 
-		const admin = await prisma.admin.create({
+		const admin = await prisma.spaceUser.create({
 			data: {
 				userId,
 				spaceId: space.id,
@@ -52,6 +57,8 @@ export const actions = {
 			}
 		});
 
+
+		console.log(admin)
 		try {
 			// let info = await gmailTransporter.sendMail({
 			// 	from: 'odidaprotas@gmail.com', // sender address
@@ -63,7 +70,6 @@ export const actions = {
 		} catch (e) {
 			console.log(e);
 		}
-
 
 		const form = { success: true, data: space };
 

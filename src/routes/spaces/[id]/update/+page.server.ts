@@ -13,7 +13,7 @@ export const actions = {
 
 		let space = await prisma.space.findFirst({
 			where: { appId: spaceId },
-			include: { admins: true }
+			include: { users: true }
 		});
 
 		if (!space) throw error(404, 'Space not found');
@@ -26,7 +26,7 @@ export const actions = {
 
 		function isAdmin() {
 			if (user?.id !== space.userId) return true;
-			return space.admins.find((admin) => admin.userId === user.id);
+			return space.users.find((admin) => admin.userId === user.id);
 		}
 
 		if (!isAdmin()) throw error(403, 'You are unauthorized to perfom this action');

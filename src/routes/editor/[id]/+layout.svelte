@@ -10,6 +10,7 @@
 	let spanClass = 'flex-1 ml-3 whitespace-nowrap';
 	export let data;
 	import { page } from '$app/stores';
+	import SpaceNav from '../../base/[space]/SpaceNav.svelte';
 
 	let spaceId = $page.params.id;
 	const uiId = $page.params.builder;
@@ -24,6 +25,10 @@
 {#if isPreview}
 	<slot />
 {/if}
+
+<div>
+	<SpaceNav />
+</div>
 
 {#if !isPreview}
 	<div class="flex">

@@ -7,16 +7,13 @@ export const websocketServer = {
 	name: 'wsservrer',
 	configureServer(server: any) {
 		// const wss = new WebSocketServer({ port: 5174 });
-	// console.log('websocket started');
+		// console.log('websocket started');
 		// wss.on('connection', function connection(ws: any) {
 		// 	ws.on('error', console.error);
-
 		// 	ws.on('message', function message(data: any) {
 		// 		console.log('received: %s', data);
 		// 	});
-
 		// 	ws.send("ping", "ping")
-
 		// 	ws.send('something');
 		// });
 	}
@@ -31,6 +28,6 @@ export default defineConfig({
 		noExternal: ['chart.js']
 	},
 	optimizeDeps: {
-		include: ['papaparse']
+		include: ['papaparse', 'lodash.get', 'lodash.isequal', 'lodash.clonedeep']
 	}
 });

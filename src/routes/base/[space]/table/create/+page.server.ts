@@ -6,30 +6,12 @@ import { error, redirect } from '@sveltejs/kit';
 
 export const actions = {
 	async default({ params, locals, request }) {
-		const session = await locals.getSession();
-		if (!session) throw error(403, 'You must be authenticated!');
-
-		const spaceId = params.space;
-
 		let space = await prisma.space.findFirst({
-			where: { appId: String(spaceId) },
-			include: { admins: true }
+			where: { appId: String(params.space) },
+			include: { users: true }
 		});
 
 		if (!space) throw error(404, 'Space not found');
-
-		let user = await prisma.user.findFirst({
-			where: {
-				email: session.user.email
-			}
-		});
-
-		function isAdmin() {
-			if (user?.id === space?.userId) return true;
-			return space?.admins.find((admin) => admin.userId === user?.id);
-		}
-
-		if (!isAdmin()) throw error(403, 'You are unauthorized to view this page');
 
 		const data = await request.formData();
 
@@ -47,7 +29,6 @@ export const actions = {
 		const table = await prisma.spaceTable.create({
 			data: {
 				name: convertToSlug(name),
-				userId: String(user.id),
 				tableSpace: String(space?.id)
 			}
 		});

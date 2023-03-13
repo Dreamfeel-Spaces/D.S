@@ -9,6 +9,7 @@
 	} from 'flowbite-svelte';
 	export let data;
 	import { page } from '$app/stores';
+	import SpaceNav from '../../base/[space]/SpaceNav.svelte';
 
 	let spaceId = $page.params.id;
 	let tableId = $page.params.table;
@@ -16,6 +17,8 @@
 	let activeSpace = data?.myapps?.find(({ appId }: any) => appId === spaceId);
 	let pathname = $page.url.pathname;
 </script>
+
+<SpaceNav />
 
 <div class="flex">
 	<div class="hidden md:block lg:block">
@@ -192,10 +195,16 @@
 			</SidebarWrapper>
 		</Sidebar>
 	</div>
-	<div class="flex-1">
+	<div class="flex-1 bg-gray-200">
 		<slot />
 	</div>
 	<div class="w-36  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
+		<!-- <div class="text-right text-sm">
+			{data.spaceSession?.user?.username}
+			<form method="post" action={`/a/${$page.params.id}/accounts?/signout`}>
+				<button>Signout</button>
+			</form>
+		</div> -->
 		<div>
 			<div class="mt-20">
 				<a class="hover:underline text-blue" href={`/base/${$page.params.id}`}>Collections API</a>

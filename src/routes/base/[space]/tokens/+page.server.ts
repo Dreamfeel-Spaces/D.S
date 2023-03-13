@@ -20,23 +20,23 @@ export const actions = {
 		const space = await prisma.space.findFirst({
 			where: { id: spaceId },
 			include: {
-				admins: true
+				users: true
 			}
 		});
 
 		function isAdmin() {
 			if (user?.id !== space?.userId) return true;
-			return space?.admins.find((admin) => admin.userId === user?.id);
+			return space?.users.find((admin) => admin.id === user?.id);
 		}
 
 		if (!isAdmin()) throw error(403, 'You are unauthorized to view this page');
 
-		const token = new Token('reversible');
-		const key = await token.create('token-bodge', space?.secret ?? AUTH_SECRET);
+		// const token = new Token('reversible');
+		// const key = await token.create('token-bodge', space?.secret ?? AUTH_SECRET);
 
-		const apiKey = await prisma.spaceAPIKeys.create({
-			data: { key, spaceId: String(spaceId), userId: String(user?.id) }
-		});
+		// const apiKey = await prisma.spaceAPIKeys.create({
+		// 	data: { key, spaceId: String(spaceId), userId: String(user?.id) }
+		// });
 
 		return { success: true, data: apiKey };
 	}

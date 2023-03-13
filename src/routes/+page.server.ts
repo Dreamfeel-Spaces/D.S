@@ -2,14 +2,21 @@
 import { prisma } from '$lib/db/prisma';
 import type { RequestEvent, Actions } from './$types';
 
-export async function load({ locals }: RequestEvent) {
+export async function load({}: RequestEvent) {
 	const miniApps = await prisma.space.findMany({
 		where: {
 			miniAppChannel: true
 		}
 	});
 
-	return { apps: miniApps };
+	const posts = await prisma.blogContent.findMany({
+		take: 4,
+		where: {
+			published: true
+		}
+	});
+
+	return { apps: miniApps, posts };
 }
 
 export const actions: Actions = {

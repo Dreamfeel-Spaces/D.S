@@ -13,7 +13,7 @@ export async function load({ params, locals }) {
 
 	const space = await prisma.space.findFirst({
 		where: { appId: spaceId },
-		include: { admins: true }
+		include: { users: true }
 	});
 	const user = await prisma.user.findUnique({
 		where: { email: session.user.email }
@@ -21,7 +21,7 @@ export async function load({ params, locals }) {
 
 	function isAdmin() {
 		if (user?.id === space?.userId) return true;
-		return space?.admins.find((admin) => admin.userId === user?.id);
+		return space?.users.find((admin) => admin.userId === user?.id);
 	}
 
 	if (!isAdmin()) throw error(403, 'You are unauthorized to view this page');

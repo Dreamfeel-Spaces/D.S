@@ -1,150 +1,104 @@
-//@ts-nocheck
-export const cardPlugin = (editor, config) => {
-	const type = 'card';
-	const dc = editor.DomComponents;
-
-	dc.addType(type, {
-		model: {
-			defaults: {
-				droppable: false,
-				draggable: true,
-				attributes: {
-					class: 'card'
-				},
-				components: [
-					{
-						tagName: 'img',
-						attributes: {
-							class: 'avatar',
-							src: '{{avatarUrl}}'
-						}
-					},
-					{
-						tagName: 'div',
-						components: [
-							{
-								tagName: 'h4',
-								content: '{{name}}'
-							},
-							{
-								tagName: 'p',
-								content: '{{name}}'
-							}
-						]
-					}
-				]
-			},
-			init() {
-				this.listenTo(this, 'change:attributes change:components', () => {
-					const cardComponents = this.components();
-					const cardData = this.get('data');
-					const regex = /{{(\w+)}}/g;
-					const imageRegex = /src="{{(\w+)}}"/g;
-					const html = this.toHTML();
-
-					cardComponents.each((component, index) => {
-						if (index === 0) {
-							// Update the avatar image source
-							const avatar = component;
-							const avatarSrc = avatar.get('attributes').src;
-
-							if (avatarSrc.match(imageRegex)) {
-								avatarSrc.replace(imageRegex, (match, key) => {
-									const value = cardData[key];
-									avatar.setAttributes({ src: value });
-								});
-							}
-						} else {
-							// Update all other components
-							const componentHtml = html.replace(regex, (match, key) => {
-								const value = cardData[key];
-								return value || match;
-							});
-							component.set('content', componentHtml);
-						}
-					});
-				});
-
-				// Listen for changes to the first child component's image source
-				const firstComponent = this.components().at(0);
-				firstComponent.on('change:attributes:src', (model, value) => {
-					const regex = /{{(\w+)}}/;
-					const match = value.match(regex);
-
-					if (match) {
-						const key = match[1];
-						const value = this.get('data')[key];
-
-						// Update all other child components' image sources
-						this.components().each((component, index) => {
-							if (index === 0) return;
-
-							const attributes = component.get('attributes');
-							const src = attributes && attributes.src;
-
-							if (src && src.match(regex)) {
-								const updatedSrc = src.replace(regex, value);
-								component.setAttributes({ src: updatedSrc });
-							}
-						});
-					}
-				});
-			}
-		},
-		view: {
-			events: {
-				dblclick() {
-					editor.select(this.model);
-				}
-			}
-		}
-	});
-
-	// editor.BlockManager.add('card', {
-	// 	label: 'Cardlist',
-	// 	content: `<div  data-gjs-type="card"></div>`
-	// });
-};
-
-// Watch for changes to the card's children
-// cardPlugin.on('change:components', () => {
-// 	// Get the current child components
-// 	const currentChildren = card.get('components');
-
-// 	// Loop through all the other cards and update their children
-// 	cards.forEach((otherCard) => {
-// 		if (otherCard !== card) {
-// 			// Ignore the current card
-// 			// Clear any existing child components
-// 			otherCard.components((parent) => parent === otherCard).reset();
-
-// 			// Add the same child components as the current card
-// 			currentChildren.forEach((childComponent) => {
-// 				const clonedComponent = childComponent.clone(); // Clone the component
-// 				otherCard.components((parent) => parent === otherCard).add(clonedComponent); // Add the cloned component to the other card
+// function listPlugin(editor, opts = {}) {
+// 	// Extract the tables and rows from the plugin options
+// 	const { tables = [], rows = [] } = opts;
+  
+// 	// Register the 'list' component type
+// 	editor.DomComponents.addType('list', {
+// 	  model: {
+// 		defaults: {
+// 		  droppable: true,
+// 		  attributes: {
+// 			'data-table': '' // Add a 'data-table' attribute to the component
+// 		  }
+// 		},
+  
+// 		init() {
+// 		  // Initialize the component
+// 		  this.updateContent(); // Call updateContent() to populate the component
+// 		  this.listenTo(this, 'change:attributes:data-table', this.updateContent); // Listen for changes to the 'data-table' attribute and call updateContent() when it changes
+// 		},
+  
+// 		updateContent() {
+// 		  // Update the content of the component based on the 'data-table' attribute
+// 		  const dataTable = this.get('attributes')['data-table'];
+// 		  if (!dataTable) return; // If 'data-table' is not set, do nothing
+  
+// 		  const tableData = tables.find(table => table.name === dataTable);
+// 		  if (!tableData) return; // If no matching table is found, do nothing
+  
+// 		  const rowsData = tableData.rows;
+// 		  const rowComponents = rowsData.map((row, index) => {
+// 			const { username, image } = row;
+  
+// 			// Create a 'username' text component for the row
+// 			const usernameComponent = editor.Component.create('text', {
+// 			  content: username,
+// 			  selectable: index === 0, // Only make the first row selectable
+// 			  editable: index === 0 // Only make the first row editable
 // 			});
-// 		}
-// 	});
-// });
-
-// Watch for removal of components from the card
-// cardPlugin.on('component:remove', (removedComponent) => {
-// 	// Get the type of the removed component
-// 	const removedType = removedComponent.get('type');
-
-// 	// Loop through all the other cards and remove the same component
-// 	cards.forEach((otherCard) => {
-// 		if (otherCard !== card) {
-// 			// Ignore the current card
-// 			// Find the same component in the other card
-// 			const componentToRemove = otherCard.components().find((component) => {
-// 				return component.get('type') === removedType;
+  
+// 			// Create an 'image' component for the row
+// 			const imageComponent = editor.Component.create('image', {
+// 			  attributes: {
+// 				src: image
+// 			  },
+// 			  selectable: false, // Make the image component non-selectable
+// 			  editable: false // Make the image component non-editable
 // 			});
-
-// 			// Remove the component from the other card
-// 			if (componentToRemove) {
-// 				componentToRemove.remove();
+  
+// 			// Create a 'row' component to contain the 'username' and 'image' components
+// 			const rowComponent = editor.Component.create('div', {
+// 			  components: [usernameComponent, imageComponent], // Add the 'username' and 'image' components as child components
+// 			  selectable: false // Make the 'row' component non-selectable
+// 			});
+  
+// 			// If this is the first row, make it editable and listen for changes to update all other rows
+// 			if (index === 0) {
+// 			  rowComponent.set('selectable', true); // Make the row selectable
+// 			  // Listen for changes to the first row
+// 			  this.listenTo(rowComponent, 'change', () => {
+// 				const childComponents = this.get('components');
+// 				childComponents.forEach((child, index) => {
+// 				  if (index !== 0) {
+// 					// For each child component that is not the first row, update the 'username' component with the new content of the first row
+// 					const rowComponent = child;
+// 					const usernameComponent = rowComponent.get('components')[0];
+// 					usernameComponent.set('content', usernameComponent.get('content'));
+// 				  }
+// 				});
+// 			  });
 // 			}
+  
+// 			return rowComponent;
+// 		  });
+  
+// 		  // Replace the current child components with the first row component
+// 		  this.components([rowComponents[0]]);
+// 		  // Append the other row components as child components
+// 		  rowComponents.forEach((component, index) => {
+// 			if (index !== 0) {
+// 			  // Make the other rows non-selectable and non-editable
+// 			  component.set('selectable', false);
+// 			  component.set('editable', false);
+// 			  component.get('components').forEach(child =>          // Make the other rows non-selectable and non-editable
+// 			  component.set('selectable', false);
+// 			  component.set('editable', false);
+// 			  component.get('components').forEach(child => {
+// 				child.set('selectable', false);
+// 				child.set('editable', false);
+// 			  });
+	
+// 			  this.append(component);
+// 			});
+// 		  }
 // 		}
-// 	});
-// });
+// 	  });
+// 	}
+	
+// 	// Export the plugin function
+// 	export default listPlugin;
+	
+export async function cardPlugin(){
+
+}
+  

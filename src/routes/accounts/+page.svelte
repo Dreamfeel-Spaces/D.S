@@ -1,37 +1,43 @@
 <script>
-	import { Card } from 'flowbite-svelte';
+	import { Button, Card } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	const apps = $page.data.myapps;
+	import logo from '../../assets/logo.png';
+	import { signIn } from '@auth/sveltekit/client';
 </script>
 
 <section class="bg-white dark:bg-gray-900">
-	<div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-		<h1
-			class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+	<div class="grid grid-cols-2">
+		<div
+			style="align-items: center;"
+			class="flex justify-center text-center bg-gray-100 min-h-108 text-gray-500 text-2xl overflow-auto"
 		>
-			Welcome to Dreamfeel
-		</h1>
-		<p
-			class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400"
-		>
-			Here at Dreamfeel Spaces we focus on markets where technology, innovation, and capital can
-			unlock long-term value and drive economic growth.
-		</p>
-		<div class=" mb-3 lg:mb-3 space-y-1  sm:justify-center sm:space-y-0 sm:space-x-4">
-			<a
-				href="/"
-				class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-			>
-				Sign in with Google
-			</a>
+			<div>
+				<img loading="lazy" src={logo} alt="" />
+				<p>Dreamfeel Spaces</p>
+			</div>
 		</div>
-		<div>
-			<a
-				href="/"
-				class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 dark:focus:ring-pink-900"
-			>
-				Sign in with GitHub
-			</a>
+		<div class="py-8 px-4 mx-auto max-w-screen-xl  lg:py-16 ">
+			<div class="text-center text-4xl mb-9 text-gray-600">
+				<h1>Sign in</h1>
+			</div>
+			<p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16  dark:text-gray-400">
+				Here at Dreamfeel Spaces we focus on markets where technology, innovation, and capital can
+				unlock long-term value and drive economic growth.
+			</p>
+			<div class="px-16">
+				<button
+					on:click={() => signIn('google')}
+					class="w-full justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+				>
+					Sign in with Google
+				</button>
+				<div>
+					<Button on:click={() => signIn('github')} color="dark" class="w-full mt-9"
+						>Sign in with GitHub</Button
+					>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>

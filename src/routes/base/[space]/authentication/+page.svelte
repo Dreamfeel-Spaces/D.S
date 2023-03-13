@@ -13,6 +13,7 @@
 		Alert
 	} from 'flowbite-svelte';
 	import { page } from '$app/stores';
+	import Request from '../[table]/api/Request.svelte';
 	const spaceName = $page.params.space;
 </script>
 
@@ -45,11 +46,34 @@
 {/if}
 {#if data?.space?.apiChannel}
 	<div class="mt-6 px-6">
-		<Card class="text-left" size="lg" padding="xl">
+		<Card class="text-left" size="xl" padding="xl">
 			<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Signup</h5>
 			<p class="text-lg my-3">Endpoint: <b>{`/api/signup`}</b></p>
 			<Tabs>
-				<TabItem open title="cURL" />
+				<TabItem open title="Simulate">
+					<Request
+						table={{
+							columns: [
+								{
+									name: 'email',
+									type: 'email'
+								},
+								{
+									name: 'name',
+									type: 'string'
+								},
+								{
+									name: 'password',
+									type: 'password'
+								}
+							]
+						}}
+						action="signup"
+						url={`${$page.url.origin}/api/auth/register/`}
+						method={'post'}
+					/>
+				</TabItem>
+				<TabItem title="cURL" />
 				<TabItem title="JS" />
 				<TabItem title="PY" />
 				<TabItem title="Rust" />
@@ -57,11 +81,8 @@
 				<TabItem title="C#" />
 				<TabItem title="Java" />
 			</Tabs>
-			<div class="my-3">
-				<Toggle>Disable</Toggle>
-			</div>
 
-			<div class="mt-3">
+			<!-- <div class="mt-3">
 				<p class="mb-3">Require permissions</p>
 				{#each data?.permissions ?? [] as column}
 					<div>
@@ -70,17 +91,36 @@
 						</Checkbox>
 					</div>
 				{/each}
-			</div>
-			<Button class="mt-3">Update preferences</Button>
+			</div> -->
+			<!-- <Button class="mt-3">Update preferences</Button> -->
 		</Card>
 	</div>
 
 	<div class="mt-6 px-6">
-		<Card class="text-left" size="lg" padding="xl">
+		<Card class="text-left" size="xl" padding="xl">
 			<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Signin</h5>
 			<p class="text-lg my-3">Endpoint: <b>{`/api/signin`}</b></p>
 			<Tabs>
-				<TabItem open title="cURL" />
+				<TabItem open title="Simulate">
+					<Request
+						table={{
+							columns: [
+								{
+									name: 'email',
+									type: 'email'
+								},
+								{
+									name: 'password',
+									type: 'password'
+								}
+							]
+						}}
+						action="signin"
+						url={`${$page.url.origin}/api/auth/register/`}
+						method={'post'}
+					/>
+				</TabItem>
+				<TabItem title="cURL" />
 				<TabItem title="JS" />
 				<TabItem title="PY" />
 				<TabItem title="Rust" />
@@ -88,7 +128,7 @@
 				<TabItem title="C#" />
 				<TabItem title="Java" />
 			</Tabs>
-			<div class="my-3">
+			<!-- <div class="my-3">
 				<Toggle>Disable</Toggle>
 			</div>
 
@@ -102,7 +142,7 @@
 					</div>
 				{/each}
 			</div>
-			<Button class="mt-3">Update preferences</Button>
+			<Button class="mt-3">Update preferences</Button> -->
 		</Card>
 	</div>
 {/if}

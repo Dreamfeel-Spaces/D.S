@@ -23,6 +23,10 @@ export async function POST(event: RequestEvent) {
 		}
 	});
 
+
+
+
+
 	if (user?.id === space.userId) {
 		if (await token.verify(password, space.superAdminSecret)) {
 			const sessionToken = await token.createUserToken({ ...user, role: 'owner' });
@@ -30,7 +34,7 @@ export async function POST(event: RequestEvent) {
 		} else throw error(403, 'Invalid credentials');
 	}
 
-	let admin = await prisma.admin.findFirst({
+	let admin = await prisma.spaceUser.findFirst({
 		where: {
 			username,
 			spaceId: space.id

@@ -21,7 +21,11 @@ export async function load({ params }: RequestEvent) {
 			tableSpace: String(space?.id)
 		},
 		include: {
-			columns: true
+			columns: {
+				include: {
+					options: true
+				}
+			}
 		}
 	});
 
@@ -29,7 +33,8 @@ export async function load({ params }: RequestEvent) {
 		table,
 		tables: space.tables.map((table) => {
 			return { name: table.name, value: table.id };
-		})
+		}),
+		columns: table?.columns ?? []
 	};
 }
 
@@ -38,28 +43,14 @@ export const actions: Actions = {
 		const spaceId = params.space;
 		const tableId = params.table;
 
-		const session = await locals.getSession();
-
-		if (!session) throw error(403, 'Authorization failed');
-
 		const space = await prisma.space.findUnique({
-			where: { appId: spaceId },
-			include: { admins: true }
+			where: {
+				appId: spaceId
+			}
 		});
-
-		const user = await prisma.user.findUnique({
-			where: { email: String(session.user?.email) }
-		});
-
-		function isAdmin() {
-			if (user?.id === space?.userId) return true;
-			return space?.admins.find((admin) => admin.userId === user?.id);
-		}
-
-		if (!isAdmin()) throw error(403, 'You are unauthorized to view this page');
 
 		const table = await prisma.spaceTable.findFirst({
-			where: { name: tableId, tableSpace: space.id },
+			where: { name: tableId, tableSpace: String(space?.id) },
 			include: {
 				rows: {
 					include: {
@@ -78,32 +69,72 @@ export const actions: Actions = {
 		let displayName = data.get('displayName');
 
 		for (let column of JSON.parse(columns)) {
-			const col = await prisma.column.create({
-				data: {
-					regex: column.regex,
-					name: column.name,
-					type: column.type,
-					rel: column.rel,
-					multiple: Boolean(column.multiple),
-					spaceTableId: table.id,
-					defaultOn: Boolean(column.defaultOn),
-					dateTimeDefault: column.dateTimeDefault
-				}
-			});
+			if (!Boolean(column.id)) {
+				const col = await prisma.column.create({
+					data: {
+						regex: column.regex,
+						name: column.name,
+						type: column.type,
+						rel: column.rel,
+						multiple: Boolean(column.multiple),
+						spaceTableId: String(table?.id),
+						defaultOn: Boolean(column.defaultOn),
+						dateTimeDefault: column.dateTimeDefault
+					}
+				});
 
-			if (column.type === 'select') {
-				for (let option of column.options) {
-					const opt = await prisma.columnSelectOptions.create({
-						data: {
-							columnId: String(col.id),
-							label: String(option.label),
-							value: String(option.value)
+				if (column.type === 'select') {
+					for (let option of column.options) {
+						const opt = await prisma.columnSelectOptions.create({
+							data: {
+								columnId: String(col.id),
+								label: String(option.label),
+								value: String(option.value)
+							}
+						});
+					}
+				}
+
+				fields.push(col);
+			} else {
+				console.log(column.id);
+				const col = await prisma.column.update({
+					where: { id: column.id },
+					data: {
+						regex: column.regex,
+						name: column.name,
+						type: column.type,
+						rel: column.rel,
+						multiple: Boolean(column.multiple),
+						defaultOn: Boolean(column.defaultOn),
+						dateTimeDefault: column.dateTimeDefault
+					}
+				});
+
+				if (column.type === 'select') {
+					for (let option of column.options) {
+						if (!Boolean(option.id)) {
+							const opt = await prisma.columnSelectOptions.create({
+								data: {
+									columnId: String(col.id),
+									label: String(option.label),
+									value: String(option.value)
+								}
+							});
+						} else {
+							const opt = await prisma.columnSelectOptions.update({
+								where: { id: option.id },
+								data: {
+									label: String(option.label),
+									value: String(option.value)
+								}
+							});
 						}
-					});
+					}
 				}
-			}
 
-			fields.push(col);
+				fields.push(col);
+			}
 		}
 
 		const updatedTable = await prisma.spaceTable.update({

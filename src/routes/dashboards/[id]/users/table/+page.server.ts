@@ -8,7 +8,7 @@ export async function load({ params }: RequestEvent) {
 			appId: params.id
 		},
 		include: {
-			admins: true
+			users: true
 		}
 	});
 
@@ -16,7 +16,7 @@ export async function load({ params }: RequestEvent) {
 
 	return {
 		space,
-		admins: space?.admins?.map((adm) => {
+		admins: space?.users?.map((adm) => {
 			const date = new Date(adm.dateCreated);
 			const dateStr = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 			let status = adm.status === 'pending-confirmation' ? 'Unverified' : 'Verified';

@@ -1,10 +1,27 @@
 <script lang="ts">
-	import heroImage from '../assets/hero.png';
+	//@ts-nocheck
 	import logo from '../assets/logo.png';
-
+	import axios from 'axios';
 	export let form: any;
-	import { Alert } from 'flowbite-svelte';
+	import { page } from '$app/stores';
+	export let data: any;
+	import {
+		Alert,
+		Button,
+		Card,
+		Select,
+		Spinner,
+		Tabs,
+		TabItem,
+		Input,
+		CarouselTransition
+	} from 'flowbite-svelte';
+
+	import Cursort from './Cursort.svelte';
+	import HeroCarousel from './HeroCarousel.svelte';
 </script>
+
+<Cursort />
 
 {#if form?.feedbackSuccess}
 	<Alert dismissable class="mx-6 mt-2">
@@ -12,64 +29,20 @@
 	</Alert>
 {/if}
 
-<!-- <section class="mb-40">
-	<div class="px-6 py-12 md:px-12 text-gray-800 text-center lg:text-left">
-		<div class="container mx-auto xl:px-32">
-			<div class="grid lg:grid-cols-2  items-center">
-				<div class="md:mt-12 lg:mt-0 mb-12 lg:mb-0">
-					<div
-						class="block rounded-lg lg:-mt-60 shadow-lg px-6 py-12 md:px-12 lg:-mr-14"
-						style="background: hsla(0, 0%, 100%, 0.55); backdrop-filter: blur(30px);"
-					>
-						<h1 class="text-4xl  md:text-5xl xl:text-6xl font-bold tracking-tight mb-12">
-							<span class="text-blue-600">Build, refine</span> and make your <br /><span
-								class="text-blue-600">brand visible</span
-							>
-						</h1>
-						<a
-							class="inline-block px-7 py-3 mb-2 md:mb-0 md:mr-2 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-							data-mdb-ripple="true"
-							data-mdb-ripple-color="light"
-							href="/spaces/create"
-							rel="external"
-							role="button">Get started</a
-						>
-						<a
-							class="inline-block px-7 py-3 bg-transparent text-blue-600 font-medium text-sm leading-snug uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out"
-							data-mdb-ripple="true"
-							data-mdb-ripple-color="light"
-							href="/spaces/demo"
-							role="button">Live demo</a
-						>
-					</div>
-				</div>
-				<div class="md:mb-12 lg:mb-0">
-					<img src={heroImage} class="w-full rounded-lg shadow-lg" alt="Hero" />
-				</div>
-			</div>
-		</div>
-	</div>
-</section> -->
-
-<section class="bg-white dark:bg-gray-900">
-	<div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-		<div class="mr-auto -mt-12 place-self-center lg:col-span-7">
+<section class="bg-neutral-100 rounded-br-full rounded-bl-3xl  dark:bg-gray-900">
+	<div class="grid max-w-screen-xl px-4 py-8  mx-auto lg:gap-8 xl:gap-0 lg:py-9 lg:grid-cols-12">
+		<div class="mr-auto md:pt-9  self-center min-h-105 lg:col-span-7">
 			<h1
-				class="max-w-2xl  mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-gray-700 dark:text-white"
+				class="max-w-2xl  mt-28 mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-gray-700 dark:text-white"
 			>
-				The <span class="text-pink-700">No Code Platform</span> for the dreamers
+				Create scalable APIs without touching a line of code
 			</h1>
 			<p
 				class="max-w-2xl  mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
 			>
-				From realtime APIs, fully rich customizable dashboards, interactive website builder and
-				countless integration, including with native device technology companies around the world
-				use Dreamfeel.ai to build blazingly fast apps.
+			Create APIs without coding. Streamline your workflow and empower your team with Dreamfeel spaces. Build, test, and deploy in minutes..
 			</p>
-			<a
-				href="/accounts/signin"
-				class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 dark:focus:ring-pink-900"
-			>
+			<Button class="mr-3" size="lg" href="/accounts" gradient color="pinkToOrange">
 				Get started
 				<svg
 					class="w-5 h-5 ml-2 -mr-1"
@@ -82,17 +55,15 @@
 						clip-rule="evenodd"
 					/></svg
 				>
-			</a>
-			<a
-				target="blank"
-				href="http://localhost:5173/spaces/demo"
-				class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-			>
-				Live demo
+			</Button>
+			<a target="blank" href="http://localhost:5173/spaces/demo">
+				<Button size="lg" gradient color="purpleToBlue">Live demo</Button>
 			</a>
 		</div>
-		<div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
-			<img src={heroImage} alt="mockup" loading="lazy" />
+		<div class="  lg:mt-0 lg:col-span-5">
+			<Card padding="sm" class=" h-100 min-h-100 max-h-100 rounded-b-3xl rounded-t-3xl " size="xl">
+				<HeroCarousel />
+			</Card>
 		</div>
 	</div>
 </section>
@@ -1240,11 +1211,9 @@
 			<p class="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">
 				No credit card required.
 			</p>
-			<a
-				href="/"
-				class="text-white py-4 bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm px-5  mr-2 mb-2 dark:bg-pink-600 dark:hover:bg-pink-700 focus:outline-none dark:focus:ring-pink-800"
-				>Free trial for 30 days</a
-			>
+			<a href="/accounts">
+				<Button size="xl" gradient color="pinkToOrange">Get started for free</Button>
+			</a>
 		</div>
 	</div>
 </section>
@@ -1252,145 +1221,78 @@
 <section class="text-gray-600 body-font overflow-hidden">
 	<div class="container px-5 py-24 mx-auto">
 		<div class="flex flex-wrap -m-12">
-			<div class="p-12 md:w-1/2 flex flex-col items-start">
-				<span
-					class="inline-block py-1 px-2 rounded bg-indigo-50 text-indigo-500 text-xs font-medium tracking-widest"
-					>CATEGORY</span
-				>
-				<h2 class="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4">
-					Roof party normcore before they sold out, cornhole vape
-				</h2>
-				<p class="leading-relaxed mb-8">
-					Live-edge letterpress cliche, salvia fanny pack humblebrag narwhal portland. VHS man braid
-					palo santo hoodie brunch trust fund. Bitters hashtag waistcoat fashion axe chia unicorn.
-					Plaid fixie chambray 90's, slow-carb etsy tumeric. Cray pug you probably haven't heard of
-					them hexagon kickstarter craft beer pork chic.
-				</p>
-				<div
-					class="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full"
-				>
-					<a  href="/" class="text-indigo-500 inline-flex items-center"
-						>Learn More<svg
-							class="w-4 h-4 ml-2"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-							stroke-width="2"
-							fill="none"
-							stroke-linecap="round"
-							stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5l7 7-7 7" /></svg
+			{#each data.posts as post}
+				<div class="p-12 md:w-1/2 flex flex-col items-start">
+					<span
+						class="inline-block py-1 px-2 rounded bg-indigo-50 text-indigo-500 text-xs font-medium tracking-widest"
+						>CATEGORY</span
+					>
+					<h2 class="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4">
+						{post.title}
+					</h2>
+					<p class="leading-relaxed mb-8">
+						{@html post.content}
+					</p>
+					<div
+						class="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full"
+					>
+						<a
+							rel="external"
+							href={`/blog/${post.slug}`}
+							class="text-indigo-500 inline-flex items-center"
+							>Learn More<svg
+								class="w-4 h-4 ml-2"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+								stroke-width="2"
+								fill="none"
+								stroke-linecap="round"
+								stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5l7 7-7 7" /></svg
+							></a
+						><span
+							class="text-gray-400 mr-3 inline-flex items-center ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200"
+							><svg
+								class="w-4 h-4 mr-1"
+								stroke="currentColor"
+								stroke-width="2"
+								fill="none"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								viewBox="0 0 24 24"
+								><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle
+									cx="12"
+									cy="12"
+									r="3"
+								/></svg
+							>1.2K</span
+						><span class="text-gray-400 inline-flex items-center leading-none text-sm"
+							><svg
+								class="w-4 h-4 mr-1"
+								stroke="currentColor"
+								stroke-width="2"
+								fill="none"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								viewBox="0 0 24 24"
+								><path
+									d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
+								/></svg
+							>6</span
+						>
+					</div>
+					<a href="/" class="inline-flex items-center"
+						><img
+							alt="blog"
+							src="https://dummyimage.com/104x104"
+							class="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
+						/><span class="flex-grow flex flex-col pl-4"
+							><span class="title-font font-medium text-gray-900">Holden Caulfield</span><span
+								class="text-gray-400 text-xs tracking-widest mt-0.5">UI DEVELOPER</span
+							></span
 						></a
-					><span
-						class="text-gray-400 mr-3 inline-flex items-center ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200"
-						><svg
-							class="w-4 h-4 mr-1"
-							stroke="currentColor"
-							stroke-width="2"
-							fill="none"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							viewBox="0 0 24 24"
-							><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle
-								cx="12"
-								cy="12"
-								r="3"
-							/></svg
-						>1.2K</span
-					><span class="text-gray-400 inline-flex items-center leading-none text-sm"
-						><svg
-							class="w-4 h-4 mr-1"
-							stroke="currentColor"
-							stroke-width="2"
-							fill="none"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							viewBox="0 0 24 24"
-							><path
-								d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
-							/></svg
-						>6</span
 					>
 				</div>
-				<a href="/" class="inline-flex items-center"
-					><img
-						alt="blog"
-						src="https://dummyimage.com/104x104"
-						class="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
-					/><span class="flex-grow flex flex-col pl-4"
-						><span class="title-font font-medium text-gray-900">Holden Caulfield</span><span
-							class="text-gray-400 text-xs tracking-widest mt-0.5">UI DEVELOPER</span
-						></span
-					></a
-				>
-			</div>
-			<div class="p-12 md:w-1/2 flex flex-col items-start">
-				<span
-					class="inline-block py-1 px-2 rounded bg-indigo-50 text-indigo-500 text-xs font-medium tracking-widest"
-					>CATEGORY</span
-				>
-				<h2 class="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4">
-					Pinterest DIY dreamcatcher gentrify single-origin coffee
-				</h2>
-				<p class="leading-relaxed mb-8">
-					Live-edge letterpress cliche, salvia fanny pack humblebrag narwhal portland. VHS man braid
-					palo santo hoodie brunch trust fund. Bitters hashtag waistcoat fashion axe chia unicorn.
-					Plaid fixie chambray 90's, slow-carb etsy tumeric.
-				</p>
-				<div
-					class="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full"
-				>
-					<a href="/" class="text-indigo-500 inline-flex items-center"
-						>Learn More<svg
-							class="w-4 h-4 ml-2"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-							stroke-width="2"
-							fill="none"
-							stroke-linecap="round"
-							stroke-linejoin="round"><path d="M5 12h14" /><path d="M12 5l7 7-7 7" /></svg
-						></a
-					><span
-						class="text-gray-400 mr-3 inline-flex items-center ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200"
-						><svg
-							class="w-4 h-4 mr-1"
-							stroke="currentColor"
-							stroke-width="2"
-							fill="none"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							viewBox="0 0 24 24"
-							><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle
-								cx="12"
-								cy="12"
-								r="3"
-							/></svg
-						>1.2K</span
-					><span class="text-gray-400 inline-flex items-center leading-none text-sm"
-						><svg
-							class="w-4 h-4 mr-1"
-							stroke="currentColor"
-							stroke-width="2"
-							fill="none"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							viewBox="0 0 24 24"
-							><path
-								d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"
-							/></svg
-						>6</span
-					>
-				</div>
-				<a href="/" class="inline-flex items-center"
-					><img
-						alt="blog"
-						src="https://dummyimage.com/103x103"
-						class="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
-					/><span class="flex-grow flex flex-col pl-4"
-						><span class="title-font font-medium text-gray-900">Alper Kamu</span><span
-							class="text-gray-400 text-xs tracking-widest mt-0.5">DESIGNER</span
-						></span
-					></a
-				>
-			</div>
+			{/each}
 		</div>
 	</div>
 </section>
@@ -1748,11 +1650,10 @@
 	</div>
 </footer>
 
-Container for demo purpose
-<style>
+<!-- <style>
 	@media (min-width: 992px) {
 		.rotate-lg-6 {
 			transform: rotate(6deg);
 		}
 	}
-</style>
+</style> -->

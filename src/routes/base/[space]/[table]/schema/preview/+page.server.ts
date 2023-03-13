@@ -11,23 +11,10 @@ export const actions = {
 
 		const session = await locals.getSession();
 
-		if (!session) throw error(403, 'Authorization failed');
-
 		const space = await prisma.space.findUnique({
 			where: { appId: spaceId },
-			include: { admins: true }
+			include: { users: true }
 		});
-
-		const user = await prisma.user.findUnique({
-			where: { email: session.user.email }
-		});
-
-		function isAdmin() {
-			if (user?.id === space?.userId) return true;
-			return space?.admins.find((admin) => admin.userId === user?.id);
-		}
-
-		if (!isAdmin()) throw error(403, 'You are unauthorized to view this page');
 
 		const table = await prisma.spaceTable.findFirst({
 			where: { name: tableId, tableSpace: space.id },
@@ -90,15 +77,22 @@ export const actions = {
 
 export async function load({ params }: RequestEvent) {
 	const spaceId = params.space;
-	const tableName = params.id;
+	const tableName = params.table;
 
-	const tables = await prisma.spaceTable.findMany({
-		where: { tableSpace: spaceId }
+	const space = await prisma.space.findUnique({
+		where: {
+			appId: spaceId
+		}
+	});
+
+	const table = await prisma.spaceTable.findFirst({
+		where: { tableSpace: space?.id, name: tableName },
+		include: {
+			columns: true
+		}
 	});
 
 	return {
-		tables: tables.map((table) => {
-			return { name: table.name, value: table.id };
-		})
+		columns: table?.columns ?? []
 	};
 }

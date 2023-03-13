@@ -22,7 +22,6 @@
 	import { gStorage } from '$lib/plugins/util/storage';
 	import gBasic from 'grapesjs-blocks-basic';
 	import { cardPlugin } from '$lib/plugins/grapes/space-ui/w-copilot';
-	// import gjsProject from 'grapesjs-project-manager';
 
 	let editor: grapesjs.Editor;
 	let paginate: Boolean = false;
@@ -45,14 +44,7 @@
 				(editor) => gjsForms(editor),
 				(editor) => gjsTabs(editor),
 				(editor) => gBasic(editor),
-				// (editor) => spaceCommerceItem(editor),
-				// (editor) => spaceCommerceList(editor, data?.tables),
-				// spaceCommercePrice,
-				(editor) => spaceTestPlugin(editor, { tables: data?.tables, rows: data.rows }),
-				(editor) => cardPlugin(editor, data?.tables, data?.rows),
-				editor=>{
-					// editor.addComponents()
-				}
+				
 			],
 			layerManager: {
 				appendTo: '.layers-container'

@@ -1,7 +1,6 @@
 //@ts-nocheck
 
 import { prisma } from '$lib/db/prisma';
-import { gmailTransporter } from '$lib/mail';
 import { Token } from '$lib/token/Token';
 import { convertToSlug } from '$lib/util/slugit';
 import { error, redirect } from '@sveltejs/kit';
@@ -61,20 +60,16 @@ export const actions: Actions = {
 					appId: params.id
 				},
 				include: {
-					admins: {
-						include: {
-							user: true
-						}
-					}
+					users: true
 				}
 			});
-			const admins = space?.admins ?? [];
+			const admins = space?.users ?? [];
 
 			const existingAdmin = admins.find((admin) => admin.username === email);
 
 			if (existingAdmin) throw error(400, 'Admin already exists in this space');
 
-			const admin = await prisma.admin.create({
+			const admin = await prisma.spaceUser.create({
 				data: {
 					username: email,
 					password: await token.createAdminPass(),
@@ -92,15 +87,11 @@ export const actions: Actions = {
 					appId: spaceId
 				},
 				include: {
-					admins: {
-						include: {
-							user: true
-						}
-					}
+					users: true
 				}
 			});
 
-			const admins = space?.admins ?? [];
+			const admins = space?.users ?? [];
 
 			const existingAdmin = admins.find((admin) => admin.username === email);
 
@@ -108,7 +99,7 @@ export const actions: Actions = {
 
 			let adminPassword = token.createAdminPass();
 
-			const admin = await prisma.admin.create({
+			const admin = await prisma.spaceUser.create({
 				data: {
 					userId: String(user.id),
 					username: user.email,
@@ -252,11 +243,7 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 				}
 			},
 			configVars: true,
-			admins: {
-				include: {
-					user: true
-				}
-			},
+			users: true,
 			permissions: true,
 			dashboards: true
 		}
@@ -276,14 +263,13 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 		if (user && user.id === space.userId) {
 			return { space, userRole: { superAdmin: true } };
 		}
-		throw redirect(302, `/spaces/${space?.appId}/login`);
+		throw redirect(302, `/a/${space?.appId}/accounts`);
 	}
 
 	const userToken = cookies.get(`${space?.appId}-accessToken`);
 
-	if (!userToken) throw redirect(302, `/spaces/${space?.appId}/login`);
 
-	console.log(userToken);
+	if (!userToken) throw redirect(302, `/a/${space?.appId}/accounts`);
 
 	const token = await prisma.spaceSession.findUnique({
 		where: {
@@ -293,7 +279,7 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 
 	const tk = new Token();
 
-	if (token?.spaceId !== space.id) throw redirect(302, `/spaces/${space.appId}/login`);
+	if (token?.spaceId !== space.id) throw redirect(302, `/a/${space.appId}/accounts`);
 
 	const admin = await tk.verifyJwt(token?.sessionToken);
 

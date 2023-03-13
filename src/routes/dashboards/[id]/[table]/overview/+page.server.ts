@@ -422,7 +422,7 @@ export const actions: Actions = {
 		switch (type) {
 			case 'form': {
 				const data = {
-					formId: itemId,
+					dashboardFormId: itemId,
 					via,
 					title,
 					description,

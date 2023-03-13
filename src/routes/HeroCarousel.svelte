@@ -1,0 +1,91 @@
+<!-- Carousel.svelte -->
+<script lang="ts">
+	//@ts-nocheck
+	import { fade, slide } from 'svelte/transition';
+
+	import HeroRest from './HeroRest.svelte';
+	import HeroChart from './HeroChart.svelte';
+	import HeroForm from './HeroForm.svelte';
+	import HeroReport from './HeroReport.svelte';
+	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
+
+	export let images: any[] = [HeroRest, HeroChart, HeroForm, HeroReport];
+	let currentImageIndex = 0;
+	let timerId;
+
+	function nextImage() {
+		currentImageIndex = (currentImageIndex + 1) % images.length;
+	}
+
+	function previousImage() {
+		currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+	}
+
+	const showCarouselItem = (index: number) => {
+		if (browser) {
+			const carouselItems = document.querySelectorAll('.carousel-item');
+			carouselItems.forEach((item, i) => {
+				item.classList.toggle('visible', i === index);
+				item.classList.toggle('hidden', i !== index);
+			});
+		}
+	};
+	showCarouselItem(currentImageIndex);
+
+	$: showCarouselItem(currentImageIndex);
+
+	function startAutoSlide(interval) {
+		if (timerId) clearInterval(timerId);
+		timerId = setInterval(nextImage, interval);
+	}
+
+	function stopAutoSlide() {
+		if (timerId) clearInterval(timerId);
+	}
+
+	onMount(() => {
+		startAutoSlide(10000);
+	});
+</script>
+
+<div class="carousel">
+	{#each images as image, i}
+		<div class="carousel-item h-72 {i === currentImageIndex ? 'visible' : 'hidden'}">
+			<svelte:component this={image} />
+			<!-- <p>{image.caption}</p> -->
+		</div>
+	{/each}
+</div>
+
+<!-- <div>
+	<button on:click={previousImage}>Previous</button>
+	<button on:click={nextImage}>Next</button>
+</div> -->
+<style>
+	.carousel {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 500px;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.carousel-item {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		transition: opacity 0.5s ease;
+	}
+
+	.carousel-item.visible {
+		opacity: 1;
+	}
+
+	.carousel-item.hidden {
+		opacity: 0;
+	}
+</style>

@@ -2,36 +2,42 @@
 	import { Card } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	const apps = $page.data.myapps;
+	import logo from '../../assets/logo.png';
 </script>
 
-<section class="bg-white dark:bg-gray-900">
-	<div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-		<h1
-			class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
-		>
-			Organizations
-		</h1>
-		<p
-			class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400"
-		>
-		Here at Flowbite we focus on markets where technology, innovation, and capital can unlock
-			long-term value and drive economic growth.
-		</p>
+<section class=" dark:bg-gray-900">
+	<div class="grid grid-cols-2 gap-2 ">
+		<div class="py-8 px-4  text-center max-w-screen-xl   lg:py-16 bg-gray-200">
+			<div style="align-items:center" class="flex justify-center min-h-108 ">
+				<div>
+					<img src={logo} loading="lazy" alt="" />
+					<p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl s dark:text-gray-400">
+						Dreamfeel Spaces
+					</p>
+				</div>
+			</div>
+		</div>
+		<div>
+			<div class="px-6">
+				<div class="grid grid-cols-4  mt-9 gap-3">
+					{#each apps as app}
+						<a rel="external" href={`/spaces/${app.appId}`}>
+							<Card class="text-center">
+								<div>
+									{app.name}
+								</div>
+								<div class="text-xs">@{app.name}</div>
+							</Card>
+						</a>
+					{/each}
+					<a href="/spaces/create">
+						<Card class="text-center">
+							<div>+</div>
+							<div class="text-xs">Create new</div>
+						</Card>
+					</a>
+				</div>
+			</div>
+		</div>
 	</div>
 </section>
-
-<div class="lg:px-48 px-6">
-	<hr class="my-4" />
-	<div class="grid grid-cols-4  mt-9 gap-3">
-		{#each apps as app}
-			<a rel="external" href={`/spaces/${app.appId}`}>
-				<Card class="text-center">
-					<div>
-						{app.name}
-					</div>
-					<div class="text-xs">@{app.name}</div>
-				</Card>
-			</a>
-		{/each}
-	</div>
-</div>

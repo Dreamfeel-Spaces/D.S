@@ -8,11 +8,13 @@
 		BreadcrumbItem,
 		Alert,
 		Card,
-		CloseButton
+		CloseButton,
+		Spinner
 	} from 'flowbite-svelte';
 	import { columnTypes } from '$lib/coltypes/columnTypes';
 	import type { PageData } from './$types';
 	import { page } from '$app/stores';
+	import axios from 'axios';
 	const tableName = $page.params.table;
 	const spaceName = $page.params.space;
 	let spaceId = $page.params.space;
@@ -20,7 +22,7 @@
 
 	export let data: PageData;
 	export let form: any;
-	let displayName: string;
+	let displayName: string = data.table?.displayName ?? '';
 
 	const option = {
 		label: '',
@@ -38,7 +40,7 @@
 		options: [{ ...option }],
 		dateTimeDefault: 'custom'
 	};
-	let columns: (typeof col)[] = [{ ...col }];
+	let columns: any[] = data.columns.length ? data.columns : [{ ...col }];
 	function addColumn() {
 		columns = [...columns, { ...col }];
 	}
@@ -47,11 +49,28 @@
 		all.splice(index, 1);
 		columns = [...all];
 	}
+
+	let deleting: any = false;
+
+	async function handleDeleteColumn(id: string, index: number) {
+		deleting = index;
+		const response = await axios.delete(
+			`/base/${$page.params.space}/${$page.params.table}/schema/col/${id}`
+		);
+		if (response.data) {
+			let allCols = [...columns];
+			allCols.splice(index, 1);
+			columns = [...allCols];
+			deleting = false;
+			return;
+		}
+		deleting = false;
+	}
 </script>
 
-<div class="py-2 ">
+<div class="py-2 bg-gray-50 ">
 	<div class="flex my-2">
-		<div class=" flex-1 text-xl px-6 text-gray-500">
+		<div class=" flex-1 text-xl px-6 ">
 			<Breadcrumb>
 				<BreadcrumbItem>Home</BreadcrumbItem>
 				<BreadcrumbItem>Api</BreadcrumbItem>
@@ -67,7 +86,7 @@
 		<div class="px-9 text-end text-lg">
 			<a
 				class="bg-blue-700 px-3  text-white rounded-3xl py-2 text-xs"
-				href={`/base/${spaceName}/${tableName}/schema/create`}>Add columns</a
+				href={`/base/${spaceName}/${tableName}/schema/preview`}>Preview</a
 			>
 		</div>
 	</div>
@@ -75,7 +94,7 @@
 	<div class="mt-4 px-6" />
 </div>
 
-<div style="max-height: 80vh" class=" overflow-auto pb-12 bg-gray-50">
+<div class=" overflow-auto pb-12 bg-gray-50">
 	{#if form?.success}
 		<div class="mt-3 px-6">
 			<Alert>
@@ -88,15 +107,36 @@
 		</div>
 	{/if}
 
-	<div class="grid gap-4 px-6 grid-cols-2  mb-6 mt-6 ">
+	<div class="grid gap-4 px-6   mb-6 mt-6 ">
 		{#each columns as column, index}
-			<Card>
+			<Card size="xl">
+				{#if !column.id}
+					<div class="text-right">
+						<Button class="mb-3" size="xs" pill gradient color="red">Not saved</Button>
+					</div>
+				{:else}
+					<div class="text-right">
+						<Button class="mb-3" size="xs" pill gradient color="green">Saved</Button>
+					</div>
+				{/if}
 				<div class="flex justify-between">
 					<div class=" text-xl">
 						Col {index + 1}
+						{#if column.id}
+							<span> - ({column.name})</span>
+						{/if}
 					</div>
 					<div>
-						<CloseButton on:click={() => removeColumn(index)} />
+						{#if deleting === index}
+							<Spinner />
+						{:else}
+							<CloseButton
+								on:click={() => {
+									if (column.id) handleDeleteColumn(column.id, index);
+									else removeColumn(index);
+								}}
+							/>
+						{/if}
 					</div>
 				</div>
 				<div class="mb-9 mt-5 container  ">
@@ -238,11 +278,10 @@
 							</div>
 						</div>
 					{/if}
-					<hr />
 				</div>
 			</Card>
 		{/each}
-		<Card>
+		<Card size="xl">
 			<button class="h-full text-7xl" on:click={addColumn}>
 				<div class="text-center">
 					<p>+</p>

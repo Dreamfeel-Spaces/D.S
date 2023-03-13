@@ -5,7 +5,7 @@ import type { LayoutServerLoad } from './$types';
 
 export const csr = true;
 
-export const load: LayoutServerLoad = async ({ locals, url }) => {
+export const load: LayoutServerLoad = async ({ locals, url, cookies }) => {
 	const session = await locals.getSession();
 	if (session) {
 		const user = await prisma.user.findUnique({
@@ -28,10 +28,25 @@ export const load: LayoutServerLoad = async ({ locals, url }) => {
 				dashboards: true
 			}
 		});
+
 		return {
 			session,
 			myapps: myapps.filter((app) => Boolean(app.appId))
 		};
 	}
-	return { session, myapps: [] };
+
+	const demo = await prisma.space.findUnique({
+		where: { appId: 'demo' },
+		include: {
+			tables: true,
+			spaceUis: {
+				include: {
+					spaceUIVersion: true
+				}
+			},
+			dashboards: true
+		}
+	});
+
+	return { session, myapps: [demo] };
 };

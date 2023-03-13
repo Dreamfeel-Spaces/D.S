@@ -9,6 +9,7 @@
 	} from 'flowbite-svelte';
 	export let data;
 	import { page } from '$app/stores';
+	import SpaceNav from './SpaceNav.svelte';
 
 	let spaceId = $page.params.space;
 	let tableId = $page.params.table;
@@ -17,11 +18,15 @@
 	let pathname = $page.url.pathname;
 </script>
 
-<div class="flex">
+<div>
+	<SpaceNav />
+</div>
+
+<div class="flex  ">
 	<div class="hidden md:block lg:block">
 		<Sidebar>
 			<SidebarWrapper>
-				<SidebarGroup class="max-h-99 overflow-auto">
+				<SidebarGroup class="max-h-105 overflow-auto">
 					<SidebarItem
 						rel="external"
 						active={!Boolean(tableId) &&
@@ -161,10 +166,10 @@
 			</SidebarWrapper>
 		</Sidebar>
 	</div>
-	<div class="flex-1">
+	<div class="flex-1 max-h-108  bg-gray-200 pb-20 overflow-auto">
 		<slot />
 	</div>
-	<div class="w-36  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
+	<div class="w-36   ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
 		<div>
 			<div class="mt-20">
 				<a class="hover:underline text-blue" href={`/docs`}>Collection docs</a>

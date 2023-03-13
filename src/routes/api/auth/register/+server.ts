@@ -22,10 +22,10 @@ export async function POST(event: RequestEvent) {
 
 	if (!username || !password || !name) {
 		await logger.error({});
-		throw error(400, 'Username (email), password and name are required');
+		throw error(401, 'Username (email), password and name are required');
 	}
 
-	const admin = await prisma.admin.create({
+	const admin = await prisma.spaceUser.create({
 		data: {
 			spaceId: String(space.id),
 			role: 'user',

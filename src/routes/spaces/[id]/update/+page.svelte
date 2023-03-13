@@ -1,9 +1,8 @@
-<script>
-	export let form = { success: false, data: {} };
-	let { success: saveSpaceSuccess, data: newSpaceData } = form;
+<script lang="ts">
+	export let form: any;
 </script>
 
-{#if saveSpaceSuccess}
+{#if form?.saveSpaceSuccess}
 	<div>form saved!</div>
 {/if}
 

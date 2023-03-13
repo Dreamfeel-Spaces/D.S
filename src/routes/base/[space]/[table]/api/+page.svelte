@@ -1,4 +1,5 @@
 <script lang="ts">
+	//@ts-nocheck
 	import type { PageData } from './$types';
 	export let data: PageData;
 	// import Prism from 'svelte-prism';
@@ -12,21 +13,18 @@
 		TabItem,
 		AccordionItem,
 		Checkbox,
-		Alert
+		Alert,
+		Input,
+		Label,
+		Button
 	} from 'flowbite-svelte';
 	import { page } from '$app/stores';
+	import Request from './Request.svelte';
 	const tableName = $page.params.table;
 	const spaceName = $page.params.space;
 	const table = data?.table;
+	const origin = $page.url.origin;
 </script>
-
-<div class="my-3 mx-6  flex  text-2xl text-gray-500">
-	<p class="mr-2">
-		{spaceName}
-	</p>
-	/
-	<b class="text-3xl ml-2">{tableName}</b>
-</div>
 
 <div class="mt-3 px-6">
 	<Breadcrumb>
@@ -63,14 +61,66 @@
 	</div>
 {/if}
 
-<div class="max-h-99 overflow-auto">
+<div>
 	{#if data?.table?.columns?.length && data?.space?.apiChannel}
-		<div class="mt-6 px-6 max-h-99 overflow-auto">
+		<div class="mt-6 px-6  overflow-auto">
+			<Card class="text-left" size="xl" padding="xl">
+				<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">CREATE</h5>
+				<div class="text-right mb-6">
+					<div>
+						<pre>
+							{`${origin}/api/records/${tableName}`}
+						</pre>
+						<div>POST</div>
+					</div>
+				</div>
+				<Tabs>
+					<TabItem open title="Simulate">
+						<Request
+							{table}
+							action="create"
+							url={`${origin}/api/records/${tableName}`}
+							method={'get'}
+						/>
+					</TabItem>
+					<TabItem title="cURL" />
+					<TabItem title="JS" />
+					<TabItem title="PY" />
+					<TabItem title="Rust" />
+					<TabItem title="PHP" />
+					<TabItem title="C#" />
+					<TabItem title="Java" />
+				</Tabs>
+
+				<div class="mt-3">
+					<p class="mb-3">Require permissions</p>
+					{#each data?.table?.requiredPermission ?? [] as permission}
+						<div>
+							<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
+								{permission.name}
+							</Checkbox>
+						</div>
+					{/each}
+				</div>
+			</Card>
+		</div>
+
+		<div class="mt-6 px-6  overflow-auto">
 			<Card class="text-left" size="xl" padding="xl">
 				<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Find Many</h5>
-				<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}`}</b></p>
+				<div class="text-right mb-6">
+					<div>
+						<pre>
+							{`${origin}/api/records/${tableName}`}
+						</pre>
+						<div>GET</div>
+					</div>
+				</div>
 				<Tabs>
-					<TabItem open title="cURL" />
+					<TabItem open title="Simulate">
+						<Request action="find_many" url={`${origin}/api/records/${tableName}`} method={'get'} />
+					</TabItem>
+					<TabItem title="cURL" />
 					<TabItem title="JS">
 						<div class="mb-4">Vanilla js</div>
 						<!-- <Prism language="javascript">
@@ -87,22 +137,22 @@
 					<TabItem title="Java" />
 				</Tabs>
 				<!-- <div class="my-3">
-				<Toggle>Disable</Toggle>
-			</div> -->
+			<Toggle>Disable</Toggle>
+		</div> -->
 				<div>
 					<!-- <p class="mb-3">Allowed filters</p>
 
-				<div class="grid grid-cols-4 gap-4 ">
-					<Checkbox>Limit</Checkbox>
-					<Checkbox>Skip</Checkbox>
-					{#each table?.columns?.filter((item) => item.type !== 'password') ?? [] as column}
-						<div>
-							<Checkbox>
-								{column.name}
-							</Checkbox>
-						</div>
-					{/each}
-				</div> -->
+			<div class="grid grid-cols-4 gap-4 ">
+				<Checkbox>Limit</Checkbox>
+				<Checkbox>Skip</Checkbox>
+				{#each table?.columns?.filter((item) => item.type !== 'password') ?? [] as column}
+					<div>
+						<Checkbox>
+							{column.name}
+						</Checkbox>
+					</div>
+				{/each}
+			</div> -->
 				</div>
 				<Accordion>
 					<AccordionItem>
@@ -116,61 +166,22 @@
 							<div>
 								<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
 									{permission.name}
-							</Checkbox>
+								</Checkbox>
 							</div>
 						{/each}
 					</AccordionItem>
 				</Accordion>
 				<div class="mt-3">
 					<!-- <div class="my-3">
-					<hr />
+				<hr />
+			</div>
+			{#each data?.permissions ?? [] as column}
+				<div>
+					<Checkbox>
+						{column.name}
+					</Checkbox>
 				</div>
-				{#each data?.permissions ?? [] as column}
-					<div>
-						<Checkbox>
-							{column.name}
-						</Checkbox>
-					</div>
-				{/each} -->
-				</div>
-			</Card>
-		</div>
-		<div class="mt-6 px-6">
-			<Card class="text-left" size="xl" padding="xl">
-				<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Find First</h5>
-				<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}`}</b></p>
-				<Tabs>
-					<TabItem open title="cURL" />
-					<TabItem title="JS" />
-					<TabItem title="PY" />
-					<TabItem title="Rust" />
-					<TabItem title="PHP" />
-					<TabItem title="C#" />
-					<TabItem title="Java" />
-				</Tabs>
-				<!-- <div class="my-3">
-				<Toggle>Disable</Toggle>
-			</div> -->
-				<!-- <div>
-				<div class="grid grid-cols-4 gap-4 ">
-					{#each table?.columns?.filter((item) => item.type !== 'password') ?? [] as column}
-						<div>
-							<Checkbox>
-								{column.name}
-							</Checkbox>
-						</div>
-					{/each}
-				</div>
-			</div> -->
-				<div class="mt-3">
-					<p class="mb-3">Require permissions</p>
-					{#each data?.table?.requiredPermission ?? [] as permission}
-						<div>
-							<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
-								{permission.name}
-							</Checkbox>
-						</div>
-					{/each}
+			{/each} -->
 				</div>
 			</Card>
 		</div>
@@ -178,9 +189,23 @@
 		<div class="mt-6 px-6">
 			<Card class="text-left" size="xl" padding="xl">
 				<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Find Unique</h5>
-				<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}`}</b></p>
+				<div class="text-right">
+					<pre>
+						{`${origin}/api/records/${tableName}/:id`}
+					</pre>
+					<div>GET</div>
+				</div>
 				<Tabs>
-					<TabItem open title="cURL" />
+					<TabItem open title="Simulate">
+						<Request
+							action="find_unique"
+							singleItem
+							url={`${origin}/api/records/${tableName}`}
+							method={'get'}
+							table={data?.table}
+						/>
+					</TabItem>
+					<TabItem title="cURL" />
 					<TabItem title="JS" />
 					<TabItem title="PY" />
 					<TabItem title="Rust" />
@@ -188,64 +213,8 @@
 					<TabItem title="C#" />
 					<TabItem title="Java" />
 				</Tabs>
-				<!-- <div class="my-3">
-				<Toggle>Disable</Toggle>
-			</div> -->
-				<div>
-					<!-- <p class="mb-3">Allowed filters</p>
 
-				<div class="grid grid-cols-4 gap-4 ">
-					{#each table?.columns?.filter((item) => item.type !== 'password') ?? [] as column}
-						<div>
-							<Checkbox>
-								{column.name}
-							</Checkbox>
-						</div>
-					{/each}
-				</div> -->
-				</div>
-				<div class="mt-3">
-					<p class="mb-3">Require permissions</p>
-					{#each data?.table?.requiredPermission ?? [] as permission}
-						<div>
-							<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
-								{permission.name}
-							</Checkbox>
-						</div>
-					{/each}
-				</div>
-			</Card>
-		</div>
-
-		<div class="mt-6 px-6">
-			<Card class="text-left" size="xl" padding="xl">
-				<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Update</h5>
-				<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}/:id`}</b></p>
-				<Tabs>
-					<TabItem open title="cURL" />
-					<TabItem title="JS" />
-					<TabItem title="PY" />
-					<TabItem title="Rust" />
-					<TabItem title="PHP" />
-					<TabItem title="C#" />
-					<TabItem title="Java" />
-				</Tabs>
-				<!-- <div class="my-3">
-				<Toggle>Disable</Toggle>
-			</div> -->
-				<div>
-					<!-- <p class="mb-3">Allowed filters</p>
-
-				<div class="grid grid-cols-4 gap-4 ">
-					{#each table?.columns?.filter((item) => item.type !== 'password') ?? [] as column}
-						<div>
-							<Checkbox>
-								{column.name}
-							</Checkbox>
-						</div>
-					{/each}
-				</div> -->
-				</div>
+				<div />
 				<div class="mt-3">
 					<p class="mb-3">Require permissions</p>
 					{#each data?.table?.requiredPermission ?? [] as permission}
@@ -262,9 +231,23 @@
 		<div class="mt-6 px-6">
 			<Card class="text-left" size="xl" padding="xl">
 				<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Delete</h5>
-				<p class="text-lg my-3">Endpoint: <b>{`/api/${tableName}`}</b></p>
+				<div class="text-right">
+					<pre>
+						{`${origin}/api/records/${tableName}/:id`}
+					</pre>
+					<div>DELETE</div>
+				</div>
 				<Tabs>
-					<TabItem open title="cURL" />
+					<TabItem open title="Simulate">
+						<Request
+							action="delete"
+							singleItem
+							url={`${origin}/api/records/${tableName}`}
+							method={'get'}
+							table={data?.table}
+						/>
+					</TabItem>
+					<TabItem title="cURL" />
 					<TabItem title="JS" />
 					<TabItem title="PY" />
 					<TabItem title="Rust" />
@@ -272,22 +255,8 @@
 					<TabItem title="C#" />
 					<TabItem title="Java" />
 				</Tabs>
-				<!-- <div class="my-3">
-				<Toggle>Disable</Toggle>
-			</div> -->
-				<div>
-					<!-- <p class="mb-3">Allowed filters</p>
 
-				<div class="grid grid-cols-4 gap-4 ">
-					{#each table?.columns?.filter((item) => item.type !== 'password') ?? [] as column}
-						<div>
-							<Checkbox>
-								{column.name}
-							</Checkbox>
-						</div>
-					{/each}
-				</div> -->
-				</div>
+				<div />
 				<div class="mt-3">
 					<p class="mb-3">Require permissions</p>
 					{#each data?.table?.requiredPermission ?? [] as permission}

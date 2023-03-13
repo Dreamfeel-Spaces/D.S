@@ -22,11 +22,11 @@ export const actions: Actions = {
 						appId: spaceId
 					},
 					include: {
-						admins: true
+						users: true
 					}
 				});
 
-				const admin = await prisma.admin.findFirst({
+				const admin = await prisma.spaceUser.findFirst({
 					where: {
 						username,
 						spaceId: space?.id

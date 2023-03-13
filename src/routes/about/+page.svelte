@@ -1,19 +1,28 @@
-<section class="bg-white dark:bg-gray-900">
-	<div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-		<h1
-			class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
-		>
-			About us
-		</h1>
-		<p
-			class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400"
-		>
-			Here at Dreamfeel we focus on markets where technology, innovation, and capital can unlock
-			long-term value and drive economic growth.
-		</p>
-		<div
-			class="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4"
-		/>
+<script lang="ts">
+	import logo from '../../assets/logo.png';
+</script>
+
+<section class="dark:bg-gray-900">
+	<div class="grid grid-cols-2 gap-3">
+		<div style="align-items:center" class=" min-h-108 flex justify-center">
+			<div>
+				<img src={logo} loading="lazy" alt="" />
+			</div>
+		</div>
+		<div class="py-8 px-8  mx-auto max-w-screen-xl lg:py-16 ">
+			<h1
+				class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-700 md:text-5xl lg:text-6xl dark:text-white"
+			>
+				About us
+			</h1>
+			<p class="mt-8 text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400">
+				Here at Dreamfeel we focus on markets where technology, innovation, and capital can unlock
+				long-term value and drive economic growth.
+			</p>
+			<div class=" text-blue-600  text-2xl underline mt-4 sm:space-y-0 sm:space-x-4">
+				<p><a href="/">Explore Careers</a></p>
+			</div>
+		</div>
 	</div>
 </section>
 

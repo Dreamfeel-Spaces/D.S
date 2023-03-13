@@ -20,8 +20,8 @@ export class Token {
 		return keys.find((key: any) => bcrypt.compareSync(token, key.key));
 	}
 
-	async verify(encrypted: string, unencypted: string) {
-		return bcrypt.compareSync(encrypted, unencypted);
+	async verify(unencypted: string, encrypted: string) {
+		return bcrypt.compareSync(unencypted, encrypted);
 	}
 
 	async jwt(user: any) {
@@ -32,16 +32,15 @@ export class Token {
 		return jwt.verify(tk, AUTH_SECRET);
 	}
 	async verifyApiKey(apiKey: string = '', event: any) {
-		if (!Boolean(apiKey)) throw error(403, 'Missing API Key');
-		return new Promise(async (res, rej) => {
-			if (!apiKey?.startsWith('Basic ')) {
-				rej('Authorization failed');
-			}
+		if (!Boolean(apiKey)) throw error(403, 'API Key not found');
 
+		if (apiKey?.startsWith('Basic ')) {
 			let tokenWithId = apiKey.split(' ')[1] || '#';
 			const splitToken = tokenWithId.split('#');
 			const appId = splitToken[0];
-			const token = splitToken[0];
+			const token = splitToken[1];
+
+			if (!appId || !token) return [null, error(403, 'Invalid API Key')];
 
 			const space = await prisma.space.findUnique({
 				where: {
@@ -52,44 +51,44 @@ export class Token {
 				}
 			});
 
-			const logger = new Logger();
-			logger.info(event, space?.id);
-
 			if (!space?.apiChannel) {
-				rej('API endpoints not allowed');
+				return [null, error(403, 'Rest API disabled for this space')];
 			}
+
+			const logger = new Logger();
+
+			logger.info(event, space?.id);
 
 			const apiKeys = space?.apiKeys ?? [];
 
 			if (!apiKeys.length) {
-				rej('Failed to validate accessToken');
+				return [null, error(403, 'Invalid API key')];
 			}
 
-			const reqKey = apiKeys.find((key) => this.verify(key.key, apiKey));
-
-			const newHit = (reqKey?.hits ?? 0) + 1;
+			const reqKey = apiKeys.filter((key) => {
+				const veri = bcrypt.compareSync(apiKey, key.key);
+				return veri;
+			})[0];
 
 			if (!reqKey) {
-				rej('Failed to validate accessToken');
+				return [null, error(403, 'Invalid API key')];
 			}
-			try {
-				// const updatedKey = await prisma.spaceAPIKeys.update({
-				// 	where: {
-				// 		id: String(reqKey?.id)
-				// 	},
-				// 	data: {
-				// 		hits: newHit
-				// 	}
-				// });
 
-				let spaceData = { ...space };
-				delete spaceData['apiKeys'];
-				res(spaceData);
-			} catch (e) {
-				console.log(e);
-			}
-		});
+			// await prisma.spaceAPIKeys.update({
+			// 	where: {
+			// 		id: String(reqKey?.id)
+			// 	},
+			// 	data: {
+			// 		hits: reqKey.hits + 1
+			// 	}
+			// });
+
+			let spaceData: any = { ...space };
+			delete spaceData['apiKeys'];
+			return [spaceData, null];
+		}
 	}
+
 	async createAdminPass() {
 		const pass = 'testPass123';
 		const hashed = bcrypt.hashSync(pass, 8);

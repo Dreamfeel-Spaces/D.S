@@ -11,7 +11,8 @@
 		SidebarDropdownWrapper,
 		SidebarGroup,
 		SidebarItem,
-		SidebarWrapper
+		SidebarWrapper,
+		Button
 	} from 'flowbite-svelte';
 
 	import { sineIn } from 'svelte/easing';
@@ -32,10 +33,21 @@
 
 	let subdomain = $page.data.subdomain;
 
-	let isPreview = /\/preview/.test(pathname) || $page.params.appId || /^\/forms\/(.+)\/?/.test(pathname) || /^\/reports\/(.+)\/?/.test(pathname)
+	let isPreview =
+		/^\/preview/.test(pathname) ||
+		$page.params.appId ||
+		/^\/forms\/(.+)\/?/.test(pathname) ||
+		/^\/reports\/(.+)\/?/.test(pathname) ||
+		/^\/editor\/(.+)\/?/.test(pathname) ||
+		/^\/dashboards\/(.+)\/?/.test(pathname) ||
+		/^\/spaces\/(.+)\/?/.test(pathname) ||
+		/^\/base\/(.+)\/?/.test(pathname) ||
+		/^\/a\/(.+)\/?/.test(pathname);
 
 	import logo from '../assets/logo.png';
 	import Rt from '$lib/ws/Rt.svelte';
+	import { signIn, signOut } from '@auth/sveltekit/client';
+	import { goto } from '$app/navigation';
 </script>
 
 <Rt />
@@ -55,7 +67,7 @@
 {#if !isPreview && !subdomain}
 	<div>
 		<nav
-			class="flex-no-wrap relative flex w-full items-center justify-between bg-neutral-100 py-4 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
+			class="flex-no-wrap relative flex w-full items-center justify-between  py-4 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
 			data-te-navbar-ref
 		>
 			<div class="flex w-full flex-wrap items-center justify-between px-6">
@@ -223,22 +235,26 @@
 						</ul>
 					</div>
 					<div class="relative" data-te-dropdown-ref>
-						<a
-							class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
-							href="/account"
-							id="dropdownMenuButton2"
-							role="button"
-							data-te-dropdown-toggle-ref
-							aria-expanded="false"
-						>
-							<img
-								src={$page.data.session?.user?.image}
-								class="rounded-full"
-								style="height: 25px; width: 25px"
-								alt=""
-								loading="lazy"
-							/>
-						</a>
+						{#if $page.data.session}
+							<a
+								class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
+								href="/accounts"
+								id="dropdownMenuButton2"
+								role="button"
+								data-te-dropdown-toggle-ref
+								aria-expanded="false"
+							>
+								<img
+									src={$page.data.session?.user?.image}
+									class="rounded-full"
+									style="height: 25px; width: 25px"
+									alt=""
+									loading="lazy"
+								/>
+							</a>
+						{:else}
+							<a href="/accounts"> <Button color="pinkToOrange" gradient>Sign in</Button></a>
+						{/if}
 						<ul
 							class="absolute left-auto right-0 z-[1000] float-left m-0 mt-1 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
 							aria-labelledby="dropdownMenuButton2"
@@ -273,50 +289,18 @@
 		</nav>
 	</div>
 
-	<Drawer  transitionType="fly" {transitionParams} bind:hidden={hidden2} id="sidebar2">
+	<Drawer transitionType="fly" {transitionParams} bind:hidden={hidden2} id="sidebar2">
 		<div class="flex items-center">
-			<img src={logo} style="height: 40px" alt="logo transparent" loading="lazy" />
+			<a href="/">
+				<img src={logo} style="height: 40px" alt="logo transparent" loading="lazy" />
+			</a>
 			<CloseButton on:click={() => (hidden2 = true)} class="mb-4 dark:text-white" />
 		</div>
 		<Sidebar>
-			<SidebarWrapper divClass="overflow-y-auto py-4 px-3 rounded0">
+			<SidebarWrapper divClass="overflow-y-auto py-4 px-3 ">
 				<SidebarGroup>
 					<SidebarItem
-						active={!isPreview &&
-							!isDashboard &&
-							!isEditor &&
-							!isBase &&
-							!isSpaces &&
-							!/\/admin/.test(pathname) &&
-							!/\/blog/.test(pathname) &&
-							!/\/logs/.test(pathname)}
-						on:click={() => (hidden2 = true)}
-						href="/"
-						rel="external"
-						label="Home"
-					>
-						<svelte:fragment slot="icon">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-6 h-6"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z"
-								/><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z"
-								/></svg
-							>
-						</svelte:fragment>
-					</SidebarItem>
-					<SidebarItem
-						active={/\/admin/.test(pathname)}
+						active={/^\/admin/.test(pathname)}
 						on:click={() => (hidden2 = true)}
 						href="/admin"
 						rel="external"
@@ -368,14 +352,14 @@
 						{#each $page.data.myapps as app}
 							<SidebarDropdownItem
 								on:click={() => (hidden2 = true)}
-								href={`/spaces/${app.appId}`}
+								href={`/a/${app.appId}`}
 								label={app.name}
 								rel="external"
 								active={isSpaces && spaceId === app.appId}
 							/>
 						{/each}
 					</SidebarDropdownWrapper>
-					<SidebarDropdownWrapper isOpen={isBase} label="Apis">
+					<!-- <SidebarDropdownWrapper isOpen={isBase} label="Apis">
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -400,8 +384,8 @@
 								active={isBase && spaceId === app.appId}
 							/>
 						{/each}
-					</SidebarDropdownWrapper>
-					<SidebarDropdownWrapper isOpen={isDashboard} label="Dashboards">
+					</SidebarDropdownWrapper> -->
+					<!-- <SidebarDropdownWrapper isOpen={isDashboard} label="Dashboards">
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -427,8 +411,8 @@
 								rel="external"
 							/>
 						{/each}
-					</SidebarDropdownWrapper>
-					<SidebarDropdownWrapper isOpen={isEditor} label="Editor">
+					</SidebarDropdownWrapper> -->
+					<!-- <SidebarDropdownWrapper isOpen={isEditor} label="Editor">
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -453,7 +437,7 @@
 								rel="external"
 							/>
 						{/each}
-					</SidebarDropdownWrapper>
+					</SidebarDropdownWrapper> -->
 					<SidebarDropdownWrapper isOpen={/\/blog/.test(pathname)} label="Blog">
 						<svelte:fragment slot="icon">
 							<svg
@@ -548,7 +532,11 @@
 						>
 					</svelte:fragment>
 				</SidebarItem> -->
-					<SidebarItem label={Boolean(session) ? 'Sign out' : 'Sign In'}>
+					<SidebarItem
+						on:click={() => (hidden2 = true)}
+						href="/accounts"
+						label={Boolean(session) ? 'Sign out' : 'Sign In'}
+					>
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"

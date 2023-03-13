@@ -6,10 +6,6 @@
 	import { Breadcrumb, BreadcrumbItem, Card, Alert } from 'flowbite-svelte';
 </script>
 
-<div class="my-3 text-xl px-6 text-gray-500">
-	<b class="text-3xl text-gray-500 ml-2">{spaceId}</b>
-</div>
-
 <div class="my-3">
 	<Breadcrumb>
 		<BreadcrumbItem>Home</BreadcrumbItem>
@@ -30,7 +26,7 @@
 		</Alert>
 	</div>
 {/if}
-<div class="grid lg:grid-cols-2 max-h-96 overflow-auto gap-4 px-6 ">
+<div class="grid lg:grid-cols-2 max-h-99 overflow-auto gap-4 px-6 ">
 	{#each data?.space?.tables ?? [] as table}
 		<Card size="lg">
 			<b>{table.name}</b>

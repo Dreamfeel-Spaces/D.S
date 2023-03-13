@@ -42,7 +42,7 @@ export const actions: Actions = {
 		const username = String(data.get('email'));
 		const name = String(data.get('fullname'));
 
-		const user = await prisma.admin.create({
+		const user = await prisma.spaceUser.create({
 			data: {
 				spaceId: space.id,
 				name,

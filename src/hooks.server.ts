@@ -4,12 +4,14 @@ import GitHub from '@auth/core/providers/github';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import type { Adapter } from '@auth/core/adapters';
 
+import jwt from 'jsonwebtoken';
+
 import { GITHUB_ID, GITHUB_SECRET } from '$env/static/private';
 import { prisma } from './lib/db/prisma';
 import { sequence } from '@sveltejs/kit/hooks';
-import type { Handle, HandleFetch, HandleServerError } from '@sveltejs/kit';
+import { error, type Handle, type HandleFetch, type HandleServerError } from '@sveltejs/kit';
 import { Pages } from '$lib/plugins/pages/Pages';
-import { errorCatch } from '$lib/util/slugit';
+import { errorCatch, isReservedRoute } from '$lib/util/slugit';
 import { Token } from '$lib/token/Token';
 
 export const authHandle = SvelteKitAuth({
@@ -36,46 +38,7 @@ export const authHandle = SvelteKitAuth({
 export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 	const pathname = event.url.pathname;
 
-	let isAccounts = /^\/accounts/.test(pathname);
-	let isAdmin = /^\/admin/.test(pathname);
-	let isApi = /^\/api/.test(pathname);
-	let isApps = /^\/apps/.test(pathname);
-	let isBase = /^\/base/.test(pathname);
-	let isSpaces = /^\/spaces/.test(pathname);
-	let isBlog = /^\/blog/.test(pathname);
-	let isDashboards = /^\/dashboards/.test(pathname);
-	let isDeactivated = /^\/deactivated/.test(pathname);
-	let isEditor = /^\/editor/.test(pathname);
-	let isExample = /^\/example/.test(pathname);
-	let isPdf = /^\/pdf/.test(pathname);
-	let isHome = /^\/$/.test(pathname);
-	let isAbout = /^\/about/.test(pathname);
-	let isDocs = /^\/docs/.test(pathname);
-	let isForms = /^\/forms/.test(pathname);
-	let isReports = /^\/reports/.test(pathname);
-
-	let reservedRoutes = [
-		isAccounts,
-		isAdmin,
-		isApi,
-		isApps,
-		isBase,
-		isBlog,
-		isDashboards,
-		isDeactivated,
-		isEditor,
-		isExample,
-		isPdf,
-		isSpaces,
-		isHome,
-		isAbout,
-		isBlog,
-		isDocs,
-		isForms,
-		isReports
-	];
-
-	const isReserved = reservedRoutes.find(Boolean);
+	const isReserved = isReservedRoute(pathname);
 
 	const pageManager = new Pages({ url: event.url });
 
@@ -103,8 +66,29 @@ export const errorHandle: HandleServerError = ({ error }) => {
 	return { message: 'Error' };
 };
 
+export const spaceAuth: Handle = async ({ event, resolve }) => {
+	if (/^\/api\/examples/.test(event.url.pathname)) return resolve(event);
+	if (/^\/api?/.test(event.url.pathname)) return resolve(event);
+	const { cookies } = event;
+
+	async function getSpaceSession() {
+		try {
+			const sessionToken = cookies.get(`${event.params.id}-accessToken`);
+			const decoded = jwt.decode(sessionToken);
+			return { user: decoded };
+		} catch (e) {
+			return null;
+		}
+	}
+	event.locals.getSpaceSession = getSpaceSession;
+	event.locals.spaceSession = await getSpaceSession();
+	return resolve(event);
+};
+
 export const apiAuth: Handle = async ({ event, resolve }) => {
+	if (/^\/api\/examples/.test(event.url.pathname)) return resolve(event);
 	if (!/^\/api?/.test(event.url.pathname)) return resolve(event);
+
 	const {
 		request: { headers },
 		locals
@@ -114,9 +98,11 @@ export const apiAuth: Handle = async ({ event, resolve }) => {
 
 	const token = new Token();
 	const logger = new Error();
+	const [space, spaceError] = await token.verifyApiKey(apiKey, event);
+
+	if (!space) throw error(404, 'Space not found!');
+
 	try {
-		const [space, spaceError] = await errorCatch(token.verifyApiKey(apiKey, event));
-		if (spaceError) throw spaceError;
 		const [session, sessionError] = await errorCatch(token.decodeUserToken(authorization, space));
 		if (sessionError) throw sessionError;
 		event.locals.space = space;
@@ -127,4 +113,20 @@ export const apiAuth: Handle = async ({ event, resolve }) => {
 	}
 };
 
-export const handle = sequence(apiAuth, authHandle, withSpaceRouter);
+export const handle = sequence(apiAuth, authHandle, spaceAuth, withSpaceRouter);
+
+// import EmailProvider from "next-auth/providers/email";
+// ...
+// providers: [
+//   EmailProvider({+-
+//     server: {
+//       host: process.env.EMAIL_SERVER_HOST,
+//       port: process.env.EMAIL_SERVER_PORT,
+//       auth: {
+//         user: process.env.EMAIL_SERVER_USER,
+//         pass: process.env.EMAIL_SERVER_PASSWORD
+//       }
+//     },
+//     from: process.env.EMAIL_FROM
+//   }),
+// ],

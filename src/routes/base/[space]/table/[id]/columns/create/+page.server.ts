@@ -14,7 +14,7 @@ export const actions = {
 		if (!session) throw error(403, 'Authorization failed');
 		const space = await prisma.space.findFirst({
 			where: { id: spaceId },
-			include: { admins: true }
+			include: { users: true }
 		});
 		const user = await prisma.user.findUnique({
 			where: { email: session.user.email }
@@ -22,7 +22,7 @@ export const actions = {
 
 		function isAdmin() {
 			if (user?.id === space?.userId) return true;
-			return space?.admins.find((admin) => admin.userId === user?.id);
+			return space?.users.find((admin) => admin.userId === user?.id);
 		}
 
 		if (!isAdmin()) throw error(403, 'You are unauthorized to view this page');

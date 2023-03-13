@@ -207,7 +207,7 @@
 							<TableHeadCell>Status</TableHeadCell>
 						</TableHead>
 						<TableBody class="divide-y">
-							{#each data.space.admins as admin}
+							{#each data.space.users as admin}
 								<TableBodyRow>
 									<TableBodyCell>{admin?.username}</TableBodyCell>
 									<TableBodyCell>{new Date(admin?.dateCreated) ?? ''}</TableBodyCell>
