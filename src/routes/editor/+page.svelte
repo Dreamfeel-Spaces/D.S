@@ -1,5 +1,5 @@
 <script>
-	import { Card } from 'flowbite-svelte';
+	import { Card, Button } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import VideoDialog from './VideoDialog.svelte';
 	const apps = $page.data.myapps;
@@ -7,12 +7,17 @@
 
 <section class=" dark:bg-gray-900">
 	<div class="grid grid-cols-2 gap-2">
-		<div class="py-8  min-h-108 bg-gray-200 px-4 mx-auto max-w-screen-xl  lg:py-16 ">
-			<h1
-				class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-700 md:text-5xl lg:text-6xl dark:text-white"
-			>
-				Editor
-			</h1>
+		<div class="py-8  min-h-108 px-4 mx-auto max-w-screen-xl  lg:py-16 ">
+			<div class="flex">
+				<h1
+					class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-700 md:text-5xl lg:text-6xl dark:text-white"
+				>
+					Editor
+				</h1>
+				<div>
+					<Button size="xs" pill>Preview</Button>
+				</div>
+			</div>
 			<p class="my-14 text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400">
 				Here at Dreamfeel we focus on markets where technology, innovation, and capital can unlock
 				long-term value and drive economic growth.

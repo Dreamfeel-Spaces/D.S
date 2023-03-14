@@ -9,9 +9,6 @@ export const actions = {
 		const spaceId = params.space;
 		const tableId = params.id;
 
-		const session = await locals.getSession();
-
-		if (!session) throw error(403, 'Authorization failed');
 		const space = await prisma.space.findFirst({
 			where: { id: spaceId },
 			include: { users: true }
@@ -19,13 +16,6 @@ export const actions = {
 		const user = await prisma.user.findUnique({
 			where: { email: session.user.email }
 		});
-
-		function isAdmin() {
-			if (user?.id === space?.userId) return true;
-			return space?.users.find((admin) => admin.userId === user?.id);
-		}
-
-		if (!isAdmin()) throw error(403, 'You are unauthorized to view this page');
 
 		const table = await prisma.spaceTable.findFirst({
 			where: { name: tableId, tableSpace: space.id },
@@ -83,8 +73,6 @@ export const actions = {
 				displayName: String(displayName)
 			}
 		});
-
-		console.log(fields);
 
 		return { success: true, data: { fields, table: updatedTable } };
 	}

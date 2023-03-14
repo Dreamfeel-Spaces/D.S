@@ -1,38 +1,29 @@
 <script lang="ts">
-	import { Alert, Input, Button } from 'flowbite-svelte';
+	import logo from '../../../../assets/logo.png';
+	import { Input, Button } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
+	import DemoCredentials from './DemoCredentials.svelte';
+
 	const appId = $page.params.id;
 	const isDemo = appId === 'demo';
+
 	export let data: PageData;
-	import logo from '../../../../assets/logo.png';
 </script>
 
 {#if !data.spaceSession}
-	<div class="grid grid-cols-2 gap-3">
-		<div class="min-h-99 self-center flex text-center  overflow-auto">
+	<div class="grid lg:grid-cols-2 gap-3">
+		<div class="min-h-99  hidden self-center lg:flex text-center  overflow-auto">
 			<div>
 				<img src={logo} loading="lazy" alt="" />
 				<p>Dreamfeel Spaces</p>
 			</div>
 		</div>
-		<div class="px-6 min-h-112 overflow-auto bg-gray-200 mx-3 pt-3 pb-20">
-			<div>
-				<p class="text-4xl text-gray-700">{appId}</p>
-				<p class="my-3">Login required</p>
-			</div>
+		<div class="px-6  min-h-100 overflow-auto bg-gray-200 mx-3 pt-3 pb-20">
 			{#if isDemo}
-				<Alert>
-					<div class="mb-2">Test credentials</div>
-					<ul>
-						<li>Username: <b>admin@company.mail</b></li>
-						<li>Password: <b>testPass123</b></li>
-					</ul>
-					<hr />
-					<div class="mt-3">
-						<a class="hover:underline" href="/spaces/create">Create a new space instead</a>
-					</div>
-				</Alert>
+				<div class="flex justify-end">
+					<DemoCredentials />
+				</div>
 			{/if}
 			<div class="mt-9">
 				<form action="?/signin" method="POST">

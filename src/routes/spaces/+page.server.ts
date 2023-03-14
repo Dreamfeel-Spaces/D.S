@@ -6,7 +6,7 @@ export async function load({ locals }) {
 		const user = await prisma.user.findUnique({
 			where: {
 				email: session?.user?.email
-			}
+		}
 		});
 		const apps = await prisma.space.findMany({ where: { userId: user?.id } });
 

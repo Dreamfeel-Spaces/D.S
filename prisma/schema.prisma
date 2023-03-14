@@ -2,16 +2,16 @@ generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = "file:./.sqlite"
-}
-
 // datasource db {
-//   provider     = "mysql"
-//   url          = env("DATABASE_URL")
-//   relationMode = "prisma"
+//   provider = "sqlite"
+//   url      = "file:./.sqlite"
 // }
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
 
 model uiDraft {
   id    String  @id @default(cuid())
@@ -87,7 +87,7 @@ model ConfigVars {
   spaceUIVersionId String?
   space            Space?          @relation(fields: [spaceId], references: [id])
   spaceId          String?
-  createdBy        User            @relation(fields: [userId], references: [id])
+  createdBy        SpaceUser       @relation(fields: [userId], references: [id])
   userId           String
 
   @@index([spaceUIVersionId])
@@ -107,7 +107,7 @@ model SpaceUIVersion {
   pages       Page[]
   default     Boolean      @default(false)
   configVars  ConfigVars[]
-  createdBy   User?        @relation(fields: [userId], references: [id])
+  createdBy   SpaceUser?   @relation(fields: [userId], references: [id])
   userId      String?
 
   @@index([spaceUIId])
@@ -121,7 +121,7 @@ model SpaceUI {
   name           String           @default("dawn")
   spaceUIVersion SpaceUIVersion[]
   template       Boolean          @default(false)
-  user           User?            @relation(fields: [userId], references: [id])
+  user           SpaceUser?       @relation(fields: [userId], references: [id])
   userId         String?
 
   @@index([spaceId])
@@ -325,7 +325,7 @@ model SpaceTable {
   columns             Column[]
   rows                Row[]
   relations           Relations[]
-  createdBy           User?           @relation(fields: [userId], references: [id])
+  createdBy           SpaceUser?      @relation(fields: [userId], references: [id])
   userId              String
   space               Space?          @relation(fields: [tableSpace], references: [id])
   tableSpace          String?
@@ -355,8 +355,8 @@ model SpaceSession {
   id           String     @id @default(cuid())
   sessionToken String     @unique
   expires      DateTime?
-  admin        SpaceUser? @relation(fields: [adminId], references: [id])
-  adminId      String?
+  user         SpaceUser? @relation(fields: [userId], references: [id])
+  userId       String?
   dateCreated  DateTime   @default(now())
   space        Space      @relation(fields: [spaceId], references: [id])
   spaceId      String
@@ -370,38 +370,43 @@ model Geo {
 }
 
 model SpaceUser {
-  id                     String         @id @default(cuid())
-  space                  Space          @relation(fields: [spaceId], references: [id])
+  id                     String           @id @default(cuid())
+  space                  Space            @relation(fields: [spaceId], references: [id])
   spaceId                String
-  apiKeys                SpaceAPIKeys?  @relation(fields: [spaceAPIKeysId], references: [id])
+  apiKeys                SpaceAPIKeys?    @relation(fields: [spaceAPIKeysId], references: [id])
   spaceAPIKeysId         String?
   rules                  APIRule[]
-  dateCreated            DateTime       @default(now())
-  updatedAt              DateTime?      @default(now()) @updatedAt
+  dateCreated            DateTime         @default(now())
+  updatedAt              DateTime?        @default(now()) @updatedAt
   password               String?
-  role                   String?        @default("user")
+  role                   String?          @default("user")
   username               String?
   sessions               SpaceSession[]
-  status                 String         @default("pending-confirmation")
-  defaultPasswordUpdated Boolean        @default(false)
+  status                 String           @default("pending-confirmation")
+  defaultPasswordUpdated Boolean          @default(false)
   name                   String?
   avatar                 String?
-  geo                    Geo?           @relation(fields: [geoId], references: [id])
+  geo                    Geo?             @relation(fields: [geoId], references: [id])
   geoId                  String?
   AdminKeys              AdminKeys[]
-  user                   User?          @relation(fields: [userId], references: [id])
+  user                   User?            @relation(fields: [userId], references: [id])
   userId                 String?
+  ConfigVars             ConfigVars[]
+  SpaceUIVersion         SpaceUIVersion[]
+  SpaceUI                SpaceUI[]
+  SpaceTable             SpaceTable[]
+  SpaceUpdate            SpaceUpdate[]
 
   @@map("Admin")
 }
 
 model SpaceUpdate {
-  id      String   @id @default(cuid())
-  user    User     @relation(fields: [userId], references: [id])
+  id      String    @id @default(cuid())
+  user    SpaceUser @relation(fields: [userId], references: [id])
   userId  String
-  time    DateTime @default(now())
+  time    DateTime  @default(now())
   fields  String?
-  space   Space?   @relation(fields: [spaceId], references: [id])
+  space   Space?    @relation(fields: [spaceId], references: [id])
   spaceId String?
 }
 
@@ -433,8 +438,7 @@ model SpaceAPIKeys {
   dateCreated DateTime    @default(now())
   space       Space?      @relation(fields: [spaceId], references: [id])
   spaceId     String?
-  admins      SpaceUser[]
-  createdBy   User?       @relation(fields: [userId], references: [id])
+  users       SpaceUser[]
   userId      String?
   expires     DateTime?
   name        String?
@@ -551,23 +555,17 @@ model Session {
 }
 
 model User {
-  id             String           @id @default(cuid())
-  name           String?
-  email          String?          @unique
-  emailVerified  DateTime?
-  image          String?
-  accounts       Account[]
-  sessions       Session[]
-  spaces         Space[]
-  spaceUpdates   SpaceUpdate[]
-  spaceAPIKeys   SpaceAPIKeys[]
-  spaceTables    SpaceTable[]
-  configVars     ConfigVars[]
-  spaceUIVersion SpaceUIVersion[]
-  spaceUI        SpaceUI[]
-  BlogContent    BlogContent[]
-  comments       Comment[]
-  SpaceUser      SpaceUser[]
+  id            String        @id @default(cuid())
+  name          String?
+  email         String?       @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  spaces        Space[]
+  BlogContent   BlogContent[]
+  comments      Comment[]
+  SpaceUser     SpaceUser[]
 }
 
 model VerificationToken {

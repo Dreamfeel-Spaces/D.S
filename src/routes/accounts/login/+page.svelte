@@ -1,11 +1,11 @@
-<script lang="ts" >
+<script lang="ts">
 	import { page } from '$app/stores';
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
 	const session = $page.data.session;
 	const user = session?.user;
-	export let form:any
+	export let form: any;
 	// export let form: ActionData satisfies {error:boolean};
 </script>
 
@@ -44,15 +44,15 @@
 	</div>
 {/if}
 
-<div class="lg:mx-20 mt-5">
+<div class="lg:mx-20 mt-5 max-w-48 overflow-auto">
 	{#if user}
 		<div class="flex justify-end">
 			<div>
 				<button on:click={() => signOut()}>Logout</button>
 			</div>
 		</div>
-		<div class="mt-4">
-			<p>You are logged in as {user.name}</p>
+		<div class="mt-4  flex-wrap">
+			<p class=" flex-wrap">You are logged in as {user.name}</p>
 			<small>
 				{user.email}
 			</small>

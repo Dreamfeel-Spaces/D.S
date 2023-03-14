@@ -8,11 +8,15 @@ export async function load({ params, cookies }: RequestEvent) {
 	const spaceId = params.id;
 	const cookie = cookies.get(`${spaceId}-accessToken`);
 
-	const decoded = jwt.decode(cookie ?? '');
+	if (cookie) {
+		const decoded = jwt.decode(cookie ?? '');
 
-	if (!decoded) return { spaceSession: null };
+		if (!decoded) return { spaceSession: null };
 
-	return { spaceSession: { user: decoded } };
+		return { spaceSession: { user: decoded } };
+	}
+
+	return { spaceSession: null };
 }
 
 export const actions: Actions = {
@@ -34,42 +38,25 @@ export const actions: Actions = {
 
 		if (!space) throw error(404, 'Page not found');
 
-		if (spaceId === 'demo') {
-			if (username === 'admin@company.mail' && password === 'testPass123') {
-				const admin = await prisma.spaceUser.findFirst({
-					where: {
-						username,
-						spaceId: space?.id
-					}
-				});
-
-				if (admin) {
-					const token = new Token();
-					const sessionToken = await token.createUserToken(admin);
-					const session = await prisma.spaceSession.create({
-						data: {
-							adminId: admin.id,
-							sessionToken,
-							spaceId: String(space?.id)
-						}
-					});
-
-					cookies.set(`${spaceId}-accessToken`, sessionToken, { path: '/' });
-					throw redirect(302, `/a/${spaceId}`);
-				} else throw error(404, 'User not found');
-			} else {
-				throw error(403, 'Incorrect credentials provided');
+		const user = await prisma.spaceUser.findFirst({
+			where: {
+				spaceId: space.id,
+				username
 			}
-		}
-		const user = space.users.find((u) => u.username === username);
+		});
 
 		if (!user) return {};
 
 		const token = new Token();
+
+		const isValidPass = await token.verify(password, String(user.password));
+
+		if (!isValidPass) return {};
+
 		const sessionToken = await token.createUserToken(user);
 		await prisma.spaceSession.create({
 			data: {
-				adminId: user?.id,
+				userId: user?.id,
 				sessionToken,
 				spaceId: String(space?.id)
 			}
@@ -80,7 +67,9 @@ export const actions: Actions = {
 	},
 	async signout({ cookies, params }) {
 		const spaceId = params.id;
-		const cookie = cookies.delete(`${spaceId}-accessToken`);
+		cookies.delete(`${spaceId}-accessToken`, {
+			path: '/'
+		});
 		return { signoutSuccess: true };
 	}
 };

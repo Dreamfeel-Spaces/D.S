@@ -3,48 +3,34 @@
 	import 'grapesjs/dist/css/grapes.min.css';
 	import grapesjs from 'grapesjs';
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import axios from 'axios';
-
-	import { Select, Button, Input, Checkbox, Radio, Progressbar, Spinner } from 'flowbite-svelte';
-
-	export let data: PageData;
 
 	// import grapesTailwind from 'grapesjs-tailwind';
 	import gjsForms from 'grapesjs-plugin-forms';
 	import gjsTabs from 'grapesjs-tabs';
 	import gjsTailwind from '$lib/plugins/grapes/tailwind';
-	import { spaceTestPlugin } from '$lib/plugins/grapes/space-ui';
 	import { addGpanels, gPanels } from '$lib/plugins/util/panels';
 	import { addGCommands } from '$lib/plugins/util/commands';
 	import { gStyles } from '$lib/plugins/util/styles';
 	import { gDevices } from '$lib/plugins/util/devices';
 	import { gStorage } from '$lib/plugins/util/storage';
 	import gBasic from 'grapesjs-blocks-basic';
-	import { cardPlugin } from '$lib/plugins/grapes/space-ui/w-copilot';
 
 	let editor: grapesjs.Editor;
-	let paginate: Boolean = false;
-	let sort: Boolean = false;
-	let table: string = '';
-	let sortField = '';
-	let sortOpion = '';
-	let isList = 'list';
-
 	const spaceId = $page.params.id;
 
 	onMount(() => {
 		editor = grapesjs.init({
 			container: '#gjs',
 			fromElement: true,
-			height: '559px',
+			height: '618px',
 			width: 'auto',
 			plugins: [
 				(editor) => gjsTailwind(editor),
 				(editor) => gjsForms(editor),
 				(editor) => gjsTabs(editor),
-				(editor) => gBasic(editor),
-				
+				(editor) => gBasic(editor)
 			],
 			layerManager: {
 				appendTo: '.layers-container'
@@ -71,6 +57,12 @@
 		editor.Commands.add('manual-save', {
 			run: (editor: any) => handleSave()
 		});
+	});
+
+	onDestroy(() => {
+		if (editor) {
+			editor.destroy();
+		}
 	});
 
 	let saving = false;
@@ -152,7 +144,7 @@
 		flex-basis: 350px;
 		position: relative;
 		overflow-y: auto;
-		min-height: 559px;
+		min-height: 618px;
 	}
 	.panel__switcher {
 		position: initial;

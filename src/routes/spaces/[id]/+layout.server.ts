@@ -15,11 +15,7 @@ export async function load({ cookies, params }: any) {
 			},
 			include: {
 				owner: true,
-				apiKeys: {
-					include: {
-						createdBy: true
-					}
-				},
+				apiKeys: true,
 				configVars: true,
 				users: true,
 				permissions: true,

@@ -4,9 +4,6 @@
 </script>
 
 <div>
-	<div class="flex mb-6">
-		<small class="flex-1">Create and instantly share/store/print data reports</small>
-	</div>
 	<Table>
 		<TableHead>
 			<TableHeadCell class="text-gray-500" align="right" colspan={3}>
@@ -20,4 +17,7 @@
 		</TableHead>
 	</Table>
 	<ListPlaceholder />
+	<div class="mt-2 text-xs">
+		Create reports from custom queries and use to generate documents, share or store on the cloud.
+	</div>
 </div>

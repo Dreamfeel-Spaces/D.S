@@ -101,7 +101,7 @@ export const actions: Actions = {
 
 			const admin = await prisma.spaceUser.create({
 				data: {
-					userId: String(user.id),
+					// userId: String(user.id),
 					username: user.email,
 					spaceId: space.id,
 					password: adminPassword,
@@ -237,11 +237,7 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 		where: { appId: spaceId },
 		include: {
 			owner: true,
-			apiKeys: {
-				include: {
-					createdBy: true
-				}
-			},
+			apiKeys: true,
 			configVars: true,
 			users: true,
 			permissions: true,
@@ -267,7 +263,6 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 	}
 
 	const userToken = cookies.get(`${space?.appId}-accessToken`);
-
 
 	if (!userToken) throw redirect(302, `/a/${space?.appId}/accounts`);
 

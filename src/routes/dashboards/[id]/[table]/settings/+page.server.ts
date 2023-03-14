@@ -7,16 +7,6 @@ export const actions: Actions = {
 		const spaceId = params.id;
 		const tableId = params.table;
 
-		const session = await locals.getSession();
-
-		if (!session) throw error(403, 'Unauthorized');
-
-		const user = await prisma.user.findUnique({
-			where: {
-				email: String(session?.user?.email)
-			}
-		});
-
 		const space = await prisma.space.findUnique({
 			where: {
 				appId: spaceId
@@ -55,16 +45,6 @@ export const actions: Actions = {
 export async function load({ params, locals }: RequestEvent) {
 	const spaceId = params.id;
 	const tableId = params.table;
-
-	const session = await locals.getSession();
-
-	if (!session) throw error(403, 'Unauthorized');
-
-	const user = await prisma.user.findUnique({
-		where: {
-			email: String(session?.user?.email)
-		}
-	});
 
 	const space = await prisma.space.findUnique({
 		where: {

@@ -9,10 +9,14 @@
 <div>
 	<form method="post">
 		<div class="flex mb-6">
-			<small class="flex-1">Get started with custom forms</small>
+			<small class="flex-1">Spaces form builder</small>
+		</div>
+		<div class="text-2xl text-center mb-2">
+			<p>Application</p>
 		</div>
 		<ListPlaceholder />
-		<Button disabled type="submit" class="w-full mt-9">Submit</Button>
+		<Button disabled type="submit" class="w-full mt-3">Submit</Button>
+		<div class="text-xs mt-3">Create and collect data for any fields of your collections.</div>
 	</form>
 </div>
 

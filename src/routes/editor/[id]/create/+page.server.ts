@@ -13,22 +13,10 @@ export const actions: Actions = {
 
 		if (!space) throw error(404, 'Space not found');
 
-		const session = await locals.getSession();
-
-		if (!session) throw error(403, 'Session not found');
-
-		const user = await prisma.user.findUnique({
-			where: {
-				email: session?.user?.email
-			}
-		});
-
-		if (!user) throw (403, 'Unauthorized');
-
 		const name = String(data.get('name'));
 
 		const ui = await prisma.spaceUI.create({
-			data: { spaceId: String(space.id), name, userId: String(user.id) }
+			data: { spaceId: String(space.id), name }
 		});
 
 		const versionOne = await prisma.spaceUIVersion.create({

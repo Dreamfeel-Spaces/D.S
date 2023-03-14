@@ -13,13 +13,11 @@
 		TabItem,
 		AccordionItem,
 		Checkbox,
-		Alert,
-		Input,
-		Label,
-		Button
+		Alert
 	} from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import Request from './Request.svelte';
+	import Code from '../../../../Code.svelte';
 	const tableName = $page.params.table;
 	const spaceName = $page.params.space;
 	const table = data?.table;
@@ -84,12 +82,59 @@
 						/>
 					</TabItem>
 					<TabItem title="cURL" />
-					<TabItem title="JS" />
-					<TabItem title="PY" />
+					<TabItem title="JS">
+						<Code
+							code={`
+// SDK
+import {Space} from "dreamfeel-sdk"
+const exampleSpace = new Space()
+const examples = await exampleSpace.find()
+console.log(examples)
+
+// Fetch
+fetch("${$page.url.origin}/api/examples")
+  .then((response) => response.json())
+  .then((data) => console.log(data));
+
+//  Axios
+try{
+	const response = await axios.get("/exampes")
+	console.log(response.data)
+}catch(e){
+	// ...
+}
+
+					`}
+						/>
+					</TabItem>
+					<TabItem title="PY">
+						<Code
+							code={`
+// SDK
+import dreamfeel_spaces
+items = dreamfeel_spaces.find("items", {take:10})
+print(items)
+							
+// requets				
+import requests
+items = requests.get('${$page.url.origin}/api/examples')
+print(items)
+							`}
+						/>
+					</TabItem>
 					<TabItem title="Rust" />
 					<TabItem title="PHP" />
 					<TabItem title="C#" />
-					<TabItem title="Java" />
+					<TabItem title="Java" >
+						<Code
+						language="clike"
+						code={`
+Url url = new URL("http://example.com");
+HttpURLConnection con = (HttpURLConnection) url.openConnection();
+con.setRequestMethod("GET"); 
+`}
+					/>
+					</TabItem>
 				</Tabs>
 
 				<div class="mt-3">

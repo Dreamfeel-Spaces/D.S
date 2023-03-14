@@ -31,8 +31,7 @@
 	import RuleDialog from './RuleDialog.svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import DashboardDialog from './DashboardDialog.svelte';
-	let activeTab = $page.url.searchParams.get('tab') ?? 'settings';
+	let activeTab = $page.url.searchParams.get('tab') ?? 'apikeys';
 	let password = '';
 	let confirmPassword = '';
 </script>
@@ -49,7 +48,7 @@
 				<BreadcrumbItem disabled>Admin</BreadcrumbItem>
 			</Breadcrumb>
 			<Tabs class="mt-4">
-				<TabItem
+				<!-- <TabItem
 					open={activeTab === 'channels'}
 					on:click={() => goto('?tab=channels')}
 					title="Dashboards"
@@ -123,7 +122,7 @@
 							</AccordionItem>
 						{/each}
 					</Accordion>
-				</TabItem>
+				</TabItem> -->
 				<TabItem
 					open={activeTab === 'apikeys'}
 					on:click={() => goto('?tab=apikeys')}
@@ -178,7 +177,6 @@
 						</div>
 					{/if}
 				</TabItem>
-			
 
 				<TabItem open={activeTab === 'admins'} on:click={() => goto('?tab=admins')} title="Admins">
 					<p class="text-sm text-gray-500 dark:text-gray-400">
@@ -284,12 +282,7 @@
 					on:click={() => goto('?tab=settings')}
 					title="Settings"
 				>
-					<p class="text-sm text-gray-500 dark:text-gray-400">
-						<b>Deactivate:</b> Once deactivated, the space will be activated again after 14days. You
-						can request reactivation by sending an email.
-					</p>
-
-					{#if form?.passwordUpdate}
+						{#if form?.passwordUpdate}
 						<p>Password updated</p>
 					{/if}
 					<div class="mt-9">
@@ -366,54 +359,7 @@
 									</form>
 								</div>
 							</AccordionItem>
-							<AccordionItem header="oij">
-								<svelte:fragment slot="header">
-									<div class="flex">
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											fill="none"
-											viewBox="0 0 24 24"
-											stroke-width="1.5"
-											stroke="currentColor"
-											class="w-6 h-6"
-											><path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-											/></svg
-										>
-										<div class="ml-2">Password</div>
-									</div>
-								</svelte:fragment>
-								<div class="my-6">Set super admin password for authorization in spaces API.</div>
 
-								<form method="post" action="?/updatePassword&tab=settings">
-									<div class="mb-4">
-										<Input
-											name="password"
-											id="password"
-											bind:value={password}
-											placeholder="Input new password"
-											type="password"
-										/>
-									</div>
-									<div class="mb-4">
-										<Input
-											bind:value={confirmPassword}
-											placeholder="Confirm new password"
-											type="password"
-											name="confirmPassword"
-											id="confirmPassword"
-										/>
-									</div>
-									{#if password && confirmPassword && password !== confirmPassword}
-										<small>Passwords do not match</small>
-									{/if}
-									<div>
-										<Button type="submit" class="w-full">Save</Button>
-									</div>
-								</form>
-							</AccordionItem>
 							<AccordionItem>
 								<svelte:fragment slot="header">
 									<div class="flex">
@@ -513,6 +459,54 @@
 										<div class="ml-2">Logistics providers</div>
 									</div>
 								</svelte:fragment>
+							</AccordionItem>
+							<AccordionItem header="oij">
+								<svelte:fragment slot="header">
+									<div class="flex">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke-width="1.5"
+											stroke="currentColor"
+											class="w-6 h-6"
+											><path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+											/></svg
+										>
+										<div class="ml-2">Password</div>
+									</div>
+								</svelte:fragment>
+								<div class="my-6">Set super admin password for authorization in spaces API.</div>
+
+								<form method="post" action="?/updatePassword&tab=settings">
+									<div class="mb-4">
+										<Input
+											name="password"
+											id="password"
+											bind:value={password}
+											placeholder="Input new password"
+											type="password"
+										/>
+									</div>
+									<div class="mb-4">
+										<Input
+											bind:value={confirmPassword}
+											placeholder="Confirm new password"
+											type="password"
+											name="confirmPassword"
+											id="confirmPassword"
+										/>
+									</div>
+									{#if password && confirmPassword && password !== confirmPassword}
+										<small>Passwords do not match</small>
+									{/if}
+									<div>
+										<Button type="submit" class="w-full">Save</Button>
+									</div>
+								</form>
 							</AccordionItem>
 						</Accordion>
 					</div>

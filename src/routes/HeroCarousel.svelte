@@ -1,16 +1,18 @@
 <!-- Carousel.svelte -->
 <script lang="ts">
 	//@ts-nocheck
-	import { fade, slide } from 'svelte/transition';
 
 	import HeroRest from './HeroRest.svelte';
 	import HeroChart from './HeroChart.svelte';
 	import HeroForm from './HeroForm.svelte';
 	import HeroReport from './HeroReport.svelte';
-	import { browser } from '$app/environment';
-	import { onMount } from 'svelte';
+	import HeroImg from './HeroImg.svelte';
 
-	export let images: any[] = [HeroRest, HeroChart, HeroForm, HeroReport];
+	import { browser } from '$app/environment';
+	import { onMount, onDestroy } from 'svelte';
+	import HeroEditor from './HeroEditor.svelte';
+
+	export let images: any[] = [HeroRest, HeroChart, HeroForm, HeroReport, HeroImg, HeroEditor];
 	let currentImageIndex = 0;
 	let timerId;
 
@@ -46,6 +48,10 @@
 
 	onMount(() => {
 		startAutoSlide(10000);
+	});
+
+	onDestroy(() => {
+		stopAutoSlide();
 	});
 </script>
 

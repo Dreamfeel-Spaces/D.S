@@ -6,8 +6,8 @@
 	const app = apps.find((app: any) => app.appId === appId);
 </script>
 
-<section class=" grid  grid-cols-2  dark:bg-gray-900">
-	<div style="align-items:center" class="bg-gray-200  flex justify-center min-h-108">
+<section class="grid  lg:grid-cols-2  dark:bg-gray-900">
+	<div style="align-items:center" class=" flex justify-center h-72 lg:min-h-108">
 		<div>
 			<h1
 				class="mb-4 text-4xl px-16 font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
@@ -26,7 +26,19 @@
 			class=" 
 			"
 		>
-			<Button gradient rel="external" href={`/dashboards/${appId}`}>
+			<div class="mb-20">
+				<p>Username: {$page.data.spaceSession?.user?.username}</p>
+				<p>Role: {$page.data.spaceSession?.user?.role}</p>
+				<form
+					action={`/a/${$page.params.id}/accounts?/signout`}
+					method="post"
+					class="flex justify-end"
+				>
+					<button>Sign out</button>
+				</form>
+			</div>
+
+			<Button size="xl" gradient rel="external" href={`/dashboards/${appId}`}>
 				Dashboards
 				<svg
 					class="ml-2 -mr-1 w-5 h-5"

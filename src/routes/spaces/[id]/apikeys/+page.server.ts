@@ -32,13 +32,6 @@ export async function load({ locals, params }) {
 			}
 		});
 
-		function isAdmin() {
-			if (user?.id === space?.userId) return true;
-			return space?.users.find((admin) => admin.userId === user?.id);
-		}
-
-		if (!isAdmin()) throw error(403, 'You are unauthorized to view this page');
-
 		return { space };
 	} else throw error(403, 'You must be signed in to view this page');
 }
@@ -59,12 +52,6 @@ export const actions: Actions = {
 
 		if (spaceSession) {
 			const user = spaceSession.user;
-			function isAdmin() {
-				if (user?.id === space?.userId) return true;
-				return space?.users.find((admin) => admin.id === user?.id);
-			}
-
-			if (!isAdmin()) throw error(403, 'You are unauthorized to view this page');
 
 			const token = new Token();
 			const unencryptedToken = await token.randomToken();
@@ -93,21 +80,6 @@ export const actions: Actions = {
 			return { success: true, data: { ...apiKey, token: formatted } };
 		}
 
-		if (!session) throw error(403, 'You must be signed in to view this page');
-
-		let user = await prisma.user.findFirst({
-			where: {
-				email: session.user.email
-			}
-		});
-
-		function isAdmin() {
-			if (user?.id === space?.userId) return true;
-			return space?.users.find((admin) => admin.userId === user?.id);
-		}
-
-		if (!isAdmin()) throw error(403, 'You are unauthorized to view this page');
-
 		const token = new Token();
 		const unencryptedToken = await token.randomToken();
 		const formatted = `Basic ${space.appId}#${unencryptedToken}`;
@@ -120,7 +92,7 @@ export const actions: Actions = {
 		const apiKey = await prisma.spaceAPIKeys.create({
 			data: {
 				spaceId: space.id,
-				userId: user.id,
+				// userId: user.id,
 				key: encrypted,
 				name: name
 			}

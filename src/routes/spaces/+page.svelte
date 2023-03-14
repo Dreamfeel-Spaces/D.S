@@ -6,9 +6,9 @@
 </script>
 
 <section class=" dark:bg-gray-900">
-	<div class="grid grid-cols-2 gap-2 ">
-		<div class="py-8 px-4  text-center max-w-screen-xl   lg:py-16 bg-gray-200">
-			<div style="align-items:center" class="flex justify-center min-h-108 ">
+	<div class="grid lg:grid-cols-2 gap-2 ">
+		<div class="py-8 px-4  text-center max-w-screen-xl   lg:py-16	">
+			<div style="align-items:center" class="flex justify-center min-h-105 ">
 				<div>
 					<img src={logo} loading="lazy" alt="" />
 					<p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl s dark:text-gray-400">
@@ -21,7 +21,7 @@
 			<div class="px-6">
 				<div class="grid grid-cols-4  mt-9 gap-3">
 					{#each apps as app}
-						<a rel="external" href={`/spaces/${app.appId}`}>
+						<a rel="external" href={`/a/${app.appId}`}>
 							<Card class="text-center">
 								<div>
 									{app.name}

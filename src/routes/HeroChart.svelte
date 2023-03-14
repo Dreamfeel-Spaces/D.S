@@ -1,11 +1,8 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import '@fontsource/merriweather';
-	import { Chart, registerables } from 'chart.js';
 	import { onDestroy, onMount } from 'svelte';
 	import { FY2021 } from '$lib/chart.json';
-
-	Chart.register(...registerables);
 
 	let chartType = 'pie';
 
@@ -43,7 +40,10 @@
 
 	let interval: any;
 
-	onMount(() => {
+	onMount(async () => {
+		const { Chart, registerables } = await import('chart.js');
+		Chart.register(...registerables);
+
 		if (browser) {
 			new Chart(barChartElement, {
 				type: chartType as any,
@@ -99,15 +99,18 @@
 
 <main class="main-container">
 	<div class="flex mb-6">
-		<small class="flex-1">Visualize your data</small>
+		<small class="flex-1">Interactive charts</small>
 	</div>
-	<section class="max-h-48 flex justify-center">
+	<section class="max-h-44 flex justify-center">
 		<canvas bind:this={barChartElement} />
 	</section>
 	<div class="mt-3 text-xs">
 		<hr class="mb-2" />
-		<section class="max-h-48 flex justify-center">
+		<section class="max-h-44 flex justify-center">
 			<canvas bind:this={lineChartElement} />
 		</section>
+		<div class="mt-3">
+			Get rich dashboards, with all tools to visualize, analyze and get insights on your data.
+		</div>
 	</div>
 </main>

@@ -40,7 +40,7 @@
 		/^\/reports\/(.+)\/?/.test(pathname) ||
 		/^\/editor\/(.+)\/?/.test(pathname) ||
 		/^\/dashboards\/(.+)\/?/.test(pathname) ||
-		/^\/spaces\/(.+)\/?/.test(pathname) ||
+		(/^\/spaces\/(.+)\/?/.test(pathname) && !/^\/spaces\/create\/?/.test(pathname)) ||
 		/^\/base\/(.+)\/?/.test(pathname) ||
 		/^\/a\/(.+)\/?/.test(pathname);
 
@@ -67,7 +67,7 @@
 {#if !isPreview && !subdomain}
 	<div>
 		<nav
-			class="flex-no-wrap relative flex w-full items-center justify-between  py-4 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
+			class="flex-no-wrap relative flex w-full items-center justify-between  py-4 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
 			data-te-navbar-ref
 		>
 			<div class="flex w-full flex-wrap items-center justify-between px-6">
@@ -139,17 +139,17 @@
 								rel="external"
 								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 								href="/editor"
-								data-te-nav-link-ref>Editor</a
+								data-te-nav-link-ref>Editor <small class="text-xs"> (preview)</small></a
 							>
 						</li>
-						<li class="lg:pr-2" data-te-nav-item-ref>
+						<!-- <li class="lg:pr-2" data-te-nav-item-ref>
 							<a
 								rel="external"
 								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 								href="/spaces"
 								data-te-nav-link-ref>Spaces</a
 							>
-						</li>
+						</li> -->
 					</ul>
 					<!-- Left links -->
 				</div>
@@ -195,7 +195,7 @@
 					<a
 						rel="external"
 						class="mr-4 text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-						href="/apps"
+						href="/spaces"
 					>
 						<span class="[&>svg]:w-5">
 							<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24">

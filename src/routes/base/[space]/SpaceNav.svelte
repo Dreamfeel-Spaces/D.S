@@ -56,6 +56,8 @@
 			<!-- Left links -->
 		</div>
 
+		<div class="flex-1" />
+
 		<!-- Right elements -->
 		<div class="relative flex items-center">
 			<div class="relative" data-te-dropdown-ref>
@@ -87,7 +89,11 @@
 					</li>
 				</ul>
 			</div>
+
 			<div class="relative flex" data-te-dropdown-ref>
+				{#if $page.data.space?.appId === 'demo'}
+					<Button class="mr-4" size="xs" color="green">Live demo</Button>
+				{/if}
 				<button on:click={() => (hidden2 = false)}>
 					<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24">
 						<path d="M120 816v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
@@ -145,10 +151,14 @@
 	</div>
 
 	<div class="bg-gray-100 text-gray-700 p-2">
-		<small class="text-right"> You are logged in as</small>
+		<small class="text-right w-48 flex-wrap"> You are logged in as</small>
 		<hr class="my-2" />
-		<p class="flex justify-between">Username: <b>{$page.data?.spaceSession?.user?.username}</b></p>
-		<p class="flex justify-between">Role: <b>{$page.data?.spaceSession?.user?.role}</b></p>
+		<p class="flex justify-between w-64 overflow-auto my-3 ">
+			Username: <b class="ml-6">{$page.data?.spaceSession?.user?.username}</b>
+		</p>
+		<p class="flex justify-between">
+			Role: <b>{$page.data?.spaceSession?.user?.role}</b>
+		</p>
 		<form method="post" action={`/a/${space.appId}/accounts?/signout`}>
 			<Button type="submit" class="mt-3" size="xs">Sign out</Button>
 		</form>

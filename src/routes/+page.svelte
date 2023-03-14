@@ -1,21 +1,9 @@
 <script lang="ts">
 	//@ts-nocheck
 	import logo from '../assets/logo.png';
-	import axios from 'axios';
 	export let form: any;
-	import { page } from '$app/stores';
 	export let data: any;
-	import {
-		Alert,
-		Button,
-		Card,
-		Select,
-		Spinner,
-		Tabs,
-		TabItem,
-		Input,
-		CarouselTransition
-	} from 'flowbite-svelte';
+	import { Alert, Button, Card } from 'flowbite-svelte';
 
 	import Cursort from './Cursort.svelte';
 	import HeroCarousel from './HeroCarousel.svelte';
@@ -40,7 +28,8 @@
 			<p
 				class="max-w-2xl  mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
 			>
-			Create APIs without coding. Streamline your workflow and empower your team with Dreamfeel spaces. Build, test, and deploy in minutes..
+				Create APIs without coding. Streamline your workflow and empower your team with Dreamfeel
+				spaces. Build, test, and deploy in minutes..
 			</p>
 			<Button class="mr-3" size="lg" href="/accounts" gradient color="pinkToOrange">
 				Get started
@@ -56,7 +45,7 @@
 					/></svg
 				>
 			</Button>
-			<a target="blank" href="http://localhost:5173/spaces/demo">
+			<a target="blank" href="/a/demo">
 				<Button size="lg" gradient color="purpleToBlue">Live demo</Button>
 			</a>
 		</div>
@@ -416,13 +405,13 @@
 				</figcaption>
 			</figure>
 		</div>
-		<div class="text-center">
+		<!-- <div class="text-center">
 			<a
 				href="/"
 				class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
 				>Show more...</a
 			>
-		</div>
+		</div> -->
 	</div>
 </section>
 
@@ -1429,8 +1418,8 @@
 									</div>
 									<div class="grow ml-6">
 										<p class="font-bold mb-1">Technical support</p>
-										<p class="text-gray-500">support@example.com</p>
-										<p class="text-gray-500">+1 234-567-89</p>
+										<p class="text-gray-500">support@dreamfeel.io</p>
+										<!-- <p class="text-gray-500">+1 234-567-89</p> -->
 									</div>
 								</div>
 							</div>
@@ -1459,8 +1448,8 @@
 									</div>
 									<div class="grow ml-6">
 										<p class="font-bold mb-1">Sales questions</p>
-										<p class="text-gray-500">sales@example.com</p>
-										<p class="text-gray-500">+1 234-567-89</p>
+										<p class="text-gray-500">sales@dreamfeel.io</p>
+										<!-- <p class="text-gray-500">+1 234-567-89</p> -->
 									</div>
 								</div>
 							</div>
@@ -1489,8 +1478,8 @@
 									</div>
 									<div class="grow ml-6">
 										<p class="font-bold mb-1">Press</p>
-										<p class="text-gray-500">press@example.com</p>
-										<p class="text-gray-500">+1 234-567-89</p>
+										<p class="text-gray-500">press@dreamfeel.io</p>
+										<!-- <p class="text-gray-500">+1 234-567-89</p> -->
 									</div>
 								</div>
 							</div>
@@ -1519,8 +1508,8 @@
 									</div>
 									<div class="grow ml-6">
 										<p class="font-bold mb-1">Bug report</p>
-										<p class="text-gray-500">bugs@example.com</p>
-										<p class="text-gray-500">+1 234-567-89</p>
+										<p class="text-gray-500">bugs@dreamfeel.io</p>
+										<!-- <p class="text-gray-500">+1 234-567-89</p> -->
 									</div>
 								</div>
 							</div>
