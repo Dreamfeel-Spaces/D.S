@@ -49,6 +49,5 @@ export const load: LayoutServerLoad = async ({ locals, url, cookies }) => {
 	});
 
 	if (demo) return { session, myapps: [demo] };
-	return { session, myapps: [demo] };
-
+	return { session, myapps: [] };
 };
