@@ -19,7 +19,7 @@ export const actions: Actions = {
 		const table = await prisma.spaceTable.findFirst({
 			where: {
 				name: tableId,
-				tableSpace: space?.id
+				spaceId: space?.id
 			}
 		});
 
@@ -58,7 +58,7 @@ export async function load({ params, locals }: RequestEvent) {
 	const table = await prisma.spaceTable.findFirst({
 		where: {
 			name: tableId,
-			tableSpace: space?.id
+			spaceId: space?.id
 		}
 	});
 

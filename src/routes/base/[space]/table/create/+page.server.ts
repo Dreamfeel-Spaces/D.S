@@ -20,7 +20,7 @@ export const actions = {
 		const existing = await prisma.spaceTable.findFirst({
 			where: {
 				name,
-				tableSpace: space.id
+				spaceId: space.id
 			}
 		});
 
@@ -29,7 +29,7 @@ export const actions = {
 		const table = await prisma.spaceTable.create({
 			data: {
 				name: convertToSlug(name),
-				tableSpace: String(space?.id)
+				spaceId: String(space?.id)
 			}
 		});
 

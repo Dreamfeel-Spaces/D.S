@@ -10,7 +10,7 @@ export async function load({ params }: RequestEvent) {
 	const table = await prisma.spaceTable.findFirst({
 		where: {
 			name: tableName,
-			tableSpace: spaceId
+			spaceId: spaceId
 		},
 		include: {
 			columns: {
@@ -59,7 +59,7 @@ export const actions: Actions = {
 		const table = await prisma.spaceTable.findFirst({
 			where: {
 				name: tableName,
-				tableSpace: spaceId
+				spaceId: spaceId
 			},
 			include: {
 				columns: true

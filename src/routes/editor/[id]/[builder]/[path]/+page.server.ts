@@ -30,7 +30,7 @@ export async function load({ params }: RequestEvent) {
 
 	const tables = await prisma.spaceTable.findMany({
 		where: {
-			tableSpace: space.id
+			spaceId: space.id
 		},
 		include: {
 			columns: true,

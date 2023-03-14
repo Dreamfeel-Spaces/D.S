@@ -13,7 +13,7 @@ export async function load({ params, locals }) {
 	});
 
 	const table = await prisma.spaceTable.findFirst({
-		where: { name: tableId, tableSpace: space.id },
+		where: { name: tableId, spaceId: space.id },
 		include: {
 			rows: {
 				include: {
@@ -24,7 +24,7 @@ export async function load({ params, locals }) {
 		}
 	});
 
-	if (table?.tableSpace !== space.id) throw error(404, 'Table not found!');
+	if (table?.spaceId !== space.id) throw error(404, 'Table not found!');
 
 	return { table };
 }

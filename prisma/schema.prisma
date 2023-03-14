@@ -327,8 +327,8 @@ model SpaceTable {
   relations           Relations[]
   createdBy           SpaceUser?      @relation(fields: [userId], references: [id])
   userId              String
-  space               Space?          @relation(fields: [tableSpace], references: [id])
-  tableSpace          String?
+  space               Space?          @relation(fields: [spaceId], references: [id])
+  spaceId          String?
   displayName         String?
   reports             Report[]
   charts              Chart[]

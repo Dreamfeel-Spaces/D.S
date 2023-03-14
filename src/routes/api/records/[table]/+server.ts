@@ -18,7 +18,7 @@ export async function GET(event: RequestEvent) {
 	const table = await prisma.spaceTable.findFirst({
 		where: {
 			name: tableName,
-			tableSpace: space?.id
+			spaceId: space?.id
 		}
 	});
 
@@ -76,7 +76,7 @@ export async function POST(event: RequestEvent) {
 	const table = await prisma.spaceTable.findFirst({
 		where: {
 			name: tableName,
-			tableSpace: space.id
+			spaceId: space.id
 		},
 		include: {
 			columns: true

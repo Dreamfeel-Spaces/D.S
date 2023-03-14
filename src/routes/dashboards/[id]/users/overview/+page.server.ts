@@ -17,7 +17,7 @@ export async function load({ params }: RequestEvent) {
 	const table = await prisma.spaceTable.findFirst({
 		where: {
 			name: tableName,
-			tableSpace: space.id
+			spaceId: space.id
 		},
 		include: {
 			columns: true,
@@ -143,7 +143,7 @@ export async function load({ params }: RequestEvent) {
 
 // 		const table = await prisma.spaceTable.findFirst({
 // 			where: {
-// 				tableSpace: space.id,
+// 				spaceId: space.id,
 // 				name: tableId
 // 			}
 // 		});
@@ -217,7 +217,7 @@ export async function load({ params }: RequestEvent) {
 
 // 		const table = await prisma.spaceTable.findFirst({
 // 			where: {
-// 				tableSpace: space.id,
+// 				spaceId: space.id,
 // 				name: tableId
 // 			}
 // 		});
@@ -274,7 +274,7 @@ export async function load({ params }: RequestEvent) {
 
 // 		const table = await prisma.spaceTable.findFirst({
 // 			where: {
-// 				tableSpace: space.id,
+// 				spaceId: space.id,
 // 				name: tableId
 // 			}
 // 		});

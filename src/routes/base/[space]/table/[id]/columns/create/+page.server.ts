@@ -18,7 +18,7 @@ export const actions = {
 		});
 
 		const table = await prisma.spaceTable.findFirst({
-			where: { name: tableId, tableSpace: space.id },
+			where: { name: tableId, spaceId: space.id },
 			include: {
 				rows: {
 					include: {
@@ -29,7 +29,7 @@ export const actions = {
 			}
 		});
 
-		if (table?.tableSpace !== space?.id) throw error(404, 'Table not found!');
+		if (table?.spaceId !== space?.id) throw error(404, 'Table not found!');
 
 		const data = await request.formData();
 
@@ -83,7 +83,7 @@ export async function load({ params }: RequestEvent) {
 	const tableName = params.id;
 
 	const tables = await prisma.spaceTable.findMany({
-		where: { tableSpace: spaceId }
+		where: { spaceId: spaceId }
 	});
 
 	return {
