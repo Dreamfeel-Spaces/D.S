@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	const apps = $page.data.myapps;
 	let appId = $page.params.id;
-	const app = apps.find((app: any) => app.appId === appId);
+	const app = (apps ?? []).find((app: any) => app.appId === appId);
 </script>
 
 <section class="grid  lg:grid-cols-2  dark:bg-gray-900">

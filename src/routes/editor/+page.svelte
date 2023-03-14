@@ -48,7 +48,7 @@
 			<div class="px-6">
 				<div class="grid grid-cols-4 text-center  px-6 mt-9 gap-3">
 					{#each apps as app}
-						<a rel="external" href={`/editor/${app.appId}`}>
+						<a rel="external" href={`/editor/${app?.appId}`}>
 							<Card class="text-center">
 								<div>
 									{app.name}

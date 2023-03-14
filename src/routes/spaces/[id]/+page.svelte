@@ -42,7 +42,7 @@
 			<Breadcrumb>
 				<BreadcrumbItem href="/" rel="external">Home</BreadcrumbItem>
 				<BreadcrumbItem href="/spaces" rel="external">Spaces</BreadcrumbItem>
-				<BreadcrumbItem rel="external" href={`/spaces/${data?.space.appId}`}
+				<BreadcrumbItem rel="external" href={`/spaces/${data?.space?.appId}`}
 					>{data.space.name}</BreadcrumbItem
 				>
 				<BreadcrumbItem disabled>Admin</BreadcrumbItem>

@@ -12,7 +12,7 @@
 		Button
 	} from 'flowbite-svelte';
 	import logo from '../../../assets/logo.png';
-	const space = $page.data.space;
+	const space = $page?.data?.space;
 	import { sineIn } from 'svelte/easing';
 	let hidden2 = true;
 	let transitionParams = {
@@ -159,7 +159,7 @@
 		<p class="flex justify-between">
 			Role: <b>{$page.data?.spaceSession?.user?.role}</b>
 		</p>
-		<form method="post" action={`/a/${space.appId}/accounts?/signout`}>
+		<form method="post" action={`/a/${space?.appId}/accounts?/signout`}>
 			<Button type="submit" class="mt-3" size="xs">Sign out</Button>
 		</form>
 	</div>
@@ -169,7 +169,7 @@
 			<SidebarGroup>
 				<SidebarItem
 					on:click={() => (hidden2 = true)}
-					href={`/dashboards/${space.appId}/`}
+					href={`/dashboards/${space?.appId}/`}
 					rel="external"
 					label="Dashboards"
 				>
@@ -196,7 +196,7 @@
 
 				<SidebarItem
 					on:click={() => (hidden2 = true)}
-					href={`/base/${space.appId}/`}
+					href={`/base/${space?.appId}/`}
 					rel="external"
 					label="API"
 				>
@@ -223,7 +223,7 @@
 
 				<SidebarItem
 					on:click={() => (hidden2 = true)}
-					href={`/editor/${space.appId}/`}
+					href={`/editor/${space?.appId}/`}
 					rel="external"
 					label="Editor"
 				>
@@ -250,7 +250,7 @@
 
 				<SidebarItem
 					on:click={() => (hidden2 = true)}
-					href={`/spaces/${space.appId}/`}
+					href={`/spaces/${space?.appId}/`}
 					rel="external"
 					label="Preferences"
 				>

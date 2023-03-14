@@ -20,7 +20,7 @@
 		<div class=" mt-8 px-6">
 			<div class="grid grid-cols-4   gap-3">
 				{#each apps as app}
-					<a rel="external" href={`/dashboards/${app.appId}`}>
+					<a rel="external" href={`/dashboards/${app?.appId}`}>
 						<Card class="text-center">
 							<div>
 								{app.name}
