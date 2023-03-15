@@ -45,13 +45,13 @@ export const actions: Actions = {
 			}
 		});
 
-		if (!user) return {};
+		if (!user) return { error: true };
 
 		const token = new Token();
 
 		const isValidPass = await token.verify(password, String(user.password));
 
-		if (!isValidPass) return {};
+		if (!isValidPass) return { error: true };
 
 		const sessionToken = await token.createUserToken(user);
 		await prisma.spaceSession.create({

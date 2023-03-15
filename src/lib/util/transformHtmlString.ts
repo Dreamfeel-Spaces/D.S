@@ -45,7 +45,7 @@ export async function transformHtmlString(
 
 		const spaceTable = await prisma.spaceTable.findFirst({
 			where: {
-				spaceId: String(_space?.id),
+				appId: String(_space?.id),
 				name: String(table)
 			},
 			include: {

@@ -13,7 +13,7 @@ export async function load({ params, url }: RequestEvent) {
 	const table = await prisma.spaceTable.findFirst({
 		where: {
 			name: tableName,
-			spaceId: spaceId
+			appId: spaceId
 		},
 		include: {
 			columns: true

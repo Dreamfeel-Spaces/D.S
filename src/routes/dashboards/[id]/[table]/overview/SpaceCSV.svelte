@@ -7,6 +7,7 @@
 	export let columns: any = [];
 	import { page } from '$app/stores';
 
+
 	import UploadCsv from 'upload-csv-svelte';
 
 	function downloadHandler() {
@@ -19,6 +20,7 @@
 	}
 
 	function downloadTemplate() {
+		console.log(columns);
 		csvGenerator(
 			[],
 			columns.filter((col) => col.checked).map((column) => column.name),

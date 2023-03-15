@@ -27,7 +27,7 @@
 	<div class="my-9 px-6 ">
 		<Alert>
 			<p class="mb-5"><b>Table created</b></p>
-			<a class="hover:underline" href={`/base/${space}/${form?.data?.name}/schema/create`}
+			<a class="hover:underline" href={`/base/${space}/${form?.data?.name}`}
 				>Add schema</a
 			>
 		</Alert>

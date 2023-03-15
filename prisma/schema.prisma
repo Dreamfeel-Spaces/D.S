@@ -4,7 +4,7 @@ generator client {
 
 // datasource db {
 //   provider = "sqlite"
-//   url      = "file:./...sqlite"
+//   url      = "file:./.sqlite"
 // }
 
 datasource db {
@@ -204,6 +204,7 @@ model BlogContent {
   flagged    Boolean   @default(false)
   slug       String    @unique
   comments   Comment[]
+  category   String    @default("Tech")
 }
 
 model Comment {
@@ -253,6 +254,7 @@ model DashboardForm {
   description String?
   fields      ReportField[]
   SQT         SQT[]
+  isUpdate    Boolean       @default(false)
 }
 
 model SQT {
@@ -286,6 +288,7 @@ model ReportField {
   chartId         String?
   dashboardForm   DashboardForm? @relation(fields: [dashboardFormId], references: [id])
   dashboardFormId String?
+  isUpdate        Boolean        @default(false)
 }
 
 model Report {
@@ -326,9 +329,9 @@ model SpaceTable {
   rows                Row[]
   relations           Relations[]
   createdBy           SpaceUser?      @relation(fields: [userId], references: [id])
-  userId              String
-  space               Space?          @relation(fields: [spaceId], references: [id])
-  spaceId          String?
+  userId              String?
+  app                 Space?          @relation(fields: [appId], references: [id])
+  appId               String?
   displayName         String?
   reports             Report[]
   charts              Chart[]
@@ -351,9 +354,12 @@ model Role {
   role Permission[]
 }
 
+//  @db.Text
+
+// @db.VarChar(3000)
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String     @db.Text
+  sessionToken String
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?
@@ -379,7 +385,6 @@ model SpaceUser {
   dateCreated            DateTime         @default(now())
   updatedAt              DateTime?        @default(now()) @updatedAt
   password               String?
-  role                   String?          @default("user")
   username               String?
   sessions               SpaceSession[]
   status                 String           @default("pending-confirmation")
@@ -396,6 +401,8 @@ model SpaceUser {
   SpaceUI                SpaceUI[]
   SpaceTable             SpaceTable[]
   SpaceUpdate            SpaceUpdate[]
+  role                   Permission?       @relation(fields: [roleId], references: [id])
+  roleId                 String?
 
   @@map("Admin")
 }
@@ -447,17 +454,18 @@ model SpaceAPIKeys {
 }
 
 model Permission {
-  id          String   @id @default(cuid())
+  id          String      @id @default(cuid())
   name        String
-  apiRule     APIRule? @relation(fields: [aPIRuleId], references: [id])
+  apiRule     APIRule?    @relation(fields: [aPIRuleId], references: [id])
   aPIRuleId   String?
-  space       Space?   @relation(fields: [spaceId], references: [id])
+  space       Space?      @relation(fields: [spaceId], references: [id])
   spaceId     String?
   description String?
-  created     DateTime @default(now())
-  updated     DateTime @default(now()) @updatedAt
-  Role        Role?    @relation(fields: [roleId], references: [id])
+  created     DateTime    @default(now())
+  updated     DateTime    @default(now()) @updatedAt
+  Role        Role?       @relation(fields: [roleId], references: [id])
   roleId      String?
+  users       SpaceUser[]
 }
 
 model APIRule {

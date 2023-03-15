@@ -16,7 +16,7 @@
 			<TableHeadCell>Age</TableHeadCell><TableHeadCell>Class</TableHeadCell>
 		</TableHead>
 	</Table>
-	<ListPlaceholder />
+	<ListPlaceholder size="xl" />
 	<div class="mt-2 text-xs">
 		Create reports from custom queries and use to generate documents, share or store on the cloud.
 	</div>

@@ -16,6 +16,11 @@
 
 	let requesting = false;
 
+	export let paused;
+	export let handlePause = ()=>{
+
+	}
+
 	let items: any = null;
 
 	let statuscode: any = '';
@@ -98,13 +103,22 @@
 	<form on:submit|preventDefault={handleFetch}>
 		<div class="mb-2 flex">
 			<p class="text-3xl flex-1">{methods.find((m) => m.value === method)?.name ?? 'Find all'}</p>
-			<Button type="submit" size="xs" color="pinkToOrange" gradient class="my-3">
-				{#if requesting}
-					<Spinner color="purple" />
-				{:else}
-					Send
-				{/if}
-			</Button>
+			<div class="flex my-3">
+				<div class="mr-2">
+					<Button on:click={handlePause} size="xs" color="default"
+						>{#if paused} Resume {:else} Pause {/if}</Button
+					>
+				</div>
+				<div>
+					<Button type="submit" size="xs" color="pinkToOrange" gradient>
+						{#if requesting}
+							<Spinner color="purple" />
+						{:else}
+							Send
+						{/if}
+					</Button>
+				</div>
+			</div>
 		</div>
 		<div class="mb-3">
 			<Select

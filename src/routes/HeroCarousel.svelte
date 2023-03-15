@@ -37,9 +37,13 @@
 
 	$: showCarouselItem(currentImageIndex);
 
+	let paused = false;
+
 	function startAutoSlide(interval) {
-		if (timerId) clearInterval(timerId);
-		timerId = setInterval(nextImage, interval);
+		if (!paused) {
+			if (timerId) clearInterval(timerId);
+			timerId = setInterval(nextImage, interval);
+		}
 	}
 
 	function stopAutoSlide() {
@@ -53,12 +57,17 @@
 	onDestroy(() => {
 		stopAutoSlide();
 	});
+
+	function handlePause(){
+		paused = !paused
+	}
+
 </script>
 
 <div class="carousel">
 	{#each images as image, i}
 		<div class="carousel-item h-72 {i === currentImageIndex ? 'visible' : 'hidden'}">
-			<svelte:component this={image} />
+			<svelte:component this={image} handlePause={handlePause} bind:paused />
 			<!-- <p>{image.caption}</p> -->
 		</div>
 	{/each}

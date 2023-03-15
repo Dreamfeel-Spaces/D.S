@@ -32,47 +32,45 @@ export const actions = {
 
 		const userId = user.id;
 
-		const space = await prisma.space.create({
-			data: {
-				appId: convertToSlug(appId ?? name),
-				name,
-				icon,
-				userId,
-				secret: 'fudge'
-			}
-		});
-
-		const token = new Token();
-		const adminPassword = await token.createAdminPass();
-
-		const admin = await prisma.spaceUser.create({
-			data: {
-				userId,
-				spaceId: space.id,
-				password: adminPassword,
-				role: 'owner',
-				username: String(user?.email),
-				name: String(user?.name),
-				avatar: String(user?.image)
-			}
-		});
-
-
-		console.log(admin)
 		try {
-			// let info = await gmailTransporter.sendMail({
-			// 	from: 'odidaprotas@gmail.com', // sender address
-			// 	to: user?.email, // list of receivers
-			// 	subject: 'Hello ✔. ',
-			// 	text: 'Hello world?',
-			// 	html: `<p>Default password: <b>${adminPassword}</b>   for space ${space.appId} </p>. Please update.`
-			// });
+			const space = await prisma.space.create({
+				data: {
+					appId: convertToSlug(appId ?? name),
+					name,
+					icon,
+					userId,
+					secret: 'fudge'
+				}
+			});
+
+			const token = new Token();
+			const adminPassword = await token.createAdminPass();
+
+			const ownerRole = await prisma.permission.create({
+				data: {
+					name: 'SUPER_USER',
+					spaceId: space.id,
+					description: `The default role for the owner of the space. Gives access and modification rights to any part, data, or API Config.`
+				}
+			});
+
+			const admin = await prisma.spaceUser.create({
+				data: {
+					userId,
+					spaceId: space.id,
+					password: adminPassword,
+					role: 'owner',
+					username: String(user?.email),
+					name: String(user?.name),
+					avatar: String(user?.image),
+					roleId: ownerRole.id
+				}
+			});
+
+			const form = { success: true, data: space };
+			return form;
 		} catch (e) {
-			console.log(e);
+			return { error: true };
 		}
-
-		const form = { success: true, data: space };
-
-		return form;
 	}
 };

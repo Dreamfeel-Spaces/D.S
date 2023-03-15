@@ -1,31 +1,13 @@
 <script lang="ts">
 	//@ts-nocheck
 	export let data;
+
 	import logo from '../../../assets/logo.png';
-	import {
-		Tabs,
-		TabItem,
-		Breadcrumb,
-		BreadcrumbItem,
-		Checkbox,
-		Button,
-		Accordion,
-		AccordionItem,
-		Table,
-		TableHead,
-		TableBody,
-		TableBodyRow,
-		TableHeadCell,
-		Input,
-		NumberInput,
-		Select,
-		TableBodyCell,
-		Card,
-		Alert
-	} from 'flowbite-svelte';
-	let selectedOptions: any = {};
+	import { Checkbox, Button, Input, NumberInput, Select, Alert } from 'flowbite-svelte';
 	import FileDropzone from '$lib/components/FileDropzone.svelte';
 	import DateTimeInput from '$lib/components/DateTimeInput.svelte';
+
+	let selectedOptions: any = {};
 	let form = data.form;
 </script>
 
@@ -125,7 +107,7 @@
 				{/if}
 			</div>
 		{/each}
-		<Button disable={data.isFilled} type="submit" class="w-full mt-9">Submit</Button>
+		<Button disabled={data.isFilled} type="submit" class="w-full mt-9">Submit</Button>
 	</form>
 </div>
 

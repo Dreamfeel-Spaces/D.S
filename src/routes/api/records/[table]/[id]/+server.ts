@@ -21,7 +21,7 @@ export async function GET(event: RequestEvent) {
 	const table = await prisma.spaceTable.findFirst({
 		where: {
 			name: tableName,
-			spaceId: space.id
+			appId: space.id
 		},
 		include: {
 			columns: true
@@ -68,7 +68,7 @@ export async function PUT(event: RequestEvent) {
 	const table = await prisma.spaceTable.findFirst({
 		where: {
 			name: tableName,
-			spaceId: space?.id
+			appId: space?.id
 		},
 		include: {
 			columns: true
@@ -138,7 +138,7 @@ export async function PATCH(event: RequestEvent) {
 	const table = await prisma.spaceTable.findFirst({
 		where: {
 			name: tableName,
-			spaceId: space.id
+			appId: space.id
 		},
 		include: {
 			columns: true

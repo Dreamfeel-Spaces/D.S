@@ -84,6 +84,14 @@
 							<div>
 								{report.name}
 								<div class="text-xs my-3 text-gray-500">{report.description}</div>
+								{#each report.SQT as sq}
+									<a
+										rel="external"
+										target="blank"
+										class="text-xs text-blue-600 underline"
+										href={`/reports/${sq.id}`}>{sq.title}</a
+									>
+								{/each}
 							</div>
 						</svelte:fragment>
 						<div class="flex justify-between">
@@ -114,7 +122,7 @@
 
 								<TableHead>
 									<TableHeadCell colspan={report.columns.length}>
-										{#each report.charts as chart}
+										{#each report.charts ?? [] as chart}
 											<div class="text-2xl text-gray-500">
 												<SpaceChart
 													noDelete
@@ -216,7 +224,21 @@
 				{#each data.forms as form}
 					<AccordionItem>
 						<svelte:fragment slot="header">
-							{form.name}
+							<div>
+								<p>
+									{form.name}
+								</p>
+								<p>
+									{#each form.SQT as sq}
+										<a
+											rel="external"
+											target="blank"
+											class="text-xs text-blue-600 underline"
+											href={`/forms/${sq.id}`}>{sq.title}</a
+										>
+									{/each}
+								</p>
+							</div>
 						</svelte:fragment>
 						<div class="flex justify-between">
 							<div class="text-small text-gray-500">{form.description}</div>
@@ -233,19 +255,22 @@
 						</div>
 						<form action="?/saveMiniform&tab=forms" method="POST">
 							<input type="hidden" value={form.id} name="form-id" id="form-id" />
-							<div class="mt-6">
-								<label for="record-id">Item</label>
-								<Select
-									name="record-id"
-									placeholder="Select item to update"
-									id="record-id"
-									bind:value={selectedOptions['record-id']}
-									items={data.rows.map((row) => ({
-										name: row[data.table.displayName],
-										value: row.id
-									}))}
-								/>
-							</div>
+							<input type="hidden" value={form.isUpdate} name="isUpdate" id="isUpdate" />
+							{#if form.isUpdate}
+								<div class="mt-6">
+									<label for="record-id">Item</label>
+									<Select
+										name="record-id"
+										placeholder="Select item to update"
+										id="record-id"
+										bind:value={selectedOptions['record-id']}
+										items={data.rows.map((row) => ({
+											name: row[data.table.displayName],
+											value: row.id
+										}))}
+									/>
+								</div>
+							{/if}
 							{#each form.columns ?? [] as column}
 								<div class="my-6">
 									{#if column.type !== 'toggle'}
@@ -327,7 +352,7 @@
 		<TabItem open={activeTab === 'import'} on:click={() => goto('?tab=import')} title="Import">
 			<div>Import data</div>
 			<div class="mt-3 grid gap-4 grid-cols-2">
-				<SpaceCsv />
+				<SpaceCsv columns={data.columnns} />
 				<SpaceJson />
 			</div>
 		</TabItem>

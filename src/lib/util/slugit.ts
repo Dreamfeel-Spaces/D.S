@@ -14,36 +14,38 @@ export async function errorCatch(promise: any) {
 }
 
 export function cleanData(filters, fields, rows) {
-	const validRows = rows.filter((row) => {
-		let isValid = true;
-		for (let filter of filters) {
-			const compare = row[filter.compare];
-			const operand = filter.operand;
-			let compareValue = filter.compareValue;
-			if ((filter.compareValue = '__custom_field')) compareValue = filter.compareValue;
-			const field = fields.find((field) => field.field.name === filter.compare);
-			const type = field?.field?.type;
-			if (type === 'number') {
-				if (operand === 'equals') {
-					isValid = Number(compare) === Number(compareValue);
-				} else if (operand === 'less_than') {
-					isValid = Number(compare) < Number(compareValue);
-				} else if (operand === 'greater_than') {
-					isValid = Number(compare) > Number(compareValue);
-				} else {
-					isValid = false;
+	let validRows = rows.filter((row) => {
+		for (let i = 0; i < filters.length; i++) {
+			let compareFieldName = filters[i].compare;
+			let operand = filters[i].operand;
+			let compareWith = filters[i].compareColumnId;
+
+			switch (operand) {
+				case 'greater_than': {
+					const compareFieldValue = Number(row[compareFieldName]);
+					if (compareWith === '__custom_field') {
+						let compareWithCustomValue = Number(filters[i].compareValue);
+						return compareFieldValue > compareWithCustomValue;
+					}
 				}
-			}
-			if (operand === 'equals') {
-				isValid = compare === compareValue;
-			} else if (operand === 'starts_with') {
-				isValid = compare.startsWith(String(compareValue));
-			} else if (operand === 'includes') {
-				isValid = compare.includes(String(compareValue));
+				case 'less_than': {
+					const compareFieldValue = Number(row[compareFieldName]);
+					if (compareWith === '__custom_field') {
+						let compareWithCustomValue = Number(filters[i].compareValue);
+						return compareFieldValue < compareWithCustomValue;
+					}
+				}
+				case 'equals': {
+					const compareFieldValue = Number(row[compareFieldName]);
+					if (compareWith === '__custom_field') {
+						let compareWithCustomValue = Number(filters[i].compareValue);
+						return compareFieldValue === compareWithCustomValue;
+					}
+				}
 			}
 		}
 
-		return isValid;
+		return row;
 	});
 
 	return validRows;

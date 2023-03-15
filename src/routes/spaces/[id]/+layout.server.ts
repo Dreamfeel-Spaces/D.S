@@ -29,6 +29,8 @@ export async function load({ cookies, params }: any) {
 
 		if (!sessionToken) throw redirect(302, `/a/${space.appId}/accounts`);
 
+		
+
 		const user = jwt.decode(sessionToken);
 
 		spaceSession = { user };

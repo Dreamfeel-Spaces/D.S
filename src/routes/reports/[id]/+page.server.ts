@@ -41,7 +41,7 @@ export async function load({ params }: RequestEvent) {
 
 	const columns = report.fields.map((field) => field.field);
 
-	const spaceId = report.table?.spaceId;
+	const spaceId = report.table?.appId;
 
 	const space = await prisma.space.findUnique({
 		where: {

@@ -262,21 +262,5 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 		throw redirect(302, `/a/${space?.appId}/accounts`);
 	}
 
-	const userToken = cookies.get(`${space?.appId}-accessToken`);
-
-	if (!userToken) throw redirect(302, `/a/${space?.appId}/accounts`);
-
-	const token = await prisma.spaceSession.findUnique({
-		where: {
-			sessionToken: userToken
-		}
-	});
-
-	const tk = new Token();
-
-	if (token?.spaceId !== space.id) throw redirect(302, `/a/${space.appId}/accounts`);
-
-	const admin = await tk.verifyJwt(token?.sessionToken);
-
-	return { space, admin };
+	return { space };
 }

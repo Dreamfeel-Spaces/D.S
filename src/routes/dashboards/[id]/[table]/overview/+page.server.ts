@@ -17,7 +17,7 @@ export async function load({ params }: RequestEvent) {
 	const table = await prisma.spaceTable.findFirst({
 		where: {
 			name: tableName,
-			spaceId: space.id
+			appId: space.id
 		},
 		include: {
 			columns: true,
@@ -28,7 +28,8 @@ export async function load({ params }: RequestEvent) {
 							field: true
 						}
 					},
-					filters: true
+					filters: true,
+					SQT: true
 				}
 			},
 			charts: {
@@ -46,7 +47,8 @@ export async function load({ params }: RequestEvent) {
 						include: {
 							field: true
 						}
-					}
+					},
+					SQT: true
 				}
 			},
 			rows: {
@@ -94,7 +96,7 @@ export async function load({ params }: RequestEvent) {
 			}, []);
 			let rows = cleanData(rep.filters, rep.fields, formattedRows);
 			const charts = JSON.parse(String(rep.charts));
-			return { ...rep, columns: cols, rows, charts, fields:rep.fields };
+			return { ...rep, columns: cols, rows, charts, fields: rep.fields };
 		}) ?? [];
 
 	const chartColumns =
@@ -143,7 +145,7 @@ export const actions: Actions = {
 
 		const table = await prisma.spaceTable.findFirst({
 			where: {
-				spaceId: space.id,
+				appId: space.id,
 				name: tableId
 			}
 		});
@@ -220,7 +222,7 @@ export const actions: Actions = {
 
 		const table = await prisma.spaceTable.findFirst({
 			where: {
-				spaceId: space.id,
+				appId: space.id,
 				name: tableId
 			}
 		});
@@ -277,7 +279,7 @@ export const actions: Actions = {
 
 		const table = await prisma.spaceTable.findFirst({
 			where: {
-				spaceId: space.id,
+				appId: space.id,
 				name: tableId
 			}
 		});
@@ -288,13 +290,18 @@ export const actions: Actions = {
 		const name = String(data.get('name'));
 		const description = String(data.get('description'));
 
+		const isUpdate = data.get('isUpdate');
+
+		const isUpdated = isUpdate === 'true';
+
 		const columnMetaData = JSON.parse(String(data.get('columnMetaData') ?? '[]'));
 
 		let form = await prisma.dashboardForm.create({
 			data: {
 				name: convertToSlug(name),
 				description,
-				tableId: String(table?.id)
+				tableId: String(table?.id),
+				isUpdate: isUpdated
 			}
 		});
 
@@ -349,22 +356,43 @@ export const actions: Actions = {
 		let updates = [];
 		for (let column of columns) {
 			let _data = String(data.get(column.name));
-			const td = await prisma.tableData.findFirst({
-				where: {
-					rowId: recordId,
-					column: column.name,
-					type: column.type
-				}
-			});
-			let updated = await prisma.tableData.update({
-				where: {
-					id: String(td?.id)
-				},
-				data: {
-					data: _data
-				}
-			});
-			updates.push(updated);
+			if (form?.isUpdate) {
+				const td = await prisma.tableData.findFirst({
+					where: {
+						rowId: recordId,
+						column: column.name,
+						type: column.type
+					}
+				});
+				let updated = await prisma.tableData.update({
+					where: {
+						id: String(td?.id)
+					},
+					data: {
+						data: _data
+					}
+				});
+				updates.push(updated);
+			} else {
+				let row = await prisma.row.create({
+					data: {
+						spaceTableId: String(form?.tableId)
+					}
+				});
+
+				let created = await prisma.tableData.create({
+					data: {
+						data: _data,
+						column: column.name,
+						rowId: row.id,
+						type: column.type,
+						rel: column.rel,
+						multiple: column.multiple,
+						required: column.required
+					}
+				});
+				updates.push(created);
+			}
 		}
 
 		return { miniFormUpdateSuccess: true };

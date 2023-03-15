@@ -1,6 +1,7 @@
 <script lang="ts">
+	//@ts-nocheck
 	import logo from '../../../../assets/logo.png';
-	import { Input, Button } from 'flowbite-svelte';
+	import { Input, Button, Alert } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import DemoCredentials from './DemoCredentials.svelte';
@@ -9,6 +10,7 @@
 	const isDemo = appId === 'demo';
 
 	export let data: PageData;
+	export let form: any;
 </script>
 
 {#if !data.spaceSession}
@@ -19,7 +21,7 @@
 				<p>Dreamfeel Spaces</p>
 			</div>
 		</div>
-		<div class="px-6  min-h-100 overflow-auto bg-gray-200 mx-3 pt-3 pb-20">
+		<div class="px-6  min-h-100 overflow-auto mx-3 pt-3 pb-20">
 			{#if isDemo}
 				<div class="flex justify-end">
 					<DemoCredentials />
@@ -27,9 +29,16 @@
 			{/if}
 			<div class="mt-9">
 				<form action="?/signin" method="POST">
+					<p class="text-3xl text-gray-600 mb-9">Sign in to spaces</p>
+
+					{#if form?.error}
+						<div class="my-4">
+							<Alert dismissable class="bg-red-200 text-red-500"><b>An error occured</b></Alert>
+						</div>
+					{/if}
 					<div>
 						<label for="username">Username</label>
-						<Input required name="username" class="mt-2" id="username" />
+						<Input type="email" required name="username" class="mt-2" id="username" />
 					</div>
 					<div class="my-6">
 						<label for="password">Password</label>
@@ -43,9 +52,17 @@
 {/if}
 
 {#if data.spaceSession}
-	<div class="flex justify-center">
-		<form method="post" action="?/signout">
-			<Button type="submit">Sign Out</Button>
-		</form>
+	<div class="flex justify-center text-center">
+		<div>
+			<div class="my-9">
+				<p class="text-3xl mb-4">Your {appId} Account</p>
+				<p>{data.spaceSession.user?.username}</p>
+				<p>{data.spaceSession.user?.role}</p>
+			</div>
+
+			<form method="post" action="?/signout">
+				<Button type="submit">Sign Out</Button>
+			</form>
+		</div>
 	</div>
 {/if}

@@ -111,6 +111,7 @@
 
 					<a
 						rel="external"
+						on:click={() => (hidden2 = true)}
 						class="mt-2 mr-2 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mt-0"
 						href="/"
 					>
@@ -291,7 +292,7 @@
 
 	<Drawer transitionType="fly" {transitionParams} bind:hidden={hidden2} id="sidebar2">
 		<div class="flex items-center">
-			<a href="/">
+			<a on:click={() => (hidden2 = true)} href="/">
 				<img src={logo} style="height: 40px" alt="logo transparent" loading="lazy" />
 			</a>
 			<CloseButton on:click={() => (hidden2 = true)} class="mb-4 dark:text-white" />

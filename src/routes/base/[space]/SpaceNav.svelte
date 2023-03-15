@@ -92,7 +92,7 @@
 
 			<div class="relative flex" data-te-dropdown-ref>
 				{#if $page.data.space?.appId === 'demo'}
-					<Button class="mr-4" size="xs" color="green">Live demo</Button>
+					<Button pill class="mr-4" size="xs" color="green">Live demo</Button>
 				{/if}
 				<button on:click={() => (hidden2 = false)}>
 					<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24">

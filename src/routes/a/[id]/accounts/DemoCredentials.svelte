@@ -1,5 +1,6 @@
 <script lang="ts">
 	import axios from 'axios';
+	import { page } from '$app/stores';
 	import { Button, Modal, Alert, Checkbox, Spinner } from 'flowbite-svelte';
 	let formModal = false;
 
@@ -23,33 +24,56 @@
 	<Button on:click={() => (formModal = true)}>Generate Credentials</Button>
 </div>
 <Modal bind:open={formModal} autoclose={false} class="w-full">
-	<Alert>
+	<div>
 		<form on:submit|preventDefault={handleGenerate}>
 			<b class="text-2xl">Demo Credentials </b>
 			<p class="my-4">
-				These credentials are only meant for testing in the Demo space. Credentials are
-				automatically deleted periodically. For testing, file upload has been disabled. To test a
-				full space, <a class="underline" href="/spaces/create">Create a new space. </a>
+				These credentials are only meant for testing in the Demo space. Credentials are deleted
+				periodically. For testing, file upload has been disabled. To create a space, <b
+					><a class="underline" href="/spaces/create">Create a new space. </a></b
+				>
 			</p>
+
 			<div>
-				<Checkbox required>I have understood the terms and conditions</Checkbox>
+				<Checkbox required>
+					<span class="text-gray-500"> I have read and understood this policy</span>
+				</Checkbox>
 			</div>
 
 			{#if res}
-				<div class="my-4">
-					Your credentials.
+				<Alert class="my-4">
+					<p class="text-xl mb-4">Your credentials.</p>
 					<p><b>Username</b> : {res.username}</p>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<p
+						on:click={async () => await navigator.clipboard.writeText(res.username)}
+						class="mb-6 underline cursor-pointer"
+					>
+						Copy username
+					</p>
 					<p><b>Password</b> : {res.password}</p>
-				</div>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<p
+						on:click={async () => await navigator.clipboard.writeText(res.password)}
+						class="mb-6 underline cursor-pointer"
+					>
+						Copy password
+					</p>
+					<p class="mt-3">
+						<a target="_blank" rel="noreferrer" href={`/a/${$page.params.id}/accounts`}
+							>Login in a new tab</a
+						>
+					</p>
+				</Alert>
 			{/if}
 
 			<Button type="submit" class="mt-4"
 				>{#if loading}
-					<Spinner />
+					Please wait...
 				{:else}
 					Generate
 				{/if}</Button
 			>
 		</form>
-	</Alert>
+	</div>
 </Modal>

@@ -28,12 +28,12 @@
 
 <div class="text-end">
 	<Button size="xs" pill gradient color="pinkToOrange" on:click={() => (formModal = true)}
-		>Create report</Button
+		>New report</Button
 	>
 </div>
 <Modal bind:open={formModal} autoclose={false} class="w-full">
 	<form class="flex flex-col space-y-3" action="?/addReport&tab=reports" method="POST">
-		<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Configure report</h3>
+		<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Report</h3>
 		<input value={JSON.stringify([...columns])} name={'columnMetaData'} type="hidden" />
 		<Label class="space-y-2">
 			<span>Name</span>
@@ -152,7 +152,6 @@
 		</div>
 		<div class="mb-3 flex gap-2 wrap">
 			<Select
-				required
 				name="sort_by"
 				bind:value={metaData.sortBy}
 				items={[...columns]
@@ -172,7 +171,6 @@
 				class=""
 			/>
 			<Select
-				required
 				name="sort"
 				bind:value={metaData.sort}
 				items={[

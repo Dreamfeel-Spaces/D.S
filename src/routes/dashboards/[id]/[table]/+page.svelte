@@ -14,7 +14,8 @@
 		BreadcrumbItem,
 		Alert,
 		Pagination,
-		PaginationItem
+		PaginationItem,
+		Button
 	} from 'flowbite-svelte';
 	import { goto } from '$app/navigation';
 
@@ -40,17 +41,36 @@
 	</div>
 	<div class="px-9 text-end text-lg">
 		{#if data?.columns.length}
-			<a
-				class="btn px-3 py-2 text-sm rounded-xl bg-blue-900 text-white"
+			<Button
+				pill
+				gradient
+				size="xs"
+				href={`/dashboards/${space}/${table}/overview?tab=charts`}
+			>
+				Charts</Button
+			>
+			<Button
+				pill
+				gradient
+				size="xs"
+				href={`/dashboards/${space}/${table}/overview`}
+			>
+				Reports</Button
+			>
+			<Button
+				pill
+				gradient
+				color="pinkToOrange"
+				size="xs"
 				href={`/dashboards/${space}/${table}/create`}
 			>
-				Add {tableName}</a
+				Add {tableName} (s)</Button
 			>
 		{/if}
 	</div>
 </div>
 
-<div class="flex justify-between mt-6">
+<!-- <div class="flex justify-between mt-6">
 	<Breadcrumb>
 		<BreadcrumbItem>Home</BreadcrumbItem>
 		<BreadcrumbItem>Dashboards</BreadcrumbItem>
@@ -60,7 +80,7 @@
 		<BreadcrumbItem>{tableName}</BreadcrumbItem>
 	</Breadcrumb>
 	<div class=" flex justify-end mx-20" />
-</div>
+</div> -->
 
 {#if !hasColumns}
 	<div class="mx-6">
@@ -78,7 +98,7 @@
 
 <div class="lg:px-9">
 	{#if !hasRecords && hasColumns}
-		<Table class="mt-9"
+		<Table class="mt-4"
 			><TableHead>
 				{#each data.columns as column}
 					<TableHeadCell>{column}</TableHeadCell>

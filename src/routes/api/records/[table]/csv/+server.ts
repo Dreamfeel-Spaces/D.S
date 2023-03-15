@@ -30,7 +30,7 @@ export async function GET({ params, url, request, locals }: RequestEvent) {
 		table = await prisma.spaceTable.findFirst({
 			where: {
 				name: tableName,
-				spaceId: space.id
+				appId: space.id
 			},
 			include: {
 				columns: true,
@@ -47,7 +47,7 @@ export async function GET({ params, url, request, locals }: RequestEvent) {
 		table = await prisma.spaceTable.findFirst({
 			where: {
 				name: tableName,
-				spaceId: space.id
+				appId: space.id
 			},
 			include: {
 				columns: true,

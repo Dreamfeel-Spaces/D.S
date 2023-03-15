@@ -3,22 +3,11 @@
 	export let data;
 	import logo from '../../../assets/logo.png';
 	import {
-		Tabs,
-		TabItem,
-		Breadcrumb,
-		BreadcrumbItem,
-		Checkbox,
-		Button,
-		Accordion,
-		AccordionItem,
 		Table,
 		TableHead,
 		TableBody,
 		TableBodyRow,
 		TableHeadCell,
-		Input,
-		NumberInput,
-		Select,
 		TableBodyCell,
 		Card,
 		Alert
@@ -35,16 +24,16 @@
 	<span class="text-xs text-gray-500">{new Date()} - {report.description}</span>
 
 	<div class={` w-full justify-center`}>
-		<Table class="mt-20" >
+		<Table class="mt-20">
 			<TableHead>
 				<TableHeadCell class="text-gray-500" align="right" colspan={report.columns.length}
-					>{'>'} {data.space.name} / {data?.table?.name} / {report?.name}
+					>{'>'} {data?.space?.name} / {data?.table?.name} / {report?.name}
 				</TableHeadCell>
 			</TableHead>
 
 			<TableHead>
 				<TableHeadCell colspan={report.columns.length}>
-					{#each report.charts as chart}
+					{#each report.charts ?? [] as chart}
 						<div class="text-2xl text-gray-500">
 							<SpaceChart
 								noDelete

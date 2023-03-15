@@ -11,7 +11,7 @@ export async function load({ params }: RequestEvent) {
 
 	if (!space) throw error(404, 'Space not found');
 	const table = await prisma.spaceTable.findFirst({
-		where: { name: tabName, spaceId: space.id },
+		where: { name: tabName, appId: space.id },
 		include: {
 			columns: true,
 			rows: {
@@ -19,7 +19,7 @@ export async function load({ params }: RequestEvent) {
 					tableData: true
 				}
 			},
-			space: true
+			app: true
 		}
 	});
 
@@ -38,6 +38,6 @@ export async function load({ params }: RequestEvent) {
 	return {
 		rows: formattedRows,
 		columns: table?.columns.map((col) => col.name).filter(Boolean),
-		space: table?.space?.id
+		space: table?.app?.id
 	};
 }

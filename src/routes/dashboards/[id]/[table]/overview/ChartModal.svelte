@@ -12,11 +12,13 @@
 </script>
 
 <div class="text-end">
-	<Button on:click={() => (formModal = true)}>Create chart</Button>
+	<Button size="xs" pill gradient color="pinkToOrange" on:click={() => (formModal = true)}
+		>New chart</Button
+	>
 </div>
 <Modal bind:open={formModal} autoclose={false} class="w-full">
 	<form class="flex flex-col space-y-3" action="?/addChart&tab=charts" method="POST">
-		<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Configure chart</h3>
+		<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Chart</h3>
 		<input value={JSON.stringify([...columns])} name={'columnMetaData'} type="hidden" />
 		<Label class="space-y-2">
 			<span>Name</span>
