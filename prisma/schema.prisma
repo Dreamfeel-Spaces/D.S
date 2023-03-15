@@ -191,6 +191,8 @@ model MsgFeedback {
   space        Space?  @relation(fields: [spaceId], references: [id])
   spaceId      String?
   customerCopy Boolean @default(false)
+
+  @@index([spaceId])
 }
 
 model BlogContent {
@@ -205,6 +207,8 @@ model BlogContent {
   slug       String    @unique
   comments   Comment[]
   category   String    @default("Tech")
+
+  @@index([userId])
 }
 
 model Comment {
@@ -217,6 +221,9 @@ model Comment {
   flagged       Boolean?    @default(false)
   user          User        @relation(fields: [userId], references: [id])
   userId        String
+
+  @@index([blogContentId])
+  @@index([userId])
 }
 
 model Relations {
@@ -225,6 +232,8 @@ model Relations {
   left         SpaceTable @relation(fields: [spaceTableId], references: [id])
   spaceTableId String
   right        String?
+
+  @@index([spaceTableId])
 }
 
 model TableFilter {
@@ -243,6 +252,8 @@ model Chart {
   valueKey    String?
   filters     ReportFilter[]
   SQT         SQT[]
+
+  @@index([tableId])
 }
 
 model DashboardForm {
@@ -255,6 +266,8 @@ model DashboardForm {
   fields      ReportField[]
   SQT         SQT[]
   isUpdate    Boolean       @default(false)
+
+  @@index([tableId])
 }
 
 model SQT {
@@ -276,6 +289,11 @@ model SQT {
   spaceTableId    String?
   tableEmailCol   String?
   shareWith       String?
+
+  @@index([dashboardFormId])
+  @@index([reportId])
+  @@index([chartId])
+  @@index([spaceTableId])
 }
 
 model ReportField {
@@ -289,6 +307,11 @@ model ReportField {
   dashboardForm   DashboardForm? @relation(fields: [dashboardFormId], references: [id])
   dashboardFormId String?
   isUpdate        Boolean        @default(false)
+
+  @@index([dashboardFormId])
+  @@index([columnId])
+  @@index([reportId])
+  @@index([chartId])
 }
 
 model Report {
@@ -305,6 +328,8 @@ model Report {
   filters     ReportFilter[]
   SQT         SQT[]
   charts      String?        @default("[]")
+
+  @@index([tableId])
 }
 
 model ReportFilter {
@@ -320,6 +345,10 @@ model ReportFilter {
   chart           Chart?  @relation(fields: [chartId], references: [id])
   chartId         String?
   enabled         Boolean @default(true)
+
+  @@index([reportId])
+  @@index([chartId])
+  @@index([columnId])
 }
 
 model SpaceTable {
@@ -340,12 +369,17 @@ model SpaceTable {
   disableApi          Boolean         @default(false)
   dataRules           DataRules[]
   SQT                 SQT[]
+
+  @@index([userId])
+  @@index([appId])
 }
 
 model DataRules {
   id           String     @id @default(cuid())
   table        SpaceTable @relation(fields: [spaceTableId], references: [id])
   spaceTableId String
+
+  @@index([spaceTableId])
 }
 
 model Role {
@@ -356,16 +390,18 @@ model Role {
 
 //  @db.Text
 
-// @db.VarChar(3000)
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String
+  sessionToken String     @db.VarChar(3000)
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?
   dateCreated  DateTime   @default(now())
   space        Space      @relation(fields: [spaceId], references: [id])
   spaceId      String
+
+  @@index([spaceId])
+  @@index([userId])
 }
 
 model Geo {
@@ -401,9 +437,14 @@ model SpaceUser {
   SpaceUI                SpaceUI[]
   SpaceTable             SpaceTable[]
   SpaceUpdate            SpaceUpdate[]
-  role                   Permission?       @relation(fields: [roleId], references: [id])
+  role                   Permission?      @relation(fields: [roleId], references: [id])
   roleId                 String?
 
+  @@index([roleId])
+  @@index([spaceAPIKeysId])
+  @@index([userId])
+  @@index([geoId])
+  @@index([spaceId])
   @@map("Admin")
 }
 
@@ -415,6 +456,9 @@ model SpaceUpdate {
   fields  String?
   space   Space?    @relation(fields: [spaceId], references: [id])
   spaceId String?
+
+  @@index([userId])
+  @@index([spaceId])
 }
 
 model Log {
@@ -429,6 +473,8 @@ model Log {
   space     Space?   @relation(fields: [spaceId], references: [id])
   spaceId   String?
   resolved  Boolean  @default(false)
+
+  @@index([spaceId])
 }
 
 model AdminKeys {
@@ -437,6 +483,9 @@ model AdminKeys {
   adminId        String
   apiKey         SpaceAPIKeys @relation(fields: [spaceAPIKeysId], references: [id])
   spaceAPIKeysId String
+
+  @@index([spaceAPIKeysId])
+  @@index([adminId])
 }
 
 model SpaceAPIKeys {
@@ -451,13 +500,13 @@ model SpaceAPIKeys {
   name        String?
   hits        Int         @default(0)
   adminKeys   AdminKeys[]
+
+  @@index([spaceId])
 }
 
 model Permission {
   id          String      @id @default(cuid())
   name        String
-  apiRule     APIRule?    @relation(fields: [aPIRuleId], references: [id])
-  aPIRuleId   String?
   space       Space?      @relation(fields: [spaceId], references: [id])
   spaceId     String?
   description String?
@@ -466,19 +515,24 @@ model Permission {
   Role        Role?       @relation(fields: [roleId], references: [id])
   roleId      String?
   users       SpaceUser[]
+
+  @@index([spaceId])
+  @@index([roleId])
 }
 
 model APIRule {
-  id          String       @id @default(cuid())
+  id          String     @id @default(cuid())
   name        String?
-  permissions Permission[]
-  admin       SpaceUser?   @relation(fields: [adminId], references: [id])
+  admin       SpaceUser? @relation(fields: [adminId], references: [id])
   adminId     String?
-  space       Space?       @relation(fields: [spaceId], references: [id])
+  space       Space?     @relation(fields: [spaceId], references: [id])
   spaceId     String?
   description String?
-  created     DateTime     @default(now())
-  updated     DateTime     @default(now()) @updatedAt
+  created     DateTime   @default(now())
+  updated     DateTime   @default(now()) @updatedAt
+
+  @@index([adminId])
+  @@index([spaceId])
 }
 
 model Dashboard {
@@ -487,6 +541,8 @@ model Dashboard {
   name        String
   spaceId     String
   description String?
+
+  @@index([spaceId])
 }
 
 model Subscription {
@@ -527,6 +583,8 @@ model Space {
   logs                     Log[]
   uiVid                    String?
   feedbacks                MsgFeedback[]
+
+  @@index([userId])
 }
 
 model Example {
@@ -552,6 +610,7 @@ model Account {
   user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -560,6 +619,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
