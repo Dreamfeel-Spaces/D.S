@@ -58,6 +58,25 @@ export async function GET({}) {
 		});
 	}
 
+	let role;
+
+	role = await prisma.permission.findFirst({
+		where: {
+			name: 'ADMIN',
+			spaceId: space.id
+		}
+	});
+
+	if (!role) {
+		role = await prisma.permission.create({
+			data: {
+				name: 'ADMIN',
+				spaceId: space.id,
+				description: 'Administrator priviledges'
+			}
+		});
+	}
+
 	const user = await prisma.spaceUser.create({
 		data: {
 			spaceId: space.id,
@@ -65,7 +84,7 @@ export async function GET({}) {
 			status: 'confirmed',
 			defaultPasswordUpdated: true,
 			name: 'Admin' + randomDomain(),
-			role: 'admin',
+			roleId: role.id,
 			username
 		}
 	});
