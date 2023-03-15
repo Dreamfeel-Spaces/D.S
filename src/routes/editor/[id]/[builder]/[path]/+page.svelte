@@ -16,47 +16,50 @@
 	import { gDevices } from '$lib/plugins/util/devices';
 	import { gStorage } from '$lib/plugins/util/storage';
 	import gBasic from 'grapesjs-blocks-basic';
+	import { browser } from '$app/environment';
 
 	let editor: grapesjs.Editor;
 	const spaceId = $page.params.id;
 
 	onMount(() => {
-		editor = grapesjs.init({
-			container: '#gjs',
-			fromElement: true,
-			height: '618px',
-			width: 'auto',
-			plugins: [
-				(editor) => gjsTailwind(editor),
-				(editor) => gjsForms(editor),
-				(editor) => gjsTabs(editor),
-				(editor) => gBasic(editor)
-			],
-			layerManager: {
-				appendTo: '.layers-container'
-			},
-			panels: gPanels(),
-			selectorManager: {
-				appendTo: '.styles-container'
-			},
-			styleManager: gStyles(),
-			traitManager: {
-				appendTo: '.traits-container'
-			},
-			deviceManager: gDevices(),
-			storageManager: gStorage('gjsPageDraft' + $page.params.builder + $page.params.path),
-			blockManager: {
-				appendTo: '#blocks',
-				blocks: []
-			}
-		});
+		if (browser) {
+			editor = grapesjs.init({
+				container: '#gjs',
+				fromElement: true,
+				height: '618px',
+				width: 'auto',
+				plugins: [
+					(editor) => gjsTailwind(editor),
+					(editor) => gjsForms(editor),
+					(editor) => gjsTabs(editor),
+					(editor) => gBasic(editor)
+				],
+				layerManager: {
+					appendTo: '.layers-container'
+				},
+				panels: gPanels(),
+				selectorManager: {
+					appendTo: '.styles-container'
+				},
+				styleManager: gStyles(),
+				traitManager: {
+					appendTo: '.traits-container'
+				},
+				deviceManager: gDevices(),
+				storageManager: gStorage('gjsPageDraft' + $page.params.builder + $page.params.path),
+				blockManager: {
+					appendTo: '#blocks',
+					blocks: []
+				}
+			});
 
-		addGpanels(editor);
-		addGCommands(editor);
+			addGpanels(editor);
+			addGCommands(editor);
 
-		editor.Commands.add('manual-save', {
-			run: (editor: any) => handleSave()
-		});
+			editor.Commands.add('manual-save', {
+				run: (editor: any) => handleSave()
+			});
+		}
 	});
 
 	onDestroy(() => {
