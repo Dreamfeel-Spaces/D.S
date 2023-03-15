@@ -23,7 +23,7 @@ export class Pages {
 			this.subdomain &&
 			this.subdomain !== this.url?.toJSON() &&
 			this.url?.toJSON().includes('.') &&
-			this.subdomain !== 'upgraded-journey'
+			this.subdomain !== 'upgraded-journey' && this.subdomain !== "dreamfeel"
 		);
 	}
 
