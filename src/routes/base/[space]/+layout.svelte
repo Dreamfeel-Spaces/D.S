@@ -22,11 +22,11 @@
 	<SpaceNav />
 </div>
 
-<div class="flex  ">
+<div class="flex dark:bg-gray-900 ">
 	<div class="hidden md:block lg:block">
 		<Sidebar>
-			<SidebarWrapper>
-				<SidebarGroup class="max-h-105 overflow-auto">
+			<SidebarWrapper class=" min-h-107 overflow-auto">
+				<SidebarGroup>
 					<SidebarItem
 						rel="external"
 						active={!Boolean(tableId) &&
@@ -166,10 +166,10 @@
 			</SidebarWrapper>
 		</Sidebar>
 	</div>
-	<div class="flex-1 max-h-108  bg-gray-200 pb-20 overflow-auto">
+	<div class="flex-1 max-h-108  dark:bg-gray-900 bg-gray-200 pb-20 overflow-auto">
 		<slot />
 	</div>
-	<div class="w-36   ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
+	<div class="w-36  dark:text-gray-50  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
 		<div>
 			<div class="mt-20">
 				<a class="hover:underline text-blue" href={`/docs`}>Collection docs</a>

@@ -29,7 +29,13 @@
 			{/if}
 			<div class="mt-9">
 				<form action="?/signin" method="POST">
-					<p class="text-3xl text-gray-600 mb-9">Sign in to spaces</p>
+					<p class="text-3xl text-gray-600 mb-9">
+						Sign in to {#if isDemo}
+							Demo
+						{:else}
+							{$page.data.space?.name}
+						{/if}
+					</p>
 
 					{#if form?.error}
 						<div class="my-4">

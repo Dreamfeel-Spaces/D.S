@@ -532,7 +532,7 @@
 			</Tabs>
 		</div>
 	</div>
-	<div class="w-36  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
+	<div class="w-36 dark:bg-gray-900 dark:text-gray-50  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
 		<div>
 			<div class="mt-20">
 				<a class="hover:underline text-blue" rel="external" href={`/base/${$page.params.id}`}

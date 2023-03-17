@@ -63,6 +63,7 @@ export function isReservedRoute(pathname: string) {
 	let isDeactivated = /^\/deactivated/.test(pathname);
 	let isEditor = /^\/editor/.test(pathname);
 	let isExample = /^\/example/.test(pathname);
+	let isOnboarding = /^\/onboarding/.test(pathname);
 	let isPdf = /^\/pdf/.test(pathname);
 	let isHome = /^\/$/.test(pathname);
 	let isAbout = /^\/about/.test(pathname);
@@ -92,7 +93,8 @@ export function isReservedRoute(pathname: string) {
 		isForms,
 		isReports,
 		isApp,
-		isMockServer
+		isMockServer,
+		isOnboarding
 	];
 
 	return reservedRoutes.find(Boolean);

@@ -31,7 +31,7 @@
 </div>
 
 {#if !isPreview}
-	<div class="flex">
+	<div class="flex  dark:bg-gray-800">
 		<div class=" hidden lg:flex  overflow-y-auto">
 			<Sidebar>
 				<SidebarWrapper>
@@ -93,10 +93,12 @@
 				</SidebarWrapper>
 			</Sidebar>
 		</div>
-		<div class="flex-1">
+		<div class="flex-1 dark:bg-gray-900">
 			<slot />
 		</div>
-		<div class="w-36  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
+		<div
+			class="w-48  ml-2  pl-4 mr-20  dark:text-white hidden md:block lg:block rounded align-middle  h-72"
+		>
 			<div>
 				<div class="mt-20">
 					<a class="hover:underline text-blue" href={`/base/${$page.params.space}`}>Dashboards</a>

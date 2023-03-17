@@ -18,7 +18,8 @@
 	let pathname = $page.url.pathname;
 </script>
 
-<SpaceNav />
+<div class="dark:bg-gray-900">
+	<SpaceNav />
 
 <div class="flex">
 	<div class="hidden md:block lg:block">
@@ -195,7 +196,7 @@
 			</SidebarWrapper>
 		</Sidebar>
 	</div>
-	<div class="flex-1 bg-gray-200">
+	<div class="flex-1 dark:bg-gray-900 bg-gray-200">
 		<slot />
 	</div>
 	<div class="w-36  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
@@ -205,7 +206,7 @@
 				<button>Signout</button>
 			</form>
 		</div> -->
-		<div>
+		<div class="text-gray-50" >
 			<div class="mt-20">
 				<a class="hover:underline text-blue" href={`/base/${$page.params.id}`}>Collections API</a>
 			</div>
@@ -221,3 +222,6 @@
 		</div>
 	</div>
 </div>
+
+</div>
+

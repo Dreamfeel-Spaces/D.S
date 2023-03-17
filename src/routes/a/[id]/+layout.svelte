@@ -4,4 +4,6 @@
 
 <SpaceNav />
 
-<slot />
+<div class="dark:bg-gray-900  min-h-112">
+	<slot />
+</div>

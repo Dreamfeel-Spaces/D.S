@@ -119,16 +119,15 @@ export function gPanels() {
 						attributes: {
 							title: 'Open projects and templates'
 						},
-						command: 'open-templates' //Open modal
-					},
-					{
-						id: 'open-pages',
-						className: 'fa fa-file-o',
-						attributes: {
-							title: 'Take Screenshot'
-						},
-						command: 'open-settings',
-						togglable: false
+						command(editor: any) {
+							editor.Modal.setTitle('')
+								.setContent(
+									`<textarea style="width:100%; height: 250px;">
+			${JSON.stringify(editor.getComponents())}
+		  </textarea>`
+								)
+								.open();
+						}
 					}
 				]
 			},

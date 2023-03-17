@@ -6,7 +6,7 @@
 	const app = (apps ?? []).find((app: any) => app.appId === appId);
 </script>
 
-<section class=" lg:px-48 lg:grid-cols-2  dark:bg-gray-900 max-h-99 overflow-auto">
+<section class=" lg:px-48 lg:grid-cols-2  dark:bg-gray-900 max-h-109 overflow-auto">
 	<div style="align-items:center " class=" flex justify-center pt-">
 		<div>
 			<h1

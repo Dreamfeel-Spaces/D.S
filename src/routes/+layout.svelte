@@ -12,7 +12,8 @@
 		SidebarGroup,
 		SidebarItem,
 		SidebarWrapper,
-		Button
+		Button,
+		DarkMode
 	} from 'flowbite-svelte';
 
 	import { sineIn } from 'svelte/easing';
@@ -42,7 +43,8 @@
 		/^\/dashboards\/(.+)\/?/.test(pathname) ||
 		(/^\/spaces\/(.+)\/?/.test(pathname) && !/^\/spaces\/create\/?/.test(pathname)) ||
 		/^\/base\/(.+)\/?/.test(pathname) ||
-		/^\/a\/(.+)\/?/.test(pathname);
+		/^\/a\/(.+)\/?/.test(pathname) ||
+		/^\/onboarding\/?/.test(pathname);
 
 	import logo from '../assets/logo.png';
 	import Rt from '$lib/ws/Rt.svelte';
@@ -67,7 +69,7 @@
 {#if !isPreview && !subdomain}
 	<div>
 		<nav
-			class="flex-no-wrap relative flex w-full items-center justify-between  py-4 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
+			class="flex-no-wrap relative flex w-full items-center justify-between bg-neutral-100   dark:bg-gray-900 py-4 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
 			data-te-navbar-ref
 		>
 			<div class="flex w-full flex-wrap items-center justify-between px-6">
@@ -234,6 +236,9 @@
 								>
 							</li>
 						</ul>
+					</div>
+					<div class="relative">
+						<DarkMode />
 					</div>
 					<div class="relative" data-te-dropdown-ref>
 						{#if $page.data.session}

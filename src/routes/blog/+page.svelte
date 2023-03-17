@@ -12,8 +12,8 @@
 	import { Button } from 'flowbite-svelte';
 </script>
 
-<div class="flex">
-	<div class=" flex-1  max-h-105 overflow-auto">
+<div class="flex dark:bg-gray-900 dark:text-gray-100">
+	<div class=" flex-1  max-h-112 overflow-auto">
 		<section class="">
 			<div class="py-8 mb-4 px-4 mx-auto max-w-screen-xl  lg:py-16 ">
 				<div
@@ -50,7 +50,7 @@
 								class="inline-block py-1 px-2 rounded bg-pink-50 text-pink-500 text-xs font-medium tracking-widest"
 								>{post.category ?? 'Tech'}</span
 							>
-							<h2 class="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4">
+							<h2 class="sm:text-3xl text-2xl title-font font-medium dark:text-gray-50 text-gray-900 mt-4 mb-4">
 								{post?.title}
 							</h2>
 							<p class="leading-relaxed mb-8">

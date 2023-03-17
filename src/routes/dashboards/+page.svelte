@@ -4,7 +4,7 @@
 	const apps = $page.data.myapps;
 </script>
 
-<section class="bg-white dark:bg-gray-900">
+<section class="bg-white dark:bg-gray-900 min-h-112">
 	<div class="grid grid-cols-2 gap-2">
 		<div class="py-8 px-4 mx-auto max-w-screen-xl  lg:py-16 lg:px-12">
 			<h1

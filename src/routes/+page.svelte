@@ -17,45 +17,51 @@
 	</Alert>
 {/if}
 
-<section class="bg-neutral-100 rounded-br-full rounded-bl-3xl  dark:bg-gray-900">
-	<div class="grid max-w-screen-xl px-4 py-8  mx-auto lg:gap-8 xl:gap-0 lg:py-9 lg:grid-cols-12">
-		<div class="mr-auto md:pt-9 lg:pt-2 self-center min-h-105 lg:col-span-7">
-			<h1
-				class="max-w-2xl  mt-28 mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-gray-700 dark:text-white"
-			>
-				Create scalable APIs without touching a line of code
-			</h1>
-			<p
-				class="max-w-2xl  mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
-			>
-				Create APIs without coding. Streamline your workflow and empower your team with Dreamfeel
-				spaces. Build, test, and deploy in minutes..
-			</p>
-			<Button class="mr-3" size="lg" href="/accounts" gradient color="pinkToOrange">
-				Get started
-				<svg
-					class="w-5 h-5 ml-2 -mr-1"
-					fill="currentColor"
-					viewBox="0 0 20 20"
-					xmlns="http://www.w3.org/2000/svg"
-					><path
-						fill-rule="evenodd"
-						d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-						clip-rule="evenodd"
-					/></svg
+<div class="  dark:bg-gray-900">
+	<section class="bg-neutral-100 rounded-br-full rounded-bl-3xl  dark:bg-gray-900">
+		<div class="grid max-w-screen-xl px-4 py-8  mx-auto lg:gap-8 xl:gap-0 lg:py-9 lg:grid-cols-12">
+			<div class="mr-auto md:pt-9 lg:pt-2 self-center min-h-105 lg:col-span-7">
+				<h1
+					class="max-w-2xl  mt-28 mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-gray-700 dark:text-white"
 				>
-			</Button>
-			<a target="blank" href="/a/demo">
-				<Button size="lg" gradient color="purpleToBlue">Live demo</Button>
-			</a>
+					Create scalable APIs without touching a line of code
+				</h1>
+				<p
+					class="max-w-2xl  mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
+				>
+					Create APIs without coding. Streamline your workflow and empower your team with Dreamfeel
+					spaces. Build, test, and deploy in minutes..
+				</p>
+				<Button class="mr-3" size="lg" href="/accounts" gradient color="pinkToOrange">
+					Get started
+					<svg
+						class="w-5 h-5 ml-2 -mr-1"
+						fill="currentColor"
+						viewBox="0 0 20 20"
+						xmlns="http://www.w3.org/2000/svg"
+						><path
+							fill-rule="evenodd"
+							d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+							clip-rule="evenodd"
+						/></svg
+					>
+				</Button>
+				<a target="blank" href="/a/demo">
+					<Button size="lg" gradient color="purpleToBlue">Live demo</Button>
+				</a>
+			</div>
+			<div class="lg:mt-0 lg:col-span-5 lg:pt-1 sm:pt-28">
+				<Card
+					padding="sm"
+					class=" h-100 min-h-100 max-h-100 rounded-b-3xl rounded-t-3xl "
+					size="xl"
+				>
+					<HeroCarousel />
+				</Card>
+			</div>
 		</div>
-		<div class="lg:mt-0 lg:col-span-5 lg:pt-1 sm:pt-28">
-			<Card padding="sm" class=" h-100 min-h-100 max-h-100 rounded-b-3xl rounded-t-3xl " size="xl">
-				<HeroCarousel />
-			</Card>
-		</div>
-	</div>
-</section>
+	</section>
+</div>
 
 <section class="bg-white dark:bg-gray-900">
 	<div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
@@ -204,68 +210,6 @@
 		</div>
 	</div>
 </section>
-
-<div class="container my-24 px-6 mx-auto">
-	<!-- Section: Design Block -->
-	<section class="mb-32 text-gray-800 background-radial-gradient">
-		<style>
-			.background-radial-gradient {
-				background-color: hsl(218, 41%, 15%);
-				background-image: radial-gradient(
-						650px circle at 0% 0%,
-						hsl(218, 41%, 35%) 15%,
-						hsl(218, 41%, 30%) 35%,
-						hsl(218, 41%, 20%) 75%,
-						hsl(218, 41%, 19%) 80%,
-						transparent 100%
-					),
-					radial-gradient(
-						1250px circle at 100% 100%,
-						hsl(218, 41%, 45%) 15%,
-						hsl(218, 41%, 30%) 35%,
-						hsl(218, 41%, 20%) 75%,
-						hsl(218, 41%, 19%) 80%,
-						transparent 100%
-					);
-			}
-		</style>
-
-		<div class="px-6 py-12 md:px-12 text-center lg:text-left">
-			<div class="container mx-auto">
-				<div class="grid lg:grid-cols-2 gap-12 flex items-center">
-					<div class="mt-12 lg:mt-0">
-						<h1
-							class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12"
-							style="color: hsl(218, 81%, 95%)"
-						>
-							Are you ready <br /><span class="text-pink-600">for an adventure?</span>
-						</h1>
-						<p class="text-lg" style="color: hsl(218, 81%, 95%)">
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima officia consequatur
-							adipisci tenetur repudiandae rerum quos.
-						</p>
-					</div>
-					<div class="mb-12 lg:mb-0">
-						<div
-							class="embed-responsive embed-responsive-16by9 relative w-full overflow-hidden rounded-lg shadow-lg"
-							style="padding-top: 56.25%"
-						>
-							<!-- svelte-ignore a11y-missing-attribute -->
-							<iframe
-								class="embed-responsive-item absolute top-0 right-0 bottom-0 left-0 w-full h-full"
-								src="https://www.youtube.com/embed/vlDzYIIOYmM?enablejsapi=1&amp;origin=https%3A%2F%2Fmdbootstrap.com"
-								allowfullscreen={true}
-								data-gtm-yt-inspected-2340190_699="true"
-								id="240632615"
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- Section: Design Block -->
-</div>
 
 <section class="bg-white dark:bg-gray-900">
 	<div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
@@ -582,391 +526,6 @@
 	</div>
 </section> -->
 
-<div class="container my-24 px-6 mx-auto">
-	<!-- Section: Design Block -->
-	<section class="mb-32 text-gray-800">
-		<style>
-			#pricing-block-5 {
-				height: 300px;
-				padding-top: 55px;
-			}
-
-			@media (min-width: 992px) {
-				#pricing-block-5 {
-					height: 400px;
-					padding-top: 80px;
-				}
-			}
-			.background-radial-gradient {
-				background-color: hsl(218, 41%, 15%);
-				background-image: radial-gradient(
-						650px circle at 0% 0%,
-						hsl(218, 41%, 35%) 15%,
-						hsl(218, 41%, 30%) 35%,
-						hsl(218, 41%, 20%) 75%,
-						hsl(218, 41%, 19%) 80%,
-						transparent 100%
-					),
-					radial-gradient(
-						1250px circle at 100% 100%,
-						hsl(218, 41%, 45%) 15%,
-						hsl(218, 41%, 30%) 35%,
-						hsl(218, 41%, 20%) 75%,
-						hsl(218, 41%, 19%) 80%,
-						transparent 100%
-					);
-			}
-		</style>
-
-		<div id="pricing-block-5" class="background-radial-gradient text-center text-white">
-			<h2 class="text-3xl font-bold text-center mb-12">Pricing</h2>
-		</div>
-
-		<div class="grid lg:grid-cols-3 px-6 md:px-12 xl:px-32" style="margin-top: -200px">
-			<div class="p-0 py-12">
-				<div
-					class="block rounded-lg shadow-lg bg-white h-full lg:rounded-tr-none lg:rounded-br-none"
-				>
-					<div class="p-6 border-b border-gray-300 text-center">
-						<p class="uppercase mb-4 text-sm">
-							<strong>Basic</strong>
-						</p>
-						<h3 class="text-2xl mb-6">
-							<strong>$ 0</strong>
-							<small class="text-gray-500 text-sm">/year</small>
-						</h3>
-
-						<button
-							type="button"
-							class="inline-block px-6 py-4 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out w-full"
-							style="background-color: hsl(0, 0%, 95%)"
-							data-mdb-ripple="true"
-							data-ripple-color="primary"
-						>
-							Free
-						</button>
-					</div>
-					<div class="p-6">
-						<ol class="list-inside">
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>Unlimited updates
-							</li>
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>Git repository
-							</li>
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>npm installation
-							</li>
-						</ol>
-					</div>
-				</div>
-			</div>
-
-			<div class="p-0">
-				<div class="block rounded-lg shadow-lg bg-white h-full z-10">
-					<div class="p-6 border-b border-gray-300 text-center">
-						<p class="uppercase mb-4 text-sm">
-							<strong>Enterprise</strong>
-						</p>
-						<h3 class="text-2xl mb-6">
-							<strong>$ 499</strong>
-							<small class="text-gray-500 text-sm">/year</small>
-						</h3>
-
-						<button
-							type="button"
-							class="inline-block px-6 py-4 bg-pink-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-pink-700 hover:shadow-lg focus:bg-pink-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-pink-800 active:shadow-lg transition duration-150 ease-in-out w-full"
-						>
-							Buy
-						</button>
-					</div>
-					<div class="p-6">
-						<ol class="list-inside">
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>Unlimited updates
-							</li>
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>Git repository
-							</li>
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>npm installation
-							</li>
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>Code examples
-							</li>
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>Premium snippets
-							</li>
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>Premium support
-							</li>
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>Drag&amp;Drop builder
-							</li>
-						</ol>
-					</div>
-				</div>
-			</div>
-
-			<div class="p-0 py-12">
-				<div
-					class="block rounded-lg shadow-lg bg-white h-full lg:rounded-tl-none lg:rounded-bl-none"
-				>
-					<div class="p-6 border-b border-gray-300 text-center">
-						<p class="uppercase mb-4 text-sm">
-							<strong>Advanced</strong>
-						</p>
-						<h3 class="text-2xl mb-6">
-							<strong>$ 299</strong>
-							<small class="text-gray-500 text-sm">/year</small>
-						</h3>
-
-						<button
-							type="button"
-							class="inline-block px-6 py-2.5 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out w-full"
-							style="background-color: hsl(0, 0%, 95%)"
-							data-mdb-ripple="true"
-							data-ripple-color="primary"
-						>
-							Buy
-						</button>
-					</div>
-					<div class="p-6">
-						<ol class="list-inside">
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>Unlimited updates
-							</li>
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>Git repository
-							</li>
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>npm installation
-							</li>
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>Code examples
-							</li>
-							<li class="mb-4 flex items-center">
-								<svg
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fas"
-									data-icon="check"
-									class="text-green-600 w-4 h-4 mr-2"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 512 512"
-								>
-									<path
-										fill="currentColor"
-										d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-									/>
-								</svg>Premium snippets
-							</li>
-						</ol>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- Section: Design Block -->
-</div>
-
 <section class="bg-white dark:bg-gray-900">
 	<div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
 		<h2 class="mb-8 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
@@ -1207,7 +766,7 @@
 	</div>
 </section>
 
-<section class="text-gray-600 body-font overflow-hidden">
+<section class="text-gray-600 dark:bg-gray-900 body-font overflow-hidden">
 	<div class="container px-5 py-24 mx-auto">
 		<div class="flex flex-wrap -m-12">
 			{#each data.posts as post}
@@ -1216,10 +775,12 @@
 						class="inline-block py-1 px-2 rounded bg-indigo-50 text-indigo-500 text-xs font-medium tracking-widest"
 						>CATEGORY</span
 					>
-					<h2 class="sm:text-3xl text-2xl title-font font-medium text-gray-900 mt-4 mb-4">
+					<h2
+						class="sm:text-3xl dark:text-gray-50 text-2xl title-font font-medium text-gray-900 mt-4 mb-4"
+					>
 						{post.title}
 					</h2>
-					<p class="leading-relaxed mb-8">
+					<p class="leading-relaxed mb-8  dark:text-gray-50">
 						{@html post.content}
 					</p>
 					<div
@@ -1286,25 +847,26 @@
 	</div>
 </section>
 
-<div class="container mb-24 px-6 -mt-20 mx-auto">
-	<section class="mb-32 text-gray-800">
-		<div
-			class="relative overflow-hidden bg-no-repeat bg-cover"
-			style="background-position: 50%; background-image: url('https://mdbootstrap.com/img/new/textures/full/284.jpg'); height: 300px;"
-		/>
-		<div class="container text-gray-800 px-4 md:px-12">
+<div class="dark:bg-gray-900">
+	<div class="container dark:bg-gray-900 pb-24 px-6 -pt-20 mx-auto">
+		<section class="mb-32 text-gray-800">
 			<div
-				class="block rounded-lg shadow-lg py-10 md:py-12 px-2 md:px-6"
-				style="margin-top: -100px; background: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(30px);"
-			>
-				<div class="flex flex-wrap">
-					<div class="grow-0 shrink-0 basis-auto w-full xl:w-5/12 px-3 lg:px-6 mb-12 xl:mb-0">
-						<form action="?/feedback" method="post">
-							<div class="form-group mb-6">
-								<input
-									required
-									type="text"
-									class="form-control block
+				class="relative overflow-hidden bg-no-repeat bg-cover"
+				style="background-position: 50%; background-image: url('https://mdbootstrap.com/img/new/textures/full/284.jpg'); height: 300px;"
+			/>
+			<div class="container text-gray-800 px-4 md:px-12">
+				<div
+					class="block dark:bg-gray-600 rounded-lg shadow-lg py-10 md:py-12 px-2 md:px-6"
+					style="margin-top: -100px; background: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(30px);"
+				>
+					<div class="flex flex-wrap">
+						<div class="grow-0 shrink-0 basis-auto w-full xl:w-5/12 px-3 lg:px-6 mb-12 xl:mb-0">
+							<form action="?/feedback" method="post">
+								<div class="form-group mb-6">
+									<input
+										required
+										type="text"
+										class="form-control block
                   w-full
                   px-3
                   py-1.5
@@ -1318,17 +880,17 @@
                   ease-in-out
                   m-0
                   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-									id="exampleInput7"
-									name="name"
-									placeholder="Name"
-								/>
-							</div>
-							<div class="form-group mb-6">
-								<input
-									required
-									name="email"
-									type="email"
-									class="form-control block
+										id="exampleInput7"
+										name="name"
+										placeholder="Name"
+									/>
+								</div>
+								<div class="form-group mb-6">
+									<input
+										required
+										name="email"
+										type="email"
+										class="form-control block
                   w-full
                   px-3
                   py-1.5
@@ -1342,15 +904,15 @@
                   ease-in-out
                   m-0
                   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-									id="exampleInput8"
-									placeholder="Email address"
-								/>
-							</div>
-							<div class="form-group mb-6">
-								<textarea
-									required
-									name="message"
-									class="
+										id="exampleInput8"
+										placeholder="Email address"
+									/>
+								</div>
+								<div class="form-group mb-6">
+									<textarea
+										required
+										name="message"
+										class="
                   form-control
                   block
                   w-full
@@ -1367,149 +929,150 @@
                   m-0
                   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
                 "
-									id="exampleFormControlTextarea13"
-									rows="3"
-									placeholder="Message"
-								/>
-							</div>
-							<div class="form-group form-check text-center mb-6">
-								<input
-									type="checkbox"
-									class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-pink-600 checked:border-pink-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain mr-2 cursor-pointer"
-									id="exampleCheck87"
-									checked
-								/>
-								<label class="form-check-label inline-block text-gray-800" for="exampleCheck87"
-									>Send me a copy of this message</label
+										id="exampleFormControlTextarea13"
+										rows="3"
+										placeholder="Message"
+									/>
+								</div>
+								<div class="form-group form-check text-center mb-6">
+									<input
+										type="checkbox"
+										class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-pink-600 checked:border-pink-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain mr-2 cursor-pointer"
+										id="exampleCheck87"
+										checked
+									/>
+									<label class="form-check-label inline-block text-gray-800" for="exampleCheck87"
+										>Send me a copy of this message</label
+									>
+								</div>
+								<button
+									type="submit"
+									class="inline-flex w-full items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 dark:focus:ring-pink-900"
 								>
-							</div>
-							<button
-								type="submit"
-								class="inline-flex w-full items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 dark:focus:ring-pink-900"
-							>
-								Send message
-							</button>
-						</form>
-					</div>
-					<div class="grow-0 shrink-0 basis-auto w-full xl:w-7/12">
-						<div class="flex flex-wrap">
-							<div class="mb-12 grow-0 shrink-0 basis-auto w-full md:w-6/12 px-3 lg:px-6">
-								<div class="flex items-start">
-									<div class="shrink-0">
-										<div
-											class="p-4 bg-pink-600 rounded-md shadow-md w-14 h-14 flex items-center justify-center"
-										>
-											<svg
-												aria-hidden="true"
-												focusable="false"
-												data-prefix="fas"
-												data-icon="headset"
-												class="w-5 text-white"
-												role="img"
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 512 512"
+									Send message
+								</button>
+							</form>
+						</div>
+						<div class="grow-0 shrink-0 basis-auto w-full xl:w-7/12">
+							<div class="flex flex-wrap">
+								<div class="mb-12 grow-0 shrink-0 basis-auto w-full md:w-6/12 px-3 lg:px-6">
+									<div class="flex items-start">
+										<div class="shrink-0">
+											<div
+												class="p-4 bg-pink-600 rounded-md shadow-md w-14 h-14 flex items-center justify-center"
 											>
-												<path
-													fill="currentColor"
-													d="M192 208c0-17.67-14.33-32-32-32h-16c-35.35 0-64 28.65-64 64v48c0 35.35 28.65 64 64 64h16c17.67 0 32-14.33 32-32V208zm176 144c35.35 0 64-28.65 64-64v-48c0-35.35-28.65-64-64-64h-16c-17.67 0-32 14.33-32 32v112c0 17.67 14.33 32 32 32h16zM256 0C113.18 0 4.58 118.83 0 256v16c0 8.84 7.16 16 16 16h16c8.84 0 16-7.16 16-16v-16c0-114.69 93.31-208 208-208s208 93.31 208 208h-.12c.08 2.43.12 165.72.12 165.72 0 23.35-18.93 42.28-42.28 42.28H320c0-26.51-21.49-48-48-48h-32c-26.51 0-48 21.49-48 48s21.49 48 48 48h181.72c49.86 0 90.28-40.42 90.28-90.28V256C507.42 118.83 398.82 0 256 0z"
-												/>
-											</svg>
+												<svg
+													aria-hidden="true"
+													focusable="false"
+													data-prefix="fas"
+													data-icon="headset"
+													class="w-5 text-white"
+													role="img"
+													xmlns="http://www.w3.org/2000/svg"
+													viewBox="0 0 512 512"
+												>
+													<path
+														fill="currentColor"
+														d="M192 208c0-17.67-14.33-32-32-32h-16c-35.35 0-64 28.65-64 64v48c0 35.35 28.65 64 64 64h16c17.67 0 32-14.33 32-32V208zm176 144c35.35 0 64-28.65 64-64v-48c0-35.35-28.65-64-64-64h-16c-17.67 0-32 14.33-32 32v112c0 17.67 14.33 32 32 32h16zM256 0C113.18 0 4.58 118.83 0 256v16c0 8.84 7.16 16 16 16h16c8.84 0 16-7.16 16-16v-16c0-114.69 93.31-208 208-208s208 93.31 208 208h-.12c.08 2.43.12 165.72.12 165.72 0 23.35-18.93 42.28-42.28 42.28H320c0-26.51-21.49-48-48-48h-32c-26.51 0-48 21.49-48 48s21.49 48 48 48h181.72c49.86 0 90.28-40.42 90.28-90.28V256C507.42 118.83 398.82 0 256 0z"
+													/>
+												</svg>
+											</div>
 										</div>
-									</div>
-									<div class="grow ml-6">
-										<p class="font-bold mb-1">Technical support</p>
-										<p class="text-gray-500">support@dreamfeel.io</p>
-										<!-- <p class="text-gray-500">+1 234-567-89</p> -->
+										<div class="grow ml-6">
+											<p class="font-bold mb-1">Technical support</p>
+											<p class="text-gray-500">support@dreamfeel.io</p>
+											<!-- <p class="text-gray-500">+1 234-567-89</p> -->
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="mb-12 grow-0 shrink-0 basis-auto w-full md:w-6/12 px-3 lg:px-6">
-								<div class="flex items-start">
-									<div class="shrink-0">
-										<div
-											class="p-4 bg-pink-600 rounded-md shadow-md w-14 h-14 flex items-center justify-center"
-										>
-											<svg
-												aria-hidden="true"
-												focusable="false"
-												data-prefix="fas"
-												data-icon="dollar-sign"
-												class="w-3 text-white"
-												role="img"
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 288 512"
+								<div class="mb-12 grow-0 shrink-0 basis-auto w-full md:w-6/12 px-3 lg:px-6">
+									<div class="flex items-start">
+										<div class="shrink-0">
+											<div
+												class="p-4 bg-pink-600 rounded-md shadow-md w-14 h-14 flex items-center justify-center"
 											>
-												<path
-													fill="currentColor"
-													d="M209.2 233.4l-108-31.6C88.7 198.2 80 186.5 80 173.5c0-16.3 13.2-29.5 29.5-29.5h66.3c12.2 0 24.2 3.7 34.2 10.5 6.1 4.1 14.3 3.1 19.5-2l34.8-34c7.1-6.9 6.1-18.4-1.8-24.5C238 74.8 207.4 64.1 176 64V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48h-2.5C45.8 64-5.4 118.7.5 183.6c4.2 46.1 39.4 83.6 83.8 96.6l102.5 30c12.5 3.7 21.2 15.3 21.2 28.3 0 16.3-13.2 29.5-29.5 29.5h-66.3C100 368 88 364.3 78 357.5c-6.1-4.1-14.3-3.1-19.5 2l-34.8 34c-7.1 6.9-6.1 18.4 1.8 24.5 24.5 19.2 55.1 29.9 86.5 30v48c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-48.2c46.6-.9 90.3-28.6 105.7-72.7 21.5-61.6-14.6-124.8-72.5-141.7z"
-												/>
-											</svg>
+												<svg
+													aria-hidden="true"
+													focusable="false"
+													data-prefix="fas"
+													data-icon="dollar-sign"
+													class="w-3 text-white"
+													role="img"
+													xmlns="http://www.w3.org/2000/svg"
+													viewBox="0 0 288 512"
+												>
+													<path
+														fill="currentColor"
+														d="M209.2 233.4l-108-31.6C88.7 198.2 80 186.5 80 173.5c0-16.3 13.2-29.5 29.5-29.5h66.3c12.2 0 24.2 3.7 34.2 10.5 6.1 4.1 14.3 3.1 19.5-2l34.8-34c7.1-6.9 6.1-18.4-1.8-24.5C238 74.8 207.4 64.1 176 64V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48h-2.5C45.8 64-5.4 118.7.5 183.6c4.2 46.1 39.4 83.6 83.8 96.6l102.5 30c12.5 3.7 21.2 15.3 21.2 28.3 0 16.3-13.2 29.5-29.5 29.5h-66.3C100 368 88 364.3 78 357.5c-6.1-4.1-14.3-3.1-19.5 2l-34.8 34c-7.1 6.9-6.1 18.4 1.8 24.5 24.5 19.2 55.1 29.9 86.5 30v48c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-48.2c46.6-.9 90.3-28.6 105.7-72.7 21.5-61.6-14.6-124.8-72.5-141.7z"
+													/>
+												</svg>
+											</div>
 										</div>
-									</div>
-									<div class="grow ml-6">
-										<p class="font-bold mb-1">Sales questions</p>
-										<p class="text-gray-500">sales@dreamfeel.io</p>
-										<!-- <p class="text-gray-500">+1 234-567-89</p> -->
+										<div class="grow ml-6">
+											<p class="font-bold mb-1">Sales questions</p>
+											<p class="text-gray-500">sales@dreamfeel.io</p>
+											<!-- <p class="text-gray-500">+1 234-567-89</p> -->
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="mb-12 md:mb-0 grow-0 shrink-0 basis-auto w-full md:w-6/12 px-3 lg:px-6">
-								<div class="flex align-start">
-									<div class="shrink-0">
-										<div
-											class="p-4 bg-pink-600 rounded-md shadow-md w-14 h-14 flex items-center justify-center"
-										>
-											<svg
-												aria-hidden="true"
-												focusable="false"
-												data-prefix="fas"
-												data-icon="newspaper"
-												class="w-5 text-white"
-												role="img"
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 576 512"
+								<div class="mb-12 md:mb-0 grow-0 shrink-0 basis-auto w-full md:w-6/12 px-3 lg:px-6">
+									<div class="flex align-start">
+										<div class="shrink-0">
+											<div
+												class="p-4 bg-pink-600 rounded-md shadow-md w-14 h-14 flex items-center justify-center"
 											>
-												<path
-													fill="currentColor"
-													d="M552 64H88c-13.255 0-24 10.745-24 24v8H24c-13.255 0-24 10.745-24 24v272c0 30.928 25.072 56 56 56h472c26.51 0 48-21.49 48-48V88c0-13.255-10.745-24-24-24zM56 400a8 8 0 0 1-8-8V144h16v248a8 8 0 0 1-8 8zm236-16H140c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm208 0H348c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm-208-96H140c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm208 0H348c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm0-96H140c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h360c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12z"
-												/>
-											</svg>
+												<svg
+													aria-hidden="true"
+													focusable="false"
+													data-prefix="fas"
+													data-icon="newspaper"
+													class="w-5 text-white"
+													role="img"
+													xmlns="http://www.w3.org/2000/svg"
+													viewBox="0 0 576 512"
+												>
+													<path
+														fill="currentColor"
+														d="M552 64H88c-13.255 0-24 10.745-24 24v8H24c-13.255 0-24 10.745-24 24v272c0 30.928 25.072 56 56 56h472c26.51 0 48-21.49 48-48V88c0-13.255-10.745-24-24-24zM56 400a8 8 0 0 1-8-8V144h16v248a8 8 0 0 1-8 8zm236-16H140c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm208 0H348c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm-208-96H140c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm208 0H348c-6.627 0-12-5.373-12-12v-8c0-6.627 5.373-12 12-12h152c6.627 0 12 5.373 12 12v8c0 6.627-5.373 12-12 12zm0-96H140c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h360c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12z"
+													/>
+												</svg>
+											</div>
 										</div>
-									</div>
-									<div class="grow ml-6">
-										<p class="font-bold mb-1">Press</p>
-										<p class="text-gray-500">press@dreamfeel.io</p>
-										<!-- <p class="text-gray-500">+1 234-567-89</p> -->
+										<div class="grow ml-6">
+											<p class="font-bold mb-1">Press</p>
+											<p class="text-gray-500">press@dreamfeel.io</p>
+											<!-- <p class="text-gray-500">+1 234-567-89</p> -->
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="grow-0 shrink-0 basis-auto w-full md:w-6/12 px-3 lg:px-6">
-								<div class="flex align-start">
-									<div class="shrink-0">
-										<div
-											class="p-4 bg-pink-600 rounded-md shadow-md w-14 h-14 flex items-center justify-center"
-										>
-											<svg
-												aria-hidden="true"
-												focusable="false"
-												data-prefix="fas"
-												data-icon="bug"
-												class="w-5 text-white"
-												role="img"
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 512 512"
+								<div class="grow-0 shrink-0 basis-auto w-full md:w-6/12 px-3 lg:px-6">
+									<div class="flex align-start">
+										<div class="shrink-0">
+											<div
+												class="p-4 bg-pink-600 rounded-md shadow-md w-14 h-14 flex items-center justify-center"
 											>
-												<path
-													fill="currentColor"
-													d="M511.988 288.9c-.478 17.43-15.217 31.1-32.653 31.1H424v16c0 21.864-4.882 42.584-13.6 61.145l60.228 60.228c12.496 12.497 12.496 32.758 0 45.255-12.498 12.497-32.759 12.496-45.256 0l-54.736-54.736C345.886 467.965 314.351 480 280 480V236c0-6.627-5.373-12-12-12h-24c-6.627 0-12 5.373-12 12v244c-34.351 0-65.886-12.035-90.636-32.108l-54.736 54.736c-12.498 12.497-32.759 12.496-45.256 0-12.496-12.497-12.496-32.758 0-45.255l60.228-60.228C92.882 378.584 88 357.864 88 336v-16H32.666C15.23 320 .491 306.33.013 288.9-.484 270.816 14.028 256 32 256h56v-58.745l-46.628-46.628c-12.496-12.497-12.496-32.758 0-45.255 12.498-12.497 32.758-12.497 45.256 0L141.255 160h229.489l54.627-54.627c12.498-12.497 32.758-12.497 45.256 0 12.496 12.497 12.496 32.758 0 45.255L424 197.255V256h56c17.972 0 32.484 14.816 31.988 32.9zM257 0c-61.856 0-112 50.144-112 112h224C369 50.144 318.856 0 257 0z"
-												/>
-											</svg>
+												<svg
+													aria-hidden="true"
+													focusable="false"
+													data-prefix="fas"
+													data-icon="bug"
+													class="w-5 text-white"
+													role="img"
+													xmlns="http://www.w3.org/2000/svg"
+													viewBox="0 0 512 512"
+												>
+													<path
+														fill="currentColor"
+														d="M511.988 288.9c-.478 17.43-15.217 31.1-32.653 31.1H424v16c0 21.864-4.882 42.584-13.6 61.145l60.228 60.228c12.496 12.497 12.496 32.758 0 45.255-12.498 12.497-32.759 12.496-45.256 0l-54.736-54.736C345.886 467.965 314.351 480 280 480V236c0-6.627-5.373-12-12-12h-24c-6.627 0-12 5.373-12 12v244c-34.351 0-65.886-12.035-90.636-32.108l-54.736 54.736c-12.498 12.497-32.759 12.496-45.256 0-12.496-12.497-12.496-32.758 0-45.255l60.228-60.228C92.882 378.584 88 357.864 88 336v-16H32.666C15.23 320 .491 306.33.013 288.9-.484 270.816 14.028 256 32 256h56v-58.745l-46.628-46.628c-12.496-12.497-12.496-32.758 0-45.255 12.498-12.497 32.758-12.497 45.256 0L141.255 160h229.489l54.627-54.627c12.498-12.497 32.758-12.497 45.256 0 12.496 12.497 12.496 32.758 0 45.255L424 197.255V256h56c17.972 0 32.484 14.816 31.988 32.9zM257 0c-61.856 0-112 50.144-112 112h224C369 50.144 318.856 0 257 0z"
+													/>
+												</svg>
+											</div>
 										</div>
-									</div>
-									<div class="grow ml-6">
-										<p class="font-bold mb-1">Bug report</p>
-										<p class="text-gray-500">bugs@dreamfeel.io</p>
-										<!-- <p class="text-gray-500">+1 234-567-89</p> -->
+										<div class="grow ml-6">
+											<p class="font-bold mb-1">Bug report</p>
+											<p class="text-gray-500">bugs@dreamfeel.io</p>
+											<!-- <p class="text-gray-500">+1 234-567-89</p> -->
+										</div>
 									</div>
 								</div>
 							</div>
@@ -1517,83 +1080,85 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	</div>
 </div>
 
-<div class="container my-24 px-6 mx-auto">
-	<!-- Section: Design Block -->
-	<section class="mb-32 text-gray-800 text-center md:text-left">
-		<div class="grid md:grid-cols-2 gap-6">
-			<div class="mb-6 md:mb-0">
-				<h2 class="text-3xl text-gray-700 font-bold mb-6">
-					Trusted by 2,000,000+ <br />
-					<u class="">developers and designers</u>
-				</h2>
-				<p class="text-gray-500 mb-6">
-					Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, quas?
-				</p>
+<div class="dark:bg-gray-900">
+	<div class="container  py-24 px-6 mx-auto">
+		<!-- Section: Design Block -->
+		<section class="mb-32  text-gray-800 text-center md:text-left">
+			<div class="grid md:grid-cols-2 gap-6">
+				<div class="mb-6 md:mb-0">
+					<h2 class="text-3xl text-gray-700 font-bold mb-6">
+						Trusted by 2,000,000+ <br />
+						<u class="">developers and designers</u>
+					</h2>
+					<p class="text-gray-500 mb-6">
+						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, quas?
+					</p>
 
-				<a
-					href="/accounts/signin"
-					class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 dark:focus:ring-pink-900"
-				>
-					Get started
-					<svg
-						class="w-5 h-5 ml-2 -mr-1"
-						fill="currentColor"
-						viewBox="0 0 20 20"
-						xmlns="http://www.w3.org/2000/svg"
-						><path
-							fill-rule="evenodd"
-							d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-							clip-rule="evenodd"
-						/></svg
+					<a
+						href="/accounts/signin"
+						class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 dark:focus:ring-pink-900"
 					>
-				</a>
-			</div>
+						Get started
+						<svg
+							class="w-5 h-5 ml-2 -mr-1"
+							fill="currentColor"
+							viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg"
+							><path
+								fill-rule="evenodd"
+								d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+								clip-rule="evenodd"
+							/></svg
+						>
+					</a>
+				</div>
 
-			<div class="mb-6 md:mb-0">
-				<div class="grid grid-cols-2 gap-6">
-					<div class="mb-12">
-						<img
-							src="https://mdbootstrap.com/img/Photos/new-templates/landing-page/logo6-1.png"
-							class="grayscale px-6"
-							alt="Nasa - logo"
-						/>
-					</div>
+				<div class="mb-6 md:mb-0">
+					<div class="grid grid-cols-2 gap-6">
+						<div class="mb-12">
+							<img
+								src="https://mdbootstrap.com/img/Photos/new-templates/landing-page/logo6-1.png"
+								class="grayscale px-6"
+								alt="Nasa - logo"
+							/>
+						</div>
 
-					<div class="mb-12">
-						<img
-							src="https://mdbootstrap.com/img/Photos/new-templates/landing-page/logo5-1.png"
-							class="grayscale px-6"
-							alt="Amazon - logo"
-						/>
-					</div>
+						<div class="mb-12">
+							<img
+								src="https://mdbootstrap.com/img/Photos/new-templates/landing-page/logo5-1.png"
+								class="grayscale px-6"
+								alt="Amazon - logo"
+							/>
+						</div>
 
-					<div class="mb-12">
-						<img
-							src="https://mdbootstrap.com/img/Photos/new-templates/landing-page/logo3-1.png"
-							class="grayscale px-6"
-							alt="Nike - logo"
-						/>
-					</div>
+						<div class="mb-12">
+							<img
+								src="https://mdbootstrap.com/img/Photos/new-templates/landing-page/logo3-1.png"
+								class="grayscale px-6"
+								alt="Nike - logo"
+							/>
+						</div>
 
-					<div class="mb-12">
-						<img
-							src="https://mdbootstrap.com/img/Photos/new-templates/landing-page/logo4-1.png"
-							class="grayscale px-6"
-							alt="Ikea - logo"
-						/>
+						<div class="mb-12">
+							<img
+								src="https://mdbootstrap.com/img/Photos/new-templates/landing-page/logo4-1.png"
+								class="grayscale px-6"
+								alt="Ikea - logo"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
-	<!-- Section: Design Block -->
+		</section>
+		<!-- Section: Design Block -->
+	</div>
 </div>
 
-<footer class="p-4 md:p-8 lg:p-10 bg-pink-300">
+<footer class="p-4 md:p-8 lg:p-10 bg-gray-900">
 	<div class="mx-auto max-w-screen-xl text-center">
 		<a
 			href="/"
