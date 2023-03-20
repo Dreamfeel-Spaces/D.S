@@ -6,7 +6,7 @@ import type { Adapter } from '@auth/core/adapters';
 
 import jwt from 'jsonwebtoken';
 
-import { GITHUB_ID, GITHUB_SECRET } from '$env/static/private';
+import { GITHUB_ID, GITHUB_SECRET, NEXTAUTH_URL } from '$env/static/private';
 import { prisma } from './lib/db/prisma';
 import { sequence } from '@sveltejs/kit/hooks';
 import { error, type Handle, type HandleFetch, type HandleServerError } from '@sveltejs/kit';
@@ -41,7 +41,7 @@ export const authHandle = SvelteKitAuth({
 				httpOnly: true,
 				sameSite: 'lax' as any,
 				path: '/',
-				domain: `${dev ? 'localhost' : 'beta.dreamfeel.me'}`,
+				domain: NEXTAUTH_URL.replace('http://', '').replace('https://', ''),
 				secure: !dev
 			}
 		}

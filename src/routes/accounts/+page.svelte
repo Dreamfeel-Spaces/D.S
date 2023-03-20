@@ -11,7 +11,7 @@
 		<div class="grid grid-cols-2">
 			<div
 				style="align-items: center;"
-				class="flex justify-center text-center bg-gray-100 min-h-108 text-gray-500 text-2xl overflow-auto"
+				class="flex justify-center text-center dark:bg-gray-900 bg-gray-100 min-h-108 text-gray-500 text-2xl overflow-auto"
 			>
 				<div>
 					<img loading="lazy" src={logo} alt="" />

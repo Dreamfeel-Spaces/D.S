@@ -25,7 +25,8 @@ export class Pages {
 			this.url?.toJSON().includes('.') &&
 			this.subdomain !== 'upgraded-journey' &&
 			this.subdomain !== 'dreamfeel' &&
-			this.subdomain !== 'beta'
+			this.subdomain !== 'beta' &&
+			this.subdomain !== 'app'
 		);
 	}
 
