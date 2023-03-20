@@ -405,7 +405,7 @@ model Role {
 
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String  @db.VarChar(3000)
+  sessionToken String     @db.VarChar(3000)
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?
@@ -696,16 +696,16 @@ model Subscription {
 }
 
 model ApiSetup {
-  id        String  @id() @default(cuid())
-  complete  Boolean @default(false)
-  step      Int     @default(0)
-  space     Space?  @relation(fields: [spaceId], references: [id])
-  spaceId   String?
-  stepOne   String?
-  stepTwo   String?
-  stepThree String?
-  stepFour  String? @default("blank")
-  apiUrl    String?
+  id           String  @id() @default(cuid())
+  complete     Boolean @default(false)
+  step         Int     @default(0)
+  space        Space?  @relation(fields: [spaceId], references: [id])
+  spaceId      String?
+  stepOne      String?
+  stepTwo      String?
+  stepThree    String?
+  stepFour     String? @default("blank")
+  apiUrl       String?
   qsWidgetOpen Boolean @default(true)
 
   @@index([spaceId])

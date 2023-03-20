@@ -13,6 +13,7 @@ import { error, type Handle, type HandleFetch, type HandleServerError } from '@s
 import { Pages } from '$lib/plugins/pages/Pages';
 import { errorCatch, isReservedRoute } from '$lib/util/slugit';
 import { Token } from '$lib/token/Token';
+import { dev } from '$app/environment';
 
 export const authHandle = SvelteKitAuth({
 	adapter: PrismaAdapter(prisma) as Adapter<boolean>,
@@ -32,6 +33,18 @@ export const authHandle = SvelteKitAuth({
 		maxAge: 60 * 60 * 24 * 30,
 		async encode() {},
 		async decode() {}
+	},
+	cookies: {
+		sessionToken: {
+			name: `${!dev ? '__Secure-' : ''}next-auth.session-token`,
+			options: {
+				httpOnly: true,
+				sameSite: 'lax' as any,
+				path: '/',
+				domain: `${dev ? 'localhost' : 'beta.dreamfeel.me'}`,
+				secure: useSecureCookies
+			}
+		}
 	}
 });
 
