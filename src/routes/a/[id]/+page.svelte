@@ -37,7 +37,7 @@
 						<Alert dismissable class="mb-6">
 							<p class="text-lg font-extrabold">Collections</p>
 							<p class="my-3">Schema and API</p>
-							<Button size="xs" gradient rel="external" href={`/base/${appId}`}>
+							<Button size="xs" gradient rel="external" href={`/base/${space.appId}`}>
 								Collections API
 								<svg
 									class="ml-2 -mr-1 w-5 h-5"
@@ -51,7 +51,7 @@
 									/></svg
 								>
 							</Button>
-							<Button size="xs" gradient rel="external" href={`/base/${appId}/table/create`}>
+							<Button size="xs" gradient rel="external" href={`/base/${space.appId}/table/create`}>
 								Add Collections
 								<svg
 									class="ml-2 -mr-1 w-5 h-5"
