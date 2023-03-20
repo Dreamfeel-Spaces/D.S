@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken';
 export async function load({ cookies, params }: any) {
 	const appId = params.id;
 
+	let recentlyOpened: any[] = JSON.parse(cookies.get(`recentlyOpened-${appId}`) ?? '[]');
+
 	let space: any = null;
 	let spaceSession: any = null;
 
@@ -12,6 +14,9 @@ export async function load({ cookies, params }: any) {
 		space = await prisma.space.findUnique({
 			where: {
 				appId
+			},
+			include: {
+				roles: true
 			}
 		});
 
@@ -25,6 +30,23 @@ export async function load({ cookies, params }: any) {
 
 		spaceSession = { user };
 	}
+
+	let isRecent = recentlyOpened.find((item: any) => {
+		return item.key === 'dashboards' && item.app === space.appId;
+	});
+
+	if (isRecent) {
+		recentlyOpened.splice(recentlyOpened.indexOf(isRecent), 1);
+		recentlyOpened.unshift(isRecent);
+	} else {
+		recentlyOpened.unshift({
+			key: 'Dashboards',
+			app: space.appId,
+			url: `/dashboards/${space.appId}`
+		});
+	}
+
+	cookies.set(`recentlyOpened-${appId}`, JSON.stringify(recentlyOpened), { path: '/' });
 
 	return { space, spaceSession };
 }

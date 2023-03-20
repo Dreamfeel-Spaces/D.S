@@ -98,7 +98,7 @@
 	});
 </script>
 
-<main class="main-container grid grid-cols-2 ">
+<main class="main-container grid grid-cols-2 gap-4 ">
 	<Card  size="lg" >
 		<section class="flex justify-center">
 			<canvas bind:this={barChartElement} />

@@ -26,7 +26,7 @@
 		<Chart />
 	</div>
 
-	<div>
+	<div class="my-3">
 		<Map />
 	</div>
 

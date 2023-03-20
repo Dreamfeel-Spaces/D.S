@@ -36,7 +36,7 @@
 
 <form method="post" class="mt-9 mx-3 px-6">
 	<div class="mb-6">
-		<label for="name">Table name</label>
+		<label class="dark:text-gray-100 text-xl mb-2" for="name">Table name</label>
 		<Input required type="text" placeholder="i.e students" id="name" name="name" class="w-full" />
 	</div>
 	<Button type="submit" class="w-full">Submit</Button>

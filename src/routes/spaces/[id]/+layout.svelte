@@ -2,8 +2,8 @@
 	import SpaceNav from '../../base/[space]/SpaceNav.svelte';
 </script>
 
-<div class="dark:bg-gray-900">
-	<SpaceNav />
+<SpaceNav />
 
+<div class="dark:bg-gray-900 pt-24">
 	<slot />
 </div>

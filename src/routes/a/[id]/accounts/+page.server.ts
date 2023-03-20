@@ -54,6 +54,7 @@ export const actions: Actions = {
 		if (!isValidPass) return { error: true };
 
 		const sessionToken = await token.createUserToken(user);
+
 		await prisma.spaceSession.create({
 			data: {
 				userId: user?.id,

@@ -1,45 +1,160 @@
 <script lang="ts">
-	import { Button, Modal, Label, Input, Select } from 'flowbite-svelte';
+	import { page } from '$app/stores';
+	import { convertToSlug } from '$lib/util/slugit';
+	import {
+		Modal,
+		Alert,
+		Button,
+		Input,
+		Textarea,
+		Label,
+		Checkbox,
+		Toggle,
+		Hr
+	} from 'flowbite-svelte';
+	const space = $page?.data?.space;
+	let tables = space?.tables ?? [];
 	let formModal = false;
-	let permissions: any = '';
+
+	let meta: any = {};
+
+	let roleName = '';
 </script>
 
-<div>
-	<div>
-		<Button size="xs" pill gradient on:click={() => (formModal = true)}>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke-width="1.5"
-				stroke="currentColor"
-				class="w-6 h-6"
-				><path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z"
-				/><path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z"
-				/></svg
-			>
-			{'Add Roles'}
-		</Button>
-	</div>
+<div class="flex justify-end">
+	<Button on:click={() => (formModal = true)} gradient color="pinkToOrange" pill size="xs"
+		>Add roles</Button
+	>
 </div>
-<Modal bind:open={formModal} size="xs" autoclose={false} class="w-full">
-	<form class="flex flex-col space-y-6" action="?/createPage&tab=permission" method="POST">
-		<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Add</h3>
-		<Label class="space-y-2">
-			<span>Name</span>
-			<Input type="text" autofocus name="name" required />
-		</Label>
 
-		<Label class="space-y-2">
-			<span>Description</span>
-			<Input type="text" name="path" id="path" required />
-		</Label>
-		<Button type="submit" class="w-full1">Save</Button>
-	</form>
+<Modal class="w-full" autoclose={false} bind:open={formModal}>
+	<div>
+		<p class="text-2xl my-6 dark:text-gray-100">Add role</p>
+		<form method="post" action="?/createRole&tab=roles">
+			<Label>
+				<span> Name </span>
+				<Input
+					name="name"
+					required
+					autofocus
+					bind:value={roleName}
+					Placeholder="Enter role name, i.e admin, user, staff, guest..."
+				/>
+			</Label>
+			{#if roleName}
+				<div class="text-sm mt-2">
+					Role name will be: {convertToSlug(roleName)}
+				</div>
+			{/if}
+			<Label class="mt-4">
+				<span> Description </span>
+				<Textarea name="description" required />
+			</Label>
+			<Checkbox
+				bind:value={meta.isSuperUser}
+				name="isSuperUser"
+				bind:checked={meta.isSuperUser}
+				class="mt-4"
+			>
+				<span class="text-gray-900 dark:text-gray-100"> Is Super User </span>
+			</Checkbox>
+			{#if !meta.isSuperUser}
+				<Hr class="my-2" />
+				<Toggle size="small" class="mt-4">
+					<span class="text-gray-900 dark:text-gray-100"> Create API Keys </span>
+				</Toggle>
+				<Toggle size="small" class="mt-4">
+					<span class="text-gray-900 dark:text-gray-100"> Create roles </span>
+				</Toggle>
+				<Toggle size="small" class="mt-4">
+					<span class="text-gray-900 dark:text-gray-100">Signup users </span>
+				</Toggle>
+				<Hr class="my-2" />
+				<Checkbox bind:checked={meta.updateAllConfig} class="mt-4">
+					<span class="text-gray-900 dark:text-gray-100">Update space config </span>
+				</Checkbox>
+				{#if !meta.updateAllConfig}
+					<Toggle size="small" class="mt-4">
+						<span class="text-gray-900 dark:text-gray-100">Update auth token options </span>
+					</Toggle>
+					<Toggle size="small" class="mt-4">
+						<span class="text-gray-900 dark:text-gray-100">Update auth providers </span>
+					</Toggle>
+					<Toggle size="small" class="mt-4">
+						<span class="text-gray-900 dark:text-gray-100">Update mail settings </span>
+					</Toggle>
+					<Toggle size="small" class="mt-4">
+						<span class="text-gray-900 dark:text-gray-100">Update sms settings </span>
+					</Toggle>
+					<Toggle size="small" class="mt-4">
+						<span class="text-gray-900 dark:text-gray-100">Update payment providers </span>
+					</Toggle>
+					<Toggle size="small" class="mt-4">
+						<span class="text-gray-900 dark:text-gray-100">Update file storage options </span>
+					</Toggle>
+					<Toggle size="small" class="mt-4">
+						<span class="text-gray-900 dark:text-gray-100">Update logistics providers </span>
+					</Toggle>
+				{/if}
+				<Hr class="my-2" />
+				<Checkbox bind:checked={meta.updateAllEditor} class="mt-4">
+					<span class="text-gray-900 dark:text-gray-100">UI Updates </span>
+				</Checkbox>
+				{#if !meta.updateAllEditor}
+					<Toggle size="small" class="mt-4">
+						<span class="text-gray-900 dark:text-gray-100">Switch UI </span>
+					</Toggle>
+					<Toggle size="small" class="mt-4">
+						<span class="text-gray-900 dark:text-gray-100">Create UI </span>
+					</Toggle>
+					<Toggle size="small" class="mt-4">
+						<span class="text-gray-900 dark:text-gray-100">Create pages </span>
+					</Toggle>
+				{/if}
+
+				<Hr class="my-2" />
+				<Checkbox bind:checked={meta.allCollectionCrud} class="mt-4">
+					<span class="text-gray-900 dark:text-gray-100">Collections CRUD </span>
+				</Checkbox>
+
+				{#if !tables.length}
+					<Alert class="mt-3"
+						>No collections have been added to this space. You can configure collection permissions
+						later.</Alert
+					>
+				{/if}
+
+				{#if !meta.allCollectionCrud}
+					{#each tables as table}
+						<div class="pl-6">
+							<Hr />
+							<div class="text-2xl">{table.name}</div>
+							<Checkbox bind:checked={table.allCRUD} class="mt-4">
+								<span class="text-gray-900 dark:text-gray-100">CRUD </span>
+							</Checkbox>
+							{#if !table.allCRUD}
+								<Toggle size="small" bind:checked={table.create} class="mt-4">
+									<span class="text-gray-900 dark:text-gray-100">Create </span>
+								</Toggle>
+								<Toggle size="small" bind:checked={table.read} class="mt-4">
+									<span class="text-gray-900 dark:text-gray-100">Read </span>
+								</Toggle>
+								<Toggle size="small" bind:checked={table.update} class="mt-4">
+									<span class="text-gray-900 dark:text-gray-100">Update </span>
+								</Toggle>
+								<Toggle size="small" bind:checked={table.delete} class="mt-4">
+									<span class="text-gray-900 dark:text-gray-100">Delete </span>
+								</Toggle>
+								<Toggle size="small" bind:checked={table.dashboards} class="mt-4">
+									<span class="text-gray-900 dark:text-gray-100">Dashboards </span>
+								</Toggle>
+							{/if}
+						</div>
+					{/each}
+				{/if}
+			{/if}
+			<input name="meta" value={JSON.stringify(meta)} type="hidden" />
+			<Button type="submit" class="mt-4 w-full">Save role</Button>
+		</form>
+	</div>
 </Modal>

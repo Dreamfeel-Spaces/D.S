@@ -1,5 +1,5 @@
 import { prisma } from '$lib/db/prisma';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { RequestEvent, Actions } from './$types';
 export async function load({ params }: RequestEvent) {
 	const space = await prisma.space.findUnique({
@@ -15,9 +15,14 @@ export async function load({ params }: RequestEvent) {
 						}
 					}
 				}
-			}
+		},
+			onboarding: true
 		}
 	});
+
+	if (!space?.onboarding[0].complete) {
+		throw redirect(302, `/a/${space?.appId}/welcome`);
+	}
 
 	return { space };
 }

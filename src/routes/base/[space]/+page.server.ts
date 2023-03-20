@@ -12,6 +12,9 @@ export async function load({ params, cookies }: RequestEvent) {
 	const space = await prisma.space.findUnique({
 		where: {
 			appId: String(spaceId)
+		},
+		include: {
+			apiSetup: true
 		}
 	});
 	const tables = await prisma.spaceTable.findMany({
@@ -23,7 +26,20 @@ export async function load({ params, cookies }: RequestEvent) {
 		}
 	});
 
-	// console.log(tables);
+	// if (!space?.apiSetup.length) {
+	// const onboarding = await prisma.onboarding.create({
+	// 	data: {
+	// 		spaceId: space.id
+	// 	}
+	// });
+	// 	throw redirect(302, `/base/${space?.appId}/welcome`);
+	// }
+
+	// console.log(tables);''=
+
+	if (!space?.apiSetup[0].complete) {
+		throw redirect(302, `/base/${space?.appId}/quick-setup`);
+	}
 
 	return { tables, space };
 }

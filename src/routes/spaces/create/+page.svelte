@@ -65,7 +65,7 @@
 	</div>
 {/if}
 
-<section class="bg-white dark:bg-gray-900 ">
+<section class="bg-white dark:bg-gray-900 m">
 	<div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
 		<h1
 			class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-700 md:text-5xl lg:text-6xl dark:text-white"
@@ -81,10 +81,10 @@
 	</div>
 </section>
 
-<div class="px-6 mx-2 lg:px-72 mb-36 ">
+<div class="px-6 mx-2 lg:px-72 pb-36 ">
 	<form method="POST" use:enhance>
 		<div class="mb-6 w-full">
-			<label for="appId">App ID</label>
+			<label class="dark:text-gray-100" for="appId">App ID</label>
 			<Input
 				placeholder="Unique app id i.e app-id"
 				bind:value={appId}
@@ -96,13 +96,13 @@
 				type="text"
 			/>
 			{#if throttling}
-				<div class="text-xs" >Validating Space ID...</div>
+				<div class="text-xs dark:text-gray-100" >Validating Space ID...</div>
 			{/if}
 			{#if notUnique}
 				<p class="text-red-600">App ID already taken</p>
 			{/if}
 			<div>
-				<small>
+				<small class="dark:text-gray-100" >
 					Formatted: {convertToSlug(appId ? appId : appName)}
 				</small>
 			</div>
@@ -113,7 +113,7 @@
 			{/if}
 		</div>
 		<div class="mb-6 w-full">
-			<label for="name">Name</label>
+			<label class="dark:text-gray-100"  for="name">Name</label>
 			<Input
 				required
 				bind:value={appName}

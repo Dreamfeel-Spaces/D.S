@@ -1,3 +1,3 @@
 import { writable } from 'svelte/store';
 
-export const wsstore = writable({});
+export const apiHelperModal = writable({ open: false });

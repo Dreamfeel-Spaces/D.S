@@ -15,7 +15,7 @@
 	} from 'flowbite-svelte';
 	const space = $page?.data?.space;
 	import { sineIn } from 'svelte/easing';
-	let hidden2 = false;
+	let hidden2 = true;
 	let transitionParams = {
 		x: 320,
 		duration: 200,

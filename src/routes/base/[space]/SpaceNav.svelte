@@ -7,15 +7,18 @@
 		SidebarWrapper,
 		SidebarGroup,
 		SidebarItem,
-		SidebarDropdownWrapper,
-		MegaMenu,
 		DarkMode,
 		Avatar,
-		Button
+		Button,
+		Dropdown,
+		DropdownDivider,
+		DropdownHeader,
+		DropdownItem
 	} from 'flowbite-svelte';
 	import logo from '../../../assets/logo.png';
 	const space = $page?.data?.space;
 	import { sineIn } from 'svelte/easing';
+	import SpaceSearch from './SpaceSearch.svelte';
 	let hidden2 = true;
 	let transitionParams = {
 		x: 320,
@@ -25,12 +28,12 @@
 </script>
 
 <nav
-	class="flex-no-wrap relative flex w-full items-center justify-between dark:bg-gray-900 bg-neutral-100 py-4 shadow-md shadow-black/5  dark:shadow-black/10 lg:flex-wrap lg:justify-start "
+	class="flex-no-wrap z-50 fixed n w-full min-w-max  flex items-center justify-between dark:bg-gray-900 bg-neutral-100 py-4 shadow-md shadow-black/5  dark:shadow-black/10 lg:flex-wrap lg:justify-start "
 	data-te-navbar-ref
 >
-	<div class="flex w-full flex-wrap items-center justify-between px-6">
+	<div class="flex flex-1 flex-wrap items-center justify-between px-6">
 		<div
-			class="!visible hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
+			class="!visible  hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
 			id="navbarSupportedContent1"
 			data-te-collapse-item
 		>
@@ -47,7 +50,7 @@
 				<li class="lg:pr-2" data-te-nav-item-ref>
 					<a
 						rel="external"
-						class="text-neutral-500 text-2xl hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
+						class="text-gray-700 dark:text-gray-500 text-2xl hover:text-gray-700 focus:text-neutral-700 disabled:text-black/30  dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
 						href={`/a/${$page.data?.space?.appId}`}
 						data-te-nav-link-ref
 					>
@@ -63,47 +66,64 @@
 		<!-- Right elements -->
 		<div class="relative flex items-center">
 			<div class="relative" data-te-dropdown-ref>
-				<ul
-					class="absolute left-auto right-0 z-[1000] float-left m-0 mt-1 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
-					aria-labelledby="dropdownMenuButton1"
-					data-te-dropdown-menu-ref
-				>
-					<li>
-						<a
-							class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-							href="/"
-							data-te-dropdown-item-ref>Action</a
-						>
-					</li>
-					<li>
-						<a
-							class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-							href="/"
-							data-te-dropdown-item-ref>Another action</a
-						>
-					</li>
-					<li>
-						<a
-							class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-							href="/"
-							data-te-dropdown-item-ref>Something else here</a
-						>
-					</li>
-				</ul>
+				<!-- <div>
+					<Dropdown>
+						<svelte:fragment slot="header">Hehe</svelte:fragment>
+						<DropdownHeader>Select</DropdownHeader>
+						<DropdownItem>hhh</DropdownItem>
+					</Dropdown>
+				</div> -->
 			</div>
 
-			<div class="relative flex" data-te-dropdown-ref>
+			<div class="relative flex">
+				<div class="mr-4">
+					<SpaceSearch />
+				</div>
 				{#if $page.data.space?.appId === 'demo'}
 					<Button pill class="mr-4" size="xs" color="green">Live demo</Button>
 				{/if}
 				<div class="px-3 flex self-center">
-					<Avatar size="xs" />
+					<Avatar data-te-dropdown-ref size="xs" />
+					<ul
+						class="absolute hidden left-auto right-0 z-[1000] float-left m-0 mt-1  min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+						aria-labelledby="dropdownMenuButton1"
+						data-te-dropdown-menu-ref
+					>
+						<li>
+							<a
+								class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+								href="/"
+								data-te-dropdown-item-ref>Action</a
+							>
+						</li>
+						<li>
+							<a
+								class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+								href="/"
+								data-te-dropdown-item-ref>Another action</a
+							>
+						</li>
+						<li>
+							<a
+								class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+								href="/"
+								data-te-dropdown-item-ref>Something else here</a
+							>
+						</li>
+					</ul>
 				</div>
 				<div>
 					<DarkMode />
 				</div>
 				<button class="dark:text-gray-100" on:click={() => (hidden2 = false)}>
-					<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24">
+					<svg
+						class="dark:text-gray-100"
+						xmlns="http://www.w3.org/2000/svg"
+						height="24"
+						viewBox="0 96 960 960"
+						fill="currentColor"
+						width="24"
+					>
 						<path d="M120 816v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
 					</svg>
 				</button>

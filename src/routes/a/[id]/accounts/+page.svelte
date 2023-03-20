@@ -1,7 +1,7 @@
 <script lang="ts">
 	//@ts-nocheck
 	import logo from '../../../../assets/logo.png';
-	import { Input, Button, Alert } from 'flowbite-svelte';
+	import { Input, Button, Alert, Label } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import DemoCredentials from './DemoCredentials.svelte';
@@ -43,12 +43,26 @@
 						</div>
 					{/if}
 					<div>
-						<label for="username">Username</label>
-						<Input type="email" required name="username" class="mt-2" id="username" />
+						<Label class-="text-2xl dark:text-gray-100" for="username">Username</Label>
+						<Input
+							type="email"
+							placeholder="Your username or email"
+							required
+							name="username"
+							class="mt-2"
+							id="username"
+						/>
 					</div>
 					<div class="my-6">
-						<label for="password">Password</label>
-						<Input required type="password" class="mt-2" name="password" id="password" />
+						<Label class-="text-2xl dark:text-gray-100" for="password">Password</Label>
+						<Input
+							placeholder="Your password"
+							required
+							type="password"
+							class="mt-2"
+							name="password"
+							id="password"
+						/>
 					</div>
 					<Button type="submit" class="w-full">Login</Button>
 				</form>

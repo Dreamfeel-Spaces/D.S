@@ -46,11 +46,12 @@ export const actions = {
 			const token = new Token();
 			const adminPassword = await token.createAdminPass();
 
-			const ownerRole = await prisma.permission.create({
+			const ownerRole = await prisma.userRoles.create({
 				data: {
 					name: 'SUPER_USER',
 					spaceId: space.id,
-					description: `The default role for the owner of the space. Gives access and modification rights to any part, data, or API Config.`
+					description: `Global rights and permissions`,
+					isSuperUser: true
 				}
 			});
 

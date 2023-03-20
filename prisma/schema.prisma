@@ -76,8 +76,11 @@ model Page {
   html             String?
   pathRegexp       String?
   uiDef            String?
+  roles            UserRoles?     @relation(fields: [userRolesId], references: [id])
+  userRolesId      String?
 
   @@index([spaceUIVersionId])
+  @@index([userRolesId])
 }
 
 model ConfigVars {
@@ -316,19 +319,20 @@ model ReportField {
 }
 
 model Report {
-  id          String         @id @default(cuid())
-  name        String
-  table       SpaceTable?    @relation(fields: [tableId], references: [id])
-  tableId     String?
-  fields      ReportField[]
-  description String?
-  sort        String?
-  sortBy      String?        @default("none")
-  layout      String?        @default("tabular")
-  orientation String?        @default("landscape")
-  filters     ReportFilter[]
-  SQT         SQT[]
-  charts      String?        @default("[]")
+  id              String                  @id @default(cuid())
+  name            String
+  table           SpaceTable?             @relation(fields: [tableId], references: [id])
+  tableId         String?
+  fields          ReportField[]
+  description     String?
+  sort            String?
+  sortBy          String?                 @default("none")
+  layout          String?                 @default("tabular")
+  orientation     String?                 @default("landscape")
+  filters         ReportFilter[]
+  SQT             SQT[]
+  charts          String?                 @default("[]")
+  viewPermissions ReportViewPermissions[]
 
   @@index([tableId])
 }
@@ -353,23 +357,31 @@ model ReportFilter {
 }
 
 model SpaceTable {
-  id                  String          @id @default(cuid())
-  name                String
-  columns             Column[]
-  rows                Row[]
-  relations           Relations[]
-  createdBy           SpaceUser?      @relation(fields: [userId], references: [id])
-  userId              String?
-  app                 Space?          @relation(fields: [appId], references: [id])
-  appId               String?
-  displayName         String?
-  reports             Report[]
-  charts              Chart[]
-  requiredPermissions String?         @default("[]")
-  dashboardForms      DashboardForm[]
-  disableApi          Boolean         @default(false)
-  dataRules           DataRules[]
-  SQT                 SQT[]
+  id                   String                           @id @default(cuid())
+  name                 String
+  columns              Column[]
+  rows                 Row[]
+  relations            Relations[]
+  createdBy            SpaceUser?                       @relation(fields: [userId], references: [id])
+  userId               String?
+  app                  Space?                           @relation(fields: [appId], references: [id])
+  appId                String?
+  displayName          String?
+  reports              Report[]
+  charts               Chart[]
+  requiredPermissions  String?                          @default("[]")
+  dashboardForms       DashboardForm[]
+  disableApi           Boolean                          @default(false)
+  dataRules            DataRules[]
+  SQT                  SQT[]
+  createPermissions    CreateCollectionPermissions[]
+  updatePermissions    UpdateCollectionPermissions[]
+  deletePermissions    DeleteCollectionPermissions[]
+  aPIDeletePermissions APIDeleteCollectionPermissions[]
+  aPIUpdatePermissions APIUpdateCollectionPermissions[]
+  aPICreatePermissions APICreateCollectionPermissions[]
+  viewPermissions      CollectionViewPermissions[]
+  aPIGETPermissions    APIGETCollectionPermissions[]
 
   @@index([userId])
   @@index([appId])
@@ -418,7 +430,6 @@ model SpaceUser {
   spaceId                String
   apiKeys                SpaceAPIKeys?    @relation(fields: [spaceAPIKeysId], references: [id])
   spaceAPIKeysId         String?
-  rules                  APIRule[]
   dateCreated            DateTime         @default(now())
   updatedAt              DateTime?        @default(now()) @updatedAt
   password               String?
@@ -440,13 +451,27 @@ model SpaceUser {
   SpaceUpdate            SpaceUpdate[]
   role                   Permission?      @relation(fields: [roleId], references: [id])
   roleId                 String?
+  UserRoles              UserRoles?       @relation(fields: [userRolesId], references: [id])
+  userRolesId            String?
+  signup                 SignUp?          @relation(fields: [signUpId], references: [id])
+  signUpId               String?
 
   @@index([roleId])
   @@index([spaceAPIKeysId])
   @@index([userId])
   @@index([geoId])
   @@index([spaceId])
+  @@index([signUpId])
+  @@index([userRolesId])
   @@map("Admin")
+}
+
+model SignUp {
+  id    String      @id @default(cuid())
+  date  String?
+  month String?
+  year  String
+  users SpaceUser[]
 }
 
 model SpaceUpdate {
@@ -521,19 +546,138 @@ model Permission {
   @@index([roleId])
 }
 
-model APIRule {
-  id          String     @id @default(cuid())
-  name        String?
-  admin       SpaceUser? @relation(fields: [adminId], references: [id])
-  adminId     String?
-  space       Space?     @relation(fields: [spaceId], references: [id])
-  spaceId     String?
-  description String?
-  created     DateTime   @default(now())
-  updated     DateTime   @default(now()) @updatedAt
+model UserRoles {
+  id                         String                           @id @default(cuid())
+  name                       String?
+  description                String?
+  created                    DateTime                         @default(now())
+  updated                    DateTime                         @default(now()) @updatedAt
+  users                      SpaceUser[]
+  createCollections          CreateCollectionPermissions[]
+  updateCollections          UpdateCollectionPermissions[]
+  deleteCollections          DeleteCollectionPermissions[]
+  viewCollections            CollectionViewPermissions[]
+  aPIDeletePermissions       APIDeleteCollectionPermissions[]
+  aPIUpdatePermissions       APIUpdateCollectionPermissions[]
+  aPICreatePermissions       APICreateCollectionPermissions[]
+  aPIGETPermissions          APIGETCollectionPermissions[]
+  isSuperUser                Boolean                          @default(false)
+  generateApiKey             Boolean                          @default(false)
+  createAdminAccount         Boolean                          @default(false)
+  updateAuthTokenOptions     Boolean                          @default(false)
+  updateRolesOptions         Boolean                          @default(false)
+  updateAuthProviders        Boolean                          @default(false)
+  accessSettings             Boolean                          @default(false)
+  updateMailSettings         Boolean                          @default(false)
+  updateSMSSettings          Boolean                          @default(false)
+  updatePaymentProviders     Boolean                          @default(false)
+  updateMediaStorageSettings Boolean                          @default(false)
+  updateLogisticsProvider    Boolean                          @default(false)
+  updateUiVersion            Boolean                          @default(false)
+  accessEditor               Boolean                          @default(false)
+  accessDashboards           Boolean                          @default(false)
+  switchUI                   Boolean                          @default(false)
+  pages                      Page[]
+  Space                      Space?                           @relation(fields: [spaceId], references: [id])
+  spaceId                    String?
 
-  @@index([adminId])
   @@index([spaceId])
+}
+
+model ReportViewPermissions {
+  id       String  @id @default(cuid())
+  report   Report? @relation(fields: [reportId], references: [id])
+  reportId String?
+
+  @@index([reportId])
+}
+
+model CollectionViewPermissions {
+  id           String      @id @default(cuid())
+  userRoles    UserRoles?  @relation(fields: [userRolesId], references: [id])
+  userRolesId  String?
+  collection   SpaceTable? @relation(fields: [spaceTableId], references: [id])
+  spaceTableId String?
+
+  @@index([userRolesId])
+  @@index([spaceTableId])
+}
+
+model APIGETCollectionPermissions {
+  id           String      @id @default(cuid())
+  userRoles    UserRoles?  @relation(fields: [userRolesId], references: [id])
+  userRolesId  String?
+  collection   SpaceTable? @relation(fields: [spaceTableId], references: [id])
+  spaceTableId String?
+
+  @@index([userRolesId])
+  @@index([spaceTableId])
+}
+
+model APIDeleteCollectionPermissions {
+  id           String      @id @default(cuid())
+  userRoles    UserRoles?  @relation(fields: [userRolesId], references: [id])
+  userRolesId  String?
+  collection   SpaceTable? @relation(fields: [spaceTableId], references: [id])
+  spaceTableId String?
+
+  @@index([userRolesId])
+  @@index([spaceTableId])
+}
+
+model APIUpdateCollectionPermissions {
+  id           String      @id @default(cuid())
+  userRoles    UserRoles?  @relation(fields: [userRolesId], references: [id])
+  userRolesId  String?
+  collection   SpaceTable? @relation(fields: [spaceTableId], references: [id])
+  spaceTableId String?
+
+  @@index([spaceTableId])
+  @@index([userRolesId])
+}
+
+model APICreateCollectionPermissions {
+  id           String      @id @default(cuid())
+  userRoles    UserRoles?  @relation(fields: [userRolesId], references: [id])
+  userRolesId  String?
+  collection   SpaceTable? @relation(fields: [spaceTableId], references: [id])
+  spaceTableId String?
+
+  @@index([userRolesId])
+  @@index([spaceTableId])
+}
+
+model DeleteCollectionPermissions {
+  id           String      @id @default(cuid())
+  userRoles    UserRoles?  @relation(fields: [userRolesId], references: [id])
+  userRolesId  String?
+  collection   SpaceTable? @relation(fields: [spaceTableId], references: [id])
+  spaceTableId String?
+
+  @@index([userRolesId])
+  @@index([spaceTableId])
+}
+
+model UpdateCollectionPermissions {
+  id           String      @id @default(cuid())
+  userRoles    UserRoles?  @relation(fields: [userRolesId], references: [id])
+  userRolesId  String?
+  collection   SpaceTable? @relation(fields: [spaceTableId], references: [id])
+  spaceTableId String?
+
+  @@index([spaceTableId])
+  @@index([userRolesId])
+}
+
+model CreateCollectionPermissions {
+  id           String      @id @default(cuid())
+  userRoles    UserRoles?  @relation(fields: [userRolesId], references: [id])
+  userRolesId  String?
+  collection   SpaceTable? @relation(fields: [spaceTableId], references: [id])
+  spaceTableId String?
+
+  @@index([userRolesId])
+  @@index([spaceTableId])
 }
 
 model Dashboard {
@@ -549,6 +693,36 @@ model Dashboard {
 model Subscription {
   id    String @id() @default(cuid())
   email String @unique
+}
+
+model ApiSetup {
+  id        String  @id() @default(cuid())
+  complete  Boolean @default(false)
+  step      Int     @default(0)
+  space     Space?  @relation(fields: [spaceId], references: [id])
+  spaceId   String?
+  stepOne   String?
+  stepTwo   String?
+  stepThree String?
+  stepFour  String? @default("blank")
+  apiUrl    String?
+  qsWidgetOpen Boolean @default(true)
+
+  @@index([spaceId])
+}
+
+model Onboarding {
+  id           String  @id() @default(cuid())
+  complete     Boolean @default(false)
+  step         Int     @default(0)
+  space        Space?  @relation(fields: [spaceId], references: [id])
+  spaceId      String?
+  stepRole     String?
+  stepClient   String?
+  stepCoding   String?
+  stepTemplate String? @default("blank")
+
+  @@index([spaceId])
 }
 
 model Space {
@@ -574,7 +748,6 @@ model Space {
   standaloneDesktopChannel Boolean        @default(false)
   uploadProvider           String?        @default("cloudinary")
   template                 Boolean        @default(false)
-  rules                    APIRule[]
   permissions              Permission[]
   defaultUIId              String?
   deactivated              Boolean?       @default(false)
@@ -584,6 +757,9 @@ model Space {
   logs                     Log[]
   uiVid                    String?
   feedbacks                MsgFeedback[]
+  onboarding               Onboarding[]
+  roles                    UserRoles[]
+  apiSetup                 ApiSetup[]
 
   @@index([userId])
 }

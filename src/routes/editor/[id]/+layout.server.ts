@@ -12,11 +12,22 @@ export async function load({ cookies, params }: any) {
 		space = await prisma.space.findUnique({
 			where: {
 				appId
+			},
+			include: {
+				onboarding: true
 			}
 		});
 
 		if (!space) throw error(404, 'Page not found');
 
+		if (!space.onboarding.length) {
+			const onboarding = await prisma.onboarding.create({
+				data: {
+					spaceId: space.id
+				}
+			});
+			throw redirect(302, `/a/${space.appId}/welcome`);
+		}
 		const sessionToken: any = cookies.get(`${space.appId}-accessToken`);
 
 		if (!sessionToken) throw redirect(302, `/a/${space.appId}/accounts`);

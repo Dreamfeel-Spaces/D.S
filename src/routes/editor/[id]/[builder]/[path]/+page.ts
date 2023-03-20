@@ -1,5 +1,5 @@
 export const prerender = false;
-export const ssr = false;
+export const ssr = true;
 export const csr = true;
 
 
@@ -19,3 +19,41 @@ export const csr = true;
 // <svelte:component this={Thing} answer={42}>
 // <p>some slotted content</p>
 // </svelte:component>
+
+
+// /** @type {import('./$types').PageServerLoad} */
+// export function load() {
+//     return {
+//       one: Promise.resolve(1),
+//       two: Promise.resolve(2),
+//       streamed: {
+//         three: new Promise((fulfil) => {
+//           setTimeout(() => {
+//             fulfil(3)
+//           }, 1000);
+//         })
+//       }
+//     };
+//   }
+
+// <script>
+//   /** @type {import('./$types').PageData} */
+//   export let data;
+// </script>
+
+// <p>
+//   one: {data.one}
+// </p>
+// <p>
+//   two: {data.two}
+// </p>
+// <p>
+//   three:
+//   {#await data.streamed.three}
+//     Loading...
+//   {:then value}
+//     {value}
+//   {:catch error}
+//     {error.message}
+//   {/await}
+// </p>

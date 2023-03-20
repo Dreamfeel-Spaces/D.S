@@ -4,6 +4,10 @@
 
 	import { Button } from 'flowbite-svelte';
 
+	import { page } from '$app/stores';
+
+	const onboarding = ($page.data?.space?.onboarding ?? [])[0];
+
 	import StepOne from './StepOne.svelte';
 	import StepTwo from './StepTwo.svelte';
 	import StepThree from './StepThree.svelte';
@@ -21,7 +25,7 @@
 	// };
 
 	export let images: any[] = [StepOne, StepTwo, StepThree, StepFour];
-	let currentImageIndex = 0;
+	let currentImageIndex = onboarding?.step || 0;
 	let timerId;
 
 	function nextImage() {
@@ -60,13 +64,13 @@
 		if (timerId) clearInterval(timerId);
 	}
 
-	onMount(() => {
-		startAutoSlide(10000);
-	});
+	// onMount(() => {
+	// 	startAutoSlide(10000);
+	// });
 
-	onDestroy(() => {
-		stopAutoSlide();
-	});
+	// onDestroy(() => {
+	// 	stopAutoSlide();
+	// });
 
 	function handlePause() {
 		paused = !paused;
@@ -84,19 +88,11 @@
 			{/each}
 		</div>
 	</div>
-
-	<div class="lg:px-72 mt-9">
-		<!-- <button on:click={previousImage}>Previous</button> -->
-		<Button class="w-full" on:click={nextImage}>Continue</Button>
-	</div>
 </div>
 
 <style>
 	.carousel {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		min-height: 500px;
+		min-height: 800px;
 		position: relative;
 		overflow: auto;
 	}

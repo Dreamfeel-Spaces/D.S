@@ -855,10 +855,7 @@
 				style="background-position: 50%; background-image: url('https://mdbootstrap.com/img/new/textures/full/284.jpg'); height: 300px;"
 			/>
 			<div class="container text-gray-800 px-4 md:px-12">
-				<div
-					class="block dark:bg-gray-600 rounded-lg shadow-lg py-10 md:py-12 px-2 md:px-6"
-					style="margin-top: -100px; background: hsla(0, 0%, 100%, 0.8); backdrop-filter: blur(30px);"
-				>
+				<Card padding="xl" size="xl">
 					<div class="flex flex-wrap">
 						<div class="grow-0 shrink-0 basis-auto w-full xl:w-5/12 px-3 lg:px-6 mb-12 xl:mb-0">
 							<form action="?/feedback" method="post">
@@ -869,6 +866,7 @@
 										class="form-control block
                   w-full
                   px-3
+
                   py-1.5
                   text-base
                   font-normal
@@ -878,6 +876,7 @@
                   rounded
                   transition
                   ease-in-out
+				  dark:bg-gray-700
                   m-0
                   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
 										id="exampleInput7"
@@ -903,7 +902,9 @@
                   transition
                   ease-in-out
                   m-0
-                  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  focus:text-gray-700
+				  dark:bg-gray-700
+				  focus:bg-white focus:border-blue-600 focus:outline-none"
 										id="exampleInput8"
 										placeholder="Email address"
 									/>
@@ -921,6 +922,7 @@
                   text-base
                   font-normal
                   text-gray-700
+				  dark:bg-gray-700
                   bg-white bg-clip-padding
                   border border-solid border-gray-300
                   rounded
@@ -1078,7 +1080,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</Card>
 			</div>
 		</section>
 	</div>
@@ -1158,7 +1160,10 @@
 	</div>
 </div>
 
-<footer class="p-4 md:p-8 lg:p-10 bg-gray-900">
+<footer
+	style="backdrop-filter:blur(30px)"
+	class="p-4 md:p-8 lg:p-10  dark:bg-neutral-900 bg-gray-900"
+>
 	<div class="mx-auto max-w-screen-xl text-center">
 		<a
 			href="/"

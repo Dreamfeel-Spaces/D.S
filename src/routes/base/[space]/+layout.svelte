@@ -5,27 +5,83 @@
 		SidebarItem,
 		SidebarWrapper,
 		SidebarDropdownItem,
-		SidebarDropdownWrapper
+		SidebarDropdownWrapper,
+		Modal,
+		Textarea,
+		Dropzone,
+		Radio,
+		Alert
 	} from 'flowbite-svelte';
-	export let data;
 	import { page } from '$app/stores';
 	import SpaceNav from './SpaceNav.svelte';
+	import SelectOption from './quick-setup/SelectOption.svelte';
+	import Request from './[table]/api/Request.svelte';
+	import { apiHelperModal } from '$lib/wsstore';
 
 	let spaceId = $page.params.space;
 	let tableId = $page.params.table;
 
-	let activeSpace = data?.myapps?.find(({ appId }: any) => appId === spaceId);
+	const space = $page.data.space;
+
 	let pathname = $page.url.pathname;
+
+	let setup = space?.apiSetup[0];
+
+	let whoAmi = 'clone_api';
 </script>
 
 <div>
 	<SpaceNav />
 </div>
 
-<div class="flex dark:bg-gray-900 ">
-	<div class="hidden md:block lg:block">
+<Modal permanent open={setup?.qsWidgetOpen || $apiHelperModal.open} class="w-full">
+	<div class="flex justify-end">
+		<SelectOption ctx={'dismiss'} />
+	</div>
+	<ul
+		class="w-full flex bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
+	>
+		<li>
+			<Radio class="p-3" bind:group={whoAmi} value="describe">Describe API.</Radio>
+		</li>
+		<li>
+			<Radio class="p-3" bind:group={whoAmi} value="upload_existing">Upload existing.</Radio>
+		</li>
+		<li>
+			<Radio class="p-3" bind:group={whoAmi} value="clone_api">Create from existing API.</Radio>
+		</li>
+	</ul>
+	<div class="my-4">
+		{#if whoAmi === 'describe'}
+			<div class="mb-2">
+				<Alert accent
+					>This schema generator is only available for PRO users . You will need to upgrade your
+					account to use this feature</Alert
+				>
+			</div>
+			<Textarea
+				placeholder="Enter a brief description of the api. IE create a schema for a school, or create three tables, or create a table with the following columns..."
+				rows={9}
+			/>
+		{/if}
+		{#if whoAmi === 'upload_existing'}
+			<Alert accent class="mb-2"
+				>This schema generator is only available for PRO users . You will need to upgrade your
+				account to use this feature</Alert
+			>
+			<Dropzone />
+		{/if}
+		{#if whoAmi === 'clone_api'}
+			<Request clone method="get" url="" />
+		{/if}
+	</div>
+	<SelectOption ctx="setup" />
+</Modal>
+
+<div class="flex dark:bg-gray-900 pb-1">
+	<div class="hidden pt-20 md:block  overflow-auto lg:block">
 		<Sidebar>
-			<SidebarWrapper class=" min-h-107 overflow-auto">
+			<SidebarWrapper class="min-h-108 max-h-108   overflow-auto">
 				<SidebarGroup>
 					<SidebarItem
 						rel="external"
@@ -81,7 +137,7 @@
 							>
 						</svelte:fragment>
 					</SidebarItem>
-					{#each activeSpace?.tables ?? [] as table}
+					{#each space?.tables ?? [] as table}
 						<SidebarDropdownWrapper isOpen={tableId === table.name} label={table.name}>
 							<svelte:fragment slot="icon">
 								<svg
@@ -102,7 +158,7 @@
 									/></svg
 								>
 							</svelte:fragment>
-							{#if activeSpace?.apiChannel}
+							{#if space?.apiChannel}
 								<SidebarDropdownItem
 									rel="external"
 									href={`/base/${spaceId}/${table.name}/api`}
@@ -113,8 +169,19 @@
 							<SidebarDropdownItem
 								rel="external"
 								href={`/base/${spaceId}/${table.name}`}
-								active={tableId === table.name && !/\/api/.test(pathname)}
+								active={tableId === table.name &&
+									!/\/api/.test(pathname) &&
+									Boolean(table.name) &&
+									!/\/permissions/.test(pathname)}
 								label={`Schema`}
+							/>
+							<SidebarDropdownItem
+								rel="external"
+								href={`/base/${spaceId}/${table.name}/permissions`}
+								active={tableId === table.name &&
+									/\/permissions/.test(pathname) &&
+									!/\/api/.test(pathname)}
+								label={`Permissions`}
 							/>
 						</SidebarDropdownWrapper>
 					{/each}
@@ -166,10 +233,12 @@
 			</SidebarWrapper>
 		</Sidebar>
 	</div>
-	<div class="flex-1 max-h-108  dark:bg-gray-900 bg-gray-200 pb-20 overflow-auto">
+	<div class="flex-1 mt-20 dark:bg-gray-900 bg-gray-200 pb-20 max-h-105 overflow-auto">
 		<slot />
 	</div>
-	<div class="w-36  dark:text-gray-50  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
+	<div
+		class="w-36  dark:text-gray-50  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72"
+	>
 		<div>
 			<div class="mt-20">
 				<a class="hover:underline text-blue" href={`/docs`}>Collection docs</a>

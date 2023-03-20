@@ -282,7 +282,7 @@
 					on:click={() => goto('?tab=settings')}
 					title="Settings"
 				>
-						{#if form?.passwordUpdate}
+					{#if form?.passwordUpdate}
 						<p>Password updated</p>
 					{/if}
 					<div class="mt-9">
@@ -292,7 +292,7 @@
 							</div>
 						{/if}
 						<Accordion>
-							<AccordionItem>
+							<!-- <AccordionItem>
 								<svelte:fragment slot="header">
 									<div class="flex">
 										<svg
@@ -358,7 +358,7 @@
 										<Button type="submit">Update</Button>
 									</form>
 								</div>
-							</AccordionItem>
+							</AccordionItem> -->
 
 							<AccordionItem>
 								<svelte:fragment slot="header">
@@ -532,7 +532,9 @@
 			</Tabs>
 		</div>
 	</div>
-	<div class="w-36 dark:bg-gray-900 dark:text-gray-50  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
+	<div
+		class="w-36 dark:bg-gray-900 dark:text-gray-50  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72"
+	>
 		<div>
 			<div class="mt-20">
 				<a class="hover:underline text-blue" rel="external" href={`/base/${$page.params.id}`}

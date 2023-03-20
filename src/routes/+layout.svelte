@@ -69,7 +69,7 @@
 {#if !isPreview && !subdomain}
 	<div>
 		<nav
-			class="flex-no-wrap relative flex w-full items-center justify-between bg-neutral-100   dark:bg-gray-900 py-4 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
+			class="flex-no-wrap fixed z-50 flex w-full items-center justify-between bg-neutral-100   dark:bg-gray-900 py-4 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
 			data-te-navbar-ref
 		>
 			<div class="flex w-full flex-wrap items-center justify-between px-6">
@@ -87,8 +87,8 @@
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
+							class="h-7 w-7 dark:text-gray-100"
 							fill="currentColor"
-							class="h-7 w-7"
 						>
 							<path
 								fill-rule="evenodd"
@@ -105,7 +105,14 @@
 				>
 					<div class="mr-4 cursor-pointer">
 						<button on:click={() => (hidden2 = false)}>
-							<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24">
+							<svg
+								class="dark:text-yellow-100"
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+								height="24"
+								viewBox="0 96 960 960"
+								width="24"
+							>
 								<path d="M120 816v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
 							</svg>
 						</button>
@@ -201,7 +208,14 @@
 						href="/spaces"
 					>
 						<span class="[&>svg]:w-5">
-							<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24">
+							<svg
+								class="dark:text-gray-100"
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+								height="24"
+								viewBox="0 96 960 960"
+								width="24"
+							>
 								<path
 									d="M666 616 440 390l226-226 226 226-226 226Zm-546-80V216h320v320H120Zm400 400V616h320v320H520Zm-400 0V616h320v320H120Zm80-480h160V296H200v160Zm467 48 113-113-113-113-113 113 113 113Zm-67 352h160V696H600v160Zm-400 0h160V696H200v160Zm160-400Zm194-65ZM360 696Zm240 0Z"
 								/>
@@ -563,5 +577,7 @@
 			</SidebarWrapper>
 		</Sidebar>
 	</Drawer>
-	<slot />
+	<div class="pt-16 dark:bg-gray-900">
+		<slot />
+	</div>
 {/if}

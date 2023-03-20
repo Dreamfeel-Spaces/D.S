@@ -4,7 +4,7 @@ import { prisma } from '$lib/db/prisma';
 import { Token } from '$lib/token/Token';
 import { convertToSlug } from '$lib/util/slugit';
 import { error, redirect } from '@sveltejs/kit';
-import type { RequestEvent, Actions } from './$types';
+import type { PageLoadEvent, Actions } from './$types';
 
 export const actions: Actions = {
 	async updateChannels({ request, params }) {
@@ -231,7 +231,7 @@ export const actions: Actions = {
 	}
 };
 
-export async function load({ params, cookies, locals }: RequestEvent) {
+export async function load({ params, cookies, locals }: PageLoadEvent) {
 	const spaceId = params.id;
 	const space = await prisma.space.findUnique({
 		where: { appId: spaceId },
@@ -241,7 +241,8 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 			configVars: true,
 			users: true,
 			permissions: true,
-			dashboards: true
+			dashboards: true,
+			tables: true
 		}
 	});
 
