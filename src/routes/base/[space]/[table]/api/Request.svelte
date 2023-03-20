@@ -267,31 +267,33 @@
 		<Input bind:value={apiUrl} required class="my-3" placeholder={`Enter url`} />
 	{/if}
 
-	<div class="my-3">
-		<p>Headers</p>
-		{#each headers as header, index}
-			<div class="grid gap-2 grid-cols-2 mt-3">
-				<div><Input required value={header.name} placeholder="key" /></div>
-				<div class="flex">
-					<Input required value={header.value} placeholder="value" />
-					<CloseButton
-						on:click={() => {
-							let all = [...headers];
-							all.splice(index, 1);
-							headers = [...all];
-						}}
-					/>
+	{#if clone}
+		<div class="my-3">
+			<p>Headers</p>
+			{#each headers as header, index}
+				<div class="grid gap-2 grid-cols-2 mt-3">
+					<div><Input required value={header.name} placeholder="key" /></div>
+					<div class="flex">
+						<Input required value={header.value} placeholder="value" />
+						<CloseButton
+							on:click={() => {
+								let all = [...headers];
+								all.splice(index, 1);
+								headers = [...all];
+							}}
+						/>
+					</div>
+					<div />
 				</div>
-				<div />
-			</div>
-		{/each}
-		<button
-			type="button"
-			on:click={() => (headers = [...headers, { name: '', value: '' }])}
-			class="mt-3"
-			>Add header
-		</button>
-	</div>
+			{/each}
+			<button
+				type="button"
+				on:click={() => (headers = [...headers, { name: '', value: '' }])}
+				class="mt-3"
+				>Add header
+			</button>
+		</div>
+	{/if}
 
 	<label for="X-API-KEY"> X-API-KEY </label>
 	<Input
