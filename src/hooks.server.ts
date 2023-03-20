@@ -42,7 +42,7 @@ export const authHandle = SvelteKitAuth({
 				sameSite: 'lax' as any,
 				path: '/',
 				domain: `${dev ? 'localhost' : 'beta.dreamfeel.me'}`,
-				secure: useSecureCookies
+				secure: !dev
 			}
 		}
 	}
