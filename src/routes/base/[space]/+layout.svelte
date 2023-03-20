@@ -25,7 +25,7 @@
 
 	let pathname = $page.url.pathname;
 
-	let setup = space?.apiSetup[0];
+	let setup = (space?.apiSetup ?? [])[0];
 
 	let whoAmi = 'clone_api';
 </script>
@@ -34,7 +34,11 @@
 	<SpaceNav />
 </div>
 
-<Modal permanent open={(setup?.qsWidgetOpen && setup?.complete) || $apiHelperModal.open} class="w-full">
+<Modal
+	permanent
+	open={(setup?.qsWidgetOpen && setup?.complete) || $apiHelperModal.open}
+	class="w-full"
+>
 	<div class="flex justify-end">
 		<SelectOption ctx={'dismiss'} />
 	</div>
