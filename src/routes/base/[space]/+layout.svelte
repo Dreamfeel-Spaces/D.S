@@ -34,7 +34,7 @@
 	<SpaceNav />
 </div>
 
-<Modal permanent open={setup?.qsWidgetOpen || $apiHelperModal.open} class="w-full">
+<Modal permanent open={(setup?.qsWidgetOpen && setup?.complete) || $apiHelperModal.open} class="w-full">
 	<div class="flex justify-end">
 		<SelectOption ctx={'dismiss'} />
 	</div>

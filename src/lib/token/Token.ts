@@ -132,7 +132,7 @@ export class Token {
 					spaceId: space.id
 				},
 				include: {
-					admin: true
+					user: true
 				}
 			});
 
@@ -140,7 +140,7 @@ export class Token {
 				res([]);
 			}
 
-			res([session?.admin]);
+			res([session?.user]);
 		});
 	}
 }
