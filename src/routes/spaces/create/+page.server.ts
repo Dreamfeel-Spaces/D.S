@@ -6,9 +6,6 @@ import { convertToSlug } from '$lib/util/slugit';
 import { error, redirect } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
-import nodemailer from 'nodemailer';
-import { GMAIL_PASSWORD, GMAIL_USERNAME } from '$env/static/private';
-
 export async function load({ locals }: RequestEvent) {
 	const session = await locals.getSession();
 
@@ -35,65 +32,43 @@ export const actions = {
 
 		const userId = user.id;
 
-		try {
-			const space = await prisma.space.create({
-				data: {
-					appId: convertToSlug(appId ?? name),
-					name,
-					icon,
-					userId,
-					secret: 'fudge'
-				}
-			});
+		const space = await prisma.space.create({
+			data: {
+				appId: convertToSlug(appId ?? name),
+				name,
+				icon,
+				userId,
+				secret: 'fudge'
+			}
+		});
 
-			const token = new Token();
-			const adminPassword = await token.createAdminPass();
+		const token = new Token();
+		const adminPassword = await token.createAdminPass();
 
-			const ownerRole = await prisma.userRoles.create({
-				data: {
-					name: 'SUPER_USER',
-					spaceId: space.id,
-					description: `Global rights and permissions`,
-					isSuperUser: true
-				}
-			});
+		const ownerRole = await prisma.userRoles.create({
+			data: {
+				name: 'SUPER_USER',
+				spaceId: space.id,
+				description: `Global rights and permissions`,
+				isSuperUser: true
+			}
+		});
 
-			const admin = await prisma.spaceUser.create({
-				data: {
-					userId,
-					spaceId: space.id,
-					password: adminPassword,
-					userRolesId: ownerRole.id,
-					username: String(user?.email),
-					name: String(user?.name),
-					avatar: String(user?.image),
-					roleId: ownerRole.id
-				}
-			});
+		const admin = await prisma.spaceUser.create({
+			data: {
+				userId,
+				spaceId: space.id,
+				password: adminPassword,
+				userRolesId: ownerRole.id,
+				username: String(user?.email),
+				name: String(user?.name),
+				avatar: String(user?.image),
+				roleId: ownerRole.id
+			}
+		});
 
-			let transporter = nodemailer.createTransport({
-				host: 'smtp.gmail.com',
-				port: 465,
-				secure: false, // true for 465, false for other ports
-				auth: {
-					user: GMAIL_USERNAME, // generated ethereal user
-					pass: GMAIL_PASSWORD // generated ethereal password
-				}
-			});
+		const form = { success: true, data: space };
 
-			await transporter.sendMail({
-				from: '"Fred Foo 👻" <foo@example.com>', // sender address
-				to: `bryodiiidah@gmail.com`, // list of receivers
-				subject: 'Hello ✔', // Subject line
-				text: 'Hello world?', // plain text body
-				html: `Admin username: ${user.email}: Password :${adminPassword}` // html body
-			});
-
-			const form = { success: true, data: space };
-			return form;
-		} catch (e) {
-			console.log(e)
-			return { error: true };
-		}
+		throw redirect(302, `/a/${space.appId}`);
 	}
 };

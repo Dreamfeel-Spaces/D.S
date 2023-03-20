@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import { convertToSlug } from '$lib/util/slugit';
 	import { Input, Button, Alert } from 'flowbite-svelte';
 	import { onDestroy } from 'svelte';
@@ -82,7 +81,7 @@
 </section>
 
 <div class="px-6 mx-2 lg:px-72 pb-36 ">
-	<form method="POST" use:enhance>
+	<form method="POST">
 		<div class="mb-6 w-full">
 			<label class="dark:text-gray-100" for="appId">App ID</label>
 			<Input
@@ -96,13 +95,13 @@
 				type="text"
 			/>
 			{#if throttling}
-				<div class="text-xs dark:text-gray-100" >Validating Space ID...</div>
+				<div class="text-xs dark:text-gray-100">Validating Space ID...</div>
 			{/if}
 			{#if notUnique}
 				<p class="text-red-600">App ID already taken</p>
 			{/if}
 			<div>
-				<small class="dark:text-gray-100" >
+				<small class="dark:text-gray-100">
 					Formatted: {convertToSlug(appId ? appId : appName)}
 				</small>
 			</div>
@@ -113,7 +112,7 @@
 			{/if}
 		</div>
 		<div class="mb-6 w-full">
-			<label class="dark:text-gray-100"  for="name">Name</label>
+			<label class="dark:text-gray-100" for="name">Name</label>
 			<Input
 				required
 				bind:value={appName}
