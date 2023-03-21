@@ -126,7 +126,24 @@ export const apiAuth: Handle = async ({ event, resolve }) => {
 	}
 };
 
-export const handle = sequence(apiAuth, authHandle, spaceAuth, withSpaceRouter);
+export const activeUser: Handle = async ({ event, resolve }) => {
+	const { locals } = event;
+	const session = await locals.getSession();
+	if (session) {
+		const user = await prisma.user.findUnique({
+			where: {
+				email: String(session?.user?.email)
+			}
+		});
+
+		event.locals.user = user;
+
+		return resolve(event);
+	}
+	return resolve(event);
+};
+
+export const handle = sequence(apiAuth, authHandle, spaceAuth, withSpaceRouter, activeUser);
 
 // import EmailProvider from "next-auth/providers/email";
 // ...

@@ -68,7 +68,7 @@
 				placeholder="Enter a brief description of the api. IE create a schema for a school, or create three tables, or create a table with the following columns..."
 				rows={9}
 			/>
-			<Button disabled class="mt-3">Submit</Button>
+			<Button disabled class="mt-3">Generate</Button>
 		{/if}
 		{#if whoAmi === 'upload_existing'}
 			<Alert accent class="mb-2"
@@ -76,6 +76,7 @@
 				account to use this feature</Alert
 			>
 			<Dropzone />
+			<Button disabled class="mt-3">Import</Button>
 		{/if}
 		{#if whoAmi === 'clone_api'}
 			<Request clone method="get" url="" />

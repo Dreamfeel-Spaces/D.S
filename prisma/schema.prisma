@@ -426,8 +426,8 @@ model Geo {
 
 model SpaceUser {
   id                     String           @id @default(cuid())
-  space                  Space            @relation(fields: [spaceId], references: [id])
-  spaceId                String
+  space                  Space?           @relation(fields: [spaceId], references: [id])
+  spaceId                String?
   apiKeys                SpaceAPIKeys?    @relation(fields: [spaceAPIKeysId], references: [id])
   spaceAPIKeysId         String?
   dateCreated            DateTime         @default(now())

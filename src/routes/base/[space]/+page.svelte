@@ -2,15 +2,7 @@
 	import type { PageData } from './$types';
 	import { page } from '$app/stores';
 	const spaceName = $page.params.space;
-	import {
-		Checkbox,
-		Button,
-		Card,
-		Breadcrumb,
-		BreadcrumbItem,
-		Accordion,
-		AccordionItem
-	} from 'flowbite-svelte';
+	import { Button, Card, Breadcrumb, BreadcrumbItem, Toast } from 'flowbite-svelte';
 
 	export let data: PageData;
 
@@ -56,8 +48,8 @@
 
 	{#if !hasTables}
 		<div class="mt-20 text-center ">
-			<p class="mb-20">No collections have been added</p>
-			<a href={`/base/${spaceId}/table/create`}>Create collections</a>
+			<p class="mb-20 text-3xl dark:text-white">No collections have been added</p>
+			<a class="dark:text-white" href={`/base/${spaceId}/table/create`}>Add collections</a>
 		</div>
 	{/if}
 

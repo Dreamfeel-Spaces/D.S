@@ -24,7 +24,7 @@ export const actions: Actions = {
 		const spaceId = params.id;
 
 		const data = await request.formData();
-		const username = String(data.get('username')).trim();
+		const username = String(data.get('username'));
 		const password = String(data.get('password'));
 
 		const space = await prisma.space.findUnique({
@@ -72,5 +72,58 @@ export const actions: Actions = {
 			path: '/'
 		});
 		return { signoutSuccess: true };
+	},
+	async updatePassword({ cookies, params, request, locals, url }) {
+		//@ts-ignore
+		const user = locals.user;
+		const data = await request.formData();
+		const password = String(data.get('password'));
+		const token = new Token();
+		const encryptedPassword = await token.encryptSync(password);
+
+		const space = await prisma.space.findUnique({
+			where: {
+				appId: params.id
+			}
+		});
+
+		const sessionToken: any = cookies.get(`${space?.appId}-accessToken`);
+
+		const tokenUser: any = jwt.decode(sessionToken);
+
+		const _user = await prisma.spaceUser.findFirst({
+			where: {
+				id: tokenUser?.id
+			}
+		});
+
+		if (!_user) {
+			throw error(401);
+		}
+
+		const spaceUser = await prisma.spaceUser.update({
+			where: {
+				id: _user.id
+			},
+			data: {
+				password: encryptedPassword,
+				defaultPasswordUpdated: true
+			}
+		});
+
+		const newSessionToken = await token.createUserToken(spaceUser);
+
+		await prisma.spaceSession.create({
+			data: {
+				userId: user?.id,
+				sessionToken: newSessionToken,
+				spaceId: String(space?.id)
+			}
+		});
+
+		cookies.set(`${space?.appId}-accessToken`, newSessionToken, { path: '/' });
+
+		const next = url.searchParams.get('next');
+		if (next) throw redirect(302, next);
 	}
 };

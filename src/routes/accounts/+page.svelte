@@ -2,8 +2,10 @@
 	import { Button, Card } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	const apps = $page.data.myapps;
+	const next = $page.url.searchParams.get('next');
 	import logo from '../../assets/logo.png';
 	import { signIn } from '@auth/sveltekit/client';
+	import { goto } from '$app/navigation';
 </script>
 
 {#if !$page.data.session}
@@ -27,15 +29,20 @@
 					unlock long-term value and drive economic growth.
 				</p>
 				<div class="px-16">
-					<button
-						on:click={() => signIn('google')}
+					<!-- <button
+						on:click={() => signIn('github')}
 						class="w-full justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
 					>
 						Sign in with Google
-					</button>
+					</button> -->
 					<div>
-						<Button on:click={() => signIn('google')} color="dark" class="w-full mt-9"
-							>Sign in with GitHub</Button
+						<Button
+							on:click={() =>
+								signIn('github').then(() => {
+									if (next) goto(next);
+								})}
+							color="dark"
+							class="w-full mt-9">Sign in with GitHub</Button
 						>
 					</div>
 				</div>

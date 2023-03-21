@@ -26,9 +26,13 @@ export async function load({ cookies, params }: any) {
 
 		if (!sessionToken) throw redirect(302, `/a/${space.appId}/accounts`);
 
-		const user = jwt.decode(sessionToken);
-
-		spaceSession = { user };
+		const user: any = jwt.decode(sessionToken);
+		const _user = await prisma.spaceUser.findUnique({
+			where: {
+				id: user?.id
+			}
+		});6
+		spaceSession = { user: _user };
 	}
 
 	let isRecent = recentlyOpened.find((item: any) => {

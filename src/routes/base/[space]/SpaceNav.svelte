@@ -10,10 +10,9 @@
 		DarkMode,
 		Avatar,
 		Button,
-		Dropdown,
-		DropdownDivider,
-		DropdownHeader,
-		DropdownItem
+		Modal,
+		Input,
+		Label
 	} from 'flowbite-svelte';
 	import logo from '../../../assets/logo.png';
 	const space = $page?.data?.space;
@@ -25,7 +24,52 @@
 		duration: 200,
 		easing: sineIn
 	};
+	let spaceUser = $page.data.spaceSession?.user;
+
+	let password = '';
+	let confirmPassword = '';
+	let authMenuOpen = false;
 </script>
+
+<Modal permanent open={!spaceUser?.defaultPasswordUpdated && spaceUser} class="w-full">
+	<form
+		action={`/a/${space.appId}/accounts?/updatePassword&next=${$page.url.pathname}`}
+		method="post"
+		class="pt-6"
+	>
+		<div class="text-center">
+			<p class="text-2xl">Update password</p>
+			<div class="mt-2 mb-6">Add a secure password to your {space.name} account.</div>
+		</div>
+		<Label class="my-2" for="password">New password</Label>
+		<Input
+			required
+			name="password"
+			placeholder="Enter new password..."
+			type="password"
+			bind:value={password}
+			color={password && confirmPassword && password !== confirmPassword ? 'red' : 'base'}
+			class="my-3"
+		/>
+		<Label class="my-2" for="confirmPassword">Confirm password</Label>
+		<Input
+			color={password && confirmPassword && password !== confirmPassword ? 'red' : 'base'}
+			required
+			bind:value={confirmPassword}
+			placeholder="Confirm new password"
+			type="password"
+			name="confirmPassword"
+			class="my-3"
+		/>
+		{#if password && confirmPassword && password !== confirmPassword}
+			<small class="text-red-600">Passwords do not match</small>
+		{/if}
+		<br />
+		<Button disabled={password && confirmPassword && password !== confirmPassword} type="submit"
+			>Update</Button
+		>
+	</form>
+</Modal>
 
 <nav
 	class="flex-no-wrap z-50 fixed n w-full min-w-max  flex items-center justify-between dark:bg-gray-900 bg-neutral-100 py-4 shadow-md shadow-black/5  dark:shadow-black/10 lg:flex-wrap lg:justify-start "
@@ -83,31 +127,38 @@
 					<Button pill class="mr-4" size="xs" color="green">Live demo</Button>
 				{/if}
 				<div class="px-3 flex self-center">
-					<Avatar data-te-dropdown-ref size="xs" />
+					<button on:click={() => (authMenuOpen = true)}>
+						<Avatar class="cursor-pointer" data-te-dropdown-ref size="xs" />
+					</button>
 					<ul
-						class="absolute hidden left-auto right-0 z-[1000] float-left m-0 mt-1  min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+						class={`absolute ${
+							authMenuOpen ? 'block' : 'hidden'
+						}  left-auto right-0 z-[1000] float-left m-0 mt-1  min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block`}
 						aria-labelledby="dropdownMenuButton1"
 						data-te-dropdown-menu-ref
 					>
 						<li>
 							<a
 								class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-								href="/"
-								data-te-dropdown-item-ref>Action</a
+								href={`/a/${space.appId}/accounts`}
+								on:click={() => (authMenuOpen = false)}
+								data-te-dropdown-item-ref>My {space.name} account</a
 							>
 						</li>
 						<li>
-							<a
-								class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-								href="/"
-								data-te-dropdown-item-ref>Another action</a
-							>
+							<form method="post" action={`/a/${space.appId}/accounts?/signout`}>
+								<button
+									on:click={() => (authMenuOpen = false)}
+									class="block text-left w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+									data-te-dropdown-item-ref>Signout</button
+								>
+							</form>
 						</li>
 						<li>
-							<a
+							<button
+								on:click={() => (authMenuOpen = false)}
 								class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-								href="/"
-								data-te-dropdown-item-ref>Something else here</a
+								data-te-dropdown-item-ref>Close</button
 							>
 						</li>
 					</ul>

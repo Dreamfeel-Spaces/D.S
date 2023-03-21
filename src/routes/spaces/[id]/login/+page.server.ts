@@ -38,7 +38,7 @@ export const actions: Actions = {
 					const sessionToken = await token.createUserToken(admin);
 					const session = await prisma.spaceSession.create({
 						data: {
-							adminId: admin.id,
+							userId: admin.id,
 							sessionToken,
 							spaceId: String(space?.id)
 						}

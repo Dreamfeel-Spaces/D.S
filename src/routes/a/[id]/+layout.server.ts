@@ -38,9 +38,15 @@ export async function load({ cookies, params }: LayoutServerLoadEvent) {
 
 		if (!sessionToken) return { space, spaceSession };
 
-		const user = jwt.decode(sessionToken);
+		const user: any = jwt.decode(sessionToken);
 
-		spaceSession = { user };
+		const _user = await prisma.spaceUser.findUnique({
+			where: {
+				id: user?.id
+			}
+		});
+
+		spaceSession = { user: _user };
 	}
 
 	return { space, spaceSession, recentlyOpened };

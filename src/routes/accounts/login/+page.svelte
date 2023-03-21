@@ -2,7 +2,6 @@
 	import { page } from '$app/stores';
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { enhance } from '$app/forms';
-	import type { ActionData } from './$types';
 	const session = $page.data.session;
 	const user = session?.user;
 	export let form: any;
