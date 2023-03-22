@@ -405,7 +405,7 @@ model Role {
 
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String     @db.VarChar(3000)
+  sessionToken String  @db.VarChar(3000)
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?
@@ -427,6 +427,8 @@ model Geo {
 model SpaceUser {
   id                     String           @id @default(cuid())
   space                  Space?           @relation(fields: [spaceId], references: [id])
+  emailAddress           String?
+  phone                  String?
   spaceId                String?
   apiKeys                SpaceAPIKeys?    @relation(fields: [spaceAPIKeysId], references: [id])
   spaceAPIKeysId         String?

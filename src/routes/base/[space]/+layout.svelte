@@ -22,7 +22,7 @@
 	let spaceId = $page.params.space;
 	let tableId = $page.params.table;
 
-	const space = $page.data.space;
+	let space = $page.data.space;
 
 	let pathname = $page.url.pathname;
 
@@ -144,7 +144,7 @@
 							>
 						</svelte:fragment>
 					</SidebarItem>
-					{#each space?.tables ?? [] as table}
+					{#each $page.data?.tables ?? [] as table}
 						<SidebarDropdownWrapper isOpen={tableId === table.name} label={table.name}>
 							<svelte:fragment slot="icon">
 								<svg

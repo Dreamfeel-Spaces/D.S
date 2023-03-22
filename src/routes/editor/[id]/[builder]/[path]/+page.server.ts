@@ -10,6 +10,17 @@ export async function load({ params }: RequestEvent) {
 	const space = await prisma.space.findUnique({
 		where: {
 			appId: spaceId
+		},
+		include: {
+			spaceUis: {
+				include: {
+					spaceUIVersion: {
+						include: {
+							pages: true
+						}
+					}
+				}
+			}
 		}
 	});
 
@@ -34,7 +45,7 @@ export async function load({ params }: RequestEvent) {
 		},
 		include: {
 			columns: true,
-		rows: {
+			rows: {
 				include: {
 					tableData: true
 				}
@@ -45,17 +56,12 @@ export async function load({ params }: RequestEvent) {
 		return { ...prev, [curr.id]: transformRows(curr.rows) };
 	}, {});
 
-	const page = await prisma.page.findUnique({
-		where: {
-			id: params.path
-		}
-	});
-
 	return {
 		space,
 		ui,
-		tables: tables,
-		rows: withRows
+		tables: tables?.map((tb) => ({ ...tb, rows: transformRows(tb.rows) })) ?? [],
+		rows: withRows,
+		pages: ui?.pages ?? []
 	};
 }
 

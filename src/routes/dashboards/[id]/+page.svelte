@@ -22,13 +22,13 @@
 </div>
 
 <div class="max-h-99 overflow-auto px-6">
-	<div class="mt-4">
+	<!-- <div class="mt-4">
 		<Chart />
 	</div>
 
 	<div class="my-3">
 		<Map />
-	</div>
+	</div> -->
 
 	<div class="grid lg:grid-cols-2  overflow-auto gap-4 ">
 		{#each data?.space?.tables ?? [] as table}

@@ -10,12 +10,12 @@
 		SidebarDropdownWrapper,
 		MegaMenu,
 		DarkMode,
-		Avatar,
-		Button,
+		Select,
+		Button
 	} from 'flowbite-svelte';
 	const space = $page?.data?.space;
 	import { sineIn } from 'svelte/easing';
-	let hidden2 = true;
+	let hidden2 = false;
 	let transitionParams = {
 		x: 320,
 		duration: 200,
@@ -54,5 +54,9 @@
 				<Radio value={''} name="widetType">Map</Radio>
 			</div>
 		</form>
+
+		<div class="mt-6"><Select items={[]} placeholder="Create from collection" /></div>
+
+		<Button class="w-full mt-9">Save</Button>
 	</div>
 </Drawer>

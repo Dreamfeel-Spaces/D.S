@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
 	import {
 		Drawer,
@@ -18,6 +18,8 @@
 	const space = $page?.data?.space;
 	import { sineIn } from 'svelte/easing';
 	import SpaceSearch from './SpaceSearch.svelte';
+	import { convertToSlug } from '$lib/util/slugit';
+	import { passwordResetDialog } from '$lib/wsstore';
 	let hidden2 = true;
 	let transitionParams = {
 		x: 320,
@@ -25,23 +27,46 @@
 		easing: sineIn
 	};
 	let spaceUser = $page.data.spaceSession?.user;
+	let user: any = { email: spaceUser?.username, username: spaceUser?.username };
 
 	let password = '';
 	let confirmPassword = '';
 	let authMenuOpen = false;
 </script>
 
-<Modal permanent open={!spaceUser?.defaultPasswordUpdated && spaceUser} class="w-full">
+<Modal
+	open={(!spaceUser?.defaultPasswordUpdated && spaceUser) || $passwordResetDialog.open}
+	class="w-full z-69"
+>
 	<form
 		action={`/a/${space.appId}/accounts?/updatePassword&next=${$page.url.pathname}`}
 		method="post"
 		class="pt-6"
 	>
 		<div class="text-center">
-			<p class="text-2xl">Update password</p>
+			<div class="flex mb-4  justify-center">
+				<Avatar size="xl" />
+			</div>
+			<p class="text-2xl">Update your {space.name} profile</p>
 			<div class="mt-2 mb-6">Add a secure password to your {space.name} account.</div>
 		</div>
-		<Label class="my-2" for="password">New password</Label>
+		<Label class="my-2" for="password">Username</Label>
+		<Input
+			required
+			name="username"
+			placeholder="Enter a username"
+			bind:value={user.username}
+			class="my-3"
+		/><Label class="my-2" for="email">Email address</Label>
+		<Input
+			required
+			name="email"
+			placeholder="Enter email address..."
+			type="email"
+			bind:value={user.email}
+			class="my-3"
+		/>
+		<Label class="mb-2 mt-9" for="password">New password</Label>
 		<Input
 			required
 			name="password"
@@ -72,7 +97,7 @@
 </Modal>
 
 <nav
-	class="flex-no-wrap z-50 fixed n w-full min-w-max  flex items-center justify-between dark:bg-gray-900 bg-neutral-100 py-4 shadow-md shadow-black/5  dark:shadow-black/10 lg:flex-wrap lg:justify-start "
+	class="flex-no-wrap z-48 fixed n w-full min-w-max  flex items-center justify-between dark:bg-gray-900 bg-neutral-100 py-4 shadow-md shadow-black/5  dark:shadow-black/10 lg:flex-wrap lg:justify-start "
 	data-te-navbar-ref
 >
 	<div class="flex flex-1 flex-wrap items-center justify-between px-6">

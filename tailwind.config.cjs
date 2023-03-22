@@ -11,7 +11,8 @@ module.exports = {
       maxHeight: { "99": "32rem", "108": "36rem", "105": "35rem", "100": "32rem", "107": "39rem", "108": "40rem" },
       minHeight: { "108": "36rem", "112": "44rem", "100": "32rem", "105": "35rem", "107": "39rem", },
       height: { "108": "36rem", "112": "44rem", "100": "32rem", },
-      marginTop: { "22": "85px" }
+      marginTop: { "22": "85px" },
+      z:{69:"1000px"}
     },
   },
   plugins: [

@@ -13,7 +13,8 @@
 		SidebarItem,
 		SidebarWrapper,
 		Button,
-		DarkMode
+		DarkMode,
+		Toast
 	} from 'flowbite-svelte';
 
 	import { sineIn } from 'svelte/easing';
@@ -48,9 +49,26 @@
 
 	import logo from '../assets/logo.png';
 	import Rt from '$lib/ws/Rt.svelte';
-	import { signIn, signOut } from '@auth/sveltekit/client';
-	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
+
+	let solutionsOpen = false;
+
+	let acceptCookies = browser && JSON.parse(localStorage.getItem('cookie_consent') ?? 'false');
 </script>
+
+<Toast position="center" open={browser && !acceptCookies} class=" bottom-9 left-9  fixed z-50">
+	<p class="text-sm">Cookie settings</p>
+	<p class="my-2">
+		This site relies on cookies to give you... Please accept our cookies so you can have the best
+		experience with our software.
+	</p>
+	<Button
+		on:click={() => {
+			localStorage.setItem('cookie_consent', 'true');
+			acceptCookies = true;
+		}}>Accept</Button
+	>
+</Toast>
 
 <Rt />
 
@@ -128,15 +146,55 @@
 					</a>
 					<!-- Left links -->
 					<ul class="list-style-none mr-auto flex flex-col pl-0 lg:flex-row" data-te-navbar-nav-ref>
-						<li class="lg:pr-2" data-te-nav-item-ref>
-							<a
-								rel="external"
+						<li class="lg:pr-2" data-te-dropdown-ref>
+							<button
+								on:click={() => (solutionsOpen = true)}
 								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
-								href="/base"
-								data-te-nav-link-ref>API's</a
+								data-te-nav-link-ref>Solutions</button
 							>
+							{#if solutionsOpen}
+								<div class="relative" data-te-dropdown-ref>
+									<ul
+										class="absolute left-auto  z-[1000] float-left m-0 mt-1  min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+										aria-labelledby="dropdownMenuButton1"
+										data-te-dropdown-menu-ref
+									>
+										<li>
+											<div
+												class="block w-full whitespace-nowrap bg-transparent  px-4 text-sm font-normal text-right text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+											>
+												<CloseButton size="xs" on:click={() => (solutionsOpen = false)} />
+											</div>
+										</li>
+										<li>
+											<a
+												rel="external"
+												class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+												href="/base"
+												data-te-dropdown-item-ref>API's</a
+											>
+										</li>
+										<li>
+											<a
+												rel="external"
+												class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+												href="/dashboards"
+												data-te-dropdown-item-ref>Customizable dashboards</a
+											>
+										</li>
+										<li>
+											<a
+												rel="external"
+												class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+												href="/editor"
+												data-te-dropdown-item-ref>Website builder</a
+											>
+										</li>
+									</ul>
+								</div>
+							{/if}
 						</li>
-						<li class="lg:pr-2" data-te-nav-item-ref>
+						<!-- <li class="lg:pr-2" data-te-nav-item-ref>
 							<a
 								rel="external"
 								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
@@ -151,7 +209,7 @@
 								href="/editor"
 								data-te-nav-link-ref>Editor <small class="text-xs"> (preview)</small></a
 							>
-						</li>
+						</li> -->
 						<!-- <li class="lg:pr-2" data-te-nav-item-ref>
 							<a
 								rel="external"
@@ -222,35 +280,7 @@
 							</svg>
 						</span>
 					</a>
-					<div class="relative" data-te-dropdown-ref>
-						<ul
-							class="absolute left-auto right-0 z-[1000] float-left m-0 mt-1 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
-							aria-labelledby="dropdownMenuButton1"
-							data-te-dropdown-menu-ref
-						>
-							<li>
-								<a
-									class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-									href="/"
-									data-te-dropdown-item-ref>Action</a
-								>
-							</li>
-							<li>
-								<a
-									class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-									href="/"
-									data-te-dropdown-item-ref>Another action</a
-								>
-							</li>
-							<li>
-								<a
-									class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-									href="/"
-									data-te-dropdown-item-ref>Something else here</a
-								>
-							</li>
-						</ul>
-					</div>
+
 					<div class="relative">
 						<DarkMode />
 					</div>

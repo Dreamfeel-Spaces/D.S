@@ -30,7 +30,7 @@ export async function GET({}) {
 			}
 		}
 
-		return `${word}@${randomDomain()}.ds`;
+		return `${randomDomain()}@dreamfeel.me`;
 	}
 
 	const username = randomUsername();
@@ -82,7 +82,6 @@ export async function GET({}) {
 			spaceId: space.id,
 			password: encryptedPass,
 			status: 'confirmed',
-			defaultPasswordUpdated: true,
 			name: 'Admin' + randomDomain(),
 			roleId: role.id,
 			username

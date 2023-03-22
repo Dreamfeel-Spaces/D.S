@@ -9,24 +9,24 @@
 }
 
 .gjs-one-bg {
-	background-color: #b1b695 !important;
+	background-color: rgb(17 24 39) !important;
 }
 
 /* Secondary color for the text color */
 .gjs-two-color {
-	color: #5e4b56 !important;
+	color: white !important;
 }
 
 /* Tertiary color for the background */
 .gjs-three-bg {
-	background-color: #11001c !important;
+	background-color: rgb(17 24 39) !important;
 	color: white;
 }
 
 /* Quaternary color for the text color */
 .gjs-four-color,
 .gjs-four-color-h:hover {
-	color: #11001c;
+	color: lightslategray;
 }
 
 .panel__previews {

@@ -11,13 +11,14 @@
 	import { browser } from '$app/environment';
 	import { onMount, onDestroy } from 'svelte';
 	import HeroEditor from './HeroEditor.svelte';
+	import { heroSliderPaused } from '$lib/wsstore';
 
 	export let images: any[] = [HeroRest, HeroChart, HeroForm, HeroReport, HeroImg, HeroEditor];
 	let currentImageIndex = 0;
 	let timerId;
 
 	function nextImage() {
-		currentImageIndex = (currentImageIndex + 1) % images.length;
+		if (!$heroSliderPaused.paused) currentImageIndex = (currentImageIndex + 1) % images.length;
 	}
 
 	function previousImage() {
@@ -40,10 +41,8 @@
 	let paused = false;
 
 	function startAutoSlide(interval) {
-		if (!paused) {
-			if (timerId) clearInterval(timerId);
-			timerId = setInterval(nextImage, interval);
-		}
+		if (timerId) clearInterval(timerId);
+		timerId = setInterval(nextImage, interval);
 	}
 
 	function stopAutoSlide() {
@@ -58,16 +57,15 @@
 		stopAutoSlide();
 	});
 
-	function handlePause(){
-		paused = !paused
+	function handlePause() {
+		paused = !paused;
 	}
-
 </script>
 
 <div class="carousel">
 	{#each images as image, i}
 		<div class="carousel-item h-72 {i === currentImageIndex ? 'visible' : 'hidden'}">
-			<svelte:component this={image} handlePause={handlePause} bind:paused />
+			<svelte:component this={image} {handlePause} bind:paused />
 			<!-- <p>{image.caption}</p> -->
 		</div>
 	{/each}

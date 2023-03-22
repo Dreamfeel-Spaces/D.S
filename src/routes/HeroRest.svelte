@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { heroSliderPaused } from '$lib/wsstore';
+
 	//@ts-nocheck
 	import axios from 'axios';
 	import { page } from '$app/stores';
@@ -16,10 +18,10 @@
 
 	let requesting = false;
 
-	export let paused;
-	export let handlePause = ()=>{
-
-	}
+	export let paused: any;
+	export let handlePause = () => {
+		heroSliderPaused.set({ paused: !$heroSliderPaused.paused });
+	};
 
 	let items: any = null;
 
@@ -104,11 +106,11 @@
 		<div class="mb-2 flex">
 			<p class="text-3xl flex-1">{methods.find((m) => m.value === method)?.name ?? 'Find all'}</p>
 			<div class="flex my-3">
-				<div class="mr-2">
+				<!-- <div class="mr-2">
 					<Button on:click={handlePause} size="xs" color="default"
-						>{#if paused} Resume {:else} Pause {/if}</Button
+						>{#if $heroSliderPaused.paused} Resume {:else} Pause {/if}</Button
 					>
-				</div>
+				</div> -->
 				<div>
 					<Button type="submit" size="xs" color="pinkToOrange" gradient>
 						{#if requesting}

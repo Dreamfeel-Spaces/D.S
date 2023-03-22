@@ -1,10 +1,11 @@
 <script lang="ts">
 	//@ts-nocheck
 	import logo from '../../../../assets/logo.png';
-	import { Input, Button, Alert, Label } from 'flowbite-svelte';
+	import { Input, Button, Alert, Label, A } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import DemoCredentials from './DemoCredentials.svelte';
+	import { passwordResetDialog } from '$lib/wsstore';
 
 	const appId = $page.params.id;
 	const isDemo = appId === 'demo';
@@ -65,6 +66,11 @@
 						/>
 					</div>
 					<Button type="submit" class="w-full">Login</Button>
+					<div class="mt-3">
+						<A rel="external" href={`/a/${$page.params.id}/accounts/reset-pass`}
+							>I forgot my password</A
+						>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -72,7 +78,7 @@
 {/if}
 
 {#if data.spaceSession}
-	<div class="flex justify-center text-center">
+	<div class="flex justify-center dark:text-white text-center">
 		<div>
 			<div class="my-9">
 				<p class="text-3xl mb-4">Your {appId} Account</p>
@@ -80,7 +86,10 @@
 				<p>{data.spaceSession.user?.role}</p>
 			</div>
 
-			<form method="post" action="?/signout">
+			<form method="post" class="flex flex-col gap-4" action="?/signout">
+				<Button type="button" on:click={() => passwordResetDialog.set({ open: true })}
+					>Reset Password</Button
+				>
 				<Button type="submit">Sign Out</Button>
 			</form>
 		</div>

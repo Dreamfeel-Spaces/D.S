@@ -105,7 +105,7 @@
 								active={/\/users/.test(pathname) && /\/permissions/.test(pathname)}
 							/>
 						</SidebarDropdownWrapper>
-						{#each activeSpace?.dashboards ?? [] as table}
+						<!-- {#each activeSpace?.dashboards ?? [] as table}
 							<SidebarDropdownWrapper isOpen={tableId === table.name} label={table.name}>
 								<svelte:fragment slot="icon">
 									<svg
@@ -140,7 +140,7 @@
 									label={`Permissions`}
 								/>
 							</SidebarDropdownWrapper>
-						{/each}
+						{/each} -->
 						{#each activeSpace?.tables ?? [] as table}
 							<SidebarDropdownWrapper isOpen={tableId === table.name} label={table.name}>
 								<svelte:fragment slot="icon">

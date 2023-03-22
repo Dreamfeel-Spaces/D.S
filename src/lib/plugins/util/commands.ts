@@ -8,8 +8,6 @@ export function addGCommands(editor: any) {
 			return row.querySelector('.layers-container');
 		},
 
-		// 0722920411
-
 		run(editor, sender) {
 			const lmEl = this.getLayersEl(this.getRowEl(editor));
 			lmEl.style.display = '';

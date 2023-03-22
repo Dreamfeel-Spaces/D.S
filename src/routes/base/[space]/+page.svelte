@@ -11,6 +11,8 @@
 
 	let spaceId = $page.params.space;
 
+	let space  = $page.data.space
+
 	import { goto } from '$app/navigation';
 	import { apiHelperModal } from '$lib/wsstore';
 </script>
@@ -61,17 +63,17 @@
 					<div class="my-3 flex">{table.rows?.length} Items</div>
 
 					<div class="flex">
-						<a rel="external" class="flex-1" href={`/base/${spaceId}/${table.name}`}
+						<a rel="external" class="flex-1" href={`/base/${space.appId}/${table.name}`}
 							><Button gradient color="pinkToOrange" pill size="xs">Schema</Button></a
 						>
 						<div class="flex justify-end">
-							<a rel="external" href={`/base/${spaceId}/${table.name}/api`}
+							<a rel="external" href={`/base/${space.appId}/${table.name}/api`}
 								><Button gradient pill size="xs">REST API</Button></a
 							>
-							<a rel="external" class="ml-3" href={`/dashboards/${spaceId}/${table.name}/overview`}>
+							<a rel="external" class="ml-3" href={`/dashboards/${space.appId}/${table.name}/overview`}>
 								<Button gradient pill size="xs">Dashboards</Button>
 							</a>
-							<a rel="external" class="ml-3" href={`/base/${spaceId}/${table.name}/permissions`}>
+							<a rel="external" class="ml-3" href={`/base/${space.appId}/${table.name}/permissions`}>
 								<Button gradient pill size="xs">Permissions</Button>
 							</a>
 						</div>

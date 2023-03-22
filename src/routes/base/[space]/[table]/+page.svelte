@@ -118,21 +118,6 @@
 		</div>
 	{/if}
 
-	<div class="px-6 mt-6">
-		<ul
-			class="w-full dark:text-gray-50 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
-		>
-			<li>
-				<Radio class="p-3" bind:group={whoAmi} required value="manual_all">Create Manually</Radio>
-			</li>
-			<li>
-				<Radio class="p-3" bind:group={whoAmi} required value="generate_add"
-					>Describe Schema and generate with AI (Pro)</Radio
-				>
-			</li>
-		</ul>
-	</div>
-
 	{#if whoAmi === 'manual_all'}
 		<div class="grid gap-4 px-6   mb-6 mt-6 ">
 			{#each columns as column, index}

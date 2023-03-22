@@ -5,9 +5,9 @@
 		SidebarItem,
 		SidebarWrapper,
 		SidebarDropdownItem,
-		SidebarDropdownWrapper
+		SidebarDropdownWrapper,
+		DarkMode
 	} from 'flowbite-svelte';
-	let spanClass = 'flex-1 ml-3 whitespace-nowrap';
 	export let data;
 	import { page } from '$app/stores';
 	import SpaceNav from '../../base/[space]/SpaceNav.svelte';
@@ -26,8 +26,14 @@
 	<slot />
 {/if}
 
-<div>
-	<SpaceNav />
+{#if !$page.params.path}
+	<div>
+		<SpaceNav />
+	</div>
+{/if}
+
+<div class="hidden">
+	<DarkMode />
 </div>
 
 {#if !isPreview}
@@ -93,7 +99,7 @@
 				</SidebarWrapper>
 			</Sidebar>
 		</div>
-		<div class="flex-1  dark:bg-gray-900">
+		<div class="flex-1 min-h-112  dark:bg-gray-900">
 			<slot />
 		</div>
 		<div

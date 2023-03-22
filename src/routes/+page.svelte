@@ -1162,7 +1162,7 @@
 
 <footer
 	style="backdrop-filter:blur(30px)"
-	class="p-4 md:p-8 lg:p-10  dark:bg-neutral-900 bg-gray-900"
+	class="p-4 md:p-8 lg:p-10  dark:bg-gray-900 bg-gray-900"
 >
 	<div class="mx-auto max-w-screen-xl text-center">
 		<a

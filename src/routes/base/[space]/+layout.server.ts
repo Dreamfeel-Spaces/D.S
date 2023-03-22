@@ -6,6 +6,7 @@ export async function load({ cookies, params }: any) {
 	const appId = params.space;
 
 	let space: any = null;
+	let tables: any = [];
 	let spaceSession: any = null;
 
 	let recentlyOpened: any[] = JSON.parse(cookies.get(`recentlyOpened-${appId}`) ?? '[]');
@@ -18,7 +19,8 @@ export async function load({ cookies, params }: any) {
 			include: {
 				apiSetup: true,
 				onboarding: true,
-				roles: true
+				roles: true,
+				tables: true
 			}
 		});
 
@@ -76,17 +78,23 @@ export async function load({ cookies, params }: any) {
 			throw redirect(302, `/base/${space.appId}/quick-setup`);
 		}
 
+		tables = await prisma.spaceTable.findMany({
+			where: {
+				appId: space.id
+			}
+		});
+
 		const sessionToken: any = cookies.get(`${space.appId}-accessToken`);
 
 		if (!sessionToken) throw redirect(302, `/a/${space.appId}/accounts`);
 
-		const user:any = jwt.decode(sessionToken);
+		const user: any = jwt.decode(sessionToken);
 		const _user = await prisma.spaceUser.findUnique({
 			where: {
 				id: user?.id
 			}
 		});
-		spaceSession = { user:_user };
+		spaceSession = { user: _user };
 	}
 
 	let isRecent = recentlyOpened.find((item: any) => {
@@ -106,5 +114,5 @@ export async function load({ cookies, params }: any) {
 
 	cookies.set(`recentlyOpened-${appId}`, JSON.stringify(recentlyOpened), { path: '/' });
 
-	return { space, spaceSession };
+	return { space, spaceSession, tables };
 }

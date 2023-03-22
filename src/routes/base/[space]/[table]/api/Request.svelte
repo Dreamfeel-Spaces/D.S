@@ -268,7 +268,7 @@
 	{/if}
 
 	{#if clone}
-		<div class="my-3">
+		<div class="my-3 pl-9 bg-gray-700 py-3 rounded-xl">
 			<p>Headers</p>
 			{#each headers as header, index}
 				<div class="grid gap-2 grid-cols-2 mt-3">
