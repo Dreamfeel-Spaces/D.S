@@ -1,23 +1,11 @@
 import { prisma } from '$lib/db/prisma';
 import type { RequestEvent } from './$types';
-import { transformHtmlString } from '$lib/util/transformHtmlString';
-
+import { error } from '@sveltejs/kit';
 import { JSDOM } from 'jsdom';
 import grapesjs from 'grapesjs';
 import { DOMParser } from 'xmldom';
-import { spaceTestPlugin } from '$lib/plugins/grapes/space-ui';
-
-
-
-
-export async function Editor(){
-
-// grapes js table
-
-}
-
-
-
+import { gSpaceApIList } from '$lib/plugins/grapes/space-ui/spaceApiList';
+import { transformRows } from '$lib/rows/transform';
 
 // https://unpkg.com/tailwindcss@2.1.2/dist/tailwind.min.css
 
@@ -30,15 +18,45 @@ export async function GET({ params }: RequestEvent) {
 		}
 	});
 
+	if (!data) {
+		throw error(404, 'Page not found');
+	}
+
 	const uiDraft = data?.html ?? '';
 
 	let parsed = JSON.parse(uiDraft);
 
 	const ui = parsed.uiDef;
 
+	const demo = await prisma.space.findUnique({
+		where: {
+			appId: 'demo'
+		}
+	});
+
+	const tables = await prisma.spaceTable.findMany({
+		where: {
+			appId: demo?.id
+		},
+		include: {
+			rows: {
+				include: {
+					tableData: true
+				}
+			}
+		}
+	});
+
 	const editor = grapesjs.init({
 		headless: true,
-		plugins: [(editor) => spaceTestPlugin(editor, [],)]
+		plugins: [
+			(editor) =>
+				gSpaceApIList(editor, {
+					tables: tables.map((table) => ({ ...tables, rows: transformRows(table.rows) })),
+					pages: [data],
+					pageId: data?.id
+				})
+		]
 	});
 
 	editor.loadProjectData(ui);
@@ -49,8 +67,13 @@ export async function GET({ params }: RequestEvent) {
 
 	const document = dom.window.document;
 
-	const tailwind = await fetch('https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css');
-	const css = await tailwind.text();
+	let tailwind;
+	let css: any;
+
+	try {
+		tailwind = await fetch('https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css');
+		css = await tailwind.text();
+	} catch (error) {}
 
 	const style = document.createElement('style');
 	style.textContent = css;

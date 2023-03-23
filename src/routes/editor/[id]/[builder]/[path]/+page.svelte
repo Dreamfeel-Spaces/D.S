@@ -27,6 +27,7 @@
 
 	let editor: grapesjs.Editor;
 	const spaceId = $page.params.id;
+	const pageId = $page.params.path;
 
 	let pageModalOpen = false;
 	let jsonModalOpen = false;
@@ -41,16 +42,16 @@
 				height: '618px',
 				width: 'auto',
 				plugins: [
-					(editor) => gjsTailwind(editor),
-					(editor) => gjsForms(editor),
-					(editor) => gjsTabs(editor),
+					// (editor) => gjsForms(editor),
+					// (editor) => gjsTabs(editor),
 					(editor) => gBasic(editor),
-					(editor) => gSpaceApIList(editor, { tables: data.tables })
+					(editor) => gSpaceApIList(editor, { tables: data.tables, pages: data.pages, pageId }),
+					(editor) => gjsTailwind(editor)
 				],
 				layerManager: {
 					appendTo: '.layers-container'
 				},
-				panels: gPanels(),
+				panels: gPanels(editor),
 				selectorManager: {
 					appendTo: '.styles-container'
 				},
@@ -76,6 +77,20 @@
 			editor.Commands.add('open-pages', {
 				run: () => {
 					pageModalOpen = true;
+				}
+			});
+
+			editor.DeviceManager.add({
+				id: 'tablet2',
+				name: 'Tablet 2',
+				width: '800px', // This width will be applied on the canvas frame
+				widthMedia: '810px', // This width that will be used for the CSS media
+				height: '600px' // Height will be applied on the canvas frame
+			});
+
+			editor.Commands.add('set-device-tablet', {
+				run: () => {
+					editor.DeviceManager.select('tablet2');
 				}
 			});
 

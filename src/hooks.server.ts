@@ -80,6 +80,7 @@ export const errorHandle: HandleServerError = ({ error }) => {
 };
 
 export const spaceAuth: Handle = async ({ event, resolve }) => {
+	if (/^\/api\/editor/.test(event.url.pathname)) return resolve(event);
 	if (/^\/api\/examples/.test(event.url.pathname)) return resolve(event);
 	if (/^\/api?/.test(event.url.pathname)) return resolve(event);
 	const { cookies } = event;
@@ -99,6 +100,7 @@ export const spaceAuth: Handle = async ({ event, resolve }) => {
 };
 
 export const apiAuth: Handle = async ({ event, resolve }) => {
+	if (/^\/api\/editor/.test(event.url.pathname)) return resolve(event);
 	if (/^\/api\/examples/.test(event.url.pathname)) return resolve(event);
 	if (!/^\/api?/.test(event.url.pathname)) return resolve(event);
 

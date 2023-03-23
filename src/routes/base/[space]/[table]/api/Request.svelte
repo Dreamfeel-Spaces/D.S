@@ -323,7 +323,7 @@
 	{#if action === 'create' || action === 'signup' || action === 'signin'}
 		<div class="text-2xl mt-4">Request body</div>
 		{#each colItems as col}
-			{#if col.type === 'string' || col.type === 'number' || col.type === 'email' || col.type === 'password'}
+			{#if col.type === 'string' || col.type === 'number' || col.type === 'email' || col.type === 'password' || col.type === 'image'}
 				<div class="grid grid-cols-2 gap-3 my-5">
 					<div>
 						<p>{col.name}</p>

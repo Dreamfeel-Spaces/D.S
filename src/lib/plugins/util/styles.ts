@@ -5,10 +5,16 @@ export function gStyles(editor: grapesjs.Editor) {
 		appendTo: '.styles-container',
 		sectors: [
 			{
+				name: 'Container',
+				open: false,
+				// Use built-in properties
+				buildProps: ['display', 'flex-wrap', "flex-direction", "overflow"]
+			},
+			{
 				name: 'Dimension',
 				open: false,
 				// Use built-in properties
-				buildProps: ['width', 'min-height', 'padding'],
+				buildProps: ['width', 'min-height', 'padding', "margin", "max-width"],
 				// Use `properties` to define/override single property
 				properties: [
 					{
