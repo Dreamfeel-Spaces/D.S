@@ -36,7 +36,7 @@
 	let confirmPassword = '';
 </script>
 
-<div class="flex">
+<div class="flex min-h-112">
 	<div class="flex-1" style="max-height:85vh; overflow:auto">
 		<div class="px-6 mt-3">
 			<Breadcrumb>

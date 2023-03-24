@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Input, Button, Alert } from 'flowbite-svelte';
+	import { Input, Button, Alert , P} from 'flowbite-svelte';
 	export let form: any;
 	import { page } from '$app/stores';
 </script>
@@ -16,8 +16,8 @@
 		>
 	{/if}
 
-	<form method="POST">
-		<label for="name">Name</label>
+	<form method="POST" class="mt-9" >
+		<P class="mb-9" for="name">Name</P>
 		<Input
 			placeholder="i.e Default, main, promo etc.."
 			required

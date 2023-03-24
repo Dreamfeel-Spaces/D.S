@@ -3,9 +3,9 @@ import type grapesjs from 'grapesjs';
 
 export function gSpaceApIList(
 	editor: grapesjs.Editor,
-	config: { tables: any[]; pages: any[]; pageId: string }
+	config: { tables: any[]; pages: any[]; pageId: string; headless: boolean }
 ) {
-	let { tables = [], pages = [], pageId }: any = config;
+	let { tables = [], pages = [], pageId, headless = false }: any = config;
 
 	const page: any = pages.find((page: { id: string; path: string }) => page.id === pageId);
 
@@ -648,7 +648,8 @@ export function gSpaceApIList(
 			defaults: {
 				droppable: true,
 				attributes: {
-					'data-table': ''
+					'data-table': '',
+					'data-api-type': 'list'
 				},
 				tagName: 'div',
 				traits: [
@@ -680,6 +681,7 @@ export function gSpaceApIList(
 				}
 			},
 			setDefaultContent() {
+				if (headless) this.resetComponents();
 				// const dataTable = this.getAttributes()['data-table'];
 				// if (dataTable) {
 				// 	this.resetComponents();
@@ -707,7 +709,6 @@ export function gSpaceApIList(
 				try {
 					const tableName = this.getAttributes()['data-table'];
 					let table: any = tables.find((tb: any) => tb.name === tableName);
-					console.log(tableName);
 					for (let i = 0; i < table?.rows?.length; i++) {
 						const row: any = table.rows[i];
 						this.append(
@@ -732,7 +733,7 @@ export function gSpaceApIList(
 
 	editor.BlockManager.add('Api list component', {
 		label: 'API List',
-		content: `<div  style="min-height:144px" data-gjs-type="api-list-component">
+		content: `<div data-api-type='list' style="min-height:144px" data-gjs-type="api-list-component">
 		<p>Update collection information in traits</p>
 		</div>`
 	});

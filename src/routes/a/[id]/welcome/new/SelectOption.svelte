@@ -26,6 +26,9 @@
 
 <div class="my-4">
 	<Toggle checked disabled size="small">
+		<span class="text-gray-700 dark:text-gray-400">*Authentication</span>
+	</Toggle>
+	<Toggle class="mt-4" checked disabled size="small">
 		<span class="text-gray-700 dark:text-gray-400">*Dashboard</span>
 	</Toggle>
 	<div class="mt-4" />

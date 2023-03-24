@@ -65,6 +65,9 @@ export class Pages {
 		if (!draft) return [null, error(404, 'Page not found')];
 
 		const html = JSON.parse(draft ?? '{}')?.html;
+
+		console.log(html);
+
 		const css = JSON.parse(draft ?? '{}')?.css;
 		const uiDef = JSON.parse(draft ?? '{}')?.css;
 		const renderedHTML = await transformHtmlString(html, css, tempId, renderSubdomainApp);

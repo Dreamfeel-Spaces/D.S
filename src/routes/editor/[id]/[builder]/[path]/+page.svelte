@@ -60,7 +60,16 @@
 					appendTo: '.traits-container'
 				},
 				deviceManager: gDevices(),
-				storageManager: gStorage('gjsPageDraft' + $page.params.builder + $page.params.path),
+				storageManager: {
+					type: 'remote',
+					stepsBeforeSave: 1,
+					options: {
+						remote: {
+							urlLoad: `${page.url.origin}/api/editor/${page.params.path}`,
+							urlStore: `${page.url.origin}/api/editor/${page.params.path}`
+						}
+					}
+				},
 				blockManager: {
 					appendTo: '#blocks',
 					blocks: []

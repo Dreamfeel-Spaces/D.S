@@ -6,7 +6,7 @@ import { Pages } from '$lib/plugins/pages/Pages';
 
 export async function load({ params, url }: RequestEvent) {
 	const pageManager = new Pages({ appId: params.appId, url });
-	const [html, htmlError] = await pageManager.renderPage();
+	const [html, htmlError] = await pageManager.renderPage({});
 	if (htmlError) throw htmlError;
 	return { html };
 }

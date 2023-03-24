@@ -191,7 +191,7 @@
 					title="Domains"
 				>
 					<div class="my-9">
-						<form method="POST" action="?/updateChannels&tab=channels">
+						<form method="POST" action="?/updateChannels&tab=domains">
 							<Checkbox
 								bind:checked={space.apiChannel}
 								bind:value={space.apiChannel}

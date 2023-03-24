@@ -14,7 +14,10 @@
 		SidebarWrapper,
 		Button,
 		DarkMode,
-		Toast
+		Toast,
+		Dropdown,
+		DropdownItem,
+		Chevron
 	} from 'flowbite-svelte';
 
 	import { sineIn } from 'svelte/easing';
@@ -147,52 +150,12 @@
 					<!-- Left links -->
 					<ul class="list-style-none mr-auto flex flex-col pl-0 lg:flex-row" data-te-navbar-nav-ref>
 						<li class="lg:pr-2" data-te-dropdown-ref>
-							<button
-								on:click={() => (solutionsOpen = true)}
-								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400"
-								data-te-nav-link-ref>Solutions</button
-							>
-							{#if solutionsOpen}
-								<div class="relative" data-te-dropdown-ref>
-									<ul
-										class="absolute left-auto  z-[1000] float-left m-0 mt-1  min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
-										aria-labelledby="dropdownMenuButton1"
-										data-te-dropdown-menu-ref
-									>
-										<li>
-											<div
-												class="block w-full whitespace-nowrap bg-transparent  px-4 text-sm font-normal text-right text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-											>
-												<CloseButton size="xs" on:click={() => (solutionsOpen = false)} />
-											</div>
-										</li>
-										<li>
-											<a
-												rel="external"
-												class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-												href="/base"
-												data-te-dropdown-item-ref>API's</a
-											>
-										</li>
-										<li>
-											<a
-												rel="external"
-												class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-												href="/dashboards"
-												data-te-dropdown-item-ref>Customizable dashboards</a
-											>
-										</li>
-										<li>
-											<a
-												rel="external"
-												class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-												href="/editor"
-												data-te-dropdown-item-ref>Website builder</a
-											>
-										</li>
-									</ul>
-								</div>
-							{/if}
+							<button class="dark:text-white flex"> Solutions<Chevron class="mt-2" /></button>
+							<Dropdown>
+								<DropdownItem href="/base" rel="external">APIs</DropdownItem>
+								<DropdownItem href="/dashboards" rel="external">Dashboards</DropdownItem>
+								<DropdownItem href="editor" rel="external">User interfaces</DropdownItem>
+							</Dropdown>
 						</li>
 						<!-- <li class="lg:pr-2" data-te-nav-item-ref>
 							<a

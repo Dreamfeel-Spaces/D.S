@@ -1,4 +1,4 @@
-export function transformRows(rows: any[] = [], columns: any[] = []) {
+ export function transformRows(rows: any[] = [], columns: any[] = []) {
 	return rows.map((row) => {
 		row = { ...row };
 		let tabledata = [...row.tableData];

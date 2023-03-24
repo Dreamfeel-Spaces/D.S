@@ -22,19 +22,14 @@
 </div>
 
 <div
-	class="grid pb-20 lg:grid-cols-3 md:grid-cols-2 gap-3 min-h-112 dark:bg-gray-900 dark:text-white px-12"
+	class="grid pb-20 lg:px-48 lg:grid-cols-3 md:grid-cols-2 gap-3  dark:bg-gray-900 dark:text-white px-12"
 >
-	<Card size="xl" class="min-h-20">
-		<div class="flex justify-end">
-			<Button color="green" pill gradient size="xs">Authentication included</Button>
-		</div>
-		<ImagePlaceholder />
+	<Card size="xl">
 		Blank site
 		<p class="my-9">Start from a blank canvas — and build exactly what you’re envisioning.</p>
 		<SelectOption ctx="blank" />
 		<div class="mt-4 flex justify-between">
 			<a rel="external" href="/">Learn more</a>
-			<a rel="external" href="/">Watch video</a>
 			<a rel="external" href="/">Watch video</a>
 		</div>
 	</Card>
@@ -55,10 +50,6 @@
 	{/if}
 	{#if interest === 'business_site' || showMore}
 		<Card size="xl" class="min-h-20">
-			<div class="flex justify-end">
-				<Button color="green" pill gradient size="xs">Authentication included</Button>
-			</div>
-			<ImagePlaceholder />
 			Business site
 			<p class="my-9">Start from a blank canvas — and build exactly what you’re envisioning.</p>
 			<SelectOption ctx="business" />
@@ -71,7 +62,7 @@
 	<Card class="" size="xl">
 		<div style="align-items:center" class="flex self-center h-full">
 			<div>
-				<Button on:click={() => (showMore = !showMore)}
+				<Button disabled on:click={() => (showMore = !showMore)}
 					>{#if showMore}
 						Hide more options
 					{:else}

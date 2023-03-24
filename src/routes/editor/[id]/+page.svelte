@@ -24,7 +24,7 @@
 		<BreadcrumbItem>Editor</BreadcrumbItem>
 		<BreadcrumbItem>Item</BreadcrumbItem>
 	</Breadcrumb>
-	<a href={`/editor/${$page.params.id}/create`}><Button pill gradient size="xs">Add UI</Button></a>
+	<a href={`/editor/${$page.params.id}/create`}><Button pill gradient size="xs">Create new Ui</Button></a>
 </div>
 
 {#if !uis.length}
@@ -32,7 +32,7 @@
 		<div>No UIS have been added</div>
 		<div class="mt-9 ">
 			<a class="hover:underline" href={`/editor/${$page.params.id}/create`}>
-				<Button>Add UI</Button></a
+				<Button>Add UI Group</Button></a
 			>
 		</div>
 	</div>
@@ -44,13 +44,13 @@
 	</div>
 {/if}
 
-<div class="px-6 grid lg:grid-cols-2 gap-2 max-h-99 overflow-auto ">
+<div class="px-6 grid gap-2 max-h-99 mt-9 overflow-auto ">
 	{#each uis as ui}
-		<Card size="lg">
+		<Card size="xl">
 			<div class="flex">
 				<b class="text-lg flex-1">{ui?.name}</b>
 				{#if ui?.spaceUIVersion.find((item) => item.id === data?.space?.uiVid)}
-					<Button gradient size="xs" color="green" pill>Active</Button>
+					<Button gradient size="xs" color="green" pill>Published</Button>
 				{/if}
 			</div>
 			<p class="my-3">{ui?.spaceUIVersion?.length ?? 0} Versions</p>
@@ -61,15 +61,16 @@
 			<Accordion class="mt-3">
 				<AccordionItem>
 					<svelte:fragment slot="header">Versions</svelte:fragment>
-					<List>
+					<List  position="inside" >
 						<Listgroup>
 							{#each ui.spaceUIVersion as version}
 								<ListgroupItem
+									size="xl"
 									href={`/editor/${$page.params.id}/${version.id}/${
 										version.pages.find((page) => page.path === '/')?.id ?? version.pages[0]?.id
 									}`}
 								>
-									<div class="flex justify-between">
+									<div class="flex justify-between ">
 										<div class="flex" style="align-items:center">
 											<a rel="external" href={`/editor/${$page.params.id}/${version.id}`}
 												>Version {version.version}</a
@@ -84,10 +85,19 @@
 												color={data?.space?.uiVid === version.id ? 'green' : 'blue'}
 												outline={data?.space?.uiVid !== version.id}
 												size="xs"
-												>{data?.space?.uiVid === version.id ? 'Deployed' : `Deploy`}</Button
+												>{data?.space?.uiVid === version.id ? 'Published' : `Publish`}</Button
 											>
 											<a href={`/editor/${$page.params.id}/${version.id}/settings`}>
 												<Button pill outline gradient size="xs">Settings</Button>
+											</a>
+											<a
+												rel="external"
+												href={`/editor/${$page.params.id}/${version.id}/${
+													version.pages.find((page) => page.path === '/')?.id ??
+													version.pages[0]?.id
+												}`}
+											>
+												<Button pill outline gradient size="xs">Open in builder</Button>
 											</a>
 										</form>
 									</div>
