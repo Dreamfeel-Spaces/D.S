@@ -28,8 +28,10 @@
 </div>
 
 <Modal class="w-full" autoclose={false} bind:open={formModal}>
+	<div slot="header" class="text-center">
+		<p class="text-2xl dark:text-gray-100">Add role</p>
+	</div>
 	<div>
-		<p class="text-2xl my-6 dark:text-gray-100">Add role</p>
 		<form method="post" action="?/createRole&tab=roles">
 			<Label>
 				<span> Name </span>
@@ -154,7 +156,7 @@
 				{/if}
 			{/if}
 			<input name="meta" value={JSON.stringify(meta)} type="hidden" />
-			<Button type="submit" class="mt-4 w-full">Save role</Button>
 		</form>
 	</div>
+	<Button slot="footer" type="submit" class=" w-full">Save role</Button>
 </Modal>

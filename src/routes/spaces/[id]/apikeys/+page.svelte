@@ -3,7 +3,7 @@
 	export let form: any;
 </script>
 
-<div class=" px-6 lg:px-48">
+<div class=" px-6 lg:px-48 pb-40">
 	<div class="mt-4 flex">
 		<Breadcrumb class="flex-1">
 			<BreadcrumbItem>Home</BreadcrumbItem>

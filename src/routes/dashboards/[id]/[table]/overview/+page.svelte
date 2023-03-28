@@ -21,7 +21,11 @@
 		Select,
 		TableBodyCell,
 		Alert,
-		Card
+		Card,
+		Heading,
+		P,
+		A,
+		Hr
 	} from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
@@ -34,6 +38,7 @@
 	import ShareformModal from './ShareformModal.svelte';
 	import SpaceCsv from './SpaceCSV.svelte';
 	import SpaceJson from './SpaceJSON.svelte';
+	import Request from '../../../../base/[space]/[table]/api/Request.svelte';
 	const spaceName = $page.params.id;
 	const tableName = $page.params.table;
 	let activeTab = $page.url.searchParams.get('tab') ?? 'reports';
@@ -61,22 +66,35 @@
 <div class="px-6 max-h-99 overflow-auto">
 	<Tabs>
 		<TabItem open={activeTab === 'reports'} on:click={() => goto('?tab=reports')} title="Reports">
-			<ReportModal columns={data.columns} />
+			{#if data.reports?.length}
+				<ReportModal columns={data.columns} />
+			{/if}
 			{#if form?.reportSuccess}
 				Report has been saved
 			{/if}
-			{#if form?.shareReportSuccess}
-				<Alert>
-					<p>
-						Report has been shared with {form?.data?.sharedWith}
-					</p>
-					<p>Link to report: {`${$page.url.origin}/reports/${form?.data.id}`}</p>
-					<a target="blank" href={`/reports/${form?.data?.id}`}>View report</a>
-				</Alert>
-			{/if}
-			{#if !data.reports?.length}
-				<div class="my-12">No reports have been added</div>
-			{/if}
+
+			<div class="px-4 text-center">
+				{#if form?.shareReportSuccess}
+					<Alert>
+						<p>
+							Report has been shared with {form?.data?.sharedWith}
+						</p>
+						<p>Link to report: {`${$page.url.origin}/reports/${form?.data.id}`}</p>
+						<a target="blank" href={`/reports/${form?.data?.id}`}>View report</a>
+					</Alert>
+				{/if}
+				{#if !data.reports?.length}
+					<Heading tag="h6" class="my-12">Reports</Heading>
+					<P class="mb-9"
+						>With reports you can query and group your data together onto an easy to manipulate
+						tables. You can create events and perform tasks on these tables, share, generate charts,
+						get AI powered analytics and insights on the reports.<A />
+					</P>
+					<Alert class="my-4" accent>You havent added any reports</Alert>
+					<ReportModal columns={data.columns} />
+				{/if}
+			</div>
+
 			<Accordion size="xs" class="mt-3">
 				{#each data.reports as report}
 					<AccordionItem size="xs">
@@ -181,11 +199,21 @@
 			on:click={() => goto('?tab=charts', { invalidateAll: true })}
 			title="Charts"
 		>
-			<ChartModal columns={data.columns} />
+			{#if data.charts.length}
+				<ChartModal columns={data.columns} />
+			{/if}
+			{#if !data.charts.length}
+				<div class="text-center lg:px-6">
+					<Heading tag="h6" class="my-12">Charts</Heading>
+					<P class="mb-9"
+						>Visualize your API data with rich interactive graphs. Generate insights and analytics
+						with AI and visualize with charts.
+					</P>
+					<Alert accent class="my-4">You haven't added any charts</Alert>
+					<ChartModal columns={data.columns} />
+				</div>
+			{/if}
 			<div class="mt-3 grid lg:grid-cols-2 grid-cols-1 gap-2">
-				{#if !data.charts.length}
-					<div class="mb-12">No charts have been added</div>
-				{/if}
 				{#each data.charts as chart}
 					<Card draggable size="lg">
 						<div class="text-2xl text-gray-500">
@@ -194,9 +222,12 @@
 					</Card>
 				{/each}
 			</div>
+			<Hr />
 		</TabItem>
 		<TabItem open={activeTab === 'forms'} on:click={() => goto('?tab=forms')} title="Forms">
-			<FormModal columns={data.columns} />
+			{#if data.forms.length}
+				<FormModal columns={data.columns} />
+			{/if}
 			{#if form?.formSuccess}
 				Form has been saved
 			{/if}
@@ -217,7 +248,15 @@
 				<div>Record updated</div>
 			{/if}
 			{#if !data.forms.length}
-				<div class="my-12">No forms have been added</div>
+				<div class="text-center lg:px-6">
+					<Heading tag="h6" class="my-12">Forms</Heading>
+					<P class="mb-9"
+						>Need to collect some data? Create create forms and share with a specific any one or
+						pick a specific role. Generate mini forms to quicky modify parts of a data object.</P
+					>
+					<Alert accent class="my-4">You haven't added any forms</Alert>
+					<ChartModal columns={data.columns} />
+				</div>
 			{/if}
 
 			<Accordion class="mt-3">
@@ -349,11 +388,45 @@
 				{/each}
 			</Accordion>
 		</TabItem>
+		<TabItem open={activeTab === 'actions'} on:click={() => goto('?tab=actions')} title="Actions">
+			<div class="text-center lg:px-6">
+				<Heading class="my-12" tag="h6">Actions</Heading>
+				<P class="my-3"
+					>Attach custom events to this collection. An action can be set to run when an action is
+					created, read, updated or deleted or when a specific property changes. Actions can send
+					mails/sms, update records, save files e.t.c...
+				</P>
+				<Alert accent class="my-9">Requires a PRO plan.</Alert>
+				<Hr />
+			</div></TabItem
+		>
 		<TabItem open={activeTab === 'import'} on:click={() => goto('?tab=import')} title="Import">
-			<div>Import data</div>
-			<div class="mt-3 grid gap-4 grid-cols-2">
+			<div class="text-center lg:px-6">
+				<Heading class="my-12" tag="h6">Import data</Heading>
+				<P class="my-3"
+					>Import your existing data, Import as CSV, JSON or import directly from your existing API.</P
+				>
+			</div>
+			<div class="mt-3 grid gap-4 mb-4 grid-cols-2">
 				<SpaceCsv columns={data.columnns} />
 				<SpaceJson />
+			</div>
+			<Card size="xl">
+				<P tag="h6">Import from URL</P>
+				<Request clone />
+			</Card>
+		</TabItem>
+		<TabItem open={activeTab === 'export'} on:click={() => goto('?tab=export')} title="Export">
+			<div class="text-center lg:px-6">
+				<Heading class="my-12" tag="h6">Export data</Heading>
+			</div>
+			<div class="mt-3 grid gap-4 grid-cols-2">
+				<SpaceCsv dataExport columns={data.columnns} />
+				<SpaceJson dataExport />
+				<Card>
+					<P>Print as...</P>
+					<Button class="mt-3" disabled>Update print settings and print</Button>
+				</Card>
 			</div>
 		</TabItem>
 	</Tabs>

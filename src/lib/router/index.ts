@@ -48,6 +48,6 @@ export function urlPatterns(routes: any[] = []) {
 			let str = prev + '\\/' + curr;
 			return str + (index === segments.length - 1 ? '\\/?$' : '');
 		}, '^');
-		return { url: new RegExp(pattern), page: route.html, params };
+		return { url: new RegExp(pattern), page: route, params };
 	});
 }

@@ -23,6 +23,10 @@
 	import Code from '../../../../Code.svelte';
 	import Tutorial from './Tutorial.svelte';
 
+	import appcSS from '../../../../../app.css?inline';
+
+	import { spaceTailwind } from '$lib/plugins/grapes/space-ui/SpaceTailwind';
+
 	export let data: PageData;
 
 	let editor: grapesjs.Editor;
@@ -34,6 +38,8 @@
 	let jsonModalContent = '';
 	let saving = false;
 
+	let theme = 'light';
+
 	onMount(() => {
 		if (browser) {
 			editor = grapesjs.init({
@@ -41,12 +47,24 @@
 				fromElement: true,
 				height: '618px',
 				width: 'auto',
+				canvasCss: appcSS,
+				optsCss: appcSS,
 				plugins: [
 					// (editor) => gjsForms(editor),
 					// (editor) => gjsTabs(editor),
 					(editor) => gBasic(editor),
 					(editor) => gSpaceApIList(editor, { tables: data.tables, pages: data.pages, pageId }),
-					(editor) => gjsTailwind(editor)
+					(editor) =>
+						gjsTailwind(editor, {
+							theme,
+							updateTheme() {
+								if (theme === 'light') theme = 'dark';
+								else if (theme === 'dark') theme = 'light';
+								console.log(theme)
+								return theme
+							}
+						}),
+					(editor) => spaceTailwind(editor)
 				],
 				layerManager: {
 					appendTo: '.layers-container'
@@ -60,16 +78,7 @@
 					appendTo: '.traits-container'
 				},
 				deviceManager: gDevices(),
-				storageManager: {
-					type: 'remote',
-					stepsBeforeSave: 1,
-					options: {
-						remote: {
-							urlLoad: `${page.url.origin}/api/editor/${page.params.path}`,
-							urlStore: `${page.url.origin}/api/editor/${page.params.path}`
-						}
-					}
-				},
+				storageManager: gStorage(`gjsProject-${$page.params.path}`),
 				blockManager: {
 					appendTo: '#blocks',
 					blocks: []
@@ -129,7 +138,7 @@
 		try {
 			const res = await axios.post(
 				`/editor/${$page.params.id}/${$page.params.builder}/${$page.params.path}/server`,
-				{ html, css, js, uiDef }
+				{ html, CSSCounterStyleRule, js, uiDef }
 			);
 
 			if (res) saving = false;

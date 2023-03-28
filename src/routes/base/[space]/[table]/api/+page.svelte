@@ -52,7 +52,7 @@
 		<Alert>
 			<p><b>Configuration error</b></p>
 			<p class="my-3">Missing schema</p>
-			<a class="hover:underline" href={`/base/${spaceName}/${tableName}/schema/create`}
+			<a class="hover:underline" href={`/base/${spaceName}/${tableName}`}
 				>Add schema</a
 			>
 		</Alert>

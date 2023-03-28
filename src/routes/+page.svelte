@@ -248,10 +248,8 @@
 						alt="profile"
 					/>
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
-						<div>Bonnie Green</div>
-						<div class="text-sm font-light text-gray-500 dark:text-gray-400">
-							Developer at Open AI
-						</div>
+						<div>Mike</div>
+						<div class="text-sm font-light text-gray-500 dark:text-gray-400">Beta tester</div>
 					</div>
 				</figcaption>
 			</figure>
@@ -280,9 +278,9 @@
 						alt="profile"
 					/>
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
-						<div>Roberta Casas</div>
+						<div>Robert Macharia</div>
 						<div class="text-sm font-light text-gray-500 dark:text-gray-400">
-							Lead designer at Dropbox
+							Freelance Developer
 						</div>
 					</div>
 				</figcaption>
@@ -316,7 +314,7 @@
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
 						<div>Jese Leos</div>
 						<div class="text-sm font-light text-gray-500 dark:text-gray-400">
-							Software Engineer at Facebook
+							Software Developer
 						</div>
 					</div>
 				</figcaption>
@@ -343,8 +341,10 @@
 						alt="profile"
 					/>
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
-						<div>Joseph McFall</div>
-						<div class="text-sm font-light text-gray-500 dark:text-gray-400">CTO at Google</div>
+						<div>Caleb Otieno</div>
+						<div class="text-sm font-light text-gray-500 dark:text-gray-400">
+							Project Manager / Beta tester
+						</div>
 					</div>
 				</figcaption>
 			</figure>
@@ -1160,10 +1160,7 @@
 	</div>
 </div>
 
-<footer
-	style="backdrop-filter:blur(30px)"
-	class="p-4 md:p-8 lg:p-10  dark:bg-gray-900 bg-gray-900"
->
+<footer style="backdrop-filter:blur(30px)" class="p-4 md:p-8 lg:p-10  dark:bg-gray-900 bg-gray-900">
 	<div class="mx-auto max-w-screen-xl text-center">
 		<a
 			href="/"

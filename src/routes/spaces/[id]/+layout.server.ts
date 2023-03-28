@@ -57,7 +57,7 @@ export async function load({ cookies, params }: any) {
 		});
 	}
 
-	cookies.set(`recentlyOpened-${appId}`, JSON.stringify(recentlyOpened), { path: '/' });
+	// cookies.set(`recentlyOpened-${appId}`, JSON.stringify(recentlyOpened), { path: '/' });
 
 	return { space, spaceSession };
 }

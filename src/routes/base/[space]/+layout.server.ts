@@ -48,7 +48,7 @@ export async function load({ cookies, params }: any) {
 				});
 			}
 
-			cookies.set(`recentlyOpened-${appId}`, JSON.stringify(recentlyOpened), { path: '/' });
+			// cookies.set(`recentlyOpened-${appId}`, JSON.stringify(recentlyOpened), { path: '/' });
 
 			throw redirect(302, `/a/${space.appId}/welcome`);
 		}
@@ -74,7 +74,7 @@ export async function load({ cookies, params }: any) {
 				});
 			}
 
-			cookies.set(`recentlyOpened-${appId}`, JSON.stringify(recentlyOpened), { path: '/' });
+			// cookies.set(`recentlyOpened-${appId}`, JSON.stringify(recentlyOpened), { path: '/' });
 			throw redirect(302, `/base/${space.appId}/quick-setup`);
 		}
 
@@ -112,7 +112,7 @@ export async function load({ cookies, params }: any) {
 		});
 	}
 
-	cookies.set(`recentlyOpened-${appId}`, JSON.stringify(recentlyOpened), { path: '/' });
+	// cookies.set(`recentlyOpened-${appId}`, JSON.stringify(recentlyOpened), { path: '/' });
 
 	return { space, spaceSession, tables };
 }

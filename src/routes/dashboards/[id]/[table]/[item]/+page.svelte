@@ -23,7 +23,7 @@
 
 <div class=" mx-6 mt-16">
 	<Card class="text-left" size="xl" padding="xl">
-		<h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">{item[displayName]}</h5>
+		<h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">{item[displayName] ?? "No display name"}</h5>
 
 		{#each Object.keys(item ?? {}) as key}
 			<p class="mb-5 text-left text-base text-gray-500 sm:text-lg dark:text-gray-400">

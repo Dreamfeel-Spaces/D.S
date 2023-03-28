@@ -114,7 +114,7 @@
 				<div>
 					<Button type="submit" size="xs" color="pinkToOrange" gradient>
 						{#if requesting}
-							<Spinner color="purple" />
+							Sending...
 						{:else}
 							Send
 						{/if}

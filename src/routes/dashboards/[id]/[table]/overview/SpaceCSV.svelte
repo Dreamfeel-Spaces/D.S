@@ -7,7 +7,6 @@
 	export let columns: any = [];
 	import { page } from '$app/stores';
 
-
 	import UploadCsv from 'upload-csv-svelte';
 
 	function downloadHandler() {
@@ -116,7 +115,12 @@
 			{/each}
 		</div>
 	{/if}
-	<Button disabled={!columns.filter((col) => col.checked)} on:click={downloadHandler} class="mt-3"
-		>Down</Button
-	>
+	{#if dataExport}
+		<Button disabled={!columns.filter((col) => col.checked)} on:click={downloadHandler} class="mt-3"
+			>Download</Button
+		>{:else}
+		<Button disabled={!columns.filter((col) => col.checked)} on:click={downloadHandler} class="mt-3"
+			>Upload</Button
+		>
+	{/if}
 </Card>

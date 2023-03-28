@@ -92,7 +92,7 @@
 						<Alert dismissable class="mb-4 w-full">
 							<p class="text-lg font-extrabold">Add data</p>
 							<p class="my-3" />
-							<div class="grid gap-4 grid-cols-2">
+							<div class="grid gap-4 lg:grid-cols-2">
 								{#each space.tables.concat({ name: 'users' }) as table}
 									<div class="my-4  w-96">
 										<div class="mb-2">
@@ -134,7 +134,7 @@
 						<Alert dismissable class="mb-4 w-full">
 							<p class="text-lg font-extrabold">Insights and analytics</p>
 							<p class="my-3" />
-							<div class="grid gap-4 grid-cols-2">
+							<div class="grid gap-4 lg:grid-cols-2">
 								{#each space.tables as table}
 									<div class="my-4  w-96">
 										<div class="mb-2">
@@ -154,7 +154,7 @@
 						<Alert dismissable class="mb-4 w-full">
 							<p class="text-lg font-extrabold">Export data</p>
 							<p class="my-3" />
-							<div class="grid gap-4 grid-cols-2">
+							<div class="grid gap-4 lg:grid-cols-2">
 								{#each space.tables as table}
 									<div class="my-4  w-96">
 										<div class="mb-2">

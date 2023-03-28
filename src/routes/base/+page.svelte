@@ -1,28 +1,24 @@
 <script>
-	import { Card, Avatar } from 'flowbite-svelte';
+	import { Card, Avatar, Heading, P } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	const apps = $page.data.myapps;
 </script>
 
-<section class=" min-h-112 pb-72 dark:bg-gray-900">
+<section class=" min-h-112 pb-72 lg:px-48 dark:bg-gray-900">
 	<div class="py-8 px-4 mx-auto max-w-screen-xl">
-		<h1
-			class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+		<Heading class="mb-4">REST APIs</Heading>
+		<P class="text-lg"
+			>You have view / test /update rights to these Spaces' REST APIs. Select a space app to get
+			started.</P
 		>
-			RESTful API's
-		</h1>
-		<p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400">
-			Here at Flowbite we focus on markets where technology, innovation, and capital can unlock
-			long-term value and drive economic growth.
-		</p>
 	</div>
 	<div class="px-6">
-		<div class="grid grid-cols-4  mt-9 gap-3">
+		<div class="grid grid-cols-4  gap-3">
 			{#each apps as app}
 				<a rel="external" href={`/base/${app.appId}`}>
 					<Card class="text-center">
 						<div class="flex mb-2 justify-center">
-							<Avatar />
+							<Avatar size="lg" src="/" />
 						</div>
 						<div>
 							{app.name}
@@ -31,10 +27,14 @@
 					</Card>
 				</a>
 			{/each}
-			<a rel="external" href={`/spaces/create`}>
-				<Card class="text-center">
-					<div>+</div>
-					<div class="text-xs">Create space</div>
+			<a class="h-full" rel="external" href={`/spaces/create`}>
+				<Card class="h-full text-center flex self-center">
+					<div class="text-center h-full flex self-center w-full">
+						<div>
+							<div>+</div>
+							<div class="text-xs">Create space</div>
+						</div>
+					</div>
 				</Card>
 			</a>
 		</div>

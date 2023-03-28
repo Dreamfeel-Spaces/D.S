@@ -9,12 +9,12 @@
 		Alert,
 		Checkbox,
 		Breadcrumb,
+		Label,
 		BreadcrumbItem
 	} from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import FileDropzone from '$lib/components/FileDropzone.svelte';
 	import DateTimeInput from '$lib/components/DateTimeInput.svelte';
-	let space = $page.params.space;
 	let table = $page.params.id;
 	const spaceName = $page.params.id;
 	const tableName = $page.params.table;
@@ -31,9 +31,12 @@
 		/<b class="text-3xl text-gray-500 mx-2">{tableName}</b>
 	</div>
 	<div class="px-9 text-end text-lg">
-		<a
-			class="btn px-3 py-2 text-sm rounded-xl bg-blue-900 text-white"
-			href={`/dashboards/${spaceName}/${tableName}`}>{tableName}(s)</a
+		<Button
+			pill
+			gradient
+			color="pinkToOrange"
+			size="xs"
+			href={`/dashboards/${spaceName}/${tableName}`}>{tableName}(s) table</Button
 		>
 	</div>
 </div>
@@ -56,7 +59,7 @@
 	<div class="px-6 mb-6">
 		<Alert>
 			<p>Item has been saved</p>
-			<a href={`/dashboards/${space}/${table}/${form.data.id}`}>View details</a>
+			<a href={`/dashboards/${$page.data.space?.appId}/${tableName}/${form.data.id}`}>View details</a>
 		</Alert>
 	</div>
 {/if}
@@ -65,7 +68,7 @@
 	{#each data.table?.columns ?? [] as column}
 		<div class="mb-6 px-6">
 			{#if column.type !== 'toggle'}
-				<label for={column.name}>{column.name}</label>
+				<Label class="mb-4" for={column.name}>{column.name}</Label>
 			{/if}
 			{#if column.type === 'string'}
 				<Input id={column.name} name={column.name} />

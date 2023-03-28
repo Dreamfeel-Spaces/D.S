@@ -2,8 +2,9 @@
 import loadBlocks from './blocks';
 import loadCommands from './commands';
 import en from './locale/en';
+import type grapesjs from 'grapesjs';
 
-export default function gjsTailwind(editor, opts = {}) {
+export default function gjsTailwind(editor: grapesjs.Editor, opts = {}) {
 	const options = {
 		...{
 			i18n: {},
@@ -28,30 +29,25 @@ export default function gjsTailwind(editor, opts = {}) {
 			...options.i18n
 		});
 
+	editor.Commands.add('toggle-theme', {
+		run: () => {
+			const theme = options.updateTheme();
+			editor.Canvas.getBody().className = theme;
+			console.log('options', theme);
+		}
+	});
+
 	const appendTailwindCss = async (frame) => {
 		const iframe = frame.view.getEl();
 
 		if (!iframe) return;
-
-		const { tailwindPlayCdn, plugins, config, cover } = options;
-		const init = () => {
-			iframe.contentWindow.tailwind.config = config;
-		};
-
-		const script = document.createElement('script');
-		script.src = tailwindPlayCdn + (plugins.length ? `?plugins=${plugins.join()}` : '');
-		script.onload = init;
-
-		const cssStyle = document.createElement('style');
-		cssStyle.innerHTML = cover;
 
 		// checks iframe is ready before loading Tailwind CSS - issue with firefox
 		const f = setInterval(() => {
 			const doc = iframe.contentDocument;
 			if (doc) {
 				if (doc?.readyState === 'complete') {
-					doc.head.appendChild(script);
-					doc.head.appendChild(cssStyle);
+					doc.body.className = options.theme;
 					clearInterval(f);
 				}
 			}

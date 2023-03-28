@@ -93,31 +93,33 @@
 	</Card> -->
 </div>
 
-<div class="py-9 text-center text-3xl dark:text-gray-100">
-	<p>Start from a template</p>
-</div>
+<div class="lg:px-48">
+	<div class="py-9 text-center text-3xl dark:text-gray-100">
+		<p>Start from a template</p>
+	</div>
 
-<div
-	class="grid pb-20 lg:grid-cols-3 md:grid-cols-2 gap-3 min-h-112 dark:bg-gray-900 dark:text-white px-12"
->
-	<Card class="min-h-20">
-		<ImagePlaceholder />
-		Organition site
-		<p class="my-9">Start from a blank canvas — and build exactly what you’re envisioning.</p>
-		<Button disabled on:click={() => goto(`/a/demo`)} size="xs">Select</Button>
-		<div class="mt-4 flex justify-between">
-			<a href="/">Learn more</a>
-			<a href="/">Preview</a>
-		</div>
-		<Accordion size="xs" class="mt-4">
-			<AccordionItem disabled>
-				<svelte:fragment slot="header">Features</svelte:fragment>
-				<List>
-					<Listgroup>
-						<ListgroupItem>Default</ListgroupItem>
-					</Listgroup>
-				</List>
-			</AccordionItem>
-		</Accordion>
-	</Card>
+	<div
+		class="grid pb-20 lg:grid-cols-2 md:grid-cols-2 gap-3 min-h-112 dark:bg-gray-900 dark:text-white px-12"
+	>
+		<Card class="min-h-20">
+			<ImagePlaceholder />
+			Organition site
+			<p class="my-9">Start from a blank canvas — and build exactly what you’re envisioning.</p>
+			<Button disabled on:click={() => goto(`/a/demo`)} size="xs">Select</Button>
+			<div class="mt-4 flex justify-between">
+				<a href="/">Learn more</a>
+				<a href="/">Preview</a>
+			</div>
+			<Accordion size="xs" class="mt-4">
+				<AccordionItem disabled>
+					<svelte:fragment slot="header">Features</svelte:fragment>
+					<List>
+						<Listgroup>
+							<ListgroupItem>Default</ListgroupItem>
+						</Listgroup>
+					</List>
+				</AccordionItem>
+			</Accordion>
+		</Card>
+	</div>
 </div>

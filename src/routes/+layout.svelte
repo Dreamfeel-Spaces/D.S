@@ -17,6 +17,8 @@
 		Toast,
 		Dropdown,
 		DropdownItem,
+		DropdownHeader,
+		DropdownDivider,
 		Chevron
 	} from 'flowbite-svelte';
 
@@ -150,22 +152,47 @@
 					<!-- Left links -->
 					<ul class="list-style-none mr-auto flex flex-col pl-0 lg:flex-row" data-te-navbar-nav-ref>
 						<li class="lg:pr-2" data-te-dropdown-ref>
-							<button class="dark:text-white flex"> Solutions<Chevron class="mt-2" /></button>
-							<Dropdown>
-								<DropdownItem href="/base" rel="external">APIs</DropdownItem>
-								<DropdownItem href="/dashboards" rel="external">Dashboards</DropdownItem>
-								<DropdownItem href="editor" rel="external">User interfaces</DropdownItem>
+							<button class="dark:text-white flex">
+								<div class="flex self-center">Solutions</div>
+								<div class="flex self-center  pt-1 ">
+									<Chevron />
+								</div>
+							</button>
+							<Dropdown class="w-72">
+								<DropdownItem href="/base" rel="external">
+									<p>Rest APIs</p>
+									<small>Collections, Auth, Payments, File storage etc... </small>
+								</DropdownItem>
+								<DropdownItem href="/dashboards" rel="external">
+									<p>Dashboards</p>
+									<small>AI Analytics, reports, forms, Import, export</small>
+								</DropdownItem>
+								<DropdownItem href="/editor" rel="external">
+									<p>User interfaces</p>
+									<small>UI builder, Tailwind CSS and Native components</small>
+								</DropdownItem>
+								<DropdownItem class="flex items-center justify-between"
+									><Chevron placement="right">Enterprise solutions</Chevron></DropdownItem
+								>
+								<Dropdown placement="right-start">
+									<DropdownItem>E-Commerce</DropdownItem>
+									<DropdownItem>SMEs</DropdownItem>
+									<DropdownItem>Startups</DropdownItem>
+									<DropdownItem>Non Profits</DropdownItem>
+									<DropdownItem>Government organizations</DropdownItem>
+									<DropdownItem>Schools</DropdownItem>
+								</Dropdown>
 							</Dropdown>
 						</li>
-						<!-- <li class="lg:pr-2" data-te-nav-item-ref>
+						<li class="lg:pr-2" data-te-nav-item-ref>
 							<a
 								rel="external"
 								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-								href="/dashboards"
-								data-te-nav-link-ref>Dashboards</a
+								href="/spaces/create"
+								data-te-nav-link-ref>New Space</a
 							>
 						</li>
-						<li class="lg:pr-2" data-te-nav-item-ref>
+						<!--	<li class="lg:pr-2" data-te-nav-item-ref>
 							<a
 								rel="external"
 								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"

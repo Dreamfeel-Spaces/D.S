@@ -18,7 +18,7 @@
 		</BreadcrumbItem>
 		<BreadcrumbItem>Overview</BreadcrumbItem>
 	</Breadcrumb>
-	<WidgetDrawer/>
+	<WidgetDrawer tables={data.space.tables} />
 </div>
 
 <div class="max-h-99 overflow-auto px-6">

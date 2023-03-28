@@ -95,7 +95,7 @@ import { source as h3s } from './data/icons/header-3'
 import { source as h4 } from './data/header-4'
 import { source as h4s } from './data/icons/header-4'
 
-import { source as r1 } from './data/hero-1'
+import { heroOneTw as r1 } from './data/heroOne'
 import { source as r1s } from './data/icons/hero-1'
 import { source as r2 } from './data/hero-2'
 import { source as r2s } from './data/icons/hero-2'
@@ -140,8 +140,9 @@ import { source as m2 } from './data/testimonial-2'
 import { source as m2s } from './data/icons/testimonial-2'
 import { source as m3 } from './data/testimonial-3'
 import { source as m3s } from './data/icons/testimonial-3'
+import { convertToSlug } from '$lib/util/slugit'
 
-const sources = [
+export const sources = [
   {
     id: 'header-block-1',
     class: '',
@@ -670,11 +671,24 @@ const sources = [
 export default (editor, options = {}) => {
   const bm = editor.Blocks
 
+
+  // sources.forEach((s)=>{
+  //   editor.DomConponents.addType(s.id, {
+  //     model:{
+  //       defaults:{
+  //         tagName:"section"
+  //       }
+  //     }
+  //   })
+  // })
+
   sources.forEach((s) => {
     bm.add(s.id, {
       label: s.label,
-      type: "space-commerce-list",
-      attributes: { class: `${s.class} block-full-width w-full`, iterable: s.iterable },
+      attributes: {
+        class: `${s.class} block-full-width w-full`,
+        iterable: s.iterable,
+      },
       content: s.content,
       category: { label: s.category, open: s.category === 'Header' },
     })
