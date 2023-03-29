@@ -7,7 +7,7 @@ import type { RequestEvent } from './$types';
 export async function GET(event: RequestEvent) {
 	const { params, request, locals } = event;
 	const tableName = params.table;
-	const recordId = params.id;
+	const recordId = params["app_id"];
 	const apiKey = request.headers.get('x-api-key');
 	const authorization = request.headers.get('authorization');
 
@@ -51,7 +51,7 @@ export async function GET(event: RequestEvent) {
 export async function PUT(event: RequestEvent) {
 	const { request, params, locals } = event;
 	const tableName = params.table;
-	const itemId = params.id;
+	const itemId = params["app_id"];
 
 	const formData = await request.json();
 
@@ -121,7 +121,7 @@ export async function PUT(event: RequestEvent) {
 export async function PATCH(event: RequestEvent) {
 	const { request, params, locals } = event;
 	const tableName = params.table;
-	const itemId = params.id;
+	const itemId = params["app_id"];
 
 	const formData = await request.json();
 
@@ -189,7 +189,7 @@ export async function PATCH(event: RequestEvent) {
 }
 
 export async function DELETE({ params }: RequestEvent) {
-	const item = params.id;
+	const item = params["app_id"];
 	const row = await prisma.row.findUnique({
 		where: { id: item }
 	});

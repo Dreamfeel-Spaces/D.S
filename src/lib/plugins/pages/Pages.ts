@@ -5,7 +5,7 @@ import { transformHtmlString } from '$lib/util/transformHtmlString';
 import { error } from '@sveltejs/kit';
 import grapesjs from 'grapesjs';
 import appCss from '../../../app.css?inline';
-import type { JsonData } from '../../../routes/editor/[id]/[builder]/[path]/server/+server';
+import type { JsonData } from '../../../routes/editor/[app_id]/[builder]/[path]/server/+server';
 import { gSpaceApIList } from '../grapes/space-ui/spaceApiList';
 import { JSDOM } from 'jsdom';
 

@@ -35,7 +35,7 @@
 	let isEditor = /\/editor/.test(pathname);
 	let isBase = /\/base/.test(pathname);
 	let isSpaces = /\/spaces/.test(pathname);
-	let spaceId = isBase ? $page.params.space : $page.params.id;
+	let spaceId = $page.params["app_id"];
 	let session = $page.data.session;
 
 	let subdomain = $page.data.subdomain;

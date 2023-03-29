@@ -5,7 +5,7 @@ import type { Actions, RequestEvent } from './$types';
 export async function load({ params }: RequestEvent) {
 	const space = await prisma.space.findUnique({
 		where: {
-			id: String(params.id)
+			id: String(params["app_id"])
 		}
 	});
 
@@ -18,7 +18,7 @@ export const actions: Actions = {
 	async default({ params }) {
 		const spa = await prisma.space.update({
 			//@ts-ignore
-			where: { id: params.id },
+			where: { id: params["app_id"] },
 			data: {
 				deactivated: false
 			}

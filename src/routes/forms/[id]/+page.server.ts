@@ -3,7 +3,7 @@ import type { Actions, RequestEvent } from './$types';
 import { error } from '@sveltejs/kit';
 
 export async function load({ params, cookies }: RequestEvent) {
-	const shareId = params.id;
+	const shareId = params["app_id"];
 
 	const share = await prisma.sQT.findUnique({
 		where: {
@@ -40,7 +40,7 @@ export async function load({ params, cookies }: RequestEvent) {
 export const actions: Actions = {
 	async default({ params, request, cookies }) {
 		const data = await request.formData();
-		const shareId = params.id;
+		const shareId = params["app_id"];
 
 		const share = await prisma.sQT.findUnique({
 			where: {

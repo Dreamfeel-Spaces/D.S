@@ -87,7 +87,7 @@ export const spaceAuth: Handle = async ({ event, resolve }) => {
 
 	async function getSpaceSession() {
 		try {
-			const sessionToken = cookies.get(`${event.params.id}-accessToken`);
+			const sessionToken = cookies.get(`${event.params['app_id']}-accessToken`);
 			const decoded = jwt.decode(sessionToken);
 			return { user: decoded };
 		} catch (e) {
@@ -145,7 +145,41 @@ export const activeUser: Handle = async ({ event, resolve }) => {
 	return resolve(event);
 };
 
-export const handle = sequence(apiAuth, authHandle, spaceAuth, withSpaceRouter, activeUser);
+export const spaceIdHandle: Handle = async ({ event, resolve }) => {
+	const { params } = event;
+	const appId = params['app_id'];
+	if (appId) {
+		const space = await prisma.space.findUnique({
+			where: {
+				appId
+			}
+		});
+
+		const sessionToken: any = cookies.get(`${space.appId}-accessToken`);
+
+		if (sessionToken) {
+			const decoded = jwt.decode(sessionToken);
+			const user = await prisma.spaceUser.findUnique({
+				where: {
+					id: decoded?.id
+				}
+			});
+			event.locals.spaceSession = { user };
+		}
+
+		event.locals.space = space;
+	}
+	return resolve(event);
+};
+
+export const handle = sequence(
+	apiAuth,
+	authHandle,
+	spaceAuth,
+	withSpaceRouter,
+	activeUser,
+	spaceIdHandle
+);
 
 // import EmailProvider from "next-auth/providers/email";
 // ...

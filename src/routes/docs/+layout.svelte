@@ -141,16 +141,16 @@
 	<div class="w-36  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
 		<div>
 			<div class="mt-20">
-				<a class="hover:underline text-blue" href={`/base/${$page.params.space}`}>Dashboards</a>
+				<a class="hover:underline text-blue" href={`/base/${$page.params["app_id"]}`}>Dashboards</a>
 			</div>
 			<div class="mt-6">
-				<a class="hover:underline text-blue" href={`/spaces/${$page.params.space}`}>Admin</a>
+				<a class="hover:underline text-blue" href={`/spaces/${$page.params["app_id"]}`}>Admin</a>
 			</div>
 			<div class="mt-6">
-				<a class="hover:underline text-blue" href={`/editor/${$page.params.space}`}>UI Builder</a>
+				<a class="hover:underline text-blue" href={`/editor/${$page.params["app_id"]}`}>UI Builder</a>
 			</div>
 			<div class="mt-6">
-				<a class="hover:underline text-blue" href={`/${$page.params.space}`}>Website</a>
+				<a class="hover:underline text-blue" href={`/${$page.params["app_id"]}`}>Website</a>
 			</div>
 		</div>
 	</div>

@@ -4,7 +4,7 @@ import { error } from '@sveltejs/kit';
 
 export const actions = {
 	async update({ request, params }) {
-		const exampleId = params.id;
+		const exampleId = params["app_id"];
 		const data = await request.formData();
 		const property = String(data.get('property'));
 		const updated = await prisma.example.update({
@@ -14,7 +14,7 @@ export const actions = {
 		return { success: true, data: updated };
 	},
 	async delete({ params }) {
-		const exampleId = params.id;
+		const exampleId = params["app_id"];
 		await prisma.example.delete({
 			where: { id: exampleId }
 		});
@@ -23,7 +23,7 @@ export const actions = {
 };
 
 export async function load({ params }) {
-	const exampleId = params.id;
+	const exampleId = params["app_id"];
 	const example = await prisma.example.findUnique({ where: { id: exampleId } });
 	if (!example) throw error(404, 'Example not found');
 	return { example };
