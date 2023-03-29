@@ -146,7 +146,7 @@ export const activeUser: Handle = async ({ event, resolve }) => {
 };
 
 export const spaceIdHandle: Handle = async ({ event, resolve }) => {
-	const { params } = event;
+	const { params, cookies } = event;
 	const appId = params['app_id'];
 	if (appId) {
 		const space = await prisma.space.findUnique({
