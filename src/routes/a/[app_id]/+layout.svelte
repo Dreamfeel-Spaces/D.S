@@ -324,7 +324,7 @@
 			</div>
 		</header>
 		<div class="main-content dark:bg-gray-700  max-h-105 flex flex-col flex-grow p-4">
-			{#if !/\/welcome/.test(pathname)}
+			{#if !/\/welcome/.test(pathname) && !/\/accounts/.test(pathname)}
 				<h1 class="font-bold dark:text-gray-100 text-2xl text-gray-700">Home</h1>
 			{/if}
 			<div class="flex flex-col  dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded mt-4">

@@ -21,7 +21,7 @@
 </script>
 
 <div class="text-end">
-	<Button on:click={() => (formModal = true)}>Generate Credentials</Button>
+	<Button size="xs" gradient on:click={() => (formModal = true)}>Generate Credentials</Button>
 </div>
 <Modal bind:open={formModal} autoclose={false} class="w-full">
 	<div>
@@ -60,7 +60,7 @@
 						Copy password
 					</p>
 					<p class="mt-3">
-						<a target="_blank" rel="noreferrer" href={`/a/${$page.params["app_id"]}/accounts`}
+						<a target="_blank" rel="noreferrer" href={`/a/${$page.params['app_id']}/accounts`}
 							>Login in a new tab</a
 						>
 					</p>

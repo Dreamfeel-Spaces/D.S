@@ -7,7 +7,7 @@ export const actions: Actions = {
 	async updateChannels({ request, params }) {
 		const data = await request.formData();
 
-		const appId = params["app_id"];
+		const appId = params['app_id'];
 
 		const space = await prisma.space.findUnique({
 			where: {
@@ -45,7 +45,7 @@ export const actions: Actions = {
 		const description = String(data.get('description'));
 		const isSuperUser = 'true' === String(data.get('isSuperUser'));
 
-		const appId = params["app_id"];
+		const appId = params['app_id'];
 
 		const space = await prisma.space.findUnique({
 			where: {
@@ -80,26 +80,21 @@ export const actions: Actions = {
 	}
 };
 
-export async function load({ cookies, params }: PageServerLoadEvent) {
-	const appId = params["app_id"];
+export async function load({ cookies, params, locals }: PageServerLoadEvent) {
+	//@ts-ignore
+	const space = locals.space;
+	//@ts-ignore
+	const spaceSession = locals.spaceSession;
 
-	const space = await prisma.space.findUnique({
+	const onboarding = await prisma.onboarding.findFirst({
 		where: {
-			appId
-		},
-		include: {
-			onboarding: true
+			spaceId: space.id
 		}
 	});
 
-	
-	const userToken = cookies.get(`${appId}-accessToken`);
+	if (!spaceSession?.user) throw redirect(302, `/a/${space.appId}/accounts`);
 
-	if (!userToken) {
-		throw redirect(302, `/a/${appId}/accounts`);
-	}
-
-	if (!space?.onboarding[0].complete) {
-		throw redirect(302, `/a/${appId}/welcome`);
+	if (!onboarding?.complete) {
+		throw redirect(302, `/a/${space?.appId}/welcome`);
 	}
 }

@@ -14,7 +14,6 @@ export async function load({ cookies, params, locals }: LayoutServerLoadEvent) {
 		throw error(404, 'Page not found');
 	}
 
-	if (!spaceSession?.user) throw redirect(302, `/a/${space.appId}/accounts`);
 
 	let onboarding = await prisma.onboarding.findFirst({
 		where: {
