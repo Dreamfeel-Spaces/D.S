@@ -31,5 +31,5 @@ export async function load({ cookies, params, locals }: LayoutServerLoadEvent) {
 		throw redirect(302, `/a/${space.appId}/welcome`);
 	}
 
-	return { space, spaceSession };
+	return { space: { ...space, onboarding: [onboarding] }, spaceSession };
 }

@@ -15,7 +15,6 @@
 
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
-	import { onMount, onDestroy } from 'svelte';
 
 	let props;
 
