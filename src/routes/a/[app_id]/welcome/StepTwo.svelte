@@ -7,7 +7,7 @@
 	let whoAmi = '';
 </script>
 
-<form action="?/stepTwo" method="post" class=" pt-9 mt-4 px-6">
+<form action="?/stepTwo" method="post" class=" px-6">
 	<div class="text-center border-gray-800  min-h-100">
 		<p class="text-3xl text-gray-900  dark:text-gray-50 ">Who will you be creating apps for ?</p>
 		<p class="my-6">We'll help you get started based on your responses. .</p>

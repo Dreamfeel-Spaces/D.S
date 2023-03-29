@@ -2,6 +2,7 @@
 	import { DarkMode } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	const space = $page.data.space;
+	const pathname = $page.url.pathname;
 </script>
 
 <!-- <SpaceNav />
@@ -322,17 +323,17 @@
 				</div>
 			</div>
 		</header>
-		<div class="main-content flex flex-col flex-grow p-4">
-			<h1 class="font-bold text-2xl text-gray-700">Home</h1>
-			<div
-				class="flex flex-col max-h-99 overflow-auto pt-9 flex-grow dark:bg-gray-700 bg-white rounded mt-4"
-			>
+		<div class="main-content dark:bg-gray-700  max-h-105 flex flex-col flex-grow p-4">
+			{#if !/\/welcome/.test(pathname)}
+				<h1 class="font-bold dark:text-gray-100 text-2xl text-gray-700">Home</h1>
+			{/if}
+			<div class="flex flex-col  dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded mt-4">
 				<slot />
 			</div>
 		</div>
-		<footer class="footer px-4 py-6">
+		<footer class="footer px-4 py-2">
 			<div class="footer-content">
-				<p class="text-sm text-gray-600 text-center">
+				<p class="text-xs text-gray-600 text-center">
 					© {space.name}. All rights reserved.
 				</p>
 			</div>

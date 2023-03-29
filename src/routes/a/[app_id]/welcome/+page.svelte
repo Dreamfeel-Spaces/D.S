@@ -77,11 +77,11 @@
 	}
 </script>
 
-<div class="dark:bg-gray-900  dark:text-gray-50  min-h-112">
-	<div class="lg:px-80">
+<div class=" dark:text-gray-50  ">
+	<div >
 		<div class="carousel  ">
 			{#each images as image, i}
-				<div class="carousel-item h-72 {i === currentImageIndex ? 'visible' : 'hidden'}">
+				<div class="carousel-item {i === currentImageIndex ? 'visible' : 'hidden'}">
 					<svelte:component this={image} {...props} />
 					<!-- <p>{image.caption}</p> -->
 				</div>
@@ -95,7 +95,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		min-height: 800px;
+		min-height:500px;
 		position: relative;
 		overflow: auto;
 	}

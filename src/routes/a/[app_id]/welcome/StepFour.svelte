@@ -8,7 +8,7 @@
 	let whoAmi = '';
 </script>
 
-<form action="?/stepFour" method="post" class=" pt-9 mt-4 px-6">
+<form action="?/stepFour" method="post" class="px-6">
 	<div class="text-center border-gray-800  min-h-100">
 		<p class="text-3xl text-gray-900  dark:text-gray-50 ">What do you want to build today?</p>
 		<p class="my-6">We'll help you get started based on your responses. .</p>
@@ -36,7 +36,7 @@
 				<Input placeholder="Specify other" required name="other" />
 			</div>
 		{/if}
-		<div class="mt-6">
+		<div class="mt-3">
 			<input value={JSON.stringify(whoAmi)} name="whoAmi" type="hidden" />
 			<Button disabled={!whoAmi} class="w-full" type="submit">Continue</Button>
 		</div>

@@ -8,10 +8,10 @@
 	let whoAmi: any = {};
 </script>
 
-<form action="?/stepThree" method={'post'} class=" pt-9 mt-4 px-6">
+<form action="?/stepThree" method={'post'} class="px-6">
 	<div class="text-center border-gray-800  min-h-100">
 		<p class="text-3xl text-gray-900  dark:text-gray-50 ">How comfortable are you with Coding?</p>
-		<p class="my-6">We'll help you get started based on your responses. .</p>
+		<p class="my-3">We'll help you get started based on your responses. .</p>
 
 		<ul
 			class="w-full bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
@@ -51,7 +51,7 @@
 			</li>
 			
 		</ul>
-		<div class="mt-9">
+		<div class="mt-3">
 			<input value={JSON.stringify(whoAmi)} name="whoAmi" type="hidden" />
 			<Button disabled={!whoAmi} class="w-full" type="submit">Continue</Button>
 		</div>

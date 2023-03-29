@@ -4,12 +4,12 @@
 	import { page } from '$app/stores';
 </script>
 
-<form method="post" action="?/stepOne" class=" pt-9 mt-4 px-6 ">
-	<div class="text-center border-gray-800  min-h-100">
-		<p class="text-3xl text-gray-900  dark:text-gray-50 ">
+<form method="post" action="?/stepOne" class=" px-6 ">
+	<div class="text-center border-gray-800 ">
+		<p class="text-3xl mt-3 text-gray-900  dark:text-gray-50 ">
 			What best describes your role in {$page.data?.space?.name}?
 		</p>
-		<p class="my-6">We'll help you get started based on your responses.</p>
+		<p class="my-3">We'll help you get started based on your responses.</p>
 		<ul
 			class="w-full dark:text-gray-50 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
 		>
@@ -37,7 +37,7 @@
 			</li>
 			<li><Radio class="p-3" bind:group={whoAmi} required value="angular">Other</Radio></li>
 		</ul>
-		<div class="mt-9">
+		<div class="mt-3">
 			<input bind:value={whoAmi} name="whoAmi" type="hidden" />
 			<Button disabled={!whoAmi} class="w-full" type="submit">Continue</Button>
 		</div>

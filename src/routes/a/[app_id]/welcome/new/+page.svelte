@@ -17,12 +17,12 @@
 	let showMore = false;
 </script>
 
-<div class="py-9 text-center text-3xl dark:text-gray-100">
+<div class="py-2 text-center text-3xl dark:text-gray-100">
 	<p>Pick a starting point</p>
 </div>
 
 <div
-	class="grid pb-20 lg:px-48 lg:grid-cols-3 md:grid-cols-2 gap-3  dark:bg-gray-900 dark:text-white px-12"
+	class="grid lg:grid-cols-3 md:grid-cols-2 gap-3  dark:text-white px-4"
 >
 	<Card size="xl">
 		Blank site
@@ -93,13 +93,13 @@
 	</Card> -->
 </div>
 
-<div class="lg:px-48">
+<!-- <div >
 	<div class="py-9 text-center text-3xl dark:text-gray-100">
 		<p>Start from a template</p>
 	</div>
 
 	<div
-		class="grid pb-20 lg:grid-cols-2 md:grid-cols-2 gap-3 min-h-112 dark:bg-gray-900 dark:text-white px-12"
+		class="grid pb-20 lg:grid-cols-2 md:grid-cols-2 gap-3  dark:text-white px-12"
 	>
 		<Card class="min-h-20">
 			<ImagePlaceholder />
@@ -122,4 +122,4 @@
 			</Accordion>
 		</Card>
 	</div>
-</div>
+</div> -->
