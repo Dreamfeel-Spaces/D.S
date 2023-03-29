@@ -47,8 +47,8 @@
 		/^\/reports\/(.+)\/?/.test(pathname) ||
 		/^\/editor\/(.+)\/?/.test(pathname) ||
 		/^\/dashboards\/(.+)\/?/.test(pathname) ||
-		(/^\/spaces\/(.+)\/?/.test(pathname) && !/^\/spaces\/create\/?/.test(pathname)) ||
-		/^\/base\/(.+)\/?/.test(pathname) ||
+		(/^\/preferences\/(.+)\/?/.test(pathname)) ||
+		/^\/rest\/(.+)\/?/.test(pathname) ||
 		/^\/a\/(.+)\/?/.test(pathname) ||
 		/^\/onboarding\/?/.test(pathname);
 
@@ -159,7 +159,7 @@
 								</div>
 							</button>
 							<Dropdown class="w-72">
-								<DropdownItem href="/base" rel="external">
+								<DropdownItem href="/rest" rel="external">
 									<p>Rest APIs</p>
 									<small>Collections, Auth, Payments, File storage etc... </small>
 								</DropdownItem>

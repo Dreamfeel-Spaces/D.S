@@ -27,7 +27,7 @@ export async function load({ cookies, params, locals }: RequestEvent) {
 				spaceId: space.id
 			}
 		});
-		throw redirect(302, `/base/${space.appId}/quick-setup`);
+		throw redirect(302, `/rest/${space.appId}/quick-setup`);
 	}
 
 	const onboarding = await prisma.onboarding.findFirst({
@@ -57,7 +57,7 @@ export async function load({ cookies, params, locals }: RequestEvent) {
 		}
 	});
 
-	space = { ...space, apiSetup, onboarding, roles, tables };
+	space = { ...space, apiSetup:[apiSetup], onboarding: [onboarding], roles, tables };
 
 	return { space, spaceSession, tables };
 }

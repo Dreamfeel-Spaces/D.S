@@ -2,7 +2,6 @@
 <script lang="ts">
 	//@ts-nocheck
 
-	import { Button } from 'flowbite-svelte';
 
 	import { page } from '$app/stores';
 

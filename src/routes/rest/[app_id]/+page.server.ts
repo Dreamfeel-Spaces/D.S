@@ -15,7 +15,7 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 
 
 	if (!apiSetup?.complete) {
-		throw redirect(302, `/base/${space?.appId}/quick-setup`);
+		throw redirect(302, `/rest/${space?.appId}/quick-setup`);
 	}
 
 	const tables = await prisma.spaceTable.findMany({
