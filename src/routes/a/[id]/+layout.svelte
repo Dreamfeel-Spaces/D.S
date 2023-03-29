@@ -1,12 +1,10 @@
 <script>
-	import SpaceNav from '../../base/[space]/SpaceNav.svelte';
+	import SpaceNav from '../../rest/[space]/SpaceNav.svelte';
 	import {
 		Sidebar,
 		SidebarGroup,
 		SidebarItem,
 		SidebarWrapper,
-		SidebarDropdownItem,
-		SidebarDropdownWrapper
 	} from 'flowbite-svelte';
 	import { page } from '$app/stores';
 </script>

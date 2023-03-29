@@ -858,7 +858,7 @@
 				<Card padding="xl" size="xl">
 					<div class="flex flex-wrap">
 						<div class="grow-0 shrink-0 basis-auto w-full xl:w-5/12 px-3 lg:px-6 mb-12 xl:mb-0">
-							<form action="?/feedback" method="post">
+							<form action="/feedback" method="post">
 								<div class="form-group mb-6">
 									<input
 										required

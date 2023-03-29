@@ -172,7 +172,7 @@
 									<small>UI builder, Tailwind CSS and Native components</small>
 								</DropdownItem>
 								<DropdownItem class="flex items-center justify-between"
-									><Chevron placement="right">Enterprise solutions</Chevron></DropdownItem
+									><Chevron placement="right">Enterprise</Chevron></DropdownItem
 								>
 								<Dropdown placement="right-start">
 									<DropdownItem>E-Commerce</DropdownItem>
@@ -188,7 +188,7 @@
 							<a
 								rel="external"
 								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-								href="/spaces/create"
+								href="/create"
 								data-te-nav-link-ref>New Space</a
 							>
 						</li>
@@ -384,10 +384,10 @@
 						</svelte:fragment>
 						<SidebarDropdownItem
 							on:click={() => (hidden2 = true)}
-							href={`/spaces/create`}
-							label={'Create space'}
+							href={`/create`}
+							label={'New +'}
 							rel="external"
-							active={isSpaces && /\/create/.test(pathname)}
+							active={isSpaces && /$\/create/.test(pathname)}
 						/>
 						{#each $page.data.myapps as app}
 							<SidebarDropdownItem

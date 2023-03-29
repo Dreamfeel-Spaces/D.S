@@ -56,8 +56,8 @@ export function isReservedRoute(pathname: string) {
 	let isAdmin = /^\/admin/.test(pathname);
 	let isApi = /^\/api/.test(pathname);
 	let isApps = /^\/apps/.test(pathname);
-	let isBase = /^\/base/.test(pathname);
-	let isSpaces = /^\/spaces/.test(pathname);
+	let isBase = /^\/rest/.test(pathname);
+	let isSpaces = /^\/preferences/.test(pathname);
 	let isBlog = /^\/blog/.test(pathname);
 	let isDashboards = /^\/dashboards/.test(pathname);
 	let isDeactivated = /^\/deactivated/.test(pathname);
@@ -72,8 +72,11 @@ export function isReservedRoute(pathname: string) {
 	let isReports = /^\/reports/.test(pathname);
 	let isApp = /^\/a\/(.+)/.test(pathname);
 	let isMockServer = /^\/api\/examples/.test(pathname);
+	let isCreate = /^\/create/.test(pathname)
+	let isFeedback = /^\/feedback/.test(pathname)
 
 	let reservedRoutes = [
+		isFeedback,
 		isAccounts,
 		isAdmin,
 		isApi,
@@ -94,7 +97,8 @@ export function isReservedRoute(pathname: string) {
 		isReports,
 		isApp,
 		isMockServer,
-		isOnboarding
+		isOnboarding,
+		isCreate
 	];
 
 	return reservedRoutes.find(Boolean);

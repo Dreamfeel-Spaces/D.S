@@ -31,7 +31,7 @@ export function gSpaceApIList(
 				} else {
 					const classes = html?.classList.replace('light', 'dark');
 					//@ts-ignore
-					this.innerHTML = `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1
+					this.innerHTML = `<svg  class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1
 					0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>`;
 					if (!classes) {
 						html?.classList.add('light');
@@ -630,21 +630,29 @@ export function gSpaceApIList(
 		}
 	});
 
+	const formSubmitHandler = function () {
+		// @ts-ignore
+		this.onsubmit = (e: SubmitEvent) => e.preventDefault();
+	};
+
 	editor.DomComponents.addType('api-form-component', {
 		model: {
 			defaults: {
 				attributes: {
 					'data-index': 0,
-					'data-table': ''
+					'data-table': '',
+					method: 'post'
 				},
-				tagName: 'div',
+				tagName: 'form',
 				traits: [
 					{
 						type: 'select',
 						options: tableNames,
 						name: 'data-table'
-					}
-				]
+					},
+					'method'
+				],
+				script: formSubmitHandler
 			},
 			init() {
 				this.listenTo(this, 'change:attributes:data-table', this.resetComponents);
@@ -665,11 +673,32 @@ export function gSpaceApIList(
 					let table: any = tables.find((tb: any) => tb.name === tableName);
 					for (let i = 0; i < table?.columns?.length; i++) {
 						const column: any = table.columns[i];
-						this
-							.append(`<div data-index="${i}" data-table=${tableName} style="min-height:100px;padding:20px;margin:20px" >
-				                <input  data-gjs-type="api-text-component" placeholder=${column.name}  data-table="${tableName}" data-index="${i}" >Text</input>
-				        </div>`);
+
+						this.append(`
+				                <input data-index="${i}"  data-table=${tableName} class="form-control block
+                  w-full
+                  px-3
+						my-6
+                  py-2
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+				  dark:bg-gray-700
+                  m-0
+                  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"  data-gjs-type="api-input-component" placeholder=${column.name}  data-table="${tableName}" data-index="${i}"/>
+				       `);
 					}
+					this.append(`<button
+						type="submit"
+						class="inline-flex w-full items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 dark:focus:ring-pink-900"
+					>
+						Submit
+					</button>`);
 				} catch (error) {}
 			}
 		}
@@ -919,7 +948,7 @@ export function gSpaceApIList(
 	});
 	editor.BlockManager.add('Api form component', {
 		label: 'API Form',
-		content: `<div class="h-20"  data-gjs-type="api-form-component"></div>`,
+		content: `<form  method="post" class="px-20 min-h-48"  data-gjs-type="api-form-component"></form>`,
 		category: 'Space API'
 	});
 
