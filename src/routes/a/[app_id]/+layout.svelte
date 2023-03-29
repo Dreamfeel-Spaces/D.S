@@ -18,7 +18,7 @@
 				<Sidebar>
 					<SidebarWrapper class="max-h max-h-100 h-100 fixed w-64 ml-4 overflow-auto">
 						<SidebarGroup>
-							<SidebarItem href={`/base/${$page.params["app_id"]}`} rel="external" label="Collections" />
+							<SidebarItem href={`/rest/${$page.params["app_id"]}`} rel="external" label="Collections" />
 							<SidebarItem href={`/dashboards/${$page.params["app_id"]}`} label="Dashboard" />
 							<SidebarItem href={`/editor/${$page.params["app_id"]}`} label="UI" />
 							<SidebarItem href={`/spaces/${$page.params["app_id"]}`} label="Config" />

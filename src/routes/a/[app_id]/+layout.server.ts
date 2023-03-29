@@ -31,5 +31,11 @@ export async function load({ cookies, params, locals }: LayoutServerLoadEvent) {
 		throw redirect(302, `/a/${space.appId}/welcome`);
 	}
 
-	return { space: { ...space, onboarding: [onboarding] }, spaceSession };
+	const tables = await prisma.spaceTable.findMany({
+		where: {
+			appId: space.id
+		}
+	});
+
+	return { space: { ...space, onboarding: [onboarding], tables }, spaceSession };
 }
