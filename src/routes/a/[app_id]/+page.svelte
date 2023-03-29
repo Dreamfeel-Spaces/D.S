@@ -21,7 +21,7 @@
 	const space = $page.data.space;
 	let activeTab = $page.url.searchParams.get('tab') ?? 'home';
 	import { goto } from '$app/navigation';
-	import PermissionDialog from '../../preferences/[id]/PermissionDialog.svelte';
+	import PermissionDialog from '../../preferences/[app_id]/PermissionDialog.svelte';
 	let appId = $page.params["app_id"];
 	const onboarding = space.onboarding[0];
 	const interest = JSON.parse(onboarding?.stepCoding ?? '');

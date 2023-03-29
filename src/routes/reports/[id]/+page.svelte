@@ -15,7 +15,7 @@
 	let selectedOptions: any = {};
 	import FileDropzone from '$lib/components/FileDropzone.svelte';
 	import DateTimeInput from '$lib/components/DateTimeInput.svelte';
-	import SpaceChart from '../../dashboards/[id]/[table]/overview/SpaceChart.svelte';
+	import SpaceChart from '../../dashboards/[app_id]/[table]/overview/SpaceChart.svelte';
 	let report = data.report;
 </script>
 
