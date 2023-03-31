@@ -21,13 +21,19 @@
 	let apiResponse: any;
 	let loading = false;
 
-	export let table: any = '';
-
 	export let action: any = '';
 
 	export let clone: Boolean = false;
 
-	const columns = table?.columns ?? [];
+	let columns = (
+		$page.data.tables.find((table: any) => table.name === $page.params.table)?.columns ?? []
+	).map((col: any) => ({
+		name: col.name,
+		value: '',
+		type: col.type
+	}));
+
+	console.log($page.data.tables, $page.params.table);
 
 	let data: any;
 	let error: any;
@@ -43,12 +49,6 @@
 	let apiUrl = `${$page.url.origin}/api/examples`;
 
 	let headers = [{ name: '', value: '' }];
-
-	let colItems = columns.map((col: any) => ({
-		name: col.name,
-		value: '',
-		type: col.type
-	}));
 
 	let asItem = 'as_item';
 
@@ -104,7 +104,7 @@
 		try {
 			savingColumns = true;
 			savingColumnsSuccess = false;
-			const response = await axios.post(`/base/${$page.params["app_id"]}/svr`, { collections });
+			const response = await axios.post(`/base/${$page.params['app_id']}/svr`, { collections });
 			if (response.data) {
 				savingColumnsSuccess = true;
 				savingColumns = false;
@@ -144,7 +144,7 @@
 			if (take) startParams = startParams + `take=${take}`;
 			if (skip) startParams = startParams + `skip=${skip}`;
 
-			const filters = colItems
+			const filters = columns
 				.filter((col: any) => Boolean(col.value))
 				.reduce((prev: string, curr: any, index: number) => {
 					if (startParams === '') return prev + `${curr.name}=${curr.value}`;
@@ -159,7 +159,7 @@
 				loading = false;
 			}
 		} else if (action === 'create') {
-			const body = colItems.reduce((prev: any, curr: any, index: number) => {
+			const body = columns.reduce((prev: any, curr: any, index: number) => {
 				return { ...prev, [curr.name]: curr.value };
 			}, {});
 			try {
@@ -207,7 +207,7 @@
 				loading = false;
 			}
 		} else if (action === 'signup') {
-			const body = colItems.reduce((prev: any, curr: any, index: number) => {
+			const body = columns.reduce((prev: any, curr: any, index: number) => {
 				return { ...prev, [curr.name]: curr.value };
 			}, {});
 			try {
@@ -225,7 +225,7 @@
 				loading = false;
 			}
 		} else if (action === 'signin') {
-			const body = colItems.reduce((prev: any, curr: any, index: number) => {
+			const body = columns.reduce((prev: any, curr: any, index: number) => {
 				return { ...prev, [curr.name]: curr.value };
 			}, {});
 			try {
@@ -259,19 +259,20 @@
 			}
 		}
 	}
+	let datatype = 'form_data';
 </script>
 
 <form on:submit|preventDefault={handleFetch}>
 	{#if clone}
 		<label for="Url">URL </label>
-		<Input bind:value={apiUrl} required class="my-3" placeholder={`Enter url`} />
+		<Input bind:value={apiUrl} required class="my-1" placeholder={`Enter url`} />
 	{/if}
 
 	{#if clone}
-		<div class="my-3 pl-9 bg-gray-700 py-3 rounded-xl">
+		<div class="my-3 pl-9 dark:bg-gray-700 py-1 rounded-xl">
 			<p>Headers</p>
 			{#each headers as header, index}
-				<div class="grid gap-2 grid-cols-2 mt-3">
+				<div class="grid gap-2 grid-cols-2 mt-1">
 					<div><Input required value={header.name} placeholder="key" /></div>
 					<div class="flex">
 						<Input required value={header.value} placeholder="value" />
@@ -289,94 +290,118 @@
 			<button
 				type="button"
 				on:click={() => (headers = [...headers, { name: '', value: '' }])}
-				class="mt-3"
+				class="mt-1"
 				>Add header
 			</button>
 		</div>
 	{/if}
 
-	<label for="X-API-KEY"> X-API-KEY </label>
+	<div class="flex justify-between">
+		<label for="X-API-KEY"> Space API Key </label>
+		{#if !clone}
+			<div>
+				<a
+					class="text-blue-500 hover:underline"
+					target="blank"
+					href={`/preferences/${$page.params['app_id']}?tab=apikeys`}>Generate API Key</a
+				>
+			</div>
+		{/if}
+	</div>
 	<Input
 		type="password"
 		bind:value={apiKey}
 		required={!clone}
-		class="my-3"
+		class="my-1"
 		placeholder={`Api Key`}
 	/>
-	{#if !clone}
-		<div>
-			<a
-				class="text-blue-500 hover:underline"
-				target="blank"
-				href={`/spaces/${$page.params["app_id"]}?tab=apikeys`}>Get an api key</a
-			>
-		</div>
-	{/if}
 
 	{#if action === 'find_unique' || action === 'delete'}
-		<div class="my-6">
+		<div class="my-1">
 			<label for="id">ID</label>
-			<Input bind:value={itemId} required class="my-3" placeholder={`Enter item id`} />
+			<Input bind:value={itemId} required class="my-2=1" placeholder={`Enter item id`} />
 		</div>
 	{/if}
 
-	{#if action === 'create' || action === 'signup' || action === 'signin'}
-		<div class="text-2xl mt-4">Request body</div>
-		{#each colItems as col}
-			{#if col.type === 'string' || col.type === 'number' || col.type === 'email' || col.type === 'password' || col.type === 'image'}
-				<div class="grid grid-cols-2 gap-3 my-5">
-					<div>
-						<p>{col.name}</p>
-					</div>
-					{#if col.type === 'number'}
-						<NumberInput
-							required={col.required}
-							type={col.type}
-							bind:value={col.value}
-							placeholder={`Enter ${col.name}..`}
-						/>
-					{:else if col.type === 'email'}
-						<Input
-							required={col.required}
-							type={'email'}
-							bind:value={col.value}
-							placeholder={`Enter ${col.name}..`}
-						/>
-					{:else if col.type === 'password'}
-						<Input
-							required={col.required}
-							type={'password'}
-							bind:value={col.value}
-							placeholder={`Enter ${col.name}..`}
-						/>
-					{:else}
-						<Input
-							required={col.required}
-							bind:value={col.value}
-							placeholder={`Enter ${col.name}..`}
-						/>
-					{/if}
+	<div class="pl-4">
+		{#if action === 'create' || action === 'signup' || action === 'signin'}
+			<div class=" mt-2 spacing-y-2">Request body</div>
+			<div class="flex">
+				<div class="flex flex-1">
+					<Radio value="form_data" bind:group={datatype}>Form Data</Radio>
+					<Radio value="json" bind:group={datatype} class="ml-2">JSON</Radio>
 				</div>
+				{#if loading}
+					<div class="flex justify-center">
+						<div>
+							<Spinner />
+						</div>
+					</div>
+				{:else}
+					<Button size="xs" type="submit" class={clone ? `mt-1 w-full` : 'mt-1'}
+						>Send request</Button
+					>
+				{/if}
+			</div>
+
+			{#if datatype === 'form_data'}
+				{#each columns as col, index}
+					{#if col.type === 'string' || col.type === 'number' || col.type === 'email' || col.type === 'password' || col.type === 'image'}
+						<div class="grid grid-cols-5 gap-3 my-2 ${index % 2 === 0 ? 'bg-gray-500' : ''}">
+							<div>
+								<p>{col.name}</p>
+							</div>
+							{#if col.type === 'number'}
+								<NumberInput
+									required={col.required}
+									type={col.type}
+									bind:value={col.value}
+									placeholder={`Enter ${col.name}..`}
+								/>
+							{:else if col.type === 'email'}
+								<Input
+									required={col.required}
+									type={'email'}
+									bind:value={col.value}
+									placeholder={`Enter ${col.name}..`}
+								/>
+							{:else if col.type === 'password'}
+								<Input
+									required={col.required}
+									type={'password'}
+									bind:value={col.value}
+									placeholder={`Enter ${col.name}..`}
+								/>
+							{:else}
+								<Input
+									required={col.required}
+									bind:value={col.value}
+									placeholder={`Enter ${col.name}..`}
+								/>
+							{/if}
+						</div>
+					{/if}
+				{/each}
 			{/if}
-		{/each}
-	{/if}
+		{/if}
+	</div>
 
 	{#if action === 'find_first'}
-		<div class="grid grid-cols-2 gap-3 my-5">
+		<div class="grid grid-cols-2 gap-3 my-2">
 			<div>
 				<p>Take</p>
 			</div>
 			<NumberInput bind:value={take} placeholder={`Take`} />
 		</div>
-		<div class="grid grid-cols-2 gap-3 my-5">
+		<div class="grid grid-cols-2 gap-3 my-2">
 			<div>
 				<p>Skip</p>
 			</div>
 			<NumberInput bind:value={skip} placeholder={`Skip`} />
 		</div>
-		{#each colItems as col}
+		{#each columns as col}
 			{#if col.type === 'string' || col.type === 'number' || col.type === 'email'}
-				<div class="grid grid-cols-2 gap-3 my-5">
+				<div class="grid grid-cols-2 gap-3 my-2">
 					<div>
 						<p>{col.name}</p>
 					</div>
@@ -395,23 +420,14 @@
 			{/if}
 		{/each}
 	{/if}
-	{#if loading}
-		<div class="flex justify-center">
-			<div>
-				<Spinner />
-			</div>
-		</div>
-	{:else}
-		<Button size="xs" type="submit" class={clone ? `mt-3 w-full` : 'mt-3'}>Send request</Button>
-	{/if}
 
-	<div class="mt-9">
-		<p class="text-2xl">Response</p>
-		<div class="mt-3">
-			<p>{statuscode}: {statusText}</p>
-		</div>
+	<div class="mt-3">
 		{#if data && !clone}
-			<div class={`my-6 text-green-500 text-wrap max-w-96 max-h-64 overflow-auto`}>
+			<p>Response</p>
+			<div class="mt-1">
+				<p>{statuscode}: {statusText}</p>
+			</div>
+			<div class={`my-1 text-green-500 text-wrap max-w-96 max-h-64 overflow-auto`}>
 				<Code code={JSON.stringify(data, null, '\t')} />
 			</div>
 		{/if}
@@ -532,26 +548,33 @@
 			</div>
 		{/if}
 		{#if !clone}
-			<div class="text-2xl mt-9">
-				<p>Response types</p>
-				<div class="my-6">
-					<Alert class="bg-green-100">
-						<p class="text-xl text-green-500">200 OK</p>
-						<p class="text-green-500">Server has successfully processed the request</p>
-					</Alert>
-				</div>
-				<div class="mb-6">
-					<Alert class="bg-red-100">
-						<p class="text-xl text-red-500">400* Bad request</p>
-						<p class="text-red-500">Request failed, something is wrong with the request.</p>
-					</Alert>
-				</div>
-				<div class="mb-6">
-					<Alert class="bg-red-100">
-						<p class="text-xl text-red-500">500* Bad request</p>
-						<p class="text-red-500">Request failed due to an internal server error.</p>
-					</Alert>
-				</div>
+			<div class="mt-2">
+				<Accordion>
+					<AccordionItem>
+						<p slot="header">Response types</p>
+
+						<div class="my-6">
+							<Alert class="bg-green-100">
+								<p class="text-sm text-green-500">200 OK</p>
+								<p class="text-green-500 text-xs">Server has successfully processed the request</p>
+							</Alert>
+						</div>
+						<div class="mb-6">
+							<Alert class="bg-red-100">
+								<p class="text-sm text-red-500">400* Bad request</p>
+								<p class="text-red-500 text-xs">
+									Request failed, something is wrong with the request.
+								</p>
+							</Alert>
+						</div>
+						<div class="mb-6">
+							<Alert class="bg-red-100">
+								<p class="text-sm text-red-500">500* Bad request</p>
+								<p class="text-red-500 text-xs">Request failed due to an internal server error.</p>
+							</Alert>
+						</div>
+					</AccordionItem>
+				</Accordion>
 			</div>
 		{/if}
 	</div>

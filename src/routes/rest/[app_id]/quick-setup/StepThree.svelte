@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 
 	import { Radio, Button, Select, Textarea, Label, Dropzone, Alert } from 'flowbite-svelte';
-	import Request from '../[table]/api/Request.svelte';
+	import Request from '../[table]/endpoints/Request.svelte';
 	import SelectOption from './SelectOption.svelte';
 	let whoAmi: any = 'existing_schema';
 	let schemaType = '';

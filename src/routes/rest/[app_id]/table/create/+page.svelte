@@ -14,14 +14,7 @@
 	<a href={`/base/${space}`}>Go back</a>
 </div>
 
-<div class="flex mt-4 justify-between px-6">
-	<Breadcrumb>
-		<BreadcrumbItem>Home</BreadcrumbItem>
-		<BreadcrumbItem>Space</BreadcrumbItem>
-		<BreadcrumbItem>Table</BreadcrumbItem>
-		<BreadcrumbItem>Create</BreadcrumbItem>
-	</Breadcrumb>
-</div>
+
 
 {#if form?.success}
 	<div class="my-9 px-6 ">

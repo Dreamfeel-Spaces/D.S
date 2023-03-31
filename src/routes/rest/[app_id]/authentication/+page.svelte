@@ -13,11 +13,11 @@
 		Alert
 	} from 'flowbite-svelte';
 	import { page } from '$app/stores';
-	import Request from '../[table]/api/Request.svelte';
+	import Request from '../[table]/endpoints/Request.svelte';
 	const spaceName = $page.params["app_id"];
 </script>
 
-<div class="my-3 mx-6  flex justify-between text-3xl text-gray-500">
+<!-- <div class="my-3 mx-6  flex justify-between text-3xl text-gray-500">
 	<p>
 		{spaceName}
 	</p>
@@ -32,7 +32,7 @@
 		</BreadcrumbItem>
 		<BreadcrumbItem>Rest Auth</BreadcrumbItem>
 	</Breadcrumb>
-</div>
+</div> -->
 {#if !data?.space?.apiChannel}
 	<div class="px-6">
 		<Alert class="mt-6">

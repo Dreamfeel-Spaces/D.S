@@ -86,7 +86,7 @@ export class Token {
 			let spaceData: any = { ...space };
 			delete spaceData['apiKeys'];
 			return [spaceData, null];
-		}
+		} else throw error(403, 'Invalid API Key');
 	}
 
 	async createAdminPass() {

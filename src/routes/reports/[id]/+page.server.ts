@@ -4,7 +4,7 @@ import { error } from '@sveltejs/kit';
 import { cleanData } from '$lib/util/slugit';
 
 export async function load({ params }: RequestEvent) {
-	const shareId = params["app_id"];
+	const shareId = params['id'];
 
 	const share = await prisma.sQT.findUnique({
 		where: {

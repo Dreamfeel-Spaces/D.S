@@ -36,18 +36,10 @@
 	let confirmPassword = '';
 </script>
 
-<div class="flex min-h-112">
-	<div class="flex-1" style="max-height:85vh; overflow:auto">
-		<div class="px-6 mt-3">
-			<Breadcrumb>
-				<BreadcrumbItem href="/" rel="external">Home</BreadcrumbItem>
-				<BreadcrumbItem href="/spaces" rel="external">Spaces</BreadcrumbItem>
-				<BreadcrumbItem rel="external" href={`/spaces/${data?.space?.appId}`}
-					>{data.space.name}</BreadcrumbItem
-				>
-				<BreadcrumbItem disabled>Admin</BreadcrumbItem>
-			</Breadcrumb>
-			<Tabs class="mt-4">
+<div class="flex">
+	<div class="flex-1">
+		<div>
+			<Tabs>
 				<!-- <TabItem
 					open={activeTab === 'channels'}
 					on:click={() => goto('?tab=channels')}
@@ -197,26 +189,30 @@
 					<div class="mt-9">
 						<AdminModal />
 					</div>
-					<Table class="mt-6">
-						<TableHead>
-							<TableHeadCell>Email</TableHeadCell>
-							<TableHeadCell>Date added</TableHeadCell>
-							<TableHeadCell>Date updated</TableHeadCell>
-							<TableHeadCell>Status</TableHeadCell>
-						</TableHead>
-						<TableBody class="divide-y">
-							{#each data.space.users as admin}
-								<TableBodyRow>
-									<TableBodyCell>{admin?.username}</TableBodyCell>
-									<TableBodyCell>{new Date(admin?.dateCreated) ?? ''}</TableBodyCell>
-									<TableBodyCell>{admin?.updatedAt ?? ''}</TableBodyCell>
-									<TableBodyCell
-										>{admin.status === 'pending-confirmation' ? 'Pending' : 'Active'}</TableBodyCell
-									>
-								</TableBodyRow>
-							{/each}
-						</TableBody>
-					</Table>
+					<div class="overflow-x-auto max-w-5xl ">
+						<Table class="mt-6 ">
+							<TableHead>
+								<TableHeadCell>Email</TableHeadCell>
+								<TableHeadCell>Date added</TableHeadCell>
+								<TableHeadCell>Date updated</TableHeadCell>
+								<TableHeadCell>Status</TableHeadCell>
+							</TableHead>
+							<TableBody class="divide-y">
+								{#each data.space.users as admin}
+									<TableBodyRow>
+										<TableBodyCell>{admin?.username}</TableBodyCell>
+										<TableBodyCell>{new Date(admin?.dateCreated) ?? ''}</TableBodyCell>
+										<TableBodyCell>{admin?.updatedAt ?? ''}</TableBodyCell>
+										<TableBodyCell
+											>{admin.status === 'pending-confirmation'
+												? 'Pending'
+												: 'Active'}</TableBodyCell
+										>
+									</TableBodyRow>
+								{/each}
+							</TableBody>
+						</Table>
+					</div>
 				</TabItem>
 
 				<TabItem
@@ -530,30 +526,6 @@
 					</form>
 				</TabItem>
 			</Tabs>
-		</div>
-	</div>
-	<div
-		class="w-36 dark:bg-gray-900 dark:text-gray-50  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72"
-	>
-		<div>
-			<div class="mt-20">
-				<a class="hover:underline text-blue" rel="external" href={`/base/${$page.params["app_id"]}`}
-					>Collections API</a
-				>
-			</div>
-			<div class="mt-6">
-				<a class="hover:underline text-blue" rel="external" href={`/dashboards/${$page.params["app_id"]}`}
-					>Dashboard</a
-				>
-			</div>
-			<div class="mt-6">
-				<a class="hover:underline text-blue" rel="external" href={`/editor/${$page.params["app_id"]}`}
-					>UI Builder</a
-				>
-			</div>
-			<div class="mt-6">
-				<a class="hover:underline text-blue" rel="external" href={`/${$page.params["app_id"]}`}>Website</a>
-			</div>
 		</div>
 	</div>
 </div>

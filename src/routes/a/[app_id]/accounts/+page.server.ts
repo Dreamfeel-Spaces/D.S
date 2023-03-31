@@ -4,24 +4,16 @@ import jwt from 'jsonwebtoken';
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
 
-export async function load({ params, cookies }: RequestEvent) {
-	const spaceId = params["app_id"];
-	const cookie = cookies.get(`${spaceId}-accessToken`);
-
-	if (cookie) {
-		const decoded = jwt.decode(cookie ?? '');
-
-		if (!decoded) return { spaceSession: null };
-
-		return { spaceSession: { user: decoded } };
-	}
-
-	return { spaceSession: null };
+export async function load({ params, cookies, locals }: RequestEvent) {
+	//@ts-ignore
+	const spaceSession = locals.spaceSession;
+	if (!spaceSession) throw error(403, 'Login required');
+	return { spaceSession };
 }
 
 export const actions: Actions = {
 	async signin({ request, params, cookies }) {
-		const spaceId = params["app_id"];
+		const spaceId = params['app_id'];
 
 		const data = await request.formData();
 		const username = String(data.get('username'));
@@ -45,7 +37,7 @@ export const actions: Actions = {
 			}
 		});
 
-		if (!user) return { error: true };
+		if (!user) return { error: true, data: { msg: 'User account does not exist' } };
 
 		const token = new Token();
 
@@ -67,7 +59,7 @@ export const actions: Actions = {
 		throw redirect(302, `/a/${spaceId}`);
 	},
 	async signout({ cookies, params }) {
-		const spaceId = params["app_id"];
+		const spaceId = params['app_id'];
 		cookies.delete(`${spaceId}-accessToken`, {
 			path: '/'
 		});
@@ -83,7 +75,7 @@ export const actions: Actions = {
 
 		const space = await prisma.space.findUnique({
 			where: {
-				appId: params["app_id"]
+				appId: params['app_id']
 			}
 		});
 

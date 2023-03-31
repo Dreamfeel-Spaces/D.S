@@ -51,13 +51,17 @@ export async function load({ cookies, params, locals }: RequestEvent) {
 		}
 	});
 
-	const tables = await prisma.spaceTable.findMany({
+	let tables = await prisma.spaceTable.findMany({
 		where: {
 			appId: space.id
+		},
+		include: {
+			columns: true
 		}
 	});
 
-	space = { ...space, apiSetup:[apiSetup], onboarding: [onboarding], roles, tables };
+	tables = tables.filter((table) => Boolean(table));
+	space = { ...space, apiSetup: [apiSetup], onboarding: [onboarding], roles, tables };
 
 	return { space, spaceSession, tables };
 }

@@ -1,5 +1,5 @@
 <script>
-	import SpaceNav from '../rest/[app_id]/SpaceNav.svelte';
+	import SpaceNav from '../../lib/components/SpaceNav.svelte';
 </script>
 
 <SpaceNav />

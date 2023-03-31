@@ -3,7 +3,7 @@ import type { RequestEvent } from './$types';
 
 export async function load({ params }: RequestEvent) {
 	const tableName = params.table;
-	const spaceId = params["app_id"];
+	const spaceId = params['app_id'];
 	const space = await prisma.space.findUnique({
 		where: {
 			appId: String(spaceId)
@@ -14,7 +14,7 @@ export async function load({ params }: RequestEvent) {
 			spaceId: String(space?.id)
 		}
 	});
-	const table = await prisma.spaceTable.findFirst({
+	let table = await prisma.spaceTable.findFirst({
 		where: {
 			name: tableName,
 			appId: space?.id
@@ -24,7 +24,7 @@ export async function load({ params }: RequestEvent) {
 		}
 	});
 	return {
-		table: { ...table, requiredPermission: JSON.parse(table?.requiredPermissions ?? '[]') },
+		table,
 		permissions,
 		space
 	};

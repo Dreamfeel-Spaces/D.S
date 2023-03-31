@@ -19,8 +19,8 @@
 	import axios from 'axios';
 	import { apiHelperModal } from '$lib/wsstore';
 	const tableName = $page.params.table;
-	const spaceName = $page.params["app_id"];
-	let spaceId = $page.params["app_id"];
+	const spaceName = $page.params['app_id'];
+	let spaceId = $page.params['app_id'];
 	let table = $page.params.table;
 
 	export let data: PageData;
@@ -58,7 +58,7 @@
 	async function handleDeleteColumn(id: string, index: number) {
 		deleting = index;
 		const response = await axios.delete(
-			`/base/${$page.params["app_id"]}/${$page.params.table}/schema/col/${id}`
+			`/rest/${$page.params['app_id']}/${$page.params.table}/schema/col/${id}`
 		);
 		if (response.data) {
 			let allCols = [...columns];
@@ -72,7 +72,7 @@
 	let whoAmi = 'manual_all';
 </script>
 
-<div class="py-2 bg-gray-50 dark:bg-gray-900">
+<!-- <div class="py-2 bg-gray-50 dark:bg-gray-900">
 	<div class="flex my-2">
 		<div class=" flex-1 text-xl px-6 ">
 			<Breadcrumb>
@@ -103,7 +103,7 @@
 	</div>
 
 	<div class="mt-4 px-6" />
-</div>
+</div> -->
 
 <div class=" overflow-auto pb-12 dark:bg-gray-900 bg-gray-50">
 	{#if form?.success}
@@ -119,40 +119,44 @@
 	{/if}
 
 	{#if whoAmi === 'manual_all'}
-		<div class="grid gap-4 px-6   mb-6 mt-6 ">
+		<div class="grid gap-4 px-6 grid-cols-3   my-2 ">
 			{#each columns as column, index}
-				<Card size="xl">
-					{#if !column.id}
-						<div class="text-right">
-							<Button class="mb-3" size="xs" pill gradient color="red">Not saved</Button>
-						</div>
-					{:else}
-						<div class="text-right">
-							<Button class="mb-3" size="xs" pill gradient color="green">Saved</Button>
-						</div>
-					{/if}
+				<Card>
 					<div class="flex justify-between">
-						<div class=" text-xl">
+						<div>
 							Col {index + 1}
 							{#if column.id}
 								<span> - ({column.name})</span>
 							{/if}
 						</div>
-						<div>
-							{#if deleting === index}
-								<Spinner />
-							{:else}
-								<CloseButton
-									on:click={() => {
-										if (column.id) handleDeleteColumn(column.id, index);
-										else removeColumn(index);
-									}}
-								/>
-							{/if}
+						<div class="flex">
+							<div>
+								{#if !column.id}
+									<div class="text-right">
+										<Button class="mb-2" size="xs" pill gradient color="red">Not saved</Button>
+									</div>
+								{:else}
+									<div class="text-right">
+										<Button class="mb-2" size="xs" pill gradient color="green">Saved</Button>
+									</div>
+								{/if}
+							</div>
+							<div>
+								{#if deleting === index}
+									<Spinner />
+								{:else}
+									<CloseButton
+										on:click={() => {
+											if (column.id) handleDeleteColumn(column.id, index);
+											else removeColumn(index);
+										}}
+									/>
+								{/if}
+							</div>
 						</div>
 					</div>
-					<div class="mb-9 mt-5 container  ">
-						<div class="mb-4 ">
+					<div class="mb-3 mt-2 container  ">
+						<div class="mb-2 ">
 							<label for="type">Type</label>
 							<Select
 								autofocus

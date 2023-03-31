@@ -32,11 +32,11 @@
 </script>
 
 <div class="text-end">
-	<Button size="xs" pill gradient color="pinkToOrange" on:click={() => (formModal = true)}
-		>Add new report</Button
+	<Button size="xs"  gradient  on:click={() => (formModal = true)}
+		>+ Add Report</Button
 	>
 </div>
-<form class="flex flex-col space-y-3" action="?/addReport&tab=report" method="POST">
+<form class="flex flex-col space-y-3" action="?/addReport&tab=reports" method="POST">
 	<Modal bind:open={formModal} autoclose={false} class="w-full text-left">
 		<div slot="header">
 			<div class="text-left">

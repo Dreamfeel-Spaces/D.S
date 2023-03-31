@@ -14,7 +14,6 @@ export async function load({ cookies, params, locals }: LayoutServerLoadEvent) {
 		throw error(404, 'Page not found');
 	}
 
-
 	let onboarding = await prisma.onboarding.findFirst({
 		where: {
 			spaceId: space.id
@@ -36,5 +35,12 @@ export async function load({ cookies, params, locals }: LayoutServerLoadEvent) {
 		}
 	});
 
-	return { space: { ...space, onboarding: [onboarding], tables }, spaceSession };
+	const roles = await prisma.userRoles.findMany({
+		where: {
+			spaceId: space.id
+		}
+	});
+
+
+	return { space: { ...space, onboarding: [onboarding], tables }, spaceSession, roles };
 }

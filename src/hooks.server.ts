@@ -162,6 +162,9 @@ export const spaceIdHandle: Handle = async ({ event, resolve }) => {
 			const user = await prisma.spaceUser.findUnique({
 				where: {
 					id: decoded?.id
+				},
+				include: {
+					role: true
 				}
 			});
 			event.locals.spaceSession = { user };

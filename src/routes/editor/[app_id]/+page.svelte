@@ -18,20 +18,11 @@
 	export let form: any;
 </script>
 
-<div class="mt-3 text-xl px-6 flex justify-between text-gray-500">
-	<Breadcrumb>
-		<BreadcrumbItem>Home</BreadcrumbItem>
-		<BreadcrumbItem>Editor</BreadcrumbItem>
-		<BreadcrumbItem>Item</BreadcrumbItem>
-	</Breadcrumb>
-	<a href={`/editor/${$page.params["app_id"]}/create`}><Button pill gradient size="xs">Create new Ui</Button></a>
-</div>
-
 {#if !uis.length}
 	<div class="my-9 text-center">
 		<div>No UIS have been added</div>
 		<div class="mt-9 ">
-			<a class="hover:underline" href={`/editor/${$page.params["app_id"]}/create`}>
+			<a class="hover:underline" href={`/editor/${$page.params['app_id']}/create`}>
 				<Button>Add UI Group</Button></a
 			>
 		</div>
@@ -44,7 +35,7 @@
 	</div>
 {/if}
 
-<div class="px-6 grid gap-2 max-h-99 mt-9 overflow-auto ">
+<div class="grid gap-2 lg:grid-cols-2  overflow-auto ">
 	{#each uis as ui}
 		<Card size="xl">
 			<div class="flex">
@@ -61,18 +52,18 @@
 			<Accordion class="mt-3">
 				<AccordionItem>
 					<svelte:fragment slot="header">Versions</svelte:fragment>
-					<List  position="inside" >
+					<List position="inside">
 						<Listgroup>
 							{#each ui.spaceUIVersion as version}
 								<ListgroupItem
 									size="xl"
-									href={`/editor/${$page.params["app_id"]}/${version.id}/${
+									href={`/editor/${$page.params['app_id']}/${version.id}/${
 										version.pages.find((page) => page.path === '/')?.id ?? version.pages[0]?.id
 									}`}
 								>
 									<div class="flex justify-between ">
 										<div class="flex" style="align-items:center">
-											<a rel="external" href={`/editor/${$page.params["app_id"]}/${version.id}`}
+											<a rel="external" href={`/editor/${$page.params['app_id']}/${version.id}`}
 												>Version {version.version}</a
 											>
 										</div>
@@ -87,12 +78,12 @@
 												size="xs"
 												>{data?.space?.uiVid === version.id ? 'Published' : `Publish`}</Button
 											>
-											<a href={`/editor/${$page.params["app_id"]}/${version.id}/settings`}>
+											<a href={`/editor/${$page.params['app_id']}/${version.id}/settings`}>
 												<Button pill outline gradient size="xs">Settings</Button>
 											</a>
 											<a
 												rel="external"
-												href={`/editor/${$page.params["app_id"]}/${version.id}/${
+												href={`/editor/${$page.params['app_id']}/${version.id}/${
 													version.pages.find((page) => page.path === '/')?.id ??
 													version.pages[0]?.id
 												}`}

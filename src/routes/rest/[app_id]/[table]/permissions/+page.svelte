@@ -41,22 +41,8 @@
 	});
 </script>
 
-<div class="mt-3">
-	<Breadcrumb>
-		<BreadcrumbItem>Home</BreadcrumbItem>
-		<BreadcrumbItem>Dashboards</BreadcrumbItem>
-		<BreadcrumbItem>
-			{$page.params["app_id"]}
-		</BreadcrumbItem>
-		<BreadcrumbItem>{$page.params.table}</BreadcrumbItem>
-		<BreadcrumbItem>Permissions</BreadcrumbItem>
-	</Breadcrumb>
-</div>
-<form method="post" class="max-h-99 overflow-auto">
+<form method="post">
 	<div class="p-6">
-		<div class=" mb-3 text-gray-500 text-3xl">API Permissions</div>
-		<div class="mb-6 text-gray-500" />
-
 		<Card size="xl">
 			<p>Create</p>
 			<p>Select roles with create access</p>

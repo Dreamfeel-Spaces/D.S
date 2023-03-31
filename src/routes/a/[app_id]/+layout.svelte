@@ -1,20 +1,23 @@
 <script>
-	import { DarkMode } from 'flowbite-svelte';
+	import { DarkMode, Button } from 'flowbite-svelte';
 	import { page } from '$app/stores';
+	import SpaceNav from '$lib/components/SpaceNav.svelte';
 	const space = $page.data.space;
+	const spaceSession = $page.data.spaceSession;
+	const user = spaceSession?.user;
 	const pathname = $page.url.pathname;
 </script>
 
-<!-- <SpaceNav />
+<SpaceNav modalOnly={true} />
 
-<div class="dark:bg-gray-900  min-h-112 pb-64 pt-20">
+<!--<div class="dark:bg-gray-900  min-h-112 pb-64 pt-20">
 	<div class="flex dark:bg-gray-900 ">
 		{#if !/\/accounts/.test($page.url.pathname) && !/\/welcome/.test($page.url.pathname)}
 			<div class="hidden md:block lg:block pt-6">
 				<Sidebar>
 					<SidebarWrapper class="max-h max-h-100 h-100 fixed w-64 ml-4 overflow-auto">
 						<SidebarGroup>
-							<SidebarItem href={`/rest/${$page.params["app_id"]}`} rel="external" label="Collections" />
+							<SidebarItem href={`/rest/${$page.params["app_id"]}`}  label="Collections" />
 							<SidebarItem href={`/dashboards/${$page.params["app_id"]}`} label="Dashboard" />
 							<SidebarItem href={`/editor/${$page.params["app_id"]}`} label="UI" />
 							<SidebarItem href={`/spaces/${$page.params["app_id"]}`} label="Config" />
@@ -30,15 +33,14 @@
 </div>
  -->
 
-<!-- component -->
 <div class="flex flex-row min-h-screen dark:bg-gray-900 bg-gray-100 text-gray-800">
 	<aside
-		class="sidebar w-64 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-800 bg-indigo-500"
+		class="sidebar dark:text-gray-900 w-64 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
 	>
-		<div class="sidebar-header flex items-center justify-center py-4">
+		<div class="sidebar-header flex items-center  ml-7 py-4">
 			<div class="inline-flex">
 				<a href={`/a/${space.appId}`} class="inline-flex flex-row items-center">
-					<span class="leading-10 text-gray-100 text-2xl font-bold ml-1 uppercase"
+					<span class="leading-10 dark:text-gray-100 text-2xl font-bold ml-1 uppercase"
 						>{space.name}</span
 					>
 				</a>
@@ -48,12 +50,12 @@
 			<ul class="flex flex-col w-full">
 				<li class="my-px">
 					<a
-						href="#"
-						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-700 dark:bg-gray-900 bg-gray-100"
+						href={`/a/${space?.appId}`}
+						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-100 dark:bg-gray-900 bg-gray-100"
 					>
-						<span class="flex items-center justify-center text-lg text-gray-400">
+						<span class="flex items-center justify-center text-lg text-gray-100">
 							<svg
-								fill="none"
+								fill="currentColor"
 								stroke-linecap="round"
 								stroke-linejoin="round"
 								stroke-width="2"
@@ -70,15 +72,14 @@
 					</a>
 				</li>
 				<li class="my-px">
-					<span class="flex font-medium text-sm text-gray-300 px-4 my-4 uppercase">Project</span>
+					<span class="flex font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase">Space</span>
 				</li>
 				<li class="my-px">
 					<a
-						rel="external"
 						href={`/rest/${space.appId}`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
 					>
-						<span class="flex items-center justify-center text-lg text-gray-400">
+						<span class="flex items-center justify-center text-lg dark:text-gray-400">
 							<svg
 								fill="currentColor"
 								xmlns="http://www.w3.org/2000/svg"
@@ -93,13 +94,12 @@
 						<span class="ml-3">Rest API</span>
 					</a>
 				</li>
-				<li class="my-px">
+				<!-- <li class="my-px">
 					<a
-						rel="external"
 						href={`/preferences/${space.appId}`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
 					>
-						<span class="flex items-center justify-center text-lg text-gray-400">
+						<span class="flex items-center justify-center text-lg dark:text-gray-400">
 							<svg
 								fill="currentColor"
 								xmlns="http://www.w3.org/2000/svg"
@@ -113,13 +113,13 @@
 						</span>
 						<span class="ml-3">Preferences</span>
 					</a>
-				</li>
+				</li> -->
 				<li class="my-px">
 					<a
 						href={`/dashboards/${space.appId}`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
 					>
-						<span class="flex items-center justify-center text-lg text-gray-400">
+						<span class="flex items-center justify-center text-lg dark:text-gray-400">
 							<svg
 								fill="currentColor"
 								xmlns="http://www.w3.org/2000/svg"
@@ -141,7 +141,7 @@
 				<li class="my-px">
 					<a
 						href={`/editor/${space.appId}`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
 					>
 						<span class="flex items-center justify-center text-l">
 							<svg
@@ -159,14 +159,40 @@
 					</a>
 				</li>
 				<li class="my-px">
-					<span class="flex font-medium text-sm text-gray-300 px-4 my-4 uppercase">Account</span>
+					<a
+						href={`/a/${space.appId}/roles`}
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+					>
+						<span class="flex items-center justify-center text-l">
+							<svg
+								fill="none"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+								class="h-6 w-6"
+							>
+								<path
+									d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
+								/>
+							</svg>
+						</span>
+						<span class="ml-3">User Roles</span>
+					</a>
+				</li>
+
+				<li class="my-px">
+					<span class="flex font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase"
+						>Account</span
+					>
 				</li>
 				<li class="my-px">
 					<a
-						href="#"
-						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						href={`/a/${space.appId}/accounts`}
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-300 hover:text-gray-700"
 					>
-						<span class="flex items-center justify-center text-lg text-gray-400">
+						<span class="flex items-center justify-center text-lg dark:text-gray-400">
 							<svg
 								fill="none"
 								stroke-linecap="round"
@@ -185,9 +211,9 @@
 				<li class="my-px">
 					<a
 						href="#"
-						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
 					>
-						<span class="flex items-center justify-center text-lg text-gray-400">
+						<span class="flex items-center justify-center text-lg dark:text-gray-400">
 							<svg
 								fill="none"
 								stroke-linecap="round"
@@ -211,10 +237,10 @@
 				</li>
 				<li class="my-px">
 					<a
-						href="#"
-						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						href={`/a/${space.appId}/preferences`}
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
 					>
-						<span class="flex items-center justify-center text-lg text-gray-400">
+						<span class="flex items-center justify-center text-lg dark:text-gray-400">
 							<svg
 								fill="none"
 								stroke-linecap="round"
@@ -230,31 +256,59 @@
 								<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
 							</svg>
 						</span>
-						<span class="ml-3">Settings</span>
+						<span class="ml-3">Preferences</span>
 					</a>
 				</li>
 				<li class="my-px">
-					<a
-						href="#"
-						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-300 hover:bg-gray-100 hover:text-gray-700"
-					>
-						<span class="flex items-center justify-center text-lg text-red-400">
-							<svg
-								fill="none"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								class="h-6 w-6"
+					{#if user}
+						<form method="post" action={`/a/${space.appId}/accounts?/signout`}>
+							<button
+								type="submit"
+								class="flex w-full flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
 							>
-								<path
-									d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
-								/>
-							</svg>
-						</span>
-						<span class="ml-3">Logout</span>
-					</a>
+								<span class="flex items-center justify-center text-lg text-red-400">
+									<svg
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+										class="h-6 w-6"
+									>
+										<path
+											d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
+										/>
+									</svg>
+								</span>
+								<span class="ml-3 dark:text-gray-300 text-gray-800"
+									>{user ? 'Sign out' : 'Sign in'}</span
+								>
+							</button>
+						</form>
+					{:else}
+						<a
+							href="#"
+							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						>
+							<span class="flex items-center justify-center text-lg text-red-400">
+								<svg
+									fill="none"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+									class="h-6 w-6"
+								>
+									<path
+										d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
+									/>
+								</svg>
+							</span>
+							<span class="ml-3">{user ? 'Sign out' : 'Sign in'}</span>
+						</a>
+					{/if}
 				</li>
 			</ul>
 		</div>
@@ -305,29 +359,35 @@
 					</div>
 				</form>
 				<div class="flex ml-auto">
+					<div class="pt-1">
+						<Button pill class="mr-4" size="xs" color="green">Live demo</Button>
+					</div>
 					<div class="mr-3">
 						<DarkMode />
 					</div>
-					<a href="" class="flex flex-row items-center">
-						<img
-							src="https://pbs.twimg.com/profile_images/378800000298815220/b567757616f720812125bfbac395ff54_normal.png"
-							class="h-10 w-10 bg-gray-200 border rounded-full"
-						/>
-						<span class="flex flex-col ml-2">
-							<span class=" dark:text-gray-100 w-20 font-semibold tracking-wide leading-none"
-								>John Doe</span
-							>
-							<span class="truncate w-20 text-gray-500 text-xs leading-none mt-1">Manager</span>
-						</span>
-					</a>
+					{#if user}
+						<a href={`/a/${space?.appId}/accounts`} class="flex flex-row items-center">
+							<img
+								alt="User profile"
+								src="https://pbs.twimg.com/profile_images/378800000298815220/b567757616f720812125bfbac395ff54_normal.png"
+								class="h-10 w-10 bg-gray-200 border rounded-full"
+							/>
+							<span class="flex flex-col ml-2">
+								<span
+									class=" overflow-hidden dark:text-gray-100 w-20 font-semibold tracking-wide leading-none"
+									>{user?.name}</span
+								>
+								<span class="truncate w-20 text-gray-500 text-xs leading-none mt-1"
+									>{user?.role?.name}</span
+								>
+							</span>
+						</a>
+					{/if}
 				</div>
 			</div>
 		</header>
-		<div class="main-content dark:bg-gray-700  max-h-105 flex flex-col flex-grow p-4">
-			{#if !/\/welcome/.test(pathname) && !/\/accounts/.test(pathname)}
-				<h1 class="font-bold dark:text-gray-100 text-2xl text-gray-700">Home</h1>
-			{/if}
-			<div class="flex flex-col  dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded mt-4">
+		<div class="main-content dark:bg-gray-700  max-h-105 flex flex-col flex-grow p-2">
+			<div class="flex flex-col  dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded ">
 				<slot />
 			</div>
 		</div>
