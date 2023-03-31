@@ -22,6 +22,7 @@
 	} from 'flowbite-svelte';
 	import Code from '../../../../Code.svelte';
 	const origin = $page.url.origin;
+	export let me = 'Brian Odida';
 </script>
 
 <!-- <div class="mt-3 px-6">
