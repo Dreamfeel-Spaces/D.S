@@ -78,6 +78,7 @@ model Page {
   uiDef            String?
   roles            UserRoles?     @relation(fields: [userRolesId], references: [id])
   userRolesId      String?
+  layout           Boolean        @default(false)
 
   @@index([spaceUIVersionId])
   @@index([userRolesId])
@@ -726,6 +727,12 @@ model Onboarding {
   stepTemplate String? @default("blank")
 
   @@index([spaceId])
+}
+
+model Intent {
+  id      String @id @default(cuid())
+  name    String
+  command String
 }
 
 model Space {

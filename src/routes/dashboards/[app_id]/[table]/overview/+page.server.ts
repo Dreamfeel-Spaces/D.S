@@ -3,66 +3,19 @@ import { cleanData, convertToSlug } from '$lib/util/slugit';
 import { error } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
 
-export async function load({ params }: RequestEvent) {
-	const tableName = params.table;
-	const space = await prisma.space.findUnique({
-		where: {
-			appId: params["app_id"]
-		},
-		include: { permissions: true, dashboards: true, tables: true }
-	});
+export async function load({ locals, params }: RequestEvent) {
+	//@ts-ignore
+	const space = locals.space;
+
 
 	if (!space) throw error(404, 'Space not found');
 
-	const table = await prisma.spaceTable.findFirst({
-		where: {
-			name: tableName,
-			appId: space.id
-		},
-		include: {
-			columns: true,
-			reports: {
-				include: {
-					fields: {
-						include: {
-							field: true
-						}
-					},
-					filters: true,
-					SQT: true
-				}
-			},
-			charts: {
-				include: {
-					fields: {
-						include: {
-							field: true
-						}
-					}
-				}
-			},
-			dashboardForms: {
-				include: {
-					fields: {
-						include: {
-							field: true
-						}
-					},
-					SQT: true
-				}
-			},
-			rows: {
-				include: {
-					tableData: true
-				}
-			}
-		}
-	});
+	const table = space.tables.find((table: any) => table.name === params.table);
 
 	let dash;
 
 	if (!table) {
-		dash = space.dashboards.filter((dashboard) => dashboard.name === tableName);
+		dash = space.dashboards.filter((dashboard: { name: any }) => dashboard.name === params.table);
 		if (!dash) throw error(404, 'Dashboard not found');
 	}
 
@@ -78,11 +31,11 @@ export async function load({ params }: RequestEvent) {
 		}
 	});
 
-	const formattedRows = (table ?? { rows: [] })?.rows.map((row) => {
+	const formattedRows = (table ?? { rows: [] })?.rows.map((row: { tableData: any[]; id: any }) => {
 		return {
 			...row,
 			...{
-				...row.tableData.reduce((prev, curr) => {
+				...row.tableData.reduce((prev: any, curr: { column: any; data: any }) => {
 					return { ...prev, [curr.column]: curr.data, id: row.id, name: curr.data };
 				}, {})
 			}
@@ -90,8 +43,8 @@ export async function load({ params }: RequestEvent) {
 	});
 
 	const reportColumns =
-		table?.reports.map((rep) => {
-			let cols = rep.fields.reduce((prev: any, curr) => {
+		table?.reports.map((rep: { fields: any[]; filters: any; charts: any }) => {
+			let cols = rep.fields.reduce((prev: any, curr: { field: any }) => {
 				return [...prev, curr.field];
 			}, []);
 			let rows = cleanData(rep.filters, rep.fields, formattedRows);
@@ -100,16 +53,16 @@ export async function load({ params }: RequestEvent) {
 		}) ?? [];
 
 	const chartColumns =
-		table?.charts.map((rep) => {
-			let cols = rep.fields.reduce((prev: any, curr) => {
+		table?.charts.map((rep: { fields: any[] }) => {
+			let cols = rep.fields.reduce((prev: any, curr: { field: any }) => {
 				return [...prev, curr.field];
 			}, []);
 			return { ...rep, columns: cols };
 		}) ?? [];
 
 	const formColumns =
-		table?.dashboardForms.map((rep) => {
-			let cols = rep.fields.reduce((prev: any, curr) => {
+		table?.dashboardForms.map((rep: { fields: any[] }) => {
+			let cols = rep.fields.reduce((prev: any, curr: { field: any }) => {
 				return [...prev, curr.field];
 			}, []);
 			return { ...rep, columns: cols };
@@ -132,7 +85,7 @@ export async function load({ params }: RequestEvent) {
 
 export const actions: Actions = {
 	async addReport({ request, params }) {
-		const spaceId = params["app_id"];
+		const spaceId = params['app_id'];
 		const tableId = params.table;
 
 		const space = await prisma.space.findUnique({
@@ -209,7 +162,7 @@ export const actions: Actions = {
 		return { reportSuccess: true, data: { ...report, fields } };
 	},
 	async addChart({ request, params }) {
-		const spaceId = params["app_id"];
+		const spaceId = params['app_id'];
 		const tableId = params.table;
 
 		const space = await prisma.space.findUnique({
@@ -266,7 +219,7 @@ export const actions: Actions = {
 		return { chartSuccess: true, data: { ...chart, fields } };
 	},
 	async addForm({ request, params }) {
-		const spaceId = params["app_id"];
+		const spaceId = params['app_id'];
 		const tableId = params.table;
 
 		const space = await prisma.space.findUnique({
@@ -322,7 +275,7 @@ export const actions: Actions = {
 	},
 	async saveMiniform({ request, params }) {
 		const data = await request.formData();
-		const spaceId = params["app_id"];
+		const spaceId = params['app_id'];
 		const tableId = params.table;
 
 		const space = await prisma.space.findUnique({

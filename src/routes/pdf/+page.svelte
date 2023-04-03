@@ -86,7 +86,6 @@
 	async function genPDF() {
 		console.log(inputs);
 		generate({ template, inputs }).then((pdf) => {
-			console.log(pdf);
 
 			const blob = new Blob([pdf.buffer], { type: 'application/pdf' });
 			window.open(URL.createObjectURL(blob));

@@ -40,7 +40,7 @@
 </script>
 
 <form
-	action={`/a/${space.appId}/accounts?/updatePassword&next=${$page.url.pathname}`}
+	action={`/a/${$page.data.space?.appId}/accounts?/updatePassword&next=${$page.url.pathname}`}
 	method="post"
 >
 	<Modal

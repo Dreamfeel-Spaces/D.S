@@ -3,9 +3,9 @@ import type grapesjs from 'grapesjs';
 
 export function gSpaceApIList(
 	editor: grapesjs.Editor,
-	config: { tables: any[]; pages: any[]; pageId: string; headless: boolean }
+	config: { tables: any[]; pages: any[]; pageId: string; headless: boolean; space: any }
 ) {
-	let { tables = [], pages = [], pageId, headless = false }: any = config;
+	let { tables = [], pages = [], pageId, headless = false, space = null }: any = config;
 
 	const page: any = pages.find((page: { id: string; path: string }) => page.id === pageId);
 
@@ -67,7 +67,6 @@ export function gSpaceApIList(
 	};
 
 	const deleteModalScript = function (props: any) {
-		console.log(props['data-id']);
 		//@ts-ignore
 		const el: HTMLElement = this as any as HTMLElement;
 		el.onclick = () => {
@@ -97,6 +96,64 @@ export function gSpaceApIList(
 			}
 		};
 	};
+
+	editor.DomComponents.addType('protected-view', {
+		model: {
+			defaults: {
+				tagName: 'section',
+				traits: [
+					{ type: 'select', options: ['redirect', 'show-error', 'do-nothing'], name: 'On Error' }
+				]
+			}
+		}
+	});
+
+	editor.DomComponents.addType('button', {
+		model: {
+			defaults: {
+				attributes: {
+					type: 'button'
+				},
+				traits: ['type'],
+				tagName: 'button'
+			}
+		}
+	});
+
+	editor.DomComponents.addType('slot', {
+		model: {
+			attributes: {
+				'data-layout-name': ''
+			}
+		}
+	});
+
+	editor.DomComponents.addType('layout', {
+		model: {
+			attributes: {
+				'data-layout-name': ''
+			},
+			tagName: 'div',
+			init() {
+				this.renderLayout();
+			},
+			renderLayout() {
+				const layout = pages.find((_page: any) => _page.path === '/products');
+				try {
+					const layoutStr = JSON.parse(layout?.html ?? '{html:"<body></body>"}')?.html;
+					this.append(layoutStr);
+				} catch (e) {
+					// console.log(e);
+				}
+			}
+		}
+	});
+
+	editor.DomComponents.addType('container', {
+		model: {
+			tagName: 'div'
+		}
+	});
 
 	editor.DomComponents.addType('api-delete-item-confirmation-dialog', {
 		model: {
@@ -588,8 +645,6 @@ export function gSpaceApIList(
 				const rows = table?.rows ?? [];
 				const row = rows[index];
 
-				console.log(row);
-
 				const key = this.getAttributes()['data-src'];
 				this.replaceWith(
 					`<img alt="API Image plugin" data-src=${key} src="${
@@ -641,7 +696,8 @@ export function gSpaceApIList(
 				attributes: {
 					'data-index': 0,
 					'data-table': '',
-					method: 'post'
+					method: 'post',
+					action: ''
 				},
 				tagName: 'form',
 				traits: [
@@ -650,7 +706,8 @@ export function gSpaceApIList(
 						options: tableNames,
 						name: 'data-table'
 					},
-					'method'
+					'method',
+					'action'
 				],
 				script: formSubmitHandler
 			},
@@ -948,7 +1005,7 @@ export function gSpaceApIList(
 	});
 	editor.BlockManager.add('Api form component', {
 		label: 'API Form',
-		content: `<form  method="post" class="px-20 min-h-48"  data-gjs-type="api-form-component"></form>`,
+		content: `<form  method="post" class="px-20 min-h-48" action="?/create"  data-gjs-type="api-form-component"></form>`,
 		category: 'Space API'
 	});
 
@@ -991,8 +1048,72 @@ export function gSpaceApIList(
 	});
 
 	editor.BlockManager.add('Space login', {
-		label: 'Space login',
-		content: "<div style='min-height:100px' data-gjs-type='space-login-component' ></div>",
+		label: 'Login',
+		content: `<div data-gjs-type="space-login-component" class="min-h-screen flex justify-center pt-20" >
+		<form  class="space-y-4 md:space-y-6" action="?/signin" method="POST">
+		<div class="text-center">
+			<h4  class="text-3xl mb-2" >${space?.name}</h4>
+			<p>Login</p>
+		</div>
+		<div>
+			<label
+				for="email"
+				class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+				>Your email</label
+			>
+			<input
+				type="email"
+				name="username"
+				id="email"
+				class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+				placeholder="name@company.com"
+				required
+			/>
+		</div>
+		<div>
+			<label
+				for="password"
+				class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label
+			>
+			<input
+				type="password"
+				name="password"
+				id="password"
+				placeholder="••••••••"
+				class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+				required
+			/>
+		</div>
+		<div class="flex items-center justify-between">
+			<div class="flex items-start">
+				<div class="flex items-center h-5">
+					<input
+						id="remember"
+						aria-describedby="remember"
+						type="checkbox"
+						class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+						required=""
+					/>
+				</div>
+				<div class="ml-3 text-sm">
+					<label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
+				</div>
+			</div>
+			<a
+				disabled
+				href="reset-pass"
+				class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+				>Forgot password?</a
+			>
+		</div>
+		<button
+			type="submit"
+			class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+			>Sign in</button
+		>
+	</form>
+	</div>
+		`,
 		category: 'Space API'
 	});
 
@@ -1032,5 +1153,66 @@ export function gSpaceApIList(
 		 </div><div class="relative mb-4">
 		 
 		 </div><button type="submit" class="text-white rounded-xl bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600  text-lg">Delete item</button><p class="text-xs text-gray-500 mt-3">This action is irreversible.</p></form></div></div></section>`
+	});
+
+	editor.BlockManager.add('layout', {
+		label: 'Layout',
+		content: `<section data-layout-name="Hehe"  class="min-h-20" data-gjs-type="layout"
+		 class="text-gray-600 body-font relative"
+		 >
+		 </section>`
+	});
+
+	editor.BlockManager.add('slot', {
+		label: 'Slot',
+		content: `<section data-layout-name="Hehe"  class="min-h-20" data-gjs-type="slot"
+		 class="text-gray-600 body-font relative"
+		 >
+		 </section>`
+	});
+
+	editor.BlockManager.add('container', {
+		label: 'Container',
+		content: `<div   class="min-h-20 h-20" 
+		 class="text-gray-600 body-font relative"
+		 >
+		 <div></div>
+		 </div>`
+	});
+
+	editor.BlockManager.add('box', {
+		label: 'Box',
+		content: `<span  class="min-h-9 h-9"
+		 class="text-gray-600 body-font relative"
+		 >
+		 <span></span>
+		 </span>`
+	});
+
+	editor.DomComponents.addType('button', {
+		model: {
+			defaults: {
+				attributes: {
+					type: 'button'
+				},
+				tagname: 'button'
+			}
+		}
+	});
+
+	editor.BlockManager.add('button', {
+		label: 'Button',
+		content: `<button type="submit" data-gjs-type="button"  class="min-h-9 h-9 bg-blue-600 text-white px-3 py-2 rounded-xl"
+		 >
+		 Click Me
+		 </button>`
+	});
+
+	editor.BlockManager.add('protected-view', {
+		label: 'Protected Page',
+		content: `<div type="protected-view" data-gjs-type="protected-view"  class="min-h-screen"
+		 >
+		 Protected view
+		 </div>`
 	});
 }

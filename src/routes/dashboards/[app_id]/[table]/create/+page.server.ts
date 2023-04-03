@@ -4,56 +4,23 @@ import { transformRows } from '$lib/rows/transform';
 import { error } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
 
-export async function load({ params }: RequestEvent) {
-	const tableName = params.table;
-
-	const space = await prisma.space.findUnique({ where: { appId: String(params["app_id"]) } });
-
+export async function load({ params, locals }: RequestEvent) {
+	const space = locals.space;
 	if (!space) throw error(404, 'Space not found');
-
-	const table = await prisma.spaceTable.findFirst({
-		where: {
-			name: tableName,
-			appId: space?.id
-		},
-		include: {
-			columns: {
-				include: {
-					options: true
-				}
-			}
-		}
-	});
-
+	const table = space.tables.find((table) => table.name == params.table);
 	if (!table) throw error(404, 'Table not found');
-
-	let cols = table?.columns.filter((col) => Boolean(col.name)) ?? [];
-
+	let cols = table?.columns?.filter((col) => Boolean(col.name)) ?? [];
 	const relationShips = cols.filter((col) => col.type === 'rel');
-
 	relationShips.forEach(async (rel) => {
 		const indexOfRel = cols.indexOf(rel);
-		const table = await prisma.spaceTable.findUnique({
-			where: {
-				id: String(rel.rel)
-			},
-			include: {
-				rows: {
-					include: {
-						tableData: true
-					}
-				}
-			}
-		});
-		const formattedRows = transformRows(table?.rows)
-
+		const table = await space.tables.filter((table) => table.id === rel.rel);
+		const formattedRows = transformRows(table?.rows);
 		const labelAndValues = formattedRows?.map((row) => ({
 			label: (row as any)[table?.displayName as any],
 			value: (row as any)?.id
 		}));
 		cols[indexOfRel] = { ...rel, options: labelAndValues as any };
 	});
-
 	return { table: { ...table, columns: cols } };
 }
 
@@ -62,7 +29,7 @@ export const actions: Actions = {
 		const tableName = params.table;
 		const space = await prisma.space.findUnique({
 			where: {
-				appId: params["app_id"]
+				appId: params['app_id']
 			}
 		});
 		if (!space) throw error(404, 'Space not found');

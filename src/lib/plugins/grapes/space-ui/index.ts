@@ -17,7 +17,6 @@ export const spaceTestPlugin = (editor, config) => {
 				}
 
 				this.on('change:components', () => {
-					console.log('fyghujkl');
 
 					// Get the current child components
 					const currentChildren = card.get('components');

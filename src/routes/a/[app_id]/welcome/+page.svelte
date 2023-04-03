@@ -2,7 +2,7 @@
 <script lang="ts">
 	//@ts-nocheck
 
-	import { Button } from 'flowbite-svelte';
+	import { Card } from 'flowbite-svelte';
 
 	import { page } from '$app/stores';
 
@@ -77,18 +77,23 @@
 	}
 </script>
 
-<div class=" dark:text-gray-50  ">
-	<div >
-		<div class="carousel  ">
-			{#each images as image, i}
-				<div class="carousel-item {i === currentImageIndex ? 'visible' : 'hidden'}">
-					<svelte:component this={image} {...props} />
-					<!-- <p>{image.caption}</p> -->
+<div class="container">
+	<Card class="w-full" size="xl" >
+		<div class=" dark:text-gray-50  ">
+			<div >
+				<div class="carousel  ">
+					{#each images as image, i}
+						<div class="carousel-item {i === currentImageIndex ? 'visible' : 'hidden'}">
+							<svelte:component this={image} {...props} />
+							<!-- <p>{image.caption}</p> -->
+						</div>
+					{/each}
 				</div>
-			{/each}
+			</div>
 		</div>
-	</div>
+	</Card>
 </div>
+
 
 <style>
 	.carousel {

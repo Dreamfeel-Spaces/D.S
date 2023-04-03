@@ -90,7 +90,6 @@ export class Pages {
 
 		const ui = page?.html ?? '';
 
-		console.log(ui);
 
 		const pageData: JsonData = page.uiDef;
 
@@ -140,7 +139,7 @@ export class Pages {
 		const apiList = document.querySelectorAll('[data-type=list]');
 
 		for (let api of apiList) {
-			console.log(api);
+			// console.log(api);
 		}
 
 		const renderedPage = dom.serialize();

@@ -7,18 +7,17 @@ import type { LayoutServerLoadEvent } from './$types';
 export async function load({ cookies, params, locals }: LayoutServerLoadEvent) {
 	// @ts-ignore
 	let space: any = locals.space;
-	//@ts-ignore
-	const spaceSession = locals.spaceSession;
+	let user: any = space.users[0];
+	if (user) user.role = space.roles.find((role: { id: any }) => role.id === user?.userRolesId);
+	let spaceSession = { user };
+
+	console.log(user);
 
 	if (!space) {
 		throw error(404, 'Page not found');
 	}
 
-	let onboarding = await prisma.onboarding.findFirst({
-		where: {
-			spaceId: space.id
-		}
-	});
+	let onboarding = space.onboarding[0];
 
 	if (!onboarding) {
 		onboarding = await prisma.onboarding.create({
@@ -29,18 +28,9 @@ export async function load({ cookies, params, locals }: LayoutServerLoadEvent) {
 		throw redirect(302, `/a/${space.appId}/welcome`);
 	}
 
-	const tables = await prisma.spaceTable.findMany({
-		where: {
-			appId: space.id
-		}
-	});
+	const tables = space.tables;
 
-	const roles = await prisma.userRoles.findMany({
-		where: {
-			spaceId: space.id
-		}
-	});
-
+	const roles = space.roles;
 
 	return { space: { ...space, onboarding: [onboarding], tables }, spaceSession, roles };
 }

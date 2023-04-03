@@ -1,26 +1,25 @@
 <script lang="ts">
 	export let form: any;
-	import { Button, Alert, Breadcrumb, BreadcrumbItem } from 'flowbite-svelte';
+	import { Button, Alert, Card, Heading } from 'flowbite-svelte';
 </script>
 
-<Breadcrumb>
-	<BreadcrumbItem>Home</BreadcrumbItem>
-	<BreadcrumbItem>Editor</BreadcrumbItem>
-	<BreadcrumbItem>Space</BreadcrumbItem>
-	<BreadcrumbItem>UI's</BreadcrumbItem>
-	<BreadcrumbItem>Create</BreadcrumbItem>
-</Breadcrumb>
+<div class="container">
+	<Card size="xl">
+		<div style="align-items: center;" class="min-h-100 flex align-center text-center self-center">
+			<div>
+				<Heading tag="h4">New ui version</Heading>
+				{#if form?.success}
+					<div class="mt-9">
+						<Alert>New ui version has been number: {form?.data?.version} added</Alert>
+					</div>
+				{/if}
 
-<div class="text-lg p-3">New ui version</div>
-
-{#if form?.success}
-	<div class="mt-9">
-		<Alert>New ui version has been number: {form?.data?.version} added</Alert>
-	</div>
-{/if}
-
-<div class="px-6">
-	<form method="post">
-		<Button type="submit">Create</Button>
-	</form>
+				<div class="px-6">
+					<form method="post">
+						<Button class="w-full mt-4" type="submit">Create new version</Button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</Card>
 </div>

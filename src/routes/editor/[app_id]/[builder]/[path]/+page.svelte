@@ -1,13 +1,25 @@
 <script lang="ts">
 	// @ts-nocheck
-	import { Modal, P, Heading, Select, Button, Label, Card, Spinner } from 'flowbite-svelte';
+	import {
+		Modal,
+		P,
+		Heading,
+		Radio,
+		Button,
+		Drawer,
+		Card,
+		Spinner,
+		DarkMode,
+		Input,
+		Toggle
+	} from 'flowbite-svelte';
 	import 'grapesjs/dist/css/grapes.min.css';
 	import grapesjs from 'grapesjs';
 	import { page } from '$app/stores';
 	import { onDestroy, onMount } from 'svelte';
 	import axios from 'axios';
 	import type { PageData } from './$types';
-
+	import { goto } from '$app/navigation';
 	// import grapesTailwind from 'grapesjs-tailwind';
 	import gjsForms from 'grapesjs-plugin-forms';
 	import gjsTabs from 'grapesjs-tabs';
@@ -30,7 +42,7 @@
 	export let data: PageData;
 
 	let editor: grapesjs.Editor;
-	const spaceId = $page.params["app_id"];
+	const spaceId = $page.params['app_id'];
 	const pageId = $page.params.path;
 
 	let pageModalOpen = false;
@@ -53,15 +65,20 @@
 					// (editor) => gjsForms(editor),
 					// (editor) => gjsTabs(editor),
 					(editor) => gBasic(editor),
-					(editor) => gSpaceApIList(editor, { tables: data.tables, pages: data.pages, pageId }),
+					(editor) =>
+						gSpaceApIList(editor, {
+							tables: data.tables,
+							pages: data.pages,
+							pageId,
+							space: $page.data.space
+						}),
 					(editor) =>
 						gjsTailwind(editor, {
 							theme,
 							updateTheme() {
 								if (theme === 'light') theme = 'dark';
 								else if (theme === 'dark') theme = 'light';
-								console.log(theme)
-								return theme
+								return theme;
 							}
 						}),
 					(editor) => spaceTailwind(editor)
@@ -94,7 +111,19 @@
 
 			editor.Commands.add('open-pages', {
 				run: () => {
-					pageModalOpen = true;
+					hidden2 = false;
+				}
+			});
+
+			editor.Commands.add('open-actions', {
+				run: () => {
+					actionsHidden = false;
+				}
+			});
+
+			editor.Commands.add('go-home', {
+				run: () => {
+					goto(`/editor/${$page.data.space.appId}`);
 				}
 			});
 
@@ -137,7 +166,7 @@
 		saving = true;
 		try {
 			const res = await axios.post(
-				`/editor/${$page.params["app_id"]}/${$page.params.builder}/${$page.params.path}/server`,
+				`/editor/${$page.params['app_id']}/${$page.params.builder}/${$page.params.path}/server`,
 				{ html, CSSCounterStyleRule, js, uiDef }
 			);
 
@@ -151,7 +180,17 @@
 	let spaceUis = data.space.spaceUis;
 	let uiId = '';
 	let selectedUIId = $page.params.builder;
-	let selectedUi = selectedUIId;
+	var selectedUi = selectedUIId;
+	let hidden2 = true;
+	let actionsHidden = true;
+	import { sineIn } from 'svelte/easing';
+	let transitionParams = {
+		x: -320,
+		duration: 200,
+		easing: sineIn
+	};
+
+	let pageModalRadio = 'pages';
 </script>
 
 <svelte:head>
@@ -166,27 +205,93 @@
 
 <Tutorial />
 
-<Modal class="w-full" bind:open={pageModalOpen}>
-	<Heading tag="h5">{$page.data.space.name}</Heading>
-	<Heading tag="h6">Pages manager</Heading>
-
-	<ul
-		class="w-full dark:text-gray-50 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
-	>
-		{#each data.ui.pages as page}
-			<li class="cursor-pointer">
-				<a rel="external" href={`/editor/${spaceId}/${data.ui.id}/${page.id}`} class="p-2 flex">
-					<P class="flex-1 font-bold">{page.name}</P>
-					<P>{page.path}</P>
-				</a>
-			</li>
-		{/each}
-	</ul>
-
-	<div class="mt-4">
-		<Button>Publish</Button>
+<Drawer transitionType="fly" {transitionParams} bind:hidden={actionsHidden}>
+	<div class="hidden">
+		<DarkMode />
 	</div>
-</Modal>
+	<Heading class="my-4" tag="h6">Actions</Heading>
+
+	<div class="flex mb-4">
+		<Radio value="pages" bind:group={pageModalRadio}>All actions</Radio>
+		<Radio class="ml-4" value="form" bind:group={pageModalRadio}>Create action</Radio>
+	</div>
+
+	<!-- {#if pageModalRadio === 'pages'}
+		<div>
+			<ul
+				class="w-full dark:text-gray-50 bg-white rounded-lg border min-h-96  kjk h-100 border-gray-200  dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
+			>
+				{#each data.ui.pages as page}
+					<li
+						class="cursor-pointer {page.id === pageId ? 'bg-gray-700' : ' '} hover:dark:bg-gray-600"
+					>
+						{#if page.layout}
+							<div class="flex justify-end">
+								<small class="text-xs  m-1 rounded-xl p-1 bg-red-500">Layout</small>
+							</div>
+						{/if}
+						<a rel="external" href={`/editor/${spaceId}/${data.ui.id}/${page.id}`} class="p-2 flex">
+							<P class="flex-1 font-bold">{page.name} <br /></P>
+							<P>{page.path}</P>
+						</a>
+					</li>
+				{/each}
+			</ul>
+		</div>
+	{:else}
+		<form method="post" class="spacing-y-6" action="?/createPage">
+			<Input required name="name" placeholder="Name" />
+			<Input name="icon" class="my-3" placeholder="Icon" />
+			<Input required name="path" class="my-3" placeholder="Path" />
+			<Toggle>Layout</Toggle>
+			<Button type="submit" class="w-full mt-3">Save</Button>
+		</form>
+	{/if} -->
+</Drawer>
+
+<Drawer transitionType="fly" {transitionParams} bind:hidden={hidden2}>
+	<div class="hidden">
+		<DarkMode />
+	</div>
+	<Heading class="my-4" tag="h6">Pages</Heading>
+
+	<div class="flex mb-4">
+		<Radio value="pages" bind:group={pageModalRadio}>All pages</Radio>
+		<Radio class="ml-4" value="form" bind:group={pageModalRadio}>Create Page</Radio>
+	</div>
+
+	{#if pageModalRadio === 'pages'}
+		<div>
+			<ul
+				class="w-full dark:text-gray-50 bg-white rounded-lg border min-h-96  kjk h-100 border-gray-200  dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
+			>
+				{#each data.ui.pages as page}
+					<li
+						class="cursor-pointer {page.id === pageId ? 'bg-gray-700' : ' '} hover:dark:bg-gray-600"
+					>
+						{#if page.layout}
+							<div class="flex justify-end">
+								<small class="text-xs  m-1 rounded-xl p-1 bg-red-500">Layout</small>
+							</div>
+						{/if}
+						<a rel="external" href={`/editor/${spaceId}/${data.ui.id}/${page.id}`} class="p-2 flex">
+							<P class="flex-1 font-bold">{page.name} <br /></P>
+							<P>{page.path}</P>
+						</a>
+					</li>
+				{/each}
+			</ul>
+		</div>
+	{:else}
+		<form method="post" class="spacing-y-6" action="?/createPage">
+			<Input required name="name" placeholder="Name" />
+			<Input name="icon" class="my-3" placeholder="Icon" />
+			<Input required name="path" class="my-3" placeholder="Path" />
+			<Toggle>Layout</Toggle>
+			<Button type="submit" class="w-full mt-3">Save</Button>
+		</form>
+	{/if}
+</Drawer>
 
 <Modal bind:open={jsonModalOpen} class="w-full">
 	<div slot="header">

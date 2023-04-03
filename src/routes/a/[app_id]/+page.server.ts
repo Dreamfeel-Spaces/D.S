@@ -84,13 +84,12 @@ export async function load({ cookies, params, locals }: PageServerLoadEvent) {
 	//@ts-ignore
 	const space = locals.space;
 	//@ts-ignore
-	const spaceSession = locals.spaceSession;
 
-	const onboarding = await prisma.onboarding.findFirst({
-		where: {
-			spaceId: space.id
-		}
-	});
+	let user: any = space.users[0];
+	if (user) user.role = space.roles.find((role: { id: any }) => role.id === user?.userRolesId);
+	let spaceSession = { user };
+
+	const onboarding = space.onboarding[0];
 
 	if (!spaceSession?.user) throw redirect(302, `/a/${space.appId}/accounts`);
 

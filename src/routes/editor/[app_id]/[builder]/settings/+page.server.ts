@@ -11,12 +11,15 @@ export const actions: Actions = {
 		const name = String(data.get('name'));
 		const icon = String(data.get('icon'));
 		const path = String(data.get('path'));
+		const layoutStr = String(data.get('layout'));
+		const layout = layoutStr === 'true';
 		const page = await prisma.page.create({
 			data: {
 				spaceUIVersionId: String(uiVersion?.id),
 				name,
 				icon,
-				path
+				path,
+				layout
 			}
 		});
 		return { createPageSuccess: true, data: page };

@@ -45,7 +45,6 @@ export const actions = {
 			}
 		});
 
-		console.log(updateSpace);
 
 		return { success: true, data: table };
 	}

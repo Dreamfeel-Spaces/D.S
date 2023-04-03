@@ -47,7 +47,7 @@
 					>
 				</Button>
 				<a target="blank" href="/a/demo">
-					<Button size="lg" gradient color="purpleToBlue">Live demo</Button>
+					<Button size="lg" gradient color="purpleToBlue">Try Live Demo</Button>
 				</a>
 			</div>
 			<div class="lg:mt-0 lg:col-span-5 lg:pt-1 sm:pt-28">

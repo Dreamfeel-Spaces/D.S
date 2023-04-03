@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { convertToSlug } from '$lib/util/slugit';
-	import { Input, Button, Alert } from 'flowbite-svelte';
+	import { Input, Button, Alert, Card, Heading, Spinner, Modal, A } from 'flowbite-svelte';
 	import { onDestroy } from 'svelte';
 	import axios from 'axios';
+	import { goto } from '$app/navigation';
 	let appName = '';
 	let appId = appName;
 	export let form: any;
@@ -38,6 +39,34 @@
 		}
 	}
 
+	let saving = false;
+
+	let saveSpaceSuccess = false;
+
+	let saveSpaceError = false;
+
+	async function handleSubmit() {
+		try {
+			saving = true;
+			saveSpaceSuccess = false;
+			saveSpaceError = false;
+			const res = await axios.post(`/create`, {
+				name: appName,
+				appId
+			});
+			if (res.status === 200) {
+				saveSpaceSuccess = true;
+				// goto(`/a/${convertToSlug(appId)}`, { invalidateAll: true });
+				// window.location.reload();
+				saving = false;
+			}
+		} catch (e) {
+			console.log(e);
+			saveSpaceError = true;
+			saving = false;
+		}
+	}
+
 	onDestroy(() => {
 		if (requestTimeOut) clearTimeout(requestTimeOut);
 	});
@@ -53,81 +82,91 @@
 	</div>
 {/if}
 
-{#if form?.success}
-	<div class="px-6 mt-9 lg:px-64">
-		<Alert>
-			<div class="mb-3">
-				<b>New space has been created!</b>
-			</div>
-			<a class="hover:underline" rel="external" href={`/a/${form?.data?.appId}`}>Go to space</a>
-		</Alert>
+<!-- {#if form?.success} -->
+
+<!-- {/if} -->
+
+<Modal bind:open={saving} class="w-full" permanent>
+	<div class="flex">
+		<Spinner />
+		<Heading class="ml-3" tag="h4">Setting you up, please wait...</Heading>
 	</div>
-{/if}
+	<div>You will be automatically be redirected to a new page..</div>
+</Modal>
 
-<section class="bg-white dark:bg-gray-900 m">
-	<div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-		<h1
-			class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-700 md:text-5xl lg:text-6xl dark:text-white"
-		>
-			Create a spaces app
-		</h1>
-		<p
-			class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400"
-		>
-			Here at Dreamfeel we focus on markets where technology, innovation, and capital can unlock
-			long-term value and drive economic growth.
-		</p>
-	</div>
-</section>
+<div class="px-6 mx-2 lg:px-72 pb-36 pt-9  flex justify-center">
+	<Card class="w-full" size="lg">
+		<section>
+			<div class="py-8 mx-auto max-w-screen-xl text-center">
+				<Heading>New Space</Heading>
+				<!-- <p
+					class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400"
+				>
+					Here at Dreamfeel we focus on markets where technology, innovation, and capital can unlock
+					long-term value and drive economic growth.
+				</p> -->
+			</div>
+		</section>
+		{#if saveSpaceSuccess}
+			<div class=" my-9">
+				<Alert accent>
+					<div class="mb-3">
+						<b>Congrats!</b>
+						<p>Your space, {appName} has been created.</p>
+						<A rel="external" href="/a/{convertToSlug(appId)}">Go to new space</A>
+					</div>
+					<!-- <a class="hover:underline" rel="external" href={`/a/${form?.data?.appId}`}>Go to space</a> -->
+				</Alert>
+			</div>
+		{/if}
+		<form on:submit|preventDefault={handleSubmit}>
+			<div class="mb-6 w-full">
+				<label class="dark:text-gray-100" for="appId">App ID</label>
+				<Input
+					placeholder="Unique app id i.e app-id"
+					bind:value={appId}
+					class="w-full"
+					id="appId"
+					name="appId"
+					color={notUnique ? 'red' : 'base'}
+					on:change={onChangeAppId}
+					type="text"
+				/>
+				{#if throttling}
+					<div class="text-xs dark:text-gray-100">Validating Space ID...</div>
+				{/if}
+				{#if notUnique}
+					<p class="text-red-600">App ID already taken</p>
+				{/if}
+				<div>
+					<small class="dark:text-gray-100">
+						Formatted: {convertToSlug(appId ? appId : appName)}
+					</small>
+				</div>
 
-<div class="px-6 mx-2 lg:px-72 pb-36 ">
-	<form method="POST">
-		<div class="mb-6 w-full">
-			<label class="dark:text-gray-100" for="appId">App ID</label>
-			<Input
-				placeholder="Unique app id i.e app-id"
-				bind:value={appId}
-				class="w-full"
-				id="appId"
-				name="appId"
-				color={notUnique ? 'red' : 'base'}
-				on:change={onChangeAppId}
-				type="text"
-			/>
-			{#if throttling}
-				<div class="text-xs dark:text-gray-100">Validating Space ID...</div>
-			{/if}
-			{#if notUnique}
-				<p class="text-red-600">App ID already taken</p>
-			{/if}
-			<div>
-				<small class="dark:text-gray-100">
-					Formatted: {convertToSlug(appId ? appId : appName)}
-				</small>
+				<br />
+				{#if convertToSlug(appId ? appId : appName).length > 24}
+					<small class="text-red-400 mt-3"> App ID cannot exceed 24 characters in length </small>
+				{/if}
+			</div>
+			<div class="mb-6 w-full">
+				<label class="dark:text-gray-100" for="name">Name</label>
+				<Input
+					required
+					bind:value={appName}
+					placeholder="Name your space"
+					class="w-full"
+					id="name"
+					name="name"
+					type="text"
+				/>
 			</div>
 
-			<br />
-			{#if convertToSlug(appId ? appId : appName).length > 24}
-				<small class="text-red-400 mt-3"> App ID cannot exceed 24 characters in length </small>
-			{/if}
-		</div>
-		<div class="mb-6 w-full">
-			<label class="dark:text-gray-100" for="name">Name</label>
-			<Input
-				required
-				bind:value={appName}
-				placeholder="Name your space"
-				class="w-full"
-				id="name"
-				name="name"
-				type="text"
-			/>
-		</div>
-
-		<Button
-			disabled={convertToSlug(appId ? appId : appName).length > 24}
-			class="w-full mb-18"
-			type="submit">Save</Button
-		>
-	</form>
+			<Button
+				disabled={convertToSlug(appId ? appId : appName).length > 24}
+				class="w-full mb-18"
+				type="submit">{saving ? 'Please wait...' : 'Save'}</Button
+			>
+		</form>
+	</Card>
 </div>

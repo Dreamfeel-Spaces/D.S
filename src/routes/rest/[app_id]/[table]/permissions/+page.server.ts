@@ -5,7 +5,7 @@ import type { Actions, RequestEvent } from './$types';
 
 export const actions: Actions = {
 	async default({ params, locals, request }) {
-		const spaceId = params["app_id"];
+		const spaceId = params['app_id'];
 		const tableId = params.table;
 
 		const space = await prisma.space.findUnique({
@@ -128,52 +128,14 @@ export const actions: Actions = {
 };
 
 export async function load({ params, locals }: RequestEvent) {
-	const spaceId = params["app_id"];
-	const tableId = params.table;
+	const space = locals.space;
 
-	const space = await prisma.space.findUnique({
-		where: {
-			appId: spaceId
-		},
-		include: {
-			permissions: true
-		}
-	});
+	const table = space.tables.find((table) => table.name === params.table);
 
-	const table = await prisma.spaceTable.findFirst({
-		where: {
-			name: tableId,
-			appId: space?.id
-		},
-		include: {
-			aPICreatePermissions: {
-				include: {
-					userRoles: true
-				}
-			},
-			aPIGETPermissions: {
-				include: {
-					userRoles: true
-				}
-			},
-			aPIUpdatePermissions: {
-				include: {
-					userRoles: true
-				}
-			},
-			aPIDeletePermissions: {
-				include: {
-					userRoles: true
-				}
-			}
-		}
-	});
 
 	if (!table) {
 		throw error(404, 'Table not found');
 	}
 
-	const requiredPermissions = JSON.parse(table?.requiredPermissions ?? '[]');
-
-	return { permissions: space?.permissions ?? [], requiredPermissions, table };
+	return { permissions: space?.permissions ?? [], table };
 }

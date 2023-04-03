@@ -1,28 +1,11 @@
 <script>
-	import {
-		DarkMode,
-		Button,
-		Sidebar,
-		SidebarGroup,
-		SidebarItem,
-		SidebarWrapper,
-		SidebarDropdownItem,
-		SidebarDropdownWrapper,
-		Modal,
-		Textarea,
-		Dropzone,
-		Radio,
-		Alert
-	} from 'flowbite-svelte';
+	import { DarkMode, Button, SidebarDropdownItem, SidebarDropdownWrapper } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import SpaceNav from '$lib/components/SpaceNav.svelte';
+	import SpaceSearch from '../../rest/[app_id]/SpaceSearch.svelte';
 	const space = $page.data.space;
 	const spaceSession = $page.data.spaceSession;
 	const user = spaceSession?.user;
-	const pathname = $page.url.pathname;
-	let whoAmi = 'clone_api';
-	import { apiHelperModal } from '$lib/wsstore';
-	let setup = space?.apiSetup ?? [];
 </script>
 
 <SpaceNav modalOnly={true} />
@@ -38,7 +21,7 @@
 						<span class="leading-10 dark:text-gray-100 text-2xl font-bold ml-1 uppercase"
 							>{space.name}</span
 						>
-						<span class="text-xs dark:text-gray-300 mt-2 ml-2">Rest API</span>
+						<span class="text-xs dark:text-gray-300 mt-2 ml-2">UI</span>
 					</a>
 				</div>
 			</div>
@@ -46,7 +29,7 @@
 				<ul class="flex flex-col w-full">
 					<li class="my-px">
 						<a
-							href={`/rest/${space.appId}`}
+							href={`/editor/${space.appId}`}
 							class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-900 dark:text-gray-300 dark:bg-gray-900 bg-gray-100"
 						>
 							<span class="flex items-center justify-center text-lg text-gray-400">
@@ -68,6 +51,24 @@
 						</a>
 					</li>
 					<li class="my-px">
+						<a
+							href={`/editor/${space.appId}/create`}
+							class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-900 dark:text-gray-300 dark:bg-gray-900 bg-gray-100"
+						>
+							<span class="flex items-center justify-center text-lg text-gray-400">
+								<svg
+									fill="currentColor"
+									xmlns="http://www.w3.org/2000/svg"
+									height="24"
+									viewBox="0 96 960 960"
+									width="24"
+									><path d="M450 856V606H200v-60h250V296h60v250h250v60H510v250h-60Z" /></svg
+								>
+							</span>
+							<span class="ml-3">Add UI</span>
+						</a>
+					</li>
+					<li class="my-px">
 						<span class="flex font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase"
 							>UI Groups</span
 						>
@@ -76,20 +77,13 @@
 						<SidebarDropdownWrapper label={ui.name}>
 							<svelte:fragment slot="icon">
 								<svg
+									fill="currentColor"
 									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
+									height="24"
+									viewBox="0 96 960 960"
+									width="24"
 									><path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z"
-									/><path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z"
+										d="M70 936q-12.75 0-21.375-8.675Q40 918.649 40 905.825 40 893 48.625 884.5T70 876h820q12.75 0 21.375 8.675 8.625 8.676 8.625 21.5 0 12.825-8.625 21.325T890 936H70Zm70-120q-24 0-42-18t-18-42V276q0-24 18-42t42-18h680q24 0 42 18t18 42v480q0 24-18 42t-42 18H140Zm0-60h680V276H140v480Zm0 0V276v480Z"
 									/></svg
 								>
 							</svelte:fragment>
@@ -158,10 +152,32 @@
 		<main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
 			<header class="header dark:bg-gray-800 bg-white shadow py-4 px-4">
 				<div class="header-content flex items-center flex-row">
-					<!-- <SpaceSearch /> -->
+					<SpaceSearch />
 					<div class="flex ml-auto">
-						<div class="pt-1">
-							<Button pill class="mr-4" size="xs" color="green">Live demo</Button>
+						{#if space.appId === 'demo' || space.appId === 'ecommerce'}
+							<div class="pt-1">
+								<Button pill class="mr-4" size="xs" color="green">Official demo</Button>
+							</div>
+						{/if}
+						<div class="ml-1">
+							<Button
+								outline
+								size="xs"
+								rel="noreferrer"
+								target="_blank"
+								href="/{$page.data.space.appId}"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									height="18"
+									fill="currentColor"
+									viewBox="0 96 960 960"
+									width="18"
+									><path
+										d="M180 936q-24 0-42-18t-18-42V276q0-24 18-42t42-18h279v60H180v600h600V597h60v279q0 24-18 42t-42 18H180Zm202-219-42-43 398-398H519v-60h321v321h-60V319L382 717Z"
+									/></svg
+								></Button
+							>
 						</div>
 						<div class="mr-3">
 							<DarkMode />

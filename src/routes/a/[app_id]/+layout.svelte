@@ -2,6 +2,7 @@
 	import { DarkMode, Button } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import SpaceNav from '$lib/components/SpaceNav.svelte';
+	import SpaceSearch from '../../rest/[app_id]/SpaceSearch.svelte';
 	const space = $page.data.space;
 	const spaceSession = $page.data.spaceSession;
 	const user = spaceSession?.user;
@@ -9,29 +10,6 @@
 </script>
 
 <SpaceNav modalOnly={true} />
-
-<!--<div class="dark:bg-gray-900  min-h-112 pb-64 pt-20">
-	<div class="flex dark:bg-gray-900 ">
-		{#if !/\/accounts/.test($page.url.pathname) && !/\/welcome/.test($page.url.pathname)}
-			<div class="hidden md:block lg:block pt-6">
-				<Sidebar>
-					<SidebarWrapper class="max-h max-h-100 h-100 fixed w-64 ml-4 overflow-auto">
-						<SidebarGroup>
-							<SidebarItem href={`/rest/${$page.params["app_id"]}`}  label="Collections" />
-							<SidebarItem href={`/dashboards/${$page.params["app_id"]}`} label="Dashboard" />
-							<SidebarItem href={`/editor/${$page.params["app_id"]}`} label="UI" />
-							<SidebarItem href={`/spaces/${$page.params["app_id"]}`} label="Config" />
-						</SidebarGroup>
-					</SidebarWrapper>
-				</Sidebar>
-			</div>
-		{/if}
-		<div class="flex-1  ">
-			<slot />
-		</div>
-	</div>
-</div>
- -->
 
 <div class="flex flex-row min-h-screen dark:bg-gray-900 bg-gray-100 text-gray-800">
 	<aside
@@ -51,9 +29,9 @@
 				<li class="my-px">
 					<a
 						href={`/a/${space?.appId}`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-100 dark:bg-gray-900 bg-gray-100"
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-100 dark:bg-gray-900 bg-gray-100"
 					>
-						<span class="flex items-center justify-center text-lg text-gray-100">
+						<span class="flex items-center justify-center text-lg dark:text-gray-100">
 							<svg
 								fill="currentColor"
 								stroke-linecap="round"
@@ -77,7 +55,7 @@
 				<li class="my-px">
 					<a
 						href={`/rest/${space.appId}`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 					>
 						<span class="flex items-center justify-center text-lg dark:text-gray-400">
 							<svg
@@ -97,7 +75,7 @@
 				<!-- <li class="my-px">
 					<a
 						href={`/preferences/${space.appId}`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 					>
 						<span class="flex items-center justify-center text-lg dark:text-gray-400">
 							<svg
@@ -117,7 +95,7 @@
 				<li class="my-px">
 					<a
 						href={`/dashboards/${space.appId}`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 					>
 						<span class="flex items-center justify-center text-lg dark:text-gray-400">
 							<svg
@@ -141,7 +119,7 @@
 				<li class="my-px">
 					<a
 						href={`/editor/${space.appId}`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 					>
 						<span class="flex items-center justify-center text-l">
 							<svg
@@ -151,7 +129,7 @@
 								viewBox="0 96 960 960"
 								width="24"
 								><path
-									d="M140 896q-24 0-42-18t-18-42V316q0-24 18-42t42-18h680q24 0 42 18t18 42v520q0 24-18 42t-42 18H140Zm0-60h461V673H140v163Zm521 0h159V450H661v386ZM140 613h461V450H140v163Z"
+									d="M70 936q-12.75 0-21.375-8.675Q40 918.649 40 905.825 40 893 48.625 884.5T70 876h820q12.75 0 21.375 8.675 8.625 8.676 8.625 21.5 0 12.825-8.625 21.325T890 936H70Zm70-120q-24 0-42-18t-18-42V276q0-24 18-42t42-18h680q24 0 42 18t18 42v480q0 24-18 42t-42 18H140Zm0-60h680V276H140v480Zm0 0V276v480Z"
 								/></svg
 							>
 						</span>
@@ -161,22 +139,19 @@
 				<li class="my-px">
 					<a
 						href={`/a/${space.appId}/roles`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 					>
 						<span class="flex items-center justify-center text-l">
 							<svg
-								fill="none"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								class="h-6 w-6"
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+								height="24"
+								viewBox="0 96 960 960"
+								width="24"
+								><path
+									d="M140 976q-24 0-42-18t-18-42V436q0-24 18-42t42-18h237V236q0-24 18-42t42-18h87q24 0 42 18t18 42v140h236q24 0 42 18t18 42v480q0 24-18 42t-42 18H140Zm0-60h680V436H584q0 28-18.5 44T519 496h-78q-27 0-45.5-16T377 436H140v480Zm92-107h239v-14q0-18-9-32t-23-19q-32-11-50-14.5t-35-3.5q-19 0-40.5 4.5T265 744q-15 5-24 19t-9 32v14Zm336-67h170v-50H568v50Zm-214-50q22.5 0 38.25-15.75T408 638q0-22.5-15.75-38.25T354 584q-22.5 0-38.25 15.75T300 638q0 22.5 15.75 38.25T354 692Zm214-63h170v-50H568v50ZM437 436h87V236h-87v200Zm43 240Z"
+								/></svg
 							>
-								<path
-									d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
-								/>
-							</svg>
 						</span>
 						<span class="ml-3">User Roles</span>
 					</a>
@@ -211,7 +186,7 @@
 				<li class="my-px">
 					<a
 						href="#"
-						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 					>
 						<span class="flex items-center justify-center text-lg dark:text-gray-400">
 							<svg
@@ -238,7 +213,7 @@
 				<li class="my-px">
 					<a
 						href={`/a/${space.appId}/preferences`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 					>
 						<span class="flex items-center justify-center text-lg dark:text-gray-400">
 							<svg
@@ -264,7 +239,7 @@
 						<form method="post" action={`/a/${space.appId}/accounts?/signout`}>
 							<button
 								type="submit"
-								class="flex w-full flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+								class="flex w-full flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 							>
 								<span class="flex items-center justify-center text-lg text-red-400">
 									<svg
@@ -289,7 +264,7 @@
 					{:else}
 						<a
 							href="#"
-							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
+							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-lg text-red-400">
 								<svg
@@ -316,51 +291,32 @@
 	<main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
 		<header class="header dark:bg-gray-800 bg-white shadow py-4 px-4">
 			<div class="header-content flex items-center flex-row">
-				<form action="#">
-					<div class="hidden md:flex relative">
-						<div
-							class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400"
+				<SpaceSearch />
+				<div class="flex ml-auto">
+					{#if space.appId === 'demo' || space.appId === 'ecommerce'}
+						<div class="pt-1">
+							<Button pill class="mr-4" size="xs" color="green">Official demo</Button>
+						</div>
+					{/if}
+					<div class="ml-1">
+						<Button
+							outline
+							size="xs"
+							rel="noreferrer"
+							target="_blank"
+							href="/{$page.data.space.appId}"
 						>
 							<svg
-								class="h-6 w-6"
-								fill="none"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-							</svg>
-						</div>
-
-						<input
-							id="search"
-							type="text"
-							name="search"
-							class="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-300 w-full h-10 focus:outline-none focus:border-indigo-400"
-							placeholder="Search..."
-						/>
-					</div>
-					<div class="flex md:hidden">
-						<a href="#" class="flex items-center justify-center h-10 w-10 border-transparent">
-							<svg
-								class="h-6 w-6 text-gray-500"
-								fill="none"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-							>
-								<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-							</svg>
-						</a>
-					</div>
-				</form>
-				<div class="flex ml-auto">
-					<div class="pt-1">
-						<Button pill class="mr-4" size="xs" color="green">Live demo</Button>
+								xmlns="http://www.w3.org/2000/svg"
+								height="18"
+								fill="currentColor"
+								viewBox="0 96 960 960"
+								width="18"
+								><path
+									d="M180 936q-24 0-42-18t-18-42V276q0-24 18-42t42-18h279v60H180v600h600V597h60v279q0 24-18 42t-42 18H180Zm202-219-42-43 398-398H519v-60h321v321h-60V319L382 717Z"
+								/></svg
+							></Button
+						>
 					</div>
 					<div class="mr-3">
 						<DarkMode />
@@ -393,9 +349,7 @@
 		</div>
 		<footer class="footer px-4 py-2">
 			<div class="footer-content">
-				<p class="text-xs text-gray-600 text-center">
-					© {space.name}. All rights reserved.
-				</p>
+				<p class="text-xs text-gray-600 text-center">© Dreamfeel Spaces. All rights reserved.</p>
 			</div>
 		</footer>
 	</main>

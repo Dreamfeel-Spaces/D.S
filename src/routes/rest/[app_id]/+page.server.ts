@@ -6,28 +6,19 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 	//@ts-ignore
 	const space = locals.space;
 
+	let user: any = space.users[0];
+	if (user) user.role = space.roles.find((role: { id: any }) => role.id === user?.userRolesId);
 
-	let apiSetup = await prisma.apiSetup.findFirst({
-		where:{
-			spaceId:space.id
-		}
-	})
 
+	let spaceSession = { user };
+
+	let apiSetup = space.apiSetup[0];
 
 	if (!apiSetup?.complete) {
 		throw redirect(302, `/rest/${space?.appId}/quick-setup`);
 	}
 
-	const tables = await prisma.spaceTable.findMany({
-		where: {
-			appId: String(space?.id)
-		},
-		include: {
-			rows: true
-		}
-	});
-
-	
+	const tables = space.tables ?? [];
 
 	return { tables, space };
 }

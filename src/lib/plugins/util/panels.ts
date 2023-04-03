@@ -10,10 +10,55 @@ export function addGpanels(editor: grapesjs.Editor) {
 		el: '.panel__basic-actions',
 		buttons: [
 			{
+				id: 'go-home',
+				attributes: {
+					title: 'Open projects and templates'
+				},
+				command: 'go-home',
+				label: `<svg
+				fill="currentColor"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				stroke-width="2"
+				viewBox="0 0 24 24"
+				stroke="currentColor"
+			>
+				<path
+					d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+				/>
+			</svg>`
+			},
+			{
 				id: 'show-api',
 				command: 'manual-save',
 				label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M840 373v503q0 24-18 42t-42 18H180q-24 0-42-18t-18-42V276q0-24 18-42t42-18h503l157 157Zm-60 27L656 276H180v600h600V400ZM479.765 811Q523 811 553.5 780.735q30.5-30.264 30.5-73.5Q584 664 553.735 633.5q-30.264-30.5-73.5-30.5Q437 603 406.5 633.265q-30.5 30.264-30.5 73.5Q376 750 406.265 780.5q30.264 30.5 73.5 30.5ZM233 472h358V329H233v143Zm-53-72v476-600 124Z"/></svg>`
 			},
+			{
+				id: 'open-pages',
+				attributes: {
+					title: 'Open projects and templates'
+				},
+				command: 'open-pages',
+				label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M480 896q-48-38-104-59t-116-21q-42 0-82.5 11T100 858q-21 11-40.5-1T40 822V340q0-11 5.5-21T62 304q46-24 96-36t102-12q58 0 113.5 15T480 316v506q51-33 107-49.5T700 756q36 0 78.5 7t81.5 29V287q9.886 3.75 19.443 7.875Q889 299 898 304q10 6 16 15.677 6 9.678 6 20.323v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700 816q-60 0-116 21t-104 59Zm60-167V376l260-260v387L540 729Zm-120 63V353q-34-19-79-28t-81-9q-47 0-87.5 10T100 351.533V792q35-17 75.5-26.5t85-9.5q44.5 0 84.5 9.5t75 26.5Zm0 0V353v439Z"/></svg>`
+			},
+			{
+				id: 'open-actions',
+				attributes: {
+					title: 'Open projects and templates'
+				},
+				command: 'open-actions',
+				label: `<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="currentColor"
+				height="24"
+				viewBox="0 96 960 960"
+				width="24"
+				><path
+					d="m393 891 279-335H492l36-286-253 366h154l-36 255Zm-73 85 40-280H160l360-520h80l-40 320h240L400 976h-80Zm153-395Z"
+				/></svg
+			>`
+			},
+
 			{
 				id: 'visibility',
 				active: true,
@@ -156,14 +201,6 @@ export function gPanels(editor: grapesjs.Editor) {
 						id: 'device-mobile',
 						command: 'set-device-mobile',
 						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M260 1016q-24 0-42-18t-18-42V196q0-24 18-42t42-18h440q24 0 42 18t18 42v760q0 24-18 42t-42 18H260Zm0-90v30h440v-30H260Zm0-60h440V286H260v580Zm0-640h440v-30H260v30Zm0 0v-30 30Zm0 700v30-30Z"/></svg>`
-					},
-					{
-						id: 'open-pages',
-						attributes: {
-							title: 'Open projects and templates'
-						},
-						command: 'open-pages',
-						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M480 896q-48-38-104-59t-116-21q-42 0-82.5 11T100 858q-21 11-40.5-1T40 822V340q0-11 5.5-21T62 304q46-24 96-36t102-12q58 0 113.5 15T480 316v506q51-33 107-49.5T700 756q36 0 78.5 7t81.5 29V287q9.886 3.75 19.443 7.875Q889 299 898 304q10 6 16 15.677 6 9.678 6 20.323v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700 816q-60 0-116 21t-104 59Zm60-167V376l260-260v387L540 729Zm-120 63V353q-34-19-79-28t-81-9q-47 0-87.5 10T100 351.533V792q35-17 75.5-26.5t85-9.5q44.5 0 84.5 9.5t75 26.5Zm0 0V353v439Z"/></svg>`
 					}
 				]
 			}

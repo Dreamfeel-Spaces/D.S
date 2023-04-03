@@ -1,6 +1,7 @@
 <script>
-	import { Button, Modal, Label, Input, SidebarItem } from 'flowbite-svelte';
+	import { Button, Modal, Label, Input, Toggle } from 'flowbite-svelte';
 	let formModal = false;
+	let layout = false;
 </script>
 
 <div class="text-end">
@@ -29,7 +30,7 @@
 </div>
 <Modal bind:open={formModal} size="lg" autoclose={false} class="w-full">
 	<form class="flex flex-col space-y-6" action="?/createPage" method="POST">
-		<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Add</h3>
+		<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Add Page</h3>
 		<Label class="space-y-2">
 			<span>Name</span>
 			<Input type="text" autofocus name="name" required />
@@ -38,6 +39,10 @@
 			<span>Path</span>
 			<Input type="text" name="path" id="path" />
 		</Label>
+		<Toggle bind:checked={layout}
+			><span class="text-gray-900 dark:text-gray-300">Layout</span></Toggle
+		>
+		<input name="layout" type="hidden" value={layout} />
 		<Button type="submit" class="w-full1">Save</Button>
 	</form>
 </Modal>

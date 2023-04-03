@@ -9,11 +9,19 @@ import jwt from 'jsonwebtoken';
 import { GITHUB_ID, GITHUB_SECRET, NEXTAUTH_URL } from '$env/static/private';
 import { prisma } from './lib/db/prisma';
 import { sequence } from '@sveltejs/kit/hooks';
-import { error, type Handle, type HandleFetch, type HandleServerError } from '@sveltejs/kit';
+import {
+	error,
+	redirect,
+	type Handle,
+	type HandleFetch,
+	type HandleServerError
+} from '@sveltejs/kit';
 import { Pages } from '$lib/plugins/pages/Pages';
 import { errorCatch, isReservedRoute } from '$lib/util/slugit';
 import { Token } from '$lib/token/Token';
 import { dev } from '$app/environment';
+import { Space } from '$lib/djs/Space';
+import { request } from 'http';
 
 export const authHandle = SvelteKitAuth({
 	adapter: PrismaAdapter(prisma) as Adapter<boolean>,
@@ -57,6 +65,16 @@ export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 
 	if (isReserved && !pageManager.isValidSubdomain) return resolve(event);
 
+	// console.log("event", event);
+
+	if (event.request.method === 'POST') {
+		const formData = await event.request.formData();
+		console.log(event.request);
+		throw redirect(301, `${event.request.action}`);
+
+		//
+	}
+
 	if (pageManager.isValidSubdomain) {
 		const [html, htmlError] = await pageManager.renderPage({
 			renderSubdomainApp: true,
@@ -75,7 +93,7 @@ export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 };
 
 export const errorHandle: HandleServerError = ({ error }) => {
-	console.log(error);
+	// console.log(error);
 	return { message: 'Error' };
 };
 
@@ -89,13 +107,21 @@ export const spaceAuth: Handle = async ({ event, resolve }) => {
 		try {
 			const sessionToken = cookies.get(`${event.params['app_id']}-accessToken`);
 			const decoded = jwt.decode(sessionToken);
-			return { user: decoded };
+			const user = await prisma.spaceUser.findUnique({
+				where: {
+					id: decoded?.id
+				},
+				include: {
+					UserRoles: true
+				}
+			});
+			return { user };
 		} catch (e) {
 			return null;
 		}
 	}
 	event.locals.getSpaceSession = getSpaceSession;
-	event.locals.spaceSession = await getSpaceSession();
+	// event.locals.spaceSession = await getSpaceSession();
 	return resolve(event);
 };
 
@@ -146,32 +172,61 @@ export const activeUser: Handle = async ({ event, resolve }) => {
 };
 
 export const spaceIdHandle: Handle = async ({ event, resolve }) => {
-	const { params, cookies } = event;
+	const start = performance.now();
+
+	const { params, cookies, url } = event;
 	const appId = params['app_id'];
+
+	let space = null;
+
+	const sessionToken: string = cookies.get(`${appId}-accessToken`);
+
 	if (appId) {
-		const space = await prisma.space.findUnique({
-			where: {
-				appId
-			}
-		});
-
-		const sessionToken: any = cookies.get(`${space.appId}-accessToken`);
-
+		let decoded = null;
 		if (sessionToken) {
-			const decoded = jwt.decode(sessionToken);
-			const user = await prisma.spaceUser.findUnique({
-				where: {
-					id: decoded?.id
-				},
-				include: {
-					role: true
-				}
-			});
-			event.locals.spaceSession = { user };
+			decoded = jwt.decode(sessionToken);
+		}
+		const isRest = /^\/rest\/(.+)/.test(url.pathname);
+		const isAppAdmin = /^\/a\/(.+)/.test(url.pathname);
+		const isDashboards = /^\/dashboards\/(.+)/.test(url.pathname);
+		const isEditor = /^\/editor\/(.+)/.test(url.pathname);
+
+		const withRelations = [isRest, isAppAdmin, isDashboards, isEditor];
+		const hasReleations = withRelations.filter(Boolean);
+
+		if (hasReleations[0]) {
+			if (isRest) {
+				space = await Space.withRestMetaData(appId, decoded?.id);
+			}
+			if (isAppAdmin) {
+				space = await Space.withAppDetailData(appId, decoded?.id);
+			}
+			if (isDashboards) {
+				if (params.table) {
+					space = await Space.withDashboardOverviewMetaData(appId, decoded?.id);
+				} else space = await Space.withDashboardData(appId, decoded?.id);
+			}
+			if (isEditor) {
+				space = await Space.withUIData(appId, decoded?.id);
+			}
+		} else {
+			space = await Space.findOneById(appId, decoded?.id);
 		}
 
 		event.locals.space = space;
+		try {
+			event.locals.spaceSession = {
+				user: {
+					...space.users[0],
+					role: space.roles.find((role) => role.id === space?.users[0]?.userRolesId)
+				}
+			};
+		} catch (error) {}
 	}
+
+	const end = performance.now();
+
+	console.log(end - start, event.url.pathname);
 	return resolve(event);
 };
 

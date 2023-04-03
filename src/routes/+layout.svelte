@@ -35,7 +35,7 @@
 	let isEditor = /\/editor/.test(pathname);
 	let isBase = /\/base/.test(pathname);
 	let isSpaces = /\/spaces/.test(pathname);
-	let spaceId = $page.params["app_id"];
+	let spaceId = $page.params['app_id'];
 	let session = $page.data.session;
 
 	let subdomain = $page.data.subdomain;
@@ -47,10 +47,11 @@
 		/^\/reports\/(.+)\/?/.test(pathname) ||
 		/^\/editor\/(.+)\/?/.test(pathname) ||
 		/^\/dashboards\/(.+)\/?/.test(pathname) ||
-		(/^\/preferences\/(.+)\/?/.test(pathname)) ||
+		/^\/preferences\/(.+)\/?/.test(pathname) ||
 		/^\/rest\/(.+)\/?/.test(pathname) ||
 		/^\/a\/(.+)\/?/.test(pathname) ||
 		/^\/onboarding\/?/.test(pathname);
+
 
 	import logo from '../assets/logo.png';
 	import Rt from '$lib/ws/Rt.svelte';
@@ -171,9 +172,12 @@
 									<p>User interfaces</p>
 									<small>UI builder, Tailwind CSS and Native components</small>
 								</DropdownItem>
-								<DropdownItem class="flex items-center justify-between"
-									><Chevron placement="right">Enterprise</Chevron></DropdownItem
-								>
+								<DropdownItem class="flex items-center justify-between">
+									<p slot="header">Enterprise</p>
+								<Chevron placement="right">
+										<p>UI builder, Tailwind CSS and Native components</p>
+									</Chevron>
+								</DropdownItem>
 								<Dropdown placement="right-start">
 									<DropdownItem>E-Commerce</DropdownItem>
 									<DropdownItem>SMEs</DropdownItem>
@@ -187,7 +191,7 @@
 						<li class="lg:pr-2" data-te-nav-item-ref>
 							<a
 								rel="external"
-								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+								class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 								href="/create"
 								data-te-nav-link-ref>New Space</a
 							>

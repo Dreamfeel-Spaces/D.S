@@ -34,7 +34,6 @@ export async function transformHtmlString(
 	});
 
 	for (let apiComponent of withAPIs) {
-		console.log(apiComponent.getAttributeNames(), 'names');
 		const space = apiComponent.getAttribute('data-api-type');
 		apiComponent.innerHTML = `<p>${space}</p>`;
 	}

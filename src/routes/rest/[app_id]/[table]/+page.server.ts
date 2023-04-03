@@ -2,36 +2,19 @@ import { prisma } from '$lib/db/prisma';
 import { error } from '@sveltejs/kit';
 import type { RequestEvent, Actions } from './$types';
 
-export async function load({ params }: RequestEvent) {
+export async function load({ params, locals }: RequestEvent) {
 	const tableName = params.table;
-	const spaceId = params["app_id"];
 
-	const space = await prisma.space.findUnique({
-		where: {
-			appId: String(spaceId)
-		},
-		include: { tables: true }
-	});
+	// @ts-ignore
+	const space = locals.space;
 
 	if (!space) throw error(404, 'Space not found');
 
-	const table = await prisma.spaceTable.findFirst({
-		where: {
-			name: tableName,
-			appId: String(space?.id)
-		},
-		include: {
-			columns: {
-				include: {
-					options: true
-				}
-			}
-		}
-	});
+	const table = space.tables.find((table: { name: string }) => table.name === tableName);
 
 	return {
 		table,
-		tables: space.tables.map((table) => {
+		tables: space.tables.map((table: { name: any; id: any }) => {
 			return { name: table.name, value: table.id };
 		}),
 		columns: table?.columns ?? []
@@ -40,27 +23,10 @@ export async function load({ params }: RequestEvent) {
 
 export const actions: Actions = {
 	async default({ params, request, locals }) {
-		const spaceId = params["app_id"];
-		const tableId = params.table;
+		// @ts-ignore
+		const space = locals.space;
 
-		const space = await prisma.space.findUnique({
-			where: {
-				appId: spaceId
-			}
-		});
-
-		const table = await prisma.spaceTable.findFirst({
-			where: { name: tableId, appId: String(space?.id) },
-			include: {
-				rows: {
-					include: {
-						tableData: true
-					}
-				},
-				columns: true
-			}
-		});
-
+		const table = space.tables.find((table: { name: string }) => table.name === params.table);
 		const data = await request.formData();
 
 		let fields = [];
@@ -97,7 +63,6 @@ export const actions: Actions = {
 
 				fields.push(col);
 			} else {
-				console.log(column.id);
 				const col = await prisma.column.update({
 					where: { id: column.id },
 					data: {

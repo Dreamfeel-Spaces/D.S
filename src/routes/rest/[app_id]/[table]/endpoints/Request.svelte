@@ -33,7 +33,6 @@
 		type: col.type
 	}));
 
-	console.log($page.data.tables, $page.params.table);
 
 	let data: any;
 	let error: any;

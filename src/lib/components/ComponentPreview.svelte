@@ -6,7 +6,6 @@
 	};
 	const type = component.value ?? component.type;
 	const variant = component.variant;
-	console.log(variant);
 </script>
 
 {#if type === 'hero'}

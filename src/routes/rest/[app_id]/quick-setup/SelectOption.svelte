@@ -11,13 +11,13 @@
 
 	async function handleRequest() {
 		modalOpen = true;
-		const response = await axios.put(`/base/${$page.params["app_id"]}/quick-setup/sver`, { ctx });
+		const response = await axios.put(`/rest/${$page.params["app_id"]}/quick-setup/sver`, { ctx });
 		if (response.data) {
 			modalOpen = false;
 			if (ctx === 'dismiss') {
 				window.location.reload();
 			}
-			goto(`/base/${$page.params["app_id"]}`);
+			goto(`/rest/${$page.params["app_id"]}`);
 		}
 	}
 </script>

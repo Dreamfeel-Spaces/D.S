@@ -1,5 +1,5 @@
 <script>
-	import { Card } from 'flowbite-svelte';
+	import { Card, Heading } from 'flowbite-svelte';
 </script>
 
 <!-- <script lang="ts">
@@ -287,6 +287,7 @@
 
 <section class="container">
 	<Card class="min-h-100" size="xl">
+		<Heading class="ml-3" tag="h4">Home</Heading>
 		<div class="flex flex-wrap pb-52">
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2">
 				<div class="bg-green-600 border rounded shadow p-2">

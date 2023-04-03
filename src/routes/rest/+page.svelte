@@ -15,8 +15,8 @@
 	<div class="px-6">
 		<div class="grid grid-cols-4  gap-3">
 			{#each apps as app}
-				<a rel="external" href={`/base/${app.appId}`}>
-					<Card class="text-center">
+				<a rel="external" href={`/rest/${app.appId}`}>
+					<Card  class="text-center">
 						<div class="flex mb-2 justify-center">
 							<Avatar size="lg" src="/" />
 						</div>

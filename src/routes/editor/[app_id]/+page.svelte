@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import {
-		Breadcrumb,
-		BreadcrumbItem,
 		Card,
+		BreadcrumbItem,
 		Accordion,
 		AccordionItem,
 		List,
@@ -19,13 +18,17 @@
 </script>
 
 {#if !uis.length}
-	<div class="my-9 text-center">
-		<div>No UIS have been added</div>
-		<div class="mt-9 ">
-			<a class="hover:underline" href={`/editor/${$page.params['app_id']}/create`}>
-				<Button>Add UI Group</Button></a
-			>
-		</div>
+	<div class="container">
+		<Card size="xl" class="w-full min-h-108 flex self-center">
+			<div class="my-9 text-center">
+				<div>No UIS have been added</div>
+				<div class="mt-9 ">
+					<a class="hover:underline" href={`/editor/${$page.params['app_id']}/create`}>
+						<Button>Add UI Group</Button></a
+					>
+				</div>
+			</div>
+		</Card>
 	</div>
 {/if}
 
@@ -39,17 +42,34 @@
 	{#each uis as ui}
 		<Card size="xl">
 			<div class="flex">
-				<b class="text-lg flex-1">{ui?.name}</b>
-				{#if ui?.spaceUIVersion.find((item) => item.id === data?.space?.uiVid)}
-					<Button gradient size="xs" color="green" pill>Published</Button>
-				{/if}
+				<b class="text-2xl flex-1">{ui?.name}</b>
+				<div class=" flex justify-between">
+					{#if ui?.spaceUIVersion.find((item) => item.id === data?.space?.uiVid)}
+						<div>
+							<Button class="mr-3" gradient size="xs" color="green" pill>Published</Button>
+						</div>
+					{/if}
+					<div>
+						<Button
+							size="xs"
+							outline
+							href={`/editor/${$page.data.space.appId}/versions/${ui.id}/create`}
+						>
+							<svg
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+								height="18"
+								viewBox="0 96 960 960"
+								width="18"><path d="M450 856V606H200v-60h250V296h60v250h250v60H510v250h-60Z" /></svg
+							>
+							<span class="ml-2"> Version </span>
+						</Button>
+					</div>
+				</div>
 			</div>
-			<p class="my-3">{ui?.spaceUIVersion?.length ?? 0} Versions</p>
-			<div class="mt-3 flex justify-between">
-				<a href={`/editor/artik-party/versions/${ui.id}/create`}>New version</a>
-				<a href="/">Edit</a>
-			</div>
-			<Accordion class="mt-3">
+			<p class="my-1">{ui?.spaceUIVersion?.length ?? 0} Versions</p>
+
+			<Accordion class="mt-1">
 				<AccordionItem>
 					<svelte:fragment slot="header">Versions</svelte:fragment>
 					<List position="inside">

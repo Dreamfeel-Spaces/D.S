@@ -33,7 +33,6 @@ export default function gjsTailwind(editor: grapesjs.Editor, opts = {}) {
 		run: () => {
 			const theme = options.updateTheme();
 			editor.Canvas.getBody().className = theme;
-			console.log('options', theme);
 		}
 	});
 
