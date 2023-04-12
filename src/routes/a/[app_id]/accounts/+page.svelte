@@ -20,7 +20,7 @@
 	<title>{space?.name}</title>
 </svelte:head>
 
-{#if !data.spaceSession?.user}
+{#if !data.spaceSession?.user?.id}
 	<section>
 		<div class="flex flex-col px-6 text-gray-800 mx-auto  lg:py-0">
 			<div
@@ -112,7 +112,7 @@
 	</section>
 {/if}
 
-{#if data.spaceSession?.user}
+{#if data.spaceSession?.user?.id}
 	<Card size="lg" class="flex m-2 dark:text-white">
 		<div>
 			<div class="my-9">

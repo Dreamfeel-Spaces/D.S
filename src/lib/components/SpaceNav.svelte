@@ -44,7 +44,7 @@
 	method="post"
 >
 	<Modal
-		open={(!spaceUser?.defaultPasswordUpdated && spaceUser) || $passwordResetDialog.open}
+		open={(!spaceUser?.defaultPasswordUpdated && spaceUser?.id) || $passwordResetDialog.open}
 		class="w-full z-69"
 	>
 		<div slot="header">
