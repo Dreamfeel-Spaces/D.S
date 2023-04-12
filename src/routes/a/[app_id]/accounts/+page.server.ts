@@ -4,10 +4,11 @@ import jwt from 'jsonwebtoken';
 import { error, redirect } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
 
-export async function load({ params, cookies, locals }: RequestEvent) {
+export async function load({ params, cookies, locals }: RequestEvent) {``
+	
 	//@ts-ignore
 	const spaceSession = locals.spaceSession;
-	if (!spaceSession) throw error(403, 'Login required');
+	if (!spaceSession?.user?.id) throw error(403, 'Login required');
 	return { spaceSession };
 }
 

@@ -85,12 +85,12 @@ export async function load({ locals }: PageServerLoadEvent) {
 	const space = locals.space;
 	//@ts-ignore
 
-	let user: any = space.users[0];
+	let user: any = locals.spaceSession?.user;
 	if (user) user.role = space.roles.find((role: { id: any }) => role.id === user?.userRolesId);
 
 	const onboarding = space.onboarding[0];
 
-	if (!user) throw redirect(302, `/a/${space.appId}/accounts`);
+	if (!user?.id) throw redirect(302, `/a/${space.appId}/accounts`);
 
 	if (!onboarding?.complete) {
 		throw redirect(302, `/a/${space?.appId}/welcome`);
