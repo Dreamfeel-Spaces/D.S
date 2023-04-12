@@ -3,7 +3,7 @@
 	import logo from '../assets/logo.png';
 	export let form: any;
 	export let data: any;
-	import { Alert, Button, Card } from 'flowbite-svelte';
+	import { Alert, Button, Card , Avatar} from 'flowbite-svelte';
 
 	import Cursort from './Cursort.svelte';
 	import HeroCarousel from './HeroCarousel.svelte';
@@ -231,22 +231,18 @@
 						Speechless with how easy this was to integrate
 					</h3>
 					<p class="my-4">
-						"I recently got my hands on Flowbite Pro, and holy crap, I'm speechless with how easy
-						this was to integrate within my application. Most templates are a pain, code is
-						scattered, and near impossible to theme.
-					</p>
-					<p class="my-4">
-						Flowbite has code in one place and I'm not joking when I say it took me a matter of
-						minutes to copy the code, customise it and integrate within a Laravel + Vue application.
+						"I recently tried out Dreamfeel Spaces Pro, and I have to say, I was blown away by how
+						easy it was to integrate with my application. Unlike most other platforms, I didn't have
+						to struggle with messy code or clunky templates - everything was intuitive and
+						straightforward. Plus, the customization options are fantastic - I was able to theme my
+						app exactly how I wanted it without any hassle. Overall, I'm really impressed with
+						Dreamfeel Spaces Pro and would highly recommend it to anyone looking for a flexible and
+						user-friendly low-code platform.
 					</p>
 					<p class="my-4">If you care for your time, I hands down would go with this."</p>
 				</blockquote>
 				<figcaption class="flex justify-center items-center space-x-3">
-					<img
-						class="w-9 h-9 rounded-full"
-						src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png"
-						alt="profile"
-					/>
+					<Avatar border/>
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
 						<div>Mike</div>
 						<div class="text-sm font-light text-gray-500 dark:text-gray-400">Beta tester</div>
@@ -261,22 +257,20 @@
 						Solid foundation for any project
 					</h3>
 					<p class="my-4">
-						"FlowBite provides a robust set of design tokens and components based on the popular
-						Tailwind CSS framework. From the most used UI components like forms and navigation bars
-						to the whole app screens designed both for desktop and mobile, this UI kit provides a
-						solid foundation for any project.
-					</p>
-					<p class="my-4">
-						Designing with Figma components that can be easily translated to the utility classes of
-						Tailwind CSS is a huge timesaver!"
+						"Dreamfeel Spaces Pro is a game-changer when it comes to building robust web
+						applications. Unlike other solutions that require you to start from scratch or work with
+						messy templates, Dreamfeel Spaces Pro provides a complete set of tools to help you build
+						and deploy scalable, secure, and high-performance apps in record time. With easy-to-use
+						datasources and website builders, you can create custom APIs, dashboards, and websites
+						in just minutes. Plus, with built-in authentication and AI-assisted schema generation,
+						you can be confident that your apps will be secure and optimized from day one. Whether
+						you're building an e-commerce site, a social network, or anything in between, Dreamfeel
+						Spaces Pro gives you the power to create amazing web apps that are tailored to your
+						needs.
 					</p>
 				</blockquote>
 				<figcaption class="flex justify-center items-center space-x-3">
-					<img
-						class="w-9 h-9 rounded-full"
-						src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png"
-						alt="profile"
-					/>
+					<Avatar border/>
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
 						<div>Robert Macharia</div>
 						<div class="text-sm font-light text-gray-500 dark:text-gray-400">
@@ -293,24 +287,17 @@
 						Mindblowing workflow and variants
 					</h3>
 					<p class="my-4">
-						"As someone who mainly designs in the browser, I've been a casual user of Figma, but as
-						soon as I saw and started playing with FlowBite my mind was 🤯.
-					</p>
-					<p class="my-4">
-						Everything is so well structured and simple to use (I've learnt so much about Figma by
-						just using the toolkit).
-					</p>
-					<p class="my-4">
-						Aesthetically, the well designed components are beautiful and will undoubtedly level up
-						your next application."
+						"As a designer who primarily works in the browser, I've used Figma for a while now, but
+						I recently came across Dreamfeel Spaces and I have to say, I'm blown away. With the
+						built-in website builder and use of Tailwind CSS, designing responsive and great-looking
+						websites has never been easier. The platform provides a solid foundation with its
+						pre-designed UI components and templates, and the ability to integrate with scalable
+						REST APIs makes development much faster. Overall, Dreamfeel Spaces has streamlined my
+						design process and made it much more efficient
 					</p>
 				</blockquote>
 				<figcaption class="flex justify-center items-center space-x-3">
-					<img
-						class="w-9 h-9 rounded-full"
-						src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
-						alt="profile"
-					/>
+					<Avatar border/>
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
 						<div>Jese Leos</div>
 						<div class="text-sm font-light text-gray-500 dark:text-gray-400">
@@ -327,19 +314,19 @@
 						Efficient Collaborating
 					</h3>
 					<p class="my-4">
-						"This is a very complex and beautiful set of elements. Under the hood it comes with the
-						best things from 2 different worlds: Figma and Tailwind.
+						"Whether you're a seasoned developer or a novice designer, Dreamfeel Spaces makes it
+						easy to create fast prototypes and test your ideas quickly. The intuitive interface and
+						extensive library of design elements mean you can quickly build custom designs that fit
+						your needs. With Dreamfeel Spaces, you have access to a wide range of examples that can
+						be used to create a prototype for your team in no time. .
 					</p>
 					<p class="my-4">
-						You have many examples that can be used to create a fast prototype for your team."
+						The combination of Dreamfeel Spaces and Tailwind CSS makes for a powerful platform that
+						can be used to create beautiful, scalable web designs with ease."
 					</p>
 				</blockquote>
 				<figcaption class="flex justify-center items-center space-x-3">
-					<img
-						class="w-9 h-9 rounded-full"
-						src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png"
-						alt="profile"
-					/>
+					<Avatar border/>
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
 						<div>Caleb Otieno</div>
 						<div class="text-sm font-light text-gray-500 dark:text-gray-400">
@@ -1086,9 +1073,8 @@
 	</div>
 </div>
 
-<div class="dark:bg-gray-900">
+<!-- <div class="dark:bg-gray-900">
 	<div class="container  py-24 px-6 mx-auto">
-		<!-- Section: Design Block -->
 		<section class="mb-32  text-gray-800 text-center md:text-left">
 			<div class="grid md:grid-cols-2 gap-6">
 				<div class="mb-6 md:mb-0">
@@ -1156,9 +1142,8 @@
 				</div>
 			</div>
 		</section>
-		<!-- Section: Design Block -->
 	</div>
-</div>
+</div> -->
 
 <footer style="backdrop-filter:blur(30px)" class="p-4 md:p-8 lg:p-10  dark:bg-gray-900 bg-gray-900">
 	<div class="mx-auto max-w-screen-xl text-center">
@@ -1201,7 +1186,8 @@
 			</li>
 		</ul>
 		<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
-			>© 2021-2022 <a href="/" class="hover:underline">Flowbite™</a>. All Rights Reserved.</span
+			>© {new Date().getFullYear()} <a href="/" class="hover:underline">Dreamfeel Spaces</a>. All
+			Rights Reserved.</span
 		>
 	</div>
 </footer>
