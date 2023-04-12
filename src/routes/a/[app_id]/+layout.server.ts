@@ -4,14 +4,13 @@ import jwt from 'jsonwebtoken';
 //@ts-ignore
 import type { LayoutServerLoadEvent } from './$types';
 
-export async function load({ cookies, params, locals }: LayoutServerLoadEvent) {
+export async function load({locals }: LayoutServerLoadEvent) {
 	// @ts-ignore
 	let space: any = locals.space;
 	let user: any = space.users[0];
 	if (user) user.role = space.roles.find((role: { id: any }) => role.id === user?.userRolesId);
 	let spaceSession = { user };
 
-	console.log(user);
 
 	if (!space) {
 		throw error(404, 'Page not found');

@@ -12,7 +12,8 @@
 		"test:unit": "vitest",
 		"lint": "prettier --plugin-search-dir . --check .",
 		"format": "prettier --plugin-search-dir . --write .",
-		"sync": "npx prisma db push"
+		"sync": "npx prisma db push",
+		"lab": "ts-node  --esm lab.ts"
 	},
 	"devDependencies": {
 		"@auth/core": "^0.4.0",
@@ -69,6 +70,7 @@
 		"svelte-file-dropzone": "^1.0.0",
 		"svelte-prism": "^1.1.6",
 		"tailwindcss": "^3.2.7",
+		"ts-node": "^10.9.1",
 		"tslib": "^2.4.1",
 		"typescript": "^4.9.3",
 		"upload-csv-svelte": "^0.0.4",
