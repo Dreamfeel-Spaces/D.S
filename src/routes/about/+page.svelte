@@ -37,13 +37,13 @@
 					<img
 						alt="team"
 						class="flex-shrink-0 rounded-lg w-48 h-48 object-cover object-center sm:mb-0 mb-4"
-						src="https://bryomajor.netlify.app/#page-top"
+						src="https://res.cloudinary.com/dreamnerd/image/upload/v1681309846/profile_ei7kvg.jpg"
 					/>
 					<div class="flex-grow sm:pl-8">
 						<h2 class="title-font font-medium text-lg dark:text-gray-300 text-gray-900">
 							Brian Major
 						</h2>
-						<h3 class="text-gray-500 mb-3">Co-Founder CEO</h3>
+						<h3 class="text-gray-500 mb-3">Co-Founder & CEO</h3>
 						<span class="inline-flex"
 							><a href="/" class="text-gray-500"
 								><svg
@@ -100,7 +100,7 @@
 						<h2 class="title-font font-medium text-lg dark:text-gray-300 text-gray-900">
 							Alex Omogi
 						</h2>
-						<h3 class="text-gray-500 mb-3">Co-Founder & C0O</h3>
+						<h3 class="text-gray-500 mb-3">Co-Founder & COO</h3>
 
 						<span class="inline-flex"
 							><a href="/" class="text-gray-500"
