@@ -6,11 +6,12 @@ export async function load({ locals }: RequestEvent) {
 	// @ts-ignore
 	let space: any = locals.space;
 	//@ts-ignore
-	let user: any = space.users[0];
-	if (user) user.role = space.roles.find((role: { id: any }) => role.id === user?.userRolesId);
-	let spaceSession = { user };
+	let spaceSession: any = locals.spaceSession;
+	let user: any = spaceSession?.user;
 
-	if (!user) throw redirect(301, `/a/${space.appId}/accounts`);
+	if (user) user.role = space.roles.find((role: { id: any }) => role.id === user?.userRolesId);
+
+	if (!user?.id) throw redirect(302, `/a/${space.appId}/accounts`);
 
 	if (!space) {
 		throw error(404, 'Page not found');

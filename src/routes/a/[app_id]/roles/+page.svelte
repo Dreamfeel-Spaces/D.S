@@ -13,7 +13,6 @@
 	const apps = $page.data.myapps;
 	const space = $page.data.space;
 	import PermissionDialog from '../../../preferences/[app_id]/PermissionDialog.svelte';
-	let appId = $page.params['app_id'];
 	const onboarding = space.onboarding[0];
 	const interest = JSON.parse(onboarding?.stepCoding ?? '');
 	export let form: any;

@@ -6,6 +6,7 @@
 	const space = $page.data.space;
 	const spaceSession = $page.data.spaceSession;
 	const user = spaceSession?.user;
+	const hasUser = Boolean(user?.id)
 	const pathname = $page.url.pathname;
 </script>
 
@@ -321,7 +322,7 @@
 					<div class="mr-3">
 						<DarkMode />
 					</div>
-					{#if user}
+					{#if hasUser}
 						<a href={`/a/${space?.appId}/accounts`} class="flex flex-row items-center">
 							<img
 								alt="User profile"
