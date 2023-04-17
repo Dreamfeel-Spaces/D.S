@@ -75,6 +75,7 @@ export function isReservedRoute(pathname: string) {
 	let isMockServer = /^\/api\/examples/.test(pathname);
 	let isCreate = /^\/create/.test(pathname);
 	let isFeedback = /^\/feedback/.test(pathname);
+	let isEarlyAccess = /^\/early-access/.test(pathname);
 
 
 	let reservedRoutes = [
@@ -100,7 +101,8 @@ export function isReservedRoute(pathname: string) {
 		isApp,
 		isMockServer,
 		isOnboarding,
-		isCreate
+		isCreate,
+		isEarlyAccess
 	];
 
 	return reservedRoutes.find(Boolean);
