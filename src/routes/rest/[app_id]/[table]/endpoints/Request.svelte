@@ -302,7 +302,7 @@
 					class="text-blue-500 hover:underline"
 					target="_blank"
 					rel="noreferrer"
-					href={`/a/${$page.params['app_id']}/preferences/apikeys`}>Generate API Key</a
+					href={`/a/${$page.params['app_id']}/preferences/keys`}>Generate API Key</a
 				>
 			</div>
 		{/if}

@@ -126,7 +126,7 @@
 					</p>
 					{#if data.space.apiChannel}
 						<div class="mt-6 text-right">
-							<a rel="external" href={`/preferences/${data?.space?.appId}/apikeys`}>
+							<a rel="external" href={`/a/preferences/${data?.space?.appId}/keys`}>
 								<Button size="xs" pill gradient>Add Api Key</Button></a
 							>
 						</div>
