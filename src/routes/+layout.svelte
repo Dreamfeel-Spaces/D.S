@@ -92,11 +92,11 @@
 {#if !isPreview && !subdomain}
 	<div>
 		<nav
-			class="flex-no-wrap fixed z-50 flex w-full items-center justify-between bg-neutral-100   dark:bg-gray-900 py-4 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
+			class="flex-no-wrap fixed z-50 flex w-full items-center justify-between bg-neutral-100   dark:bg-gray-900 pb-2 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
 			data-te-navbar-ref
 		>
 		<a class="w-full" href="/early-access">
-			<div class="bg-indigo-900 w-full text-center py-1 lg:px-4">
+			<div class="bg-indigo-900 w-full text-center lg:px-4">
 				<div
 					class="p-1 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
 					role="alert"
@@ -366,7 +366,7 @@
 		<Sidebar>
 			<SidebarWrapper divClass="overflow-y-auto py-4 px-3 ">
 				<SidebarGroup>
-					<SidebarItem
+					<!-- <SidebarItem
 						active={/^\/admin/.test(pathname)}
 						on:click={() => (hidden2 = true)}
 						href="/admin"
@@ -392,7 +392,7 @@
 								/></svg
 							>
 						</svelte:fragment>
-					</SidebarItem>
+					</SidebarItem> -->
 					<SidebarDropdownWrapper isOpen={isSpaces} label="Spaces">
 						<svelte:fragment slot="icon">
 							<svg

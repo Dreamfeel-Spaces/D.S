@@ -1,1 +1,1 @@
-Super apps
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, non sit sunt eum porro laboriosam incidunt, aut animi dolorem iure quas error hic, nostrum totam temporibus nam dolor reiciendis vero!

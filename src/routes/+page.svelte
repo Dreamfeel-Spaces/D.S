@@ -7,6 +7,7 @@
 
 	import Cursort from './Cursort.svelte';
 	import HeroCarousel from './HeroCarousel.svelte';
+
 </script>
 
 <Cursort />
@@ -50,10 +51,10 @@
 					<Button size="lg" gradient color="purpleToBlue">Try Live Demo</Button>
 				</a>
 			</div>
-			<div class="lg:mt-0 lg:col-span-5 lg:pt-1 sm:pt-28">
+			<div class="lg:mt-1 lg:col-span-5 lg:pt-1 sm:pt-28">
 				<Card
 					padding="sm"
-					class=" h-100 min-h-100 max-h-100 rounded-b-3xl rounded-t-3xl "
+					class=" h-100 min-h-100 max-h-100 mt-2  rounded-b-3xl rounded-t-3xl "
 					size="xl"
 				>
 					<HeroCarousel />

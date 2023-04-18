@@ -150,6 +150,29 @@
 			</div>
 		</aside>
 		<main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
+			<a class="w-full" rel="external" href="/early-access">
+				<div class="bg-indigo-900 w-full text-center py-1 lg:px-4">
+					<div
+						class="p-1 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+						role="alert"
+					>
+						<span class="flex rounded-full bg-indigo-500 uppercase px-2 text-xs font-bold mr-3"
+							>Alpha preview</span
+						>
+						<span class=" mr-2 text-left text-xs flex-auto"
+							>Join the waitlist to be among the first to enjoy the limited possibilities of Spaces.</span
+						>
+						<svg
+							class="fill-current opacity-75 h-4 w-4"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 20 20"
+							><path
+								d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"
+							/></svg
+						>
+					</div>
+				</div>
+			</a>
 			<header class="header dark:bg-gray-800 bg-white shadow py-4 px-4">
 				<div class="header-content flex items-center flex-row">
 					<SpaceSearch />

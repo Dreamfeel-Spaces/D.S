@@ -10,13 +10,22 @@
 		Card
 	} from 'flowbite-svelte';
 	import { page } from '$app/stores';
-	const apps = $page.data.myapps;
 	const space = $page.data.space;
-	import PermissionDialog from '../../../preferences/[app_id]/PermissionDialog.svelte';
+	import PermissionDialog from './PermissionDialog.svelte';
+	import UpdateDrawer from './UpdateDrawer.svelte';
 	const onboarding = space.onboarding[0];
 	const interest = JSON.parse(onboarding?.stepCoding ?? '');
 	export let form: any;
+	let externalFormModal = false;
+
+	function handleClickItem(role: any) {
+		externalFormModal = true;
+	}
 </script>
+
+<svelte:head>
+	<title>{space?.name || 'Unknown Space'}</title>
+</svelte:head>
 
 <Card size="xl" class="min-h-100">
 	<PermissionDialog />
@@ -47,7 +56,9 @@
 						{/if}
 					</TableBodyCell>
 					<TableBodyCell>{role.created}</TableBodyCell>
-					<TableBodyCell><a href="/edit">Edit</a></TableBodyCell>
+					<TableBodyCell class="cursor-pointer" on:click={() => handleClickItem(role)}
+						><UpdateDrawer {role} /></TableBodyCell
+					>
 				</TableBodyRow>
 			{/each}
 		</TableBody>

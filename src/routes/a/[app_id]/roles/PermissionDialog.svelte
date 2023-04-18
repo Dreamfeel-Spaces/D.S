@@ -15,24 +15,26 @@
 	const space = $page?.data?.space;
 	let tables = space?.tables ?? [];
 	let formModal = false;
+	export let externalFormModal = false;
 
 	let meta: any = {};
 
 	let roleName = '';
 </script>
 
-<div class="flex justify-end">
-	<Button on:click={() => (formModal = true)} gradient color="pinkToOrange" pill size="xs"
-		>Add roles</Button
-	>
-</div>
-
-<Modal class="w-full" autoclose={false} bind:open={formModal}>
-	<div slot="header" class="text-center">
-		<p class="text-2xl dark:text-gray-100">Add role</p>
+{#if externalFormModal !== undefined}
+	<div class="flex justify-end">
+		<Button on:click={() => (formModal = true)} gradient color="pinkToOrange" pill size="xs"
+			>Add roles</Button
+		>
 	</div>
-	<div>
-		<form method="post" action="?/createRole&tab=roles">
+{/if}
+<form action="?/create" method="post">
+	<Modal class="w-full" autoclose={false} bind:open={formModal}>
+		<div slot="header" class="text-center">
+			<p class="text-2xl dark:text-gray-100">Add role</p>
+		</div>
+		<div>
 			<Label>
 				<span> Name </span>
 				<Input
@@ -120,10 +122,7 @@
 				</Checkbox>
 
 				{#if !tables.length}
-					<Alert class="mt-3"
-						>No collections have been added to this space. You can configure collection permissions
-						later.</Alert
-					>
+					<Alert class="mt-3">No collections</Alert>
 				{/if}
 
 				{#if !meta.allCollectionCrud}
@@ -156,7 +155,7 @@
 				{/if}
 			{/if}
 			<input name="meta" value={JSON.stringify(meta)} type="hidden" />
-		</form>
-	</div>
-	<Button slot="footer" type="submit" class=" w-full">Save role</Button>
-</Modal>
+		</div>
+		<Button slot="footer" type="submit" class=" w-full">Save role</Button>
+	</Modal>
+</form>

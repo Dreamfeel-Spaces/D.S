@@ -25,7 +25,9 @@
 				role="alert"
 			>
 				<strong class="font-bold">Error!</strong>
-				<span class="block sm:inline">An error occured, please try again later. Email address could have already been registered</span>
+				<span class="block sm:inline">
+					{form?.error}
+				</span>
 				<span class="absolute top-0 bottom-0 right-0 px-4 py-3">
 					<svg
 						class="fill-current h-6 w-6 text-red-500"

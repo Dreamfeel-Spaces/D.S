@@ -39,45 +39,7 @@ export const actions: Actions = {
 
 		return { apiUpdateSuccess: true, data: updatedSpace };
 	},
-	async createRole({ request, params }) {
-		const data = await request.formData();
-		const name = convertToSlug(String(data.get('name')));
-		const description = String(data.get('description'));
-		const isSuperUser = 'true' === String(data.get('isSuperUser'));
-
-		const appId = params['app_id'];
-
-		const space = await prisma.space.findUnique({
-			where: {
-				appId: String(appId)
-			}
-		});
-
-		if (!space) throw error(404, 'Could not find this space');
-
-		if (isSuperUser) {
-			const role = await prisma.userRoles.create({
-				data: {
-					name,
-					description,
-					isSuperUser,
-					spaceId: space.id
-				}
-			});
-
-			return { roleSuccess: true, data: role };
-		} else {
-			const role = await prisma.userRoles.create({
-				data: {
-					name,
-					description,
-					spaceId: space.id
-				}
-			});
-
-			return { roleSuccess: true, data: role };
-		}
-	}
+	
 };
 
 export async function load({ locals }: PageServerLoadEvent) {

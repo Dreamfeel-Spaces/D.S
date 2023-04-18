@@ -20,8 +20,8 @@ export const actions: Actions = {
 			});
 
 			return { success: true };
-		} catch (error) {
-			return { error: true };
+		} catch (error: any) {
+			return { error: error?.message };
 		}
 	}
 };

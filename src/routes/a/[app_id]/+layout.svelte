@@ -235,62 +235,36 @@
 						<span class="ml-3">Preferences</span>
 					</a>
 				</li>
-				<li class="my-px">
-					{#if user}
-						<form method="post" action={`/a/${space.appId}/accounts?/signout`}>
-							<button
-								type="submit"
-								class="flex w-full flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
-							>
-								<span class="flex items-center justify-center text-lg text-red-400">
-									<svg
-										fill="none"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										class="h-6 w-6"
-									>
-										<path
-											d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
-										/>
-									</svg>
-								</span>
-								<span class="ml-3 dark:text-gray-300 text-gray-800"
-									>{user ? 'Sign out' : 'Sign in'}</span
-								>
-							</button>
-						</form>
-					{:else}
-						<a
-							href="#"
-							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
-						>
-							<span class="flex items-center justify-center text-lg text-red-400">
-								<svg
-									fill="none"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									class="h-6 w-6"
-								>
-									<path
-										d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
-									/>
-								</svg>
-							</span>
-							<span class="ml-3">{user ? 'Sign out' : 'Sign in'}</span>
-						</a>
-					{/if}
-				</li>
+				
 			</ul>
 		</div>
 	</aside>
 	<main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
+		<a class="w-full" rel="external" href="/early-access">
+			<div class="bg-indigo-900 w-full text-center py-1 lg:px-4">
+				<div
+					class="p-1 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+					role="alert"
+				>
+					<span class="flex rounded-full bg-indigo-500 uppercase px-2 text-xs font-bold mr-3"
+						>Alpha preview</span
+					>
+					<span class=" mr-2 text-left text-xs flex-auto"
+						>Join the waitlist to be among the first to enjoy the limited possibilities of Spaces.</span
+					>
+					<svg
+						class="fill-current opacity-75 h-4 w-4"
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 20 20"
+						><path
+							d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"
+						/></svg
+					>
+				</div>
+			</div>
+		</a>
 		<header class="header dark:bg-gray-800 bg-white shadow py-4 px-4">
+			
 			<div class="header-content flex items-center flex-row">
 				<SpaceSearch />
 				<div class="flex ml-auto">
@@ -335,7 +309,7 @@
 									>{user?.name}</span
 								>
 								<span class="truncate w-20 text-gray-500 text-xs leading-none mt-1"
-									>{user?.role?.name}</span
+									>{user?.role?.name ?? "Unknown Role"}</span
 								>
 							</span>
 						</a>

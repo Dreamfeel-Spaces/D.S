@@ -13,7 +13,6 @@
 
 	let space = $page.data.space;
 
-	import { goto } from '$app/navigation';
 	import { apiHelperModal } from '$lib/wsstore';
 	import { getColorCode } from '$lib/util/slugit';
 </script>

@@ -1,7 +1,6 @@
 <script>
 	import { Button, Card } from 'flowbite-svelte';
 	import { page } from '$app/stores';
-	const apps = $page.data.myapps;
 	const next = $page.url.searchParams.get('next');
 	import logo from '../../assets/logo.png';
 	import { signIn } from '@auth/sveltekit/client';

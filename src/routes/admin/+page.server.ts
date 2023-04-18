@@ -7,7 +7,8 @@ export async function load({ request, locals }: RequestEvent) {
 	if (!session) throw error(403, 'Unauthorized');
 	if (
 		session.user?.email === 'bryodiiidah@gmail.com' ||
-		session?.user?.email === 'odidaprotas@gmail.com'
+		session?.user?.email === 'odidaprotas@gmail.com' ||
+		session?.user?.email === 'earlmagga3@gmail.com'
 	) {
 		const spaces = await prisma.space.count();
 		const users = await prisma.user.count();

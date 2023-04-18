@@ -58,7 +58,7 @@ export function isReservedRoute(pathname: string) {
 	let isApi = /^\/api/.test(pathname);
 	let isApps = /^\/apps/.test(pathname);
 	let isBase = /^\/rest/.test(pathname);
-	let isSpaces = /^\/preferences/.test(pathname);
+	let isSpaces = /^\/spaces/.test(pathname);
 	let isBlog = /^\/blog/.test(pathname);
 	let isDashboards = /^\/dashboards/.test(pathname);
 	let isDeactivated = /^\/deactivated/.test(pathname);
@@ -102,7 +102,7 @@ export function isReservedRoute(pathname: string) {
 		isMockServer,
 		isOnboarding,
 		isCreate,
-		isEarlyAccess
+		isEarlyAccess,
 	];
 
 	return reservedRoutes.find(Boolean);

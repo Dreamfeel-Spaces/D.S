@@ -19,6 +19,13 @@
 	let meta: any = {};
 
 	let roleName = '';
+
+
+	function handleSubmit(){
+		
+	}
+
+
 </script>
 
 <div class="flex justify-end">
@@ -27,12 +34,12 @@
 	>
 </div>
 
-<Modal class="w-full" autoclose={false} bind:open={formModal}>
-	<div slot="header" class="text-center">
-		<p class="text-2xl dark:text-gray-100">Add role</p>
-	</div>
-	<div>
-		<form method="post" action="?/createRole&tab=roles">
+<form method="post" action="?/createRole&tab=roles">
+	<Modal class="w-full" autoclose={false} bind:open={formModal}>
+		<div slot="header" class="text-center">
+			<p class="text-2xl dark:text-gray-100">Add role</p>
+		</div>
+		<div>
 			<Label>
 				<span> Name </span>
 				<Input
@@ -156,7 +163,7 @@
 				{/if}
 			{/if}
 			<input name="meta" value={JSON.stringify(meta)} type="hidden" />
-		</form>
-	</div>
-	<Button slot="footer" type="submit" class=" w-full">Save role</Button>
-</Modal>
+		</div>
+		<button type="submit" class="w-full">Save role</button>
+	</Modal>
+</form>

@@ -3,25 +3,16 @@ import { SvelteKitAuth } from '@auth/sveltekit';
 import GitHub from '@auth/core/providers/github';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import type { Adapter } from '@auth/core/adapters';
-
 import jwt from 'jsonwebtoken';
-
 import { GITHUB_ID, GITHUB_SECRET, NEXTAUTH_URL } from '$env/static/private';
 import { prisma } from './lib/db/prisma';
 import { sequence } from '@sveltejs/kit/hooks';
-import {
-	error,
-	redirect,
-	type Handle,
-	type HandleFetch,
-	type HandleServerError
-} from '@sveltejs/kit';
+import { error, redirect, type Handle, type HandleServerError } from '@sveltejs/kit';
 import { Pages } from '$lib/plugins/pages/Pages';
 import { errorCatch, isReservedRoute } from '$lib/util/slugit';
 import { Token } from '$lib/token/Token';
 import { dev } from '$app/environment';
 import { Space } from '$lib/djs/Space';
-import { request } from 'http';
 
 export const authHandle = SvelteKitAuth({
 	adapter: PrismaAdapter(prisma) as Adapter<boolean>,
@@ -65,10 +56,8 @@ export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 
 	if (isReserved && !pageManager.isValidSubdomain) return resolve(event);
 
-	// console.log("event", event);
-
 	if (event.request.method === 'POST') {
-		const formData = await event.request.formData();
+		await event.request.formData();
 		console.log(event.request);
 		throw redirect(301, `${event.request.action}`);
 

@@ -12,13 +12,13 @@
 		Button,
 		Modal,
 		Input,
-		Label
+		Label,
+		Select
 	} from 'flowbite-svelte';
 	import logo from '../../assets/logo.png';
 	const space = $page?.data?.space;
 	import { sineIn } from 'svelte/easing';
 	import SpaceSearch from '../../routes/rest/[app_id]/SpaceSearch.svelte';
-	import { convertToSlug } from '$lib/util/slugit';
 	import { passwordResetDialog } from '$lib/wsstore';
 	let hidden2 = true;
 	let transitionParams = {
@@ -37,6 +37,12 @@
 	let confirmPassword = '';
 	let authMenuOpen = false;
 	export let modalOnly = false;
+	let role = '';
+
+	let rolesOptions = ($page.data.space?.roles ?? []).map((role: any) => ({
+		name: role.name,
+		value: role.id
+	}));
 </script>
 
 <form
@@ -84,6 +90,20 @@
 				class="my-3"
 			/>
 		</Label>
+
+		<div class="flex">
+			<Label class="mb-2 mt-5 flex-1" for="role"
+				>Role
+				<Select
+					required
+					name="role"
+					placeholder="Select role"
+					bind:value={role}
+					items={rolesOptions}
+					class="my-3"
+				/>
+			</Label>
+		</div>
 
 		<Label class="mb-2 mt-5" for="password"
 			>Password

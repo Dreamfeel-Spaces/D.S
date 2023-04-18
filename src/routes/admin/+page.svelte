@@ -4,7 +4,7 @@
 	import { Card } from 'flowbite-svelte';
 </script>
 
-<div class="mt-4 min-h-112  px-6">
+<div class="mt-4 min-h-112 h-100 dark:bg-gray-900  px-6">
 	<div class="grid grid-cols-3 gap-3 ">
 		<Card>
 			<p>Spaces</p>

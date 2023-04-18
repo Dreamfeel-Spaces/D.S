@@ -23,84 +23,142 @@ export const Space = {
 	},
 	async findUserById(id: string) {},
 	async withAppDetailData(appId: string, userId: string) {
-		return prisma.space.findUnique({
-			where: { appId },
-			include: {
-				onboarding: true,
-				roles: true,
-				tables: {
-					include: {
-						columns: true
-					}
-				},
-				users: {
-					where: {
-						id: userId
+		if (userId)
+			return prisma.space.findUnique({
+				where: { appId },
+				include: {
+					onboarding: true,
+					roles: true,
+					tables: {
+						include: {
+							columns: true
+						}
 					},
-					include: {
-						role: true
+					users: {
+						where: {
+							id: userId
+						},
+						include: {
+							role: true
+						}
 					}
 				}
-			}
-		});
+			});
+		else
+			return prisma.space.findUnique({
+				where: { appId },
+				include: {
+					onboarding: true,
+					roles: true,
+					tables: {
+						include: {
+							columns: true
+						}
+					}
+				}
+			});
 	},
 	async withDashboardData(appId: string, userId: string) {
-		return prisma.space.findUnique({
-			where: { appId },
-			include: {
-				onboarding: true,
-				roles: true,
-				tables: {
-					include: {
-						columns: true,
-						rows: {
-							include: {
-								_count: true
+		if (userId) {
+			return prisma.space.findUnique({
+				where: { appId },
+				include: {
+					onboarding: true,
+					roles: true,
+					tables: {
+						include: {
+							columns: true,
+							rows: {
+								include: {
+									_count: true
+								}
+							}
+						}
+					},
+					users: {
+						where: {
+							id: userId
+						},
+						include: {
+							role: true
+						}
+					}
+				}
+			});
+		} else {
+			return prisma.space.findUnique({
+				where: { appId },
+				include: {
+					onboarding: true,
+					roles: true,
+					tables: {
+						include: {
+							columns: true,
+							rows: {
+								include: {
+									_count: true
+								}
 							}
 						}
 					}
-				},
-				users: {
-					where: {
-						id: userId
-					},
-					include: {
-						role: true
-					}
 				}
-			}
-		});
+			});
+		}
 	},
 	async withUIData(appId: string, userId: string) {
-		return prisma.space.findUnique({
-			where: { appId },
-			include: {
-				roles: true,
-				tables: {
-					include: {
-						columns: true,
-						rows: {
-							include: {
-								_count: true
+		if (userId) {
+			return prisma.space.findUnique({
+				where: { appId },
+				include: {
+					roles: true,
+					tables: {
+						include: {
+							columns: true,
+							rows: {
+								include: {
+									_count: true
+								}
 							}
 						}
-					}
-				},
-				spaceUis: {
-					include: {
-						spaceUIVersion: true
-					}
-				},
-				users: {
-					where: {
-						id: userId
 					},
-					include: {
-						role: true
+					spaceUis: {
+						include: {
+							spaceUIVersion: true
+						}
+					},
+					users: {
+						where: {
+							id: userId
+						},
+						include: {
+							role: true
+						}
 					}
 				}
-			}
-		});
+			});
+		} else {
+			return prisma.space.findUnique({
+				where: { appId },
+				include: {
+					roles: true,
+					tables: {
+						include: {
+							columns: true,
+							rows: {
+								include: {
+									_count: true
+								}
+							}
+						}
+					},
+					spaceUis: {
+						include: {
+							spaceUIVersion: true
+						}
+					}
+				}
+			});
+		}
 	},
 	async withDashboardOverviewMetaData(appId: string, userId: string) {
 		return prisma.space.findUnique({
@@ -187,89 +245,167 @@ export const Space = {
 		});
 	},
 	async withRestMetaData(appId: string, userId: string) {
-		return prisma.space.findUnique({
-			where: {
-				appId
-			},
-			include: {
-				permissions: true,
-				dashboards: true,
-				apiSetup: true,
-				onboarding: true,
-				roles: true,
-				tables: {
-					include: {
-						columns: {
-							include: {
-								options: true
-							}
-						},
-						reports: {
-							include: {
-								fields: {
-									include: {
-										field: true
-									}
-								},
-								filters: true,
-								SQT: true
-							}
-						},
-						charts: {
-							include: {
-								fields: {
-									include: {
-										field: true
+		if (userId)
+			return prisma.space.findUnique({
+				where: {
+					appId
+				},
+				include: {
+					permissions: true,
+					dashboards: true,
+					apiSetup: true,
+					onboarding: true,
+					roles: true,
+					tables: {
+						include: {
+							columns: {
+								include: {
+									options: true
+								}
+							},
+							reports: {
+								include: {
+									fields: {
+										include: {
+											field: true
+										}
+									},
+									filters: true,
+									SQT: true
+								}
+							},
+							charts: {
+								include: {
+									fields: {
+										include: {
+											field: true
+										}
 									}
 								}
+							},
+							dashboardForms: {
+								include: {
+									fields: {
+										include: {
+											field: true
+										}
+									},
+									SQT: true
+								}
+							},
+							rows: {
+								include: {
+									tableData: true
+								}
+							},
+							aPICreatePermissions: {
+								include: {
+									userRoles: true
+								}
+							},
+							aPIGETPermissions: {
+								include: {
+									userRoles: true
+								}
+							},
+							aPIUpdatePermissions: {
+								include: {
+									userRoles: true
+								}
+							},
+							aPIDeletePermissions: {
+								include: {
+									userRoles: true
+								}
 							}
+						}
+					},
+					users: {
+						where: {
+							id: userId
 						},
-						dashboardForms: {
-							include: {
-								fields: {
-									include: {
-										field: true
+						include: {
+							role: true
+						}
+					}
+				}
+			});
+		else
+			return prisma.space.findUnique({
+				where: {
+					appId
+				},
+				include: {
+					permissions: true,
+					dashboards: true,
+					apiSetup: true,
+					onboarding: true,
+					roles: true,
+					tables: {
+						include: {
+							columns: {
+								include: {
+									options: true
+								}
+							},
+							reports: {
+								include: {
+									fields: {
+										include: {
+											field: true
+										}
+									},
+									filters: true,
+									SQT: true
+								}
+							},
+							charts: {
+								include: {
+									fields: {
+										include: {
+											field: true
+										}
 									}
-								},
-								SQT: true
-							}
-						},
-						rows: {
-							include: {
-								tableData: true
-							}
-						},
-						aPICreatePermissions: {
-							include: {
-								userRoles: true
-							}
-						},
-						aPIGETPermissions: {
-							include: {
-								userRoles: true
-							}
-						},
-						aPIUpdatePermissions: {
-							include: {
-								userRoles: true
-							}
-						},
-						aPIDeletePermissions: {
-							include: {
-								userRoles: true
+								}
+							},
+							dashboardForms: {
+								include: {
+									fields: {
+										include: {
+											field: true
+										}
+									},
+									SQT: true
+								}
+							},
+							rows: {
+								include: {
+									tableData: true
+								}
+							},
+							aPICreatePermissions: {
+								include: {
+									userRoles: true
+								}
+							},
+							aPIGETPermissions: {
+								include: {
+									userRoles: true
+								}
+							},
+							aPIUpdatePermissions: {
+								include: {
+									userRoles: true
+								}
+							},
+							aPIDeletePermissions: {
+								include: {
+									userRoles: true
+								}
 							}
 						}
 					}
-				},
-				users: {
-					where: {
-						id: userId
-					},
-					include: {
-						role: true
-					}
 				}
-			}
-		});
+			});
 	}
 };
