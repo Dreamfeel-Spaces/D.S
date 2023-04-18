@@ -60,7 +60,7 @@ export async function GET({}) {
 
 	let role;
 
-	role = await prisma.permission.findFirst({
+	role = await prisma.userRoles.findFirst({
 		where: {
 			name: 'ADMIN',
 			spaceId: space.id
@@ -68,7 +68,7 @@ export async function GET({}) {
 	});
 
 	if (!role) {
-		role = await prisma.permission.create({
+		role = await prisma.userRoles.create({
 			data: {
 				name: 'ADMIN',
 				spaceId: space.id,

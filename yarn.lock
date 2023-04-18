@@ -1132,6 +1132,13 @@
   resolved "https://registry.npmjs.org/@lokesh.dhakar/quantize/-/quantize-1.3.0.tgz"
   integrity sha512-4KBSyaMj65d8A+2vnzLxtHFu4OmBU4IKO0yLxZ171Itdf9jGV4w+WbG7VsKts2jUdRkFSzsZqpZOz6hTB3qGAw==
 
+"@lottiefiles/svelte-lottie-player@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.npmjs.org/@lottiefiles/svelte-lottie-player/-/svelte-lottie-player-0.3.0.tgz"
+  integrity sha512-u7kwq6YlNYCN7pRO3er+1/uDDwBX12c8hnKFxmRejAW78d3Ps6Hdq9XDUYHNAr+0euEf9p2RvpDmZaKQzcJXVw==
+  dependencies:
+    lottie-web "^5.10.0"
+
 "@mapbox/node-pre-gyp@^1.0.10", "@mapbox/node-pre-gyp@^1.0.5":
   version "1.0.10"
   resolved "https://registry.npmjs.org/@mapbox/node-pre-gyp/-/node-pre-gyp-1.0.10.tgz"
@@ -3276,6 +3283,11 @@ loose-envify@^1.1.0:
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
+
+lottie-web@^5.10.0:
+  version "5.11.0"
+  resolved "https://registry.npmjs.org/lottie-web/-/lottie-web-5.11.0.tgz"
+  integrity sha512-9vSt0AtdOH98GKDXwD5LPfFg9Pcmxt5+1BllAbudKM5iqPxpJnJUfuGaP45OyudDrESCOBgsjnntVUTygBNlzw==
 
 loupe@^2.3.1:
   version "2.3.6"

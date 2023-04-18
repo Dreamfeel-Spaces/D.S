@@ -95,7 +95,6 @@
 			<Label class="mb-2 mt-5 flex-1" for="role"
 				>Role
 				<Select
-					required
 					name="role"
 					placeholder="Select role"
 					bind:value={role}
