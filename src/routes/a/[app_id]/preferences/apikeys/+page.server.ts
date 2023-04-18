@@ -7,7 +7,7 @@ import type { Actions } from './$types';
 export async function load({ locals, params }) {
 	const session = await locals.getSession();
 	const spaceSession = await locals.getSpaceSession();
-	const spaceId = params["app_id"];
+	const spaceId = params['app_id'];
 	let space = await prisma.space.findFirst({
 		where: { appId: spaceId },
 		include: { users: true, apiKeys: true }
@@ -15,25 +15,7 @@ export async function load({ locals, params }) {
 
 	if (!space) throw error(404, 'Page not found');
 
-	if (spaceSession) {
-		const spaceSessionUser = spaceSession.user;
-		const admin = space.users.find((admin) => admin.username === spaceSessionUser.username);
-
-		if (admin.role === 'admin' && spaceSessionUser.spaceId === space.id) {
-			return { space };
-		}
-
-		if (!space) throw error(404, 'Unauthorized');
-	}
-	if (session) {
-		let user = await prisma.user.findFirst({
-			where: {
-				email: session.user.email
-			}
-		});
-
-		return { space };
-	} else throw error(403, 'You must be signed in to view this page');
+	return { space };
 }
 
 export const actions: Actions = {
@@ -41,7 +23,7 @@ export const actions: Actions = {
 		const session = await locals.getSession();
 		const spaceSession = await locals.getSpaceSession();
 
-		const spaceId = params["app_id"];
+		const spaceId = params['app_id'];
 
 		let space = await prisma.space.findFirst({
 			where: { appId: spaceId },

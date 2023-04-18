@@ -5,7 +5,6 @@ import { error, redirect } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
 
 export async function load({ params, cookies, locals }: RequestEvent) {
-	
 	//@ts-ignore
 	const spaceSession = locals.spaceSession;
 	return { spaceSession };
@@ -70,6 +69,7 @@ export const actions: Actions = {
 		const user = locals.user;
 		const data = await request.formData();
 		const password = String(data.get('password'));
+		const role = String(data.get('role'));
 		const token = new Token();
 		const encryptedPassword = await token.encryptSync(password);
 
@@ -99,7 +99,8 @@ export const actions: Actions = {
 			},
 			data: {
 				password: encryptedPassword,
-				defaultPasswordUpdated: true
+				defaultPasswordUpdated: true,
+				userRolesId: role
 			}
 		});
 

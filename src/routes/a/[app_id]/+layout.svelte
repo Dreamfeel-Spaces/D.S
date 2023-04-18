@@ -263,8 +263,8 @@
 				</div>
 			</div>
 		</a>
-		<header class="header dark:bg-gray-800 bg-white shadow py-4 px-4">
-			
+		<header class="header dark:bg-gray-800 bg-white shadow py-1 px-4">
+		
 			<div class="header-content flex items-center flex-row">
 				<SpaceSearch />
 				<div class="flex ml-auto">

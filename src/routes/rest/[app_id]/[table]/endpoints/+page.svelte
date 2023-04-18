@@ -10,13 +10,8 @@
 
 	import {
 		Card,
-		Breadcrumb,
-		BreadcrumbItem,
-		Accordion,
 		Tabs,
 		TabItem,
-		AccordionItem,
-		Checkbox,
 		Alert,
 		Select
 	} from 'flowbite-svelte';
@@ -95,7 +90,7 @@ var ${$page.params.table}CreateUrl = "${origin}/api/records/${$page.params.table
 					<TabItem open title="Simulate">
 						<Request
 							tables={data?.tables}
-							action="create"
+							{action}
 							url={`${origin}/api/records/${$page.params.table}`}
 							method={'get'}
 						/>

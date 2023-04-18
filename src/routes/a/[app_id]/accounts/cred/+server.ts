@@ -83,7 +83,7 @@ export async function GET({}) {
 			password: encryptedPass,
 			status: 'confirmed',
 			name: 'Admin' + randomDomain(),
-			roleId: role.id,
+			userRolesId: role.id,
 			username
 		}
 	});

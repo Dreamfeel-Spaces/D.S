@@ -30,14 +30,14 @@
 	let user: any = {
 		email: spaceUser?.username,
 		username: spaceUser?.username,
-		name: spaceUser?.name
+		name: spaceUser?.name,
+		role: spaceUser?.userRolesId
 	};
 
 	let password = '';
 	let confirmPassword = '';
 	let authMenuOpen = false;
 	export let modalOnly = false;
-	let role = '';
 
 	let rolesOptions = ($page.data.space?.roles ?? []).map((role: any) => ({
 		name: role.name,
@@ -97,7 +97,7 @@
 				<Select
 					name="role"
 					placeholder="Select role"
-					bind:value={role}
+					bind:value={user.role}
 					items={rolesOptions}
 					class="my-3"
 				/>

@@ -33,7 +33,6 @@
 		type: col.type
 	}));
 
-
 	let data: any;
 	let error: any;
 
@@ -302,7 +301,7 @@
 				<a
 					class="text-blue-500 hover:underline"
 					target="blank"
-					href={`/preferences/${$page.params['app_id']}?tab=apikeys`}>Generate API Key</a
+					href={`/a/${$page.params['app_id']}/preferences/apikeys?tab=apikeys`}>Generate API Key</a
 				>
 			</div>
 		{/if}
@@ -419,6 +418,8 @@
 			{/if}
 		{/each}
 	{/if}
+
+	<Button type="submit">{!loading ? 'Send request' : 'Sending request'}</Button>
 
 	<div class="mt-3">
 		{#if data && !clone}
