@@ -301,6 +301,7 @@
 				<a
 					class="text-blue-500 hover:underline"
 					target="blank"
+					rel="external"
 					href={`/a/${$page.params['app_id']}/preferences/apikeys?tab=apikeys`}>Generate API Key</a
 				>
 			</div>

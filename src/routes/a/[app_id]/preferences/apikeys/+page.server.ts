@@ -5,13 +5,7 @@ import { error } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
 export async function load({ locals, params }) {
-	const session = await locals.getSession();
-	const spaceSession = await locals.getSpaceSession();
-	const spaceId = params['app_id'];
-	let space = await prisma.space.findFirst({
-		where: { appId: spaceId },
-		include: { users: true, apiKeys: true }
-	});
+	let space = locals.space;
 
 	if (!space) throw error(404, 'Page not found');
 
