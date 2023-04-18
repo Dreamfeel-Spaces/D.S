@@ -2,7 +2,7 @@
 	import logo from '../../assets/logo.png';
 </script>
 
-<section class="dark:bg-gray-900">
+<section class="dark:bg-gray-900 min-h-108 lg:px-64">
 	<div class="text-center">
 		<div style="align-items:center" class="flex justify-center" />
 		<div class="py-8 px-8  mx-auto max-w-screen-xl lg:py-16 ">
@@ -11,15 +11,83 @@
 			>
 				About us
 			</h1>
-			<p class="mt-8 text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400">
-				Here at Dreamfeel we focus on markets where technology, innovation, and capital can unlock
-				long-term value and drive economic growth.
+			<p class="mt-8  text-justify text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400">
+				Welcome to Dreamfeel Spaces, a revolutionary no-code platform that simplifies app
+				development for everyone. At Dreamfeel, we believe that technology should be accessible to
+				all, and that's why we've created an intuitive platform that anyone can use to build apps
+				without writing a single line of code. Our platform is perfect for entrepreneurs, small
+				businesses, and individuals who need to quickly build and launch an app without having to
+				worry about the technical details.
+			</p>
+			<p class="mt-8 text-justify  text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400">
+				We understand the challenges that come with traditional app development, and that's why
+				we've created a solution that eliminates those challenges. Our platform is designed to be
+				user-friendly, with drag-and-drop interfaces and pre-built components that allow you to
+				quickly design and launch an app. You don't need any technical knowledge or experience to
+				use our platform, and you can build an app in minutes, not months. With Dreamfeel Spaces,
+				you can focus on your business, and let us take care of the technical details.
+			</p>
+			<p class="mt-8  text-justify  text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400">
+				Our team of experts is dedicated to making app development accessible to everyone. We are
+				constantly updating our platform with the latest technologies, including cutting edge AI Integrations, to
+				ensure that you have access to the most innovative tools. We are also committed to providing
+				top-notch customer support, so if you ever have any questions or issues, our team is here to
+				help. At Dreamfeel Spaces, we're more than just a platform – we're a community of innovators
+				who believe in making the world a better place through technology. Join us today and start
+				building your dream app!
 			</p>
 		</div>
 	</div>
 </section>
 
-<div class="container flex justify-center">
+<footer style="backdrop-filter:blur(30px)" class="p-4 md:p-8 lg:p-10  dark:bg-gray-900 bg-gray-900">
+	<div class="mx-auto max-w-screen-xl text-center">
+		<a
+			href="/"
+			class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white"
+		>
+			<div class="text-center">
+				<div class="flex justify-center">
+					<img src={logo} loading="lazy" width="40%" alt="" />
+				</div>
+				<p class="text-gray-600">Dreamfeel Spaces</p>
+			</div>
+		</a>
+		<p class="my-6 text-gray-500 dark:text-gray-400">
+			API Infrastructure, Data and file storage, Payment, 3rd party integrations, rich dashboard,
+			Web and platform native components.
+		</p>
+		<ul class="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white">
+			<li>
+				<a href="/" class="mr-4 hover:underline md:mr-6 ">About</a>
+			</li>
+			<li>
+				<a href="/" class="mr-4 hover:underline md:mr-6">Premium</a>
+			</li>
+			<li>
+				<a href="/" class="mr-4 hover:underline md:mr-6 ">Campaigns</a>
+			</li>
+			<li>
+				<a href="/" class="mr-4 hover:underline md:mr-6">Blog</a>
+			</li>
+			<li>
+				<a href="/" class="mr-4 hover:underline md:mr-6">Affiliate Program</a>
+			</li>
+			<li>
+				<a href="/" class="mr-4 hover:underline md:mr-6">FAQs</a>
+			</li>
+			<li>
+				<a href="/" class="mr-4 hover:underline md:mr-6">Contact</a>
+			</li>
+		</ul>
+		<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
+			>© {new Date().getFullYear()} <a href="/" class="hover:underline">Dreamfeel Spaces</a>. All
+			Rights Reserved.</span
+		>
+	</div>
+</footer>
+
+<!-- <div class="container flex justify-center">
 	<section class="text-gray-600 body-font">
 		<div class="container px-5 py-24 mx-auto">
 			<div class="flex flex-col text-center w-full mb-20">
@@ -272,4 +340,4 @@
 			</div>
 		</div>
 	</section>
-</div>
+</div> -->

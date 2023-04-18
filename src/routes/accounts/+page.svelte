@@ -3,49 +3,51 @@
 	import { page } from '$app/stores';
 	const next = $page.url.searchParams.get('next');
 	import logo from '../../assets/logo.png';
+	import github from '../../assets/github.png';
 	import { signIn } from '@auth/sveltekit/client';
 	import { goto } from '$app/navigation';
 </script>
 
 {#if !$page.data.session}
-	<section class="bg-white dark:bg-gray-900">
-		<div class="grid grid-cols-2">
-			<div
-				style="align-items: center;"
-				class="flex justify-center text-center dark:bg-gray-900 bg-gray-100 min-h-108 text-gray-500 text-2xl overflow-auto"
-			>
-				<div>
-					<img loading="lazy" src={logo} alt="" />
-					<p>Dreamfeel Spaces</p>
-				</div>
-			</div>
-			<div class="py-8 px-4 mx-auto max-w-screen-xl  lg:py-16 ">
-				<div class="text-center text-4xl mb-9 text-gray-600">
-					<h1>Sign in</h1>
-				</div>
-				<p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16  dark:text-gray-400">
-					Here at Dreamfeel Spaces we focus on markets where technology, innovation, and capital can
-					unlock long-term value and drive economic growth.
-				</p>
-				<div class="px-16">
-					<!-- <button
-						on:click={() => signIn('github')}
-						class="w-full justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-					>
-						Sign in with Google
-					</button> -->
-					<div>
-						<Button
-							on:click={() =>
-								signIn('github').then(() => {
-									if (next) goto(next);
-								})}
-							color="dark"
-							class="w-full mt-9">Sign in with GitHub</Button
-						>
+	<section
+		class="bg-white flex justify-center pt-20 self-center lg:px-72 min-h-112 dark:bg-gray-900"
+	>
+		<div>
+			<Card>
+				<div class="grid ">
+					<div class="py-4 px-4 mx-auto max-w-screen-xl  lg:py-4 ">
+						<div class="flex text-center justify-center mb-6">
+							<div>
+								<div class="flex justify-center">
+									<img loading="lazy" width={'50%'} src={logo} alt="Dreamfeel Spaces Logo" />
+								</div>
+								<p>Dreamfeel Spaces</p>
+							</div>
+						</div>
+						<div class="text-center text-4xl mb-2 text-gray-600">
+							<h1>Sign in</h1>
+						</div>
+
+						<div class="px-7">
+							<div>
+								<Button
+									outline
+									on:click={() =>
+										signIn('github').then(() => {
+											if (next) goto(next);
+										})}
+									color="dark"
+									class="w-full dark:bg-gray-600 dark:text-white mt-9"
+								>
+									<img class="mr-2" loading="lazy" src={github} width="20px" alt="Github logo" />
+									<span />
+									Sign in with GitHub</Button
+								>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
+			</Card>
 		</div>
 	</section>
 {/if}
