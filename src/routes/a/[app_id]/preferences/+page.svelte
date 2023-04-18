@@ -124,7 +124,7 @@
 						<b>Profile:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 						incididunt ut labore et dolore magna aliqua.
 					</p>
-					{#if data.space.apiChannel}
+					<!-- {#if data.space.apiChannel} -->
 						<div class="mt-6 text-right">
 							<a rel="external" href={`/a/preferences/${data?.space?.appId}/keys`}>
 								<Button size="xs" pill gradient>Add Api Key</Button></a
@@ -161,13 +161,13 @@
 								{/each}
 							</Accordion>
 						</div>
-					{:else}
+					<!-- {:else}
 						<div class="mt-9">
 							<Alert class="bg-green">
 								Your apps's api has been disabled. Please enable REST API in channels and try again
 							</Alert>
 						</div>
-					{/if}
+					{/if} -->
 				</TabItem>
 
 				<TabItem open={activeTab === 'admins'} on:click={() => goto('?tab=admins')} title="Admins">
