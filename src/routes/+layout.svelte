@@ -92,7 +92,7 @@
 {#if !isPreview && !subdomain}
 	<div>
 		<nav
-			class="flex-no-wrap fixed z-50 flex w-full items-center justify-between bg-neutral-100   dark:bg-gray-900 pb-2 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
+			class="flex-no-wrap fixed z-50 lg:flex w-full items-center justify-between bg-neutral-100   dark:bg-gray-900 pb-2 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
 			data-te-navbar-ref
 		>
 		<a class="w-full" href="/early-access">
@@ -245,7 +245,7 @@
 					<!-- Icon -->
 					<a
 						rel="external"
-						class="hidden-arrow mr-4 flex items-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+						class="hidden-arrow mr-4 hidden lg:flex items-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 						href="/about"
 						id="dropdownMenuButton1"
 						role="button"
@@ -279,7 +279,7 @@
 
 					<a
 						rel="external"
-						class="mr-4 text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+						class="mr-4 hidden lg:flex text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 						href="/spaces"
 					>
 						<span class="[&>svg]:w-5">
