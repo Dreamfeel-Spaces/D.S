@@ -20,30 +20,9 @@
 	export let me = 'Brian Odida';
 </script>
 
-<!-- <div class="mt-3 px-6">
-	<Breadcrumb>
-		<BreadcrumbItem>Home</BreadcrumbItem>
-		<BreadcrumbItem>Api</BreadcrumbItem>
-		<BreadcrumbItem>
-			{$page.params['app_id']}
-		</BreadcrumbItem>
-		<BreadcrumbItem>
-			{$page.params.table}
-		</BreadcrumbItem>
-		<BreadcrumbItem>Rest</BreadcrumbItem>
-	</Breadcrumb>
-</div> -->
-{#if !data?.space?.apiChannel}
-	<div class="my-6 mx-6">
-		<Alert>
-			<p><b>Unauthorized</b></p>
-			<p class="my-3">API has been disabled in this platform</p>
-			<a class="hover:underline" href={`/spaces/${$page.params['app_id']}`}>Enable</a>
-		</Alert>
-	</div>
-{/if}
 
-{#if !data?.table?.columns?.length && data?.space?.apiChannel}
+
+<!-- {#if !data?.table?.columns?.length && data?.space?.apiChannel}
 	<div class="my-6 mx-6">
 		<Alert>
 			<p><b>Configuration error</b></p>
@@ -53,10 +32,10 @@
 			>
 		</Alert>
 	</div>
-{/if}
+{/if} -->
 
 <div class="p-4">
-	{#if data?.table?.columns?.length && data?.space?.apiChannel}
+	<!-- {#if data?.table?.columns?.length && data?.space?.apiChannel} -->
 		<div class="overflow-auto">
 			<div class="flex">
 				<div>
@@ -159,88 +138,6 @@ con.setRequestMethod("GET");
 			</Card>
 		</div>
 
-		<!-- <div class="mt-6 px-6">
-			<Card class="text-left" size="xl" padding="xl">
-				<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Find Unique</h5>
-				<div class="text-right">
-					<pre>
-						{`${origin}/api/records/${$page.params.table}/:id`}
-					</pre>
-					<div>GET</div>
-				</div>
-				<Tabs>
-					<TabItem open title="Simulate">
-						<Request
-							action="find_unique"
-							singleItem
-							url={`${origin}/api/records/${$page.params.table}`}
-							method={'get'}
-							tables={data?.tables}
-						/>
-					</TabItem>
-					<TabItem title="cURL" />
-					<TabItem title="JS" />
-					<TabItem title="PY" />
-					<TabItem title="Rust" />
-					<TabItem title="PHP" />
-					<TabItem title="C#" />
-					<TabItem title="Java" />
-				</Tabs>
-
-				<div />
-				<div class="mt-3">
-					<p class="mb-3">Require permissions</p>
-					{#each data?.table?.requiredPermission ?? [] as permission}
-						<div>
-							<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
-								{permission.name}
-							</Checkbox>
-						</div>
-					{/each}
-				</div>
-			</Card>
-		</div>
-
-		<div class="mt-6 px-6">
-			<Card class="text-left" size="xl" padding="xl">
-				<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Delete</h5>
-				<div class="text-right">
-					<pre>
-						{`${origin}/api/records/${$page.params.table}/:id`}
-					</pre>
-					<div>DELETE</div>
-				</div>
-				<Tabs>
-					<TabItem open title="Simulate">
-						<Request
-							action="delete"
-							singleItem
-							url={`${origin}/api/records/${$page.params.table}`}
-							method={'get'}
-							tables={data?.tables}
-						/>
-					</TabItem>
-					<TabItem title="cURL" />
-					<TabItem title="JS" />
-					<TabItem title="PY" />
-					<TabItem title="Rust" />
-					<TabItem title="PHP" />
-					<TabItem title="C#" />
-					<TabItem title="Java" />
-				</Tabs>
-
-				<div />
-				<div class="mt-3">
-					<p class="mb-3">Require permissions</p>
-					{#each data?.table?.requiredPermission ?? [] as permission}
-						<div>
-							<Checkbox bind:value={permission.value} bind:checked={permission.checked} disabled>
-								{permission.name}
-							</Checkbox>
-						</div>
-					{/each}
-				</div>
-			</Card>
-		</div> -->
-	{/if}
+		
+	<!-- {/if} -->
 </div>
