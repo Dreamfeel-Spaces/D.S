@@ -24,7 +24,7 @@
 </svelte:head>
 
 <div class="container">
-	<Card class="dark:text-white" size="xl">
+	<Card class="dark:text-white min-h-105" size="xl">
 		<div class="flex justify-end py-3  pr-4 flex-wrap">
 			<Button
 				on:click={() => apiHelperModal.set({ open: true })}
