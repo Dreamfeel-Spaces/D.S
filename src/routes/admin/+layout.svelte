@@ -126,7 +126,7 @@
 			</SidebarGroup>
 		</SidebarWrapper>
 	</Sidebar>
-	<div class="flex-1">
+	<div class="flex-1 min-h-105 flex">
 		<slot />
 	</div>
 </div>

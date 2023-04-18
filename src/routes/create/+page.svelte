@@ -95,7 +95,7 @@
 </Modal>
 
 <div class="px-6 mx-2 lg:px-72 pb-36 pt-9  flex justify-center">
-	<Card class="w-full" size="lg">
+	<Card class="w-full mt-9" size="lg">
 		<section>
 			<div class="py-8 mx-auto max-w-screen-xl text-center">
 				<Heading>New Space</Heading>

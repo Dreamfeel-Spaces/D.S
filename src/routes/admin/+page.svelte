@@ -24,5 +24,10 @@
 			<p>{data.activeSpaces}</p>
 			<a href="/admin/users">view</a>
 		</Card>
+		<Card>
+			<p>Early access users</p>
+			<p>{data.earlyAccess}</p>
+			<a href="/admin/users">view</a>
+		</Card>
 	</div>
 </div>

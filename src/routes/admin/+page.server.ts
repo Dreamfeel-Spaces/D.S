@@ -18,7 +18,9 @@ export async function load({ request, locals }: RequestEvent) {
 			where: { deactivated: false }
 		});
 
-		return { spaces, users, messages, activeSpaces };
+		const earlyAccess = await prisma.eA.count();
+
+		return { spaces, users, messages, activeSpaces, earlyAccess };
 	}
 	throw error(403, 'Unauthorized');
 }
