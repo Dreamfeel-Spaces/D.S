@@ -10,7 +10,7 @@ export const actions: Actions = {
 	async updateChannels({ request, params }) {
 		const data = await request.formData();
 
-		const appId = params["app_id"];
+		const appId = params['app_id'];
 
 		const space = await prisma.space.findUnique({
 			where: {
@@ -57,7 +57,7 @@ export const actions: Actions = {
 			// send signup email and invite
 			const space = await prisma.space.findUnique({
 				where: {
-					appId: params["app_id"]
+					appId: params['app_id']
 				},
 				include: {
 					users: true
@@ -80,7 +80,7 @@ export const actions: Actions = {
 			});
 			return { adminSuccess: true, emailSent: true, data: admin };
 		} else {
-			const spaceId = params["app_id"];
+			const spaceId = params['app_id'];
 
 			const space = await prisma.space.findUnique({
 				where: {
@@ -124,7 +124,7 @@ export const actions: Actions = {
 	},
 	async addPermissions({ request, params }) {
 		const data = await request.formData();
-		const spaceId = String(params["app_id"]);
+		const spaceId = String(params['app_id']);
 		const space = await prisma.space.findUnique({
 			where: {
 				appId: spaceId
@@ -143,7 +143,7 @@ export const actions: Actions = {
 	},
 	async addDashboards({ request, params }) {
 		const data = await request.formData();
-		const spaceId = String(params["app_id"]);
+		const spaceId = String(params['app_id']);
 		const space = await prisma.space.findUnique({
 			where: {
 				appId: spaceId
@@ -181,7 +181,7 @@ export const actions: Actions = {
 		// 	return { requireConfirmation: true, data: params["app_id"] };
 		// }
 		const spa = await prisma.space.update({
-			where: { appId: params["app_id"] },
+			where: { appId: params['app_id'] },
 			data: {
 				deactivated: true
 			}
@@ -200,7 +200,7 @@ export const actions: Actions = {
 		return { deleteApiSuccess: true };
 	},
 	async updatePassword({ params, request }) {
-		const spaceId = params["app_id"];
+		const spaceId = params['app_id'];
 
 		const data = await request.formData();
 
@@ -232,7 +232,7 @@ export const actions: Actions = {
 };
 
 export async function load({ params, cookies, locals }: PageLoadEvent) {
-	const spaceId = params["app_id"];
+	const spaceId = params['app_id'];
 	const space = await prisma.space.findUnique({
 		where: { appId: spaceId },
 		include: {
@@ -247,21 +247,6 @@ export async function load({ params, cookies, locals }: PageLoadEvent) {
 	});
 
 	if (!space) throw error(404, 'Space not found');
-
-	const session = await locals.getSession();
-
-	if (session?.user) {
-		const user = await prisma.user.findUnique({
-			where: {
-				email: String(session?.user?.email)
-			}
-		});
-
-		if (user && user.id === space.userId) {
-			return { space, userRole: { superAdmin: true } };
-		}
-		throw redirect(302, `/a/${space?.appId}/accounts`);
-	}
 
 	return { space };
 }
