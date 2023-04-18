@@ -14,11 +14,14 @@ export async function load({ cookies, params, locals }: any) {
 
 	if (!spaceSession?.user) throw redirect(302, `/a/${space.appId}/accounts`);
 
-	const owner = await prisma.user.findUnique({
-		where: {
-			id: space.userId
-		}
-	});
+	let owner;
+
+	if (space.userId)
+		owner = await prisma.user.findUnique({
+			where: {
+				id: space.userId
+			}
+		});
 
 	const apiKeys = await prisma.spaceAPIKeys.findMany({
 		where: {
