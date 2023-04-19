@@ -130,6 +130,7 @@ export const apiAuth: Handle = async ({ event, resolve }) => {
 	const logger = new Error();
 	const [space, spaceError] = await token.verifyApiKey(apiKey, event);
 
+console.log(space, spaceError)
 	if (!space) throw error(404, 'Space not found!');
 
 	try {
@@ -139,10 +140,11 @@ export const apiAuth: Handle = async ({ event, resolve }) => {
 		event.locals.session = { ...session, api: true };
 		return resolve(event);
 	} catch (e) {
+		console.log(e)
 		throw e;
 	}
 };
-
+``
 export const activeUser: Handle = async ({ event, resolve }) => {
 	const { locals } = event;
 	const session = await locals.getSession();

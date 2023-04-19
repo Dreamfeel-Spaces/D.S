@@ -21,6 +21,7 @@ export async function GET(event: RequestEvent) {
 			appId: space?.id
 		}
 	});
+	console.log("table", table)
 
 	if (!table) throw error(404, 'Table not found');
 
@@ -82,6 +83,7 @@ export async function POST(event: RequestEvent) {
 			columns: true
 		}
 	});
+	console.log("table", table)
 	if (!table) throw error(404, 'Table not found');
 	const rawData = await request.json();
 	let _dat = (column: any) => String((rawData as any)[column?.name as any]);

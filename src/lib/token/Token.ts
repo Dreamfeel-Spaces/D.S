@@ -40,6 +40,7 @@ export class Token {
 			const appId = splitToken[0];
 			const token = splitToken[1];
 
+
 			if (!appId || !token) return [null, error(403, 'Invalid API Key')];
 
 			const space = await prisma.space.findUnique({
@@ -51,15 +52,16 @@ export class Token {
 				}
 			});
 
-			if (!space?.apiChannel) {
-				return [null, error(403, 'Rest API disabled for this space')];
-			}
+			// if (!space?.apiChannel || true) {
+			// 	return [null, error(403, 'Rest API disabled for this space')];
+			// }
 
 			const logger = new Logger();
 
 			logger.info(event, space?.id);
 
 			const apiKeys = space?.apiKeys ?? [];
+
 
 			if (!apiKeys.length) {
 				return [null, error(403, 'Invalid API key')];
