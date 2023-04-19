@@ -136,6 +136,31 @@
 				error = e;
 				loading = false;
 			}
+		} else if (action === 'find_many') {
+			console.log(url);
+			let startParams = '';
+
+			if (take) startParams = startParams + `take=${take}`;
+			if (skip) startParams = startParams + `skip=${skip}`;
+
+			const filters = columns
+				.filter((col: any) => Boolean(col.value))
+				.reduce((prev: string, curr: any, index: number) => {
+					if (startParams === '') return prev + `${curr.name}=${curr.value}`;
+					return prev + `&${curr.name}=${curr.value}`;
+				}, startParams);
+			try {
+				const response = await (axios as any)[method](`${url}?${filters}`, {
+					headers: {
+						'x-api-key': apiKey
+					}
+				});
+				data = response.data;
+				loading = false;
+			} catch (e) {
+				error = e;
+				loading = false;
+			}
 		} else if (action === 'find_first') {
 			let startParams = '';
 
@@ -300,20 +325,34 @@
 			<div>
 				<a
 					class="text-blue-500 hover:underline"
-					target="_blank"
-					rel="noreferrer"
+					target="blank"
 					href={`/a/${$page.params['app_id']}/preferences/keys`}>Generate API Key</a
 				>
 			</div>
 		{/if}
 	</div>
-	<Input
-		type="password"
-		bind:value={apiKey}
-		required={!clone}
-		class="my-1"
-		placeholder={`Api Key`}
-	/>
+	<div class="flex">
+		<div class="flex-1 pr-3">
+			<Input
+				type="password"
+				bind:value={apiKey}
+				required={!clone}
+				class="my-1 "
+				placeholder={`Api Key`}
+			/>
+		</div>
+		<div>
+			{#if loading}
+				<div class="flex justify-center">
+					<div>
+						<Spinner />
+					</div>
+				</div>
+			{:else}
+				<Button type="submit" class={clone ? `mt-1 w-full` : 'mt-1'}>Send request</Button>
+			{/if}
+		</div>
+	</div>
 
 	{#if action === 'find_unique' || action === 'delete'}
 		<div class="my-1">
@@ -322,25 +361,13 @@
 		</div>
 	{/if}
 
-	<div class="pl-4">
+	<div>
 		{#if action === 'create' || action === 'signup' || action === 'signin'}
-			<div class=" mt-2 spacing-y-2">Request body</div>
-			<div class="flex">
+			<div class="flex my-6">
 				<div class="flex flex-1">
 					<Radio value="form_data" bind:group={datatype}>Form Data</Radio>
-					<Radio value="json" bind:group={datatype} class="ml-2">JSON</Radio>
+					<Radio disabled value="json" bind:group={datatype} class="ml-2">JSON</Radio>
 				</div>
-				{#if loading}
-					<div class="flex justify-center">
-						<div>
-							<Spinner />
-						</div>
-					</div>
-				{:else}
-					<Button size="xs" type="submit" class={clone ? `mt-1 w-full` : 'mt-1'}
-						>Send request</Button
-					>
-				{/if}
 			</div>
 
 			{#if datatype === 'form_data'}
@@ -419,8 +446,6 @@
 			{/if}
 		{/each}
 	{/if}
-
-	<Button type="submit">{!loading ? 'Send request' : 'Sending request'}</Button>
 
 	<div class="mt-3">
 		{#if data && !clone}

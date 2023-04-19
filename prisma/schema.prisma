@@ -415,7 +415,7 @@ model Role {
 
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String     @db.VarChar(3000)
+  sessionToken String    I@db.VarChar(3000)
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?

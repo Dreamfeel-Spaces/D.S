@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {  Button, Alert, Input, Card, } from 'flowbite-svelte';
+	import {  Button, Alert, Input, Card,Datepicker } from 'flowbite-svelte';
 	export let form: any;
 </script>
 
@@ -21,13 +21,14 @@
 			</div>
 		{/if}
 		<form class="mt-9" method="POST">
+			<div class="text-lg mb-8" >API Key</div>
 			<div class="text-left text-lg text-gray-500 mb-6">
 				<label for="name">Name</label>
 				<Input required id="name" name="name" autofocus />
 			</div>
 			<div class="text-left text-lg text-gray-500 mb-6">
 				<label for="expiry">Set expiry date</label>
-				<!-- <Datepicker required id="expiry" name="expiry" /> -->
+				<Datepicker required id="expiry" name="expiry" />
 			</div>
 	
 			<Button class="w-full mt-4" type="submit">Generate new key</Button>

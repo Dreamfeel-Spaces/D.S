@@ -120,13 +120,11 @@
 					on:click={() => goto('?tab=apikeys')}
 					title="API Keys"
 				>
-					<p class="text-sm text-gray-500 dark:text-gray-400">
-						<b>Profile:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-						incididunt ut labore et dolore magna aliqua.
-					</p>
-					<!-- {#if data.space.apiChannel} -->
+					<div class="min-h-96 h-96">
+						
+						<!-- {#if data.space.apiChannel} -->
 						<div class="mt-6 text-right">
-							<a rel="external" href={`/a/preferences/${data?.space?.appId}/keys`}>
+							<a rel="external" href={`/a/${data?.space?.appId}/preferences/keys`}>
 								<Button size="xs" pill gradient>Add Api Key</Button></a
 							>
 						</div>
@@ -161,13 +159,14 @@
 								{/each}
 							</Accordion>
 						</div>
-					<!-- {:else}
+						<!-- {:else}
 						<div class="mt-9">
 							<Alert class="bg-green">
 								Your apps's api has been disabled. Please enable REST API in channels and try again
 							</Alert>
 						</div>
 					{/if} -->
+					</div>
 				</TabItem>
 
 				<TabItem open={activeTab === 'admins'} on:click={() => goto('?tab=admins')} title="Admins">

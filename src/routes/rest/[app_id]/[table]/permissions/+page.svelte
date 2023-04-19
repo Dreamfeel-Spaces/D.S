@@ -14,7 +14,7 @@
 
 	let permissions = roles.map((role) => {
 		for (let cP of table?.aPICreatePermissions ?? []) {
-			if (cP.userRoles.id === role.id || role.isSuperUser) {
+			if (cP.userRoles?.id === role?.id || role.isSuperUser) {
 				role = { ...role, createChecked: true };
 			}
 		}
