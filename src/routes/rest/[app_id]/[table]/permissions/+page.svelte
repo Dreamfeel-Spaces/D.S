@@ -20,19 +20,19 @@
 		}
 
 		for (let cP of table?.aPIGETPermissions ?? []) {
-			if (cP.userRoles.id === role.id || role.isSuperUser) {
+			if (cP.userRoles?.id === role?.id || role.isSuperUser) {
 				role = { ...role, readChecked: true };
 			}
 		}
 
 		for (let cP of table?.aPIUpdatePermissions ?? []) {
-			if (cP.userRoles.id === role.id || role.isSuperUser) {
+			if (cP.userRoles?.id === role?.id || role.isSuperUser) {
 				role = { ...role, updateChecked: true };
 			}
 		}
 
 		for (let cP of table?.aPIDeletePermissions ?? []) {
-			if (cP.userRoles.id === role.id || role.isSuperUser) {
+			if (cP.userRoles?.id === role?.id || role.isSuperUser) {
 				role = { ...role, deleteChecked: true };
 			}
 		}
