@@ -342,15 +342,11 @@
 			/>
 		</div>
 		<div>
-			{#if loading}
-				<div class="flex justify-center">
-					<div>
-						<Spinner />
-					</div>
-				</div>
-			{:else}
-				<Button type="submit" class={clone ? `mt-1 w-full` : 'mt-1'}>Send request</Button>
-			{/if}
+			<Button type="submit" class={clone ? `mt-1 w-full` : 'mt-1'}
+				>{#if loading}
+					<Spinner size="xs" />
+				{:else}Send request{/if}</Button
+			>
 		</div>
 	</div>
 
