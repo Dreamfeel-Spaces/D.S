@@ -33,7 +33,7 @@
 	const pathname = $page.url.pathname;
 	let isDashboard = /\/dashboards/.test(pathname);
 	let isEditor = /\/editor/.test(pathname);
-	let isBase = /\/base/.test(pathname);
+	let isBase = /\/rest/.test(pathname);
 	let isSpaces = /\/spaces/.test(pathname);
 	let spaceId = $page.params['app_id'];
 	let session = $page.data.session;
@@ -445,7 +445,7 @@
 						{#each $page.data.myapps as app}
 							<SidebarDropdownItem
 								on:click={() => (hidden2 = true)}
-								href={`/base/${app.appId}`}
+								href={`/rest/${app.appId}`}
 								label={app.name}
 								rel="external"
 								active={isBase && spaceId === app.appId}

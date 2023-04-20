@@ -11,7 +11,7 @@
 			{space}
 		</b>
 	</div>
-	<a href={`/base/${space}`}>Go back</a>
+	<a href={`/rest/${space}`}>Go back</a>
 </div>
 
 
@@ -20,7 +20,7 @@
 	<div class="my-9 px-6 ">
 		<Alert>
 			<p class="mb-5"><b>Table created</b></p>
-			<a class="hover:underline" href={`/base/${space}/${form?.data?.name}`}
+			<a class="hover:underline" href={`/rest/${space}/${form?.data?.name}`}
 				>Add schema</a
 			>
 		</Alert>

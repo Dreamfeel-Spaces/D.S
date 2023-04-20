@@ -215,7 +215,7 @@
 						>
 					</svelte:fragment>
 
-					<SidebarDropdownItem label={`Payments`} />
+					<SidebarDropdownItem href={`/rest/${space.appId}/integrations/payments`} label={`Payments`} />
 					<SidebarDropdownItem label={`File storage`} />
 					<SidebarDropdownItem label={`Logistics`} />
 					<SidebarDropdownItem label={`SMS`} />

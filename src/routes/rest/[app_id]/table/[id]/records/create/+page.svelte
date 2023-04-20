@@ -13,7 +13,7 @@
 </script>
 
 <div class="p-9 text-end text-lg">
-	<a href={`/base/${space}/table/${table}/records`}> Back to table</a>
+	<a href={`/rest/${space}/table/${table}/records`}> Back to table</a>
 </div>
 
 <div class="text-lg mx-48 text-center mt-9">
@@ -26,7 +26,7 @@
 	<div class="lg:px-48 px-6 flex justify-center">
 		<Alert>
 			<p>Item has been saved</p>
-			<a href={`/base/${space}/table/${table}/records/${form.data.id}`}>View details</a>
+			<a href={`/rest/${space}/table/${table}/records/${form.data.id}`}>View details</a>
 		</Alert>
 	</div>
 {/if}

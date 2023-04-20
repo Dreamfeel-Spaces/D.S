@@ -141,7 +141,7 @@
 	<div class="w-36  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72">
 		<div>
 			<div class="mt-20">
-				<a class="hover:underline text-blue" href={`/base/${$page.params["app_id"]}`}>Dashboards</a>
+				<a class="hover:underline text-blue" href={`/rest/${$page.params["app_id"]}`}>Dashboards</a>
 			</div>
 			<div class="mt-6">
 				<a class="hover:underline text-blue" href={`/spaces/${$page.params["app_id"]}`}>Admin</a>

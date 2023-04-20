@@ -131,7 +131,7 @@
 						<Alert>
 							<b> No schema found </b>
 							<div class="mt-6">
-								<a href={`/base/${$page.params['app_id']}/${$page.params['table']}/schema/create`}
+								<a href={`/rest/${$page.params['app_id']}/${$page.params['table']}/schema/create`}
 									>Add schema</a
 								>
 							</div>

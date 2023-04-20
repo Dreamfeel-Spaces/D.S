@@ -537,7 +537,7 @@
 	>
 		<div>
 			<div class="mt-20">
-				<a class="hover:underline text-blue" rel="external" href={`/base/${$page.params["app_id"]}`}
+				<a class="hover:underline text-blue" rel="external" href={`/rest/${$page.params["app_id"]}`}
 					>Collections API</a
 				>
 			</div>

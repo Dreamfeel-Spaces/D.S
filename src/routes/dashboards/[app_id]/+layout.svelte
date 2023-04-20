@@ -243,7 +243,7 @@
 							></Button
 						>
 					</div>
-					<div class="mr-3">
+					<div class="mx-3">
 						<DarkMode />
 					</div>
 					{#if user}

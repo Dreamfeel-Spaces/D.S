@@ -20,12 +20,12 @@
 	let hasColumns = Boolean(data.columns.length);
 
 	function navigateToTableDetail(item: string) {
-		goto(`/base/${space}/table/${table}/records/${item}/`);
+		goto(`/rest/${space}/table/${table}/records/${item}/`);
 	}
 </script>
 
 <div class="mt-6 flex justify-end mx-20">
-	<a href={`/base/${space}/table/${table}/records/create`}> Add record </a>
+	<a href={`/rest/${space}/table/${table}/records/create`}> Add record </a>
 </div>
 
 <div class="mt-6 text-center text-lg">
@@ -35,7 +35,7 @@
 {#if !hasColumns}
 	<div class="text-center mt-9">
 		<p class="mb-6">No columns / fields have been added to this table.</p>
-		<a class="mt-4" href={`/base/${space}/table/${table}/columns/create`}>Create columns</a>
+		<a class="mt-4" href={`/rest/${space}/table/${table}/columns/create`}>Create columns</a>
 	</div>
 {/if}
 
@@ -72,7 +72,7 @@
 						{/each}
 						<TableBodyCell>
 							<a
-								href={`/base/${space}/table/${table}/records/${row.id}/update`}
+								href={`/rest/${space}/table/${table}/records/${row.id}/update`}
 								class="font-medium text-blue-600 hover:underline dark:text-blue-500"
 							>
 								Edit

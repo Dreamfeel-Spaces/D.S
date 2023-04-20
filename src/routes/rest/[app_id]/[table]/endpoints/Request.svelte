@@ -102,7 +102,7 @@
 		try {
 			savingColumns = true;
 			savingColumnsSuccess = false;
-			const response = await axios.post(`/base/${$page.params['app_id']}/svr`, { collections });
+			const response = await axios.post(`/rest/${$page.params['app_id']}/svr`, { collections });
 			if (response.data) {
 				savingColumnsSuccess = true;
 				savingColumns = false;

@@ -12,7 +12,7 @@
 
 	function handleUpdate() {
 		goto(
-			`/base/${$page.params["app_id"]}/table/${$page.params.table}/records/${$page.params.item}/update`
+			`/rest/${$page.params["app_id"]}/table/${$page.params.table}/records/${$page.params.item}/update`
 		);
 	}
 </script>

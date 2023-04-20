@@ -57,7 +57,7 @@ export const actions: Actions = {
 				}
 			});
 
-			throw redirect(302, `/base/${space?.appId}/`);
+			throw redirect(302, `/rest/${space?.appId}/`);
 		}
 	}
 };
@@ -77,5 +77,5 @@ export async function load({ params }: PageLoadEvent) {
 
 	let onboarding = space.apiSetup[0];
 
-	if (onboarding?.complete) throw redirect(302, `/base/${appId}/`);
+	if (onboarding?.complete) throw redirect(302, `/rest/${appId}/`);
 }

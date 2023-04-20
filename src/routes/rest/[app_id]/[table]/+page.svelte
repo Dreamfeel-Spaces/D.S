@@ -97,7 +97,7 @@
 		<div class="px-9 text-end text-lg">
 			<a
 				class="bg-blue-700 px-3  text-white rounded-3xl py-2 text-xs"
-				href={`/base/${spaceName}/${tableName}/schema/preview`}>Preview</a
+				href={`/rest/${spaceName}/${tableName}/schema/preview`}>Preview</a
 			>
 		</div>
 	</div>
@@ -111,9 +111,9 @@
 			<Alert>
 				<div class="my-3 "><b>Schema saved</b></div>
 				<div class="mb-3">
-					<a class="hover:underline" href={`/base/${spaceId}/${table}`}>View schema</a>
+					<a class="hover:underline" href={`/rest/${spaceId}/${table}`}>View schema</a>
 				</div>
-				<a class="hover:underline" href={`/base/${spaceId}/${table}/api`}>Configure Rest API</a>
+				<a class="hover:underline" href={`/rest/${spaceId}/${table}/api`}>Configure Rest API</a>
 			</Alert>
 		</div>
 	{/if}

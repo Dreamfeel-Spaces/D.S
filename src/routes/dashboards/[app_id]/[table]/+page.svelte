@@ -86,7 +86,7 @@
 						<b>Configuration error</b>
 					</p>
 					<p class="mb-6">No columns / fields have been added to this table.</p>
-					<a class="mt-4 hover:underline" href={`/base/${space}/${table}/schema/create`}
+					<a class="mt-4 hover:underline" href={`/rest/${space}/${table}/schema/create`}
 						>Create columns</a
 					>
 				</Alert>

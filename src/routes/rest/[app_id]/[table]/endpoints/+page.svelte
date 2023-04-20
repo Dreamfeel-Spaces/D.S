@@ -27,7 +27,7 @@
 		<Alert>
 			<p><b>Configuration error</b></p>
 			<p class="my-3">Missing schema</p>
-			<a class="hover:underline" href={`/base/${$page.params['app_id']}/${$page.params.table}`}
+			<a class="hover:underline" href={`/rest/${$page.params['app_id']}/${$page.params.table}`}
 				>Add schema</a
 			>
 		</Alert>

@@ -331,7 +331,7 @@
 
 					<SidebarItem
 						on:click={() => (hidden2 = true)}
-						href={`/base/${space?.appId}/`}
+						href={`/rest/${space?.appId}/`}
 						rel="external"
 						label="API"
 					>
