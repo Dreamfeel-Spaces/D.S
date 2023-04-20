@@ -99,13 +99,17 @@
 </script>
 
 <main class="main-container grid grid-cols-2 gap-4 ">
-	<Card  size="lg" >
-		<section class="flex justify-center">
+	<Card size="lg">
+		<div class="text-xl">Chart Title</div>
+		<p>Chart description</p>
+		<section class="flex  max-h-48 justify-center">
 			<canvas bind:this={barChartElement} />
 		</section>
 	</Card>
 
-	<Card  size="lg"  >
+	<Card size="lg">
+		<div class="text-xl">Chart Title</div>
+		<p>Chart description</p>
 		<div class="mt-3 text-xs">
 			<section class="flex justify-center">
 				<canvas bind:this={lineChartElement} />

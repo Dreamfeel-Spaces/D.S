@@ -19,24 +19,34 @@
 
 <svelte:head>
 	<title>
-		{spaceName} - Collections
+		{space?.name} - Collections
 	</title>
 </svelte:head>
 
 <div class="container">
 	<Card class="dark:text-white min-h-105" size="xl">
-		<div class="flex justify-end py-3  pr-4 flex-wrap">
-			<Button
-				on:click={() => apiHelperModal.set({ open: true })}
-				class="mr-3"
-				pill
-				color="pinkToOrange"
-				gradient
-				size="xs">Generate collections</Button
-			>
-			<a class="text-lg" href={`/rest/${spaceId}/table/create`}>
-				<Button pill color="pinkToOrange" gradient size="xs">Add collections</Button>
-			</a>
+		<div class="flex justify-between" >
+			<Breadcrumb>
+				<BreadcrumbItem href={`/a/${data?.space?.appId}`}
+					>{data?.space?.name ?? 'Unknown space'}</BreadcrumbItem
+				>
+				<BreadcrumbItem disabled>API</BreadcrumbItem>
+			</Breadcrumb>
+			<div>
+				<div class="flex justify-end py-3  pr-4 flex-wrap">
+					<Button
+						on:click={() => apiHelperModal.set({ open: true })}
+						class="mr-3"
+						pill
+						color="pinkToOrange"
+						gradient
+						size="xs">Generate collections</Button
+					>
+					<a class="text-lg" href={`/rest/${spaceId}/table/create`}>
+						<Button pill color="pinkToOrange" gradient size="xs">Add collections</Button>
+					</a>
+				</div>
+			</div>
 		</div>
 
 		{#if !hasTables}

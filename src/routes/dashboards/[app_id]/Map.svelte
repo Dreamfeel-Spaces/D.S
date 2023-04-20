@@ -48,7 +48,7 @@
 
 <main>
 	<Card size="xl">
-		<p class="text-3xl text-gray-600">Sessions by country</p>
+		<p class="text-xl mb-4 text-gray-600">Live Sessions</p>
 		<div bind:this={mapElement} />
 	</Card>
 </main>
@@ -56,6 +56,6 @@
 <style>
 	@import 'leaflet/dist/leaflet.css';
 	main div {
-		height: 600px;
+		height: 360px;
 	}
 </style>
