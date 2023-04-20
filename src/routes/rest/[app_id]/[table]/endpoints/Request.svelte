@@ -325,7 +325,8 @@
 			<div>
 				<a
 					class="text-blue-500 hover:underline"
-					target="blank"
+					target="_blank"
+					rel="noreferrer"
 					href={`/a/${$page.params['app_id']}/preferences/keys`}>Generate API Key</a
 				>
 			</div>
