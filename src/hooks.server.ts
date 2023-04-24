@@ -4,7 +4,13 @@ import GitHub from '@auth/core/providers/github';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import type { Adapter } from '@auth/core/adapters';
 import jwt from 'jsonwebtoken';
-import { GITHUB_ID, GITHUB_SECRET, NEXTAUTH_URL } from '$env/static/private';
+import {
+	GITHUB_ID,
+	GITHUB_SECRET,
+	NEXTAUTH_URL,
+	EMAIL_FROM,
+	EMAIL_SERVER
+} from '$env/static/private';
 import { prisma } from './lib/db/prisma';
 import { sequence } from '@sveltejs/kit/hooks';
 import { error, redirect, type Handle, type HandleServerError } from '@sveltejs/kit';
@@ -13,6 +19,7 @@ import { errorCatch, isReservedRoute } from '$lib/util/slugit';
 import { Token } from '$lib/token/Token';
 import { dev } from '$app/environment';
 import { Space } from '$lib/djs/Space';
+import { Email } from '@auth/core/providers/email';
 
 export const authHandle = SvelteKitAuth({
 	adapter: PrismaAdapter(prisma) as Adapter<boolean>,
@@ -26,6 +33,10 @@ export const authHandle = SvelteKitAuth({
 		GitHub({
 			clientId: GITHUB_ID,
 			clientSecret: GITHUB_SECRET
+		}),
+		Email({
+			server: EMAIL_SERVER,
+			from: EMAIL_FROM
 		})
 	],
 	jwt: {
@@ -130,7 +141,6 @@ export const apiAuth: Handle = async ({ event, resolve }) => {
 	const logger = new Error();
 	const [space, spaceError] = await token.verifyApiKey(apiKey, event);
 
-console.log(space, spaceError)
 	if (!space) throw error(404, 'Space not found!');
 
 	try {
@@ -140,11 +150,10 @@ console.log(space, spaceError)
 		event.locals.session = { ...session, api: true };
 		return resolve(event);
 	} catch (e) {
-		console.log(e)
+		console.log(e);
 		throw e;
 	}
 };
-``
 export const activeUser: Handle = async ({ event, resolve }) => {
 	const { locals } = event;
 	const session = await locals.getSession();
