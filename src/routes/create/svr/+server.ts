@@ -89,7 +89,7 @@ export async function POST({ request, locals, cookies }: RequestEvent) {
 		lastName: '',
 		email: user?.email,
 		message: htmlEmail,
-		subject: 'Dreamfeel Spaces - Early Access'
+		subject: `${name} is now live on Dreamfeel Spaces`
 	});
 
 	const response = new Response(JSON.stringify(space));

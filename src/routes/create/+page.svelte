@@ -13,7 +13,7 @@
 	} from 'flowbite-svelte';
 	import { onDestroy } from 'svelte';
 	import axios from 'axios';
-	import { goto } from '$app/navigation';
+	// import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
 	let appName = '';
 	let appId = appName;
 	export let form: any;

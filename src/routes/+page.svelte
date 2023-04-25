@@ -3,11 +3,10 @@
 	import logo from '../assets/logo.png';
 	export let form: any;
 	export let data: any;
-	import { Alert, Button, Card , Avatar} from 'flowbite-svelte';
+	import { Alert, Button, Card, Avatar } from 'flowbite-svelte';
 
 	import Cursort from './Cursort.svelte';
 	import HeroCarousel from './HeroCarousel.svelte';
-
 </script>
 
 <Cursort />
@@ -243,7 +242,7 @@
 					<p class="my-4">If you care for your time, I hands down would go with this."</p>
 				</blockquote>
 				<figcaption class="flex justify-center items-center space-x-3">
-					<Avatar border/>
+					<Avatar border />
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
 						<div>Mike</div>
 						<div class="text-sm font-light text-gray-500 dark:text-gray-400">Beta tester</div>
@@ -271,7 +270,7 @@
 					</p>
 				</blockquote>
 				<figcaption class="flex justify-center items-center space-x-3">
-					<Avatar border/>
+					<Avatar border />
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
 						<div>Robert Macharia</div>
 						<div class="text-sm font-light text-gray-500 dark:text-gray-400">
@@ -298,7 +297,7 @@
 					</p>
 				</blockquote>
 				<figcaption class="flex justify-center items-center space-x-3">
-					<Avatar border/>
+					<Avatar border />
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
 						<div>Jese Leos</div>
 						<div class="text-sm font-light text-gray-500 dark:text-gray-400">
@@ -327,7 +326,7 @@
 					</p>
 				</blockquote>
 				<figcaption class="flex justify-center items-center space-x-3">
-					<Avatar border/>
+					<Avatar border />
 					<div class="space-y-0.5 font-medium dark:text-white text-left">
 						<div>Caleb Otieno</div>
 						<div class="text-sm font-light text-gray-500 dark:text-gray-400">
@@ -1074,17 +1073,18 @@
 	</div>
 </div>
 
-<!-- <div class="dark:bg-gray-900">
+<div class="dark:bg-gray-900">
 	<div class="container  py-24 px-6 mx-auto">
 		<section class="mb-32  text-gray-800 text-center md:text-left">
 			<div class="grid md:grid-cols-2 gap-6">
 				<div class="mb-6 md:mb-0">
 					<h2 class="text-3xl text-gray-700 font-bold mb-6">
-						Trusted by 2,000,000+ <br />
-						<u class="">developers and designers</u>
+						Our Partners <br />
+						<!-- <u class="">developers and designers</u> -->
 					</h2>
 					<p class="text-gray-500 mb-6">
-						Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, quas?
+						Our partners are an integral part of our mission and success, and we are committed to
+						building strong, long-lasting relationships with them.
 					</p>
 
 					<a
@@ -1110,12 +1110,13 @@
 					<div class="grid grid-cols-2 gap-6">
 						<div class="mb-12">
 							<img
-								src="https://mdbootstrap.com/img/Photos/new-templates/landing-page/logo6-1.png"
-								class="grayscale px-6"
-								alt="Nasa - logo"
+								width="180"
+								loading="lazy"
+								src="https://res.cloudinary.com/dreamnerd/image/upload/v1682428867/ggjggj_u8g6r5.png"
+								alt="Kenyatta Uni - logo"
 							/>
 						</div>
-
+						<!-- 
 						<div class="mb-12">
 							<img
 								src="https://mdbootstrap.com/img/Photos/new-templates/landing-page/logo5-1.png"
@@ -1138,13 +1139,13 @@
 								class="grayscale px-6"
 								alt="Ikea - logo"
 							/>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
 		</section>
 	</div>
-</div> -->
+</div>
 
 <footer style="backdrop-filter:blur(30px)" class="p-4 md:p-8 lg:p-10  dark:bg-gray-900 bg-gray-900">
 	<div class="mx-auto max-w-screen-xl text-center">
