@@ -320,7 +320,7 @@
 								/>
 							</a>
 						{:else}
-							<a href="/accounts"> <Button color="pinkToOrange" gradient>Sign in</Button></a>
+							<a href="/create"> <Button color="pinkToOrange" gradient>Get started</Button></a>
 						{/if}
 						<ul
 							class="absolute left-auto right-0 z-[1000] float-left m-0 mt-1 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"

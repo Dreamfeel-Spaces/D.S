@@ -1,6 +1,16 @@
 <script lang="ts">
 	import { convertToSlug } from '$lib/util/slugit';
-	import { Input, Button, Alert, Card, Heading, Spinner, Modal, A } from 'flowbite-svelte';
+	import {
+		Input,
+		Button,
+		Alert,
+		Card,
+		Heading,
+		Spinner,
+		Modal,
+		A,
+		Dropzone
+	} from 'flowbite-svelte';
 	import { onDestroy } from 'svelte';
 	import axios from 'axios';
 	import { goto } from '$app/navigation';
@@ -70,6 +80,8 @@
 	onDestroy(() => {
 		if (requestTimeOut) clearTimeout(requestTimeOut);
 	});
+
+	let logoFiles = [];
 </script>
 
 {#if form?.error}
@@ -150,7 +162,7 @@
 				{/if}
 			</div>
 			<div class="mb-6 w-full">
-				<label class="dark:text-gray-100" for="name">Name</label>
+				<label class="dark:text-gray-100" for="name">App Name</label>
 				<Input
 					required
 					bind:value={appName}
@@ -162,6 +174,10 @@
 				/>
 			</div>
 
+			<div class="mb-6 w-full">
+				<label class="dark:text-gray-100" for="files">App Logo</label>
+				<Dropzone disabled />
+			</div>
 			<Button
 				disabled={convertToSlug(appId ? appId : appName).length > 24}
 				class="w-full mb-18"
