@@ -9,7 +9,7 @@
 		Spinner,
 		Modal,
 		A,
-		Dropzone
+		// Dropzone
 	} from 'flowbite-svelte';
 	import { onDestroy } from 'svelte';
 	import axios from 'axios';
@@ -174,10 +174,10 @@
 				/>
 			</div>
 
-			<div class="mb-6 w-full">
+			<!-- <div class="mb-6 w-full">
 				<label class="dark:text-gray-100" for="files">App Logo</label>
 				<Dropzone disabled />
-			</div>
+			</div> -->
 			<Button
 				disabled={convertToSlug(appId ? appId : appName).length > 24}
 				class="w-full mb-18"
