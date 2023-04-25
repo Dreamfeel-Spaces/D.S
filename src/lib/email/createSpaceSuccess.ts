@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+export default function createSpaceSuccess(name: string, appId: string) {
+	return `
+    <!DOCTYPE html>
 <html
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:v="urn:schemas-microsoft-com:vml"
@@ -257,7 +259,7 @@
 														color: #555;
 													"
 												>
-													Your Space, {{Demo}} is now live
+													Your Space, ${name} is now live
 												</div>
 											</td>
 										</tr>
@@ -365,7 +367,7 @@
 															valign="middle"
 														>
 															<a
-																href="https://beta.dreamfeel.me/a"
+																href="https://beta.dreamfeel.me/a/${appId}"
 																style="
 																	background: salmon;
 																	color: #ffffff;
@@ -378,7 +380,7 @@
 																	text-transform: none;
 																"
 															>
-																Go to {{Demo}}
+																Go to ${name}
 															</a>
 														</td>
 													</tr>
@@ -633,3 +635,6 @@
 		</div>
 	</body>
 </html>
+
+    `;
+}

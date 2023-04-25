@@ -2,7 +2,9 @@ import { prisma } from '$lib/db/prisma';
 import { Token } from '$lib/token/Token';
 import { convertToSlug } from '$lib/util/slugit';
 import { error, redirect } from '@sveltejs/kit';
-import type { RequestEvent } from './$types';
+import type { RequestEvent } from '../$types';
+import createSpaceSuccess from '$lib/email/createSpaceSuccess';
+import emailHandler from '$lib/email/Email';
 
 export async function POST({ request, locals, cookies }: RequestEvent) {
 	//@ts-ignore
@@ -79,7 +81,17 @@ export async function POST({ request, locals, cookies }: RequestEvent) {
 	cookies.set(`${newSpace.appId}-accessToken`, sessionToken, {
 		path: '/'
 	});
-	// throw redirect(302, `/a/${newSpace.appId}`);
+
+	const htmlEmail = createSpaceSuccess(name, appId);
+
+	await emailHandler({
+		firstName: name,
+		lastName: '',
+		email: user?.email,
+		message: htmlEmail,
+		subject: 'Dreamfeel Spaces - Early Access'
+	});
+
 	const response = new Response(JSON.stringify(space));
 	return response;
 }
