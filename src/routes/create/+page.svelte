@@ -60,7 +60,7 @@
 			saving = true;
 			saveSpaceSuccess = false;
 			saveSpaceError = false;
-			const res = await axios.post(`/create`, {
+			const res = await axios.post(`/create/svr`, {
 				name: appName,
 				appId
 			});
