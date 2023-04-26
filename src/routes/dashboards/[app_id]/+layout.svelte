@@ -67,31 +67,21 @@
 							/></svg
 						>
 					</svelte:fragment>
-					<SidebarDropdownItem label={`Overview`} />
-					<SidebarDropdownItem label={`Add`} />
-					<SidebarDropdownItem label={` Table`} />
-					<SidebarDropdownItem label={`Import`} />
-					<SidebarDropdownItem label={`Export `} />
+					<SidebarDropdownItem
+						href={`/dashboards/${space.appId}/users/overview`}
+						label={`Overview`}
+					/>
+					<SidebarDropdownItem href={`/dashboards/${space.appId}/users/add`} label={`Add`} />
+					<SidebarDropdownItem label={` Table`} href={`/dashboards/${space.appId}/users/table`} />
+					<SidebarDropdownItem
+						href={`/dashboards/${space.appId}/users/sessions`}
+						label={`Sessions`}
+					/>
+					<SidebarDropdownItem href={`/dashboards/${space.appId}/users/geo`} label={`Geo`} />
+					<SidebarDropdownItem href={`/dashboards/${space.appId}/users/import`} label={`Import`} />
+					<SidebarDropdownItem href={`/dashboards/${space.appId}/users/export`} label={`Export `} />
 				</SidebarDropdownWrapper>
-				<SidebarDropdownWrapper label={'Sessions'}>
-					<svelte:fragment slot="icon">
-						<svg
-							fill="currentColor"
-							xmlns="http://www.w3.org/2000/svg"
-							height="24"
-							viewBox="0 96 960 960"
-							width="24"
-							><path
-								d="M140 896q-23 0-41.5-18.5T80 836V316q0-23 18.5-41.5T140 256h281l60 60h339q23 0 41.5 18.5T880 376H455l-60-60H140v520l102-400h698L833 850q-6 24-22 35t-41 11H140Zm63-60h572l84-340H287l-84 340Zm0 0 84-340-84 340Zm-63-460v-60 60Z"
-							/></svg
-						>
-					</svelte:fragment>
-					<SidebarDropdownItem label={`Overview`} />
-					<SidebarDropdownItem label={`Add`} />
-					<SidebarDropdownItem label={` Table`} />
-					<SidebarDropdownItem label={`Import`} />
-					<SidebarDropdownItem label={`Export `} />
-				</SidebarDropdownWrapper>
+
 				{#each $page.data?.tables ?? [] as table}
 					<SidebarDropdownWrapper open={$page.params.table === table.name} label={table.name}>
 						<svelte:fragment slot="icon">

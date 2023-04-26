@@ -28,7 +28,7 @@
 			<span class="text-xs text-gray-500">{new Date()} - {report.description}</span>
 
 			<div class={` w-full justify-center`}>
-				<Table class="mt-20">
+				<Table class="mt-4">
 					<TableHead>
 						<TableHeadCell class="text-gray-500" align="right" colspan={report.columns.length}
 							>{'>'} {data?.space?.name} / {data?.table?.name} / {report?.name}

@@ -14,15 +14,9 @@
 </script>
 
 <div class="flex justify-end mt-6">
-	<a href={`/dashboards/${$page.params["app_id"]}/users/add`}>
+	<a href={`/dashboards/${$page.params['app_id']}/users/add`}>
 		<Button pill gradient size="xs">Add user</Button>
 	</a>
-</div>
-
-<div class="mt-4">
-	Lorem ipsum dolor sit, amet consectetur adipisicing elit. At voluptatum natus, adipisci non neque
-	nesciunt necessitatibus quo vero consequatur atque, dolor, deleniti sunt voluptas cumque provident
-	eum consequuntur. Ex, recusandae.
 </div>
 
 <Table striped class="mt-6">
@@ -36,7 +30,7 @@
 	<TableBody>
 		{#each data?.admins as admin}
 			<TableBodyRow>
-			<TableBodyCell>{admin.id}</TableBodyCell>
+				<TableBodyCell>{admin.id}</TableBodyCell>
 				<TableBodyCell>{admin.username}</TableBodyCell>
 				<TableBodyCell>{admin.role}</TableBodyCell>
 				<TableBodyCell>{admin.status}</TableBodyCell>
