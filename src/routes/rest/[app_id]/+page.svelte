@@ -24,8 +24,8 @@
 </svelte:head>
 
 <div class="container">
-	<Card class="dark:text-white min-h-105" size="xl">
-		<div class="flex justify-between" >
+	<Card class="dark:text-white min-h-100" size="xl">
+		<div class="flex justify-between">
 			<Breadcrumb>
 				<BreadcrumbItem href={`/a/${data?.space?.appId}`}
 					>{data?.space?.name ?? 'Unknown space'}</BreadcrumbItem
@@ -56,7 +56,95 @@
 			</div>
 		{/if}
 
-		{#if hasTables}
+		<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+			<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+				<thead
+					class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+				>
+					<tr>
+						<th scope="col" class="px-6 py-3"> collection </th>
+						<th scope="col" class="px-6 py-3">
+							<div class="flex items-center">Count</div>
+						</th>
+						<th scope="col" class="px-6 py-3">
+							<div class="flex items-center">API</div>
+						</th>
+						<th scope="col" class="px-6 py-3">
+							<div class="flex items-center">Permissions</div>
+						</th>
+						<th scope="col" class="px-6 py-3">
+							<div class="flex items-center">Dashboards</div>
+						</th>
+						<th scope="col" class="px-6 py-3">
+							<span class="sr-only">Edit</span>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each data.tables as table}
+						<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+							<th
+								scope="row"
+								class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+							>
+								{table.name}
+							</th>
+							<td class="px-9 py-4 flex items-center"> {table.rows?.length ?? 0} </td>
+							<td class="px-5 py-4">
+								<a href={`/rest/${$page.data.space?.appId}/${table?.name}/endpoints`}>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										height="20"
+										fill="currentColor"
+										viewBox="0 96 960  960"
+										width="20"
+										><path
+											d="M120 936V636h60v198l558-558H540v-60h300v300h-60V318L222 876h198v60H120Z"
+										/></svg
+									>
+								</a>
+							</td>
+							<td class="px-12 py-4">
+								<a href={`/rest/${$page.data.space?.appId}/${table?.name}/permissions`}>
+									<svg
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+										height="20"
+										viewBox="0 96 960 960"
+										width="20"
+										><path
+											d="M141 836v-7 7-460 460Zm0 60q-24 0-42-18t-18-42V316q0-24 18-42t42-18h280l60 60h340q24 0 42 18t18 42v195q-14-11-28.5-19.5T821 536V376H141v460h327q4 16 9.143 30.915Q482.286 881.831 490 896H141Zm420 0v-19q0-42 42.5-65T721 789q75 0 117.5 23t42.5 65v19H561Zm160.08-174q-30.08 0-51.58-21.42-21.5-21.421-21.5-51.5 0-30.08 21.42-51.58 21.421-21.5 51.5-21.5 30.08 0 51.58 21.42 21.5 21.421 21.5 51.5 0 30.08-21.42 51.58-21.421 21.5-51.5 21.5Z"
+										/></svg
+									>
+								</a>
+							</td>
+							<td class="px-14 py-4">
+								<a href={`/dashboards/${$page.data.space?.appId}/${table?.name}/overview`}>
+									<svg
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+										height="20"
+										viewBox="0 96 960 960"
+										width="20"
+										><path
+											d="M180 936q-24 0-42-18t-18-42V276q0-24 18-42t42-18h279v60H180v600h600V597h60v279q0 24-18 42t-42 18H180Zm202-219-42-43 398-398H519v-60h321v321h-60V319L382 717Z"
+										/></svg
+									>
+								</a>
+							</td>
+							<td class="px-6 py-4 text-right">
+								<a
+									href={`/rest/${$page.data.space?.appId}/${table?.name}`}
+									class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a
+								>
+							</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+
+		<!-- {#if hasTables}
 			<div class=" px-3 grid lg:grid-cols-3 gap-3 overflow-auto">
 				{#each data.tables as table}
 					<div style="background-color:{getColorCode(table.colorCode)}" class="p-2 rounded ">
@@ -74,6 +162,6 @@
 					</div>
 				{/each}
 			</div>
-		{/if}
+		{/if} -->
 	</Card>
 </div>

@@ -166,7 +166,8 @@
 		<div class="flex flex-row w-auto flex-shrink-0 pl-4 pr-2 py-4">
 			<div class="flex flex-col items-center py-4 flex-shrink-0 w-20 bg-red-500 rounded-3xl">
 				<a
-					href="#"
+					href={`/a/${$page.data.space?.appId}`}
+					rel="external"
 					class="flex items-center justify-center h-12 w-12 bg-cyan-50 text-cyan-700 rounded-full"
 				>
 					<img
@@ -277,8 +278,8 @@
 					</li>
 				</ul>
 				<a
-					href="https://github.com/emsifa/tailwind-pos"
-					target="_blank"
+					href="https://dreamfeel.me"
+					target="blank"
 					class="mt-auto flex items-center justify-center text-cyan-200 hover:text-cyan-100 h-10 w-10 focus:outline-none"
 				>
 					<svg
