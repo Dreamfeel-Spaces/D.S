@@ -22,9 +22,8 @@
 	// 	props = { nextImage, previousImage };
 	// };
 
-
 	export let images: any[] = [StepZero, StepTwo, StepOne, StepThree, StepFour];
-	let currentImageIndex = $page.data.space.apiSetup[0].step;
+	let currentImageIndex = data.setup?.step;
 	let timerId;
 
 	function nextImage() {

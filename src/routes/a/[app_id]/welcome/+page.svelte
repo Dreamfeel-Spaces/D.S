@@ -16,8 +16,10 @@
 
 	let props;
 
+	export let data: PageData;
+
 	export let images: any[] = [StepOne, StepTwo, StepThree, StepFour, StepFour];
-	let currentImageIndex = $page.data.space.onboarding[0].step;
+	let currentImageIndex = data.onboarding?.step;
 	let timerId;
 
 	function nextImage() {
@@ -54,6 +56,7 @@
 
 	import { onMount } from 'svelte';
 	import { invalidateAll } from '$app/navigation';
+	import type { PageData } from './$types';
 
 	onMount(() => {
 		invalidateAll();

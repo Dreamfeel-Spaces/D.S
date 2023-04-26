@@ -4,7 +4,7 @@ import type { Actions, PageLoadEvent } from './$types';
 
 export const actions: Actions = {
 	async stepZero({ params, request }) {
-		const appId = params["app_id"];
+		const appId = params['app_id'];
 		const space = await prisma.space.findUnique({
 			where: {
 				appId
@@ -31,7 +31,7 @@ export const actions: Actions = {
 		}
 	},
 	async stepThree({ params, request }) {
-		const appId = params["app_id"];
+		const appId = params['app_id'];
 		const space = await prisma.space.findUnique({
 			where: {
 				appId
@@ -63,7 +63,7 @@ export const actions: Actions = {
 };
 
 export async function load({ params }: PageLoadEvent) {
-	const appId = params["app_id"];
+	const appId = params['app_id'];
 	const space = await prisma.space.findFirst({
 		where: {
 			appId
@@ -78,4 +78,6 @@ export async function load({ params }: PageLoadEvent) {
 	let onboarding = space.apiSetup[0];
 
 	if (onboarding?.complete) throw redirect(302, `/rest/${appId}/`);
+
+	return { apiSetup: onboarding };
 }

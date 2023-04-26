@@ -4,7 +4,7 @@ import type { Actions, PageLoadEvent } from './$types';
 
 export const actions: Actions = {
 	async stepOne({ params, request }) {
-		const appId = params["app_id"];
+		const appId = params['app_id'];
 		const space = await prisma.space.findFirst({
 			where: {
 				appId
@@ -40,7 +40,7 @@ export const actions: Actions = {
 		});
 	},
 	async stepTwo({ params, request }) {
-		const appId = params["app_id"];
+		const appId = params['app_id'];
 		const space = await prisma.space.findFirst({
 			where: {
 				appId
@@ -76,7 +76,7 @@ export const actions: Actions = {
 		});
 	},
 	async stepThree({ params, request }) {
-		const appId = params["app_id"];
+		const appId = params['app_id'];
 		const space = await prisma.space.findFirst({
 			where: {
 				appId
@@ -112,7 +112,7 @@ export const actions: Actions = {
 		});
 	},
 	async stepFour({ params, request }) {
-		const appId = params["app_id"];
+		const appId = params['app_id'];
 		const space = await prisma.space.findFirst({
 			where: {
 				appId
@@ -154,7 +154,7 @@ export const actions: Actions = {
 };
 
 export async function load({ params }: PageLoadEvent) {
-	const appId = params["app_id"];
+	const appId = params['app_id'];
 	const space = await prisma.space.findFirst({
 		where: {
 			appId
@@ -169,4 +169,6 @@ export async function load({ params }: PageLoadEvent) {
 	let onboarding = space.onboarding[0];
 
 	if (onboarding?.complete) throw redirect(302, `/a/${appId}/welcome/new`);
+
+	return { onboarding };
 }
