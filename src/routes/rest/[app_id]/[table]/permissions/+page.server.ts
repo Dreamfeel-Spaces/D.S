@@ -137,5 +137,35 @@ export async function load({ params, locals }: RequestEvent) {
 		throw error(404, 'Table not found');
 	}
 
-	return { permissions: space?.permissions ?? [], table };
+	return {
+		permissions: space?.permissions ?? [],
+		table,
+		roles: space.roles.map((role) => {
+			for (let cP of table?.aPICreatePermissions ?? []) {
+				if (cP.userRoles?.id === role?.id || role.isSuperUser) {
+					role = { ...role, createChecked: true };
+				}
+			}
+
+			for (let cP of table?.aPIGETPermissions ?? []) {
+				if (cP.userRoles?.id === role?.id || role.isSuperUser) {
+					role = { ...role, readChecked: true };
+				}
+			}
+
+			for (let cP of table?.aPIUpdatePermissions ?? []) {
+				if (cP.userRoles?.id === role?.id || role.isSuperUser) {
+					role = { ...role, updateChecked: true };
+				}
+			}
+
+			for (let cP of table?.aPIDeletePermissions ?? []) {
+				if (cP.userRoles?.id === role?.id || role.isSuperUser) {
+					role = { ...role, deleteChecked: true };
+				}
+			}
+
+			return role;
+		})
+	};
 }
