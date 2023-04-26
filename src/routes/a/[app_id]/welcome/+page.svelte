@@ -27,7 +27,6 @@
 	let currentImageIndex = onboarding.step;
 	let timerId;
 
-
 	function nextImage() {
 		let currIndex = (currentImageIndex + 1) % images.length;
 		if (currIndex === images.length - 1) goto('/onboarding/new');
@@ -60,27 +59,18 @@
 		}
 	}
 
-	function stopAutoSlide() {
-		if (timerId) clearInterval(timerId);
-	}
+	import { onMount } from 'svelte';
+	import { invalidateAll } from '$app/navigation';
 
-	// onMount(() => {
-	// 	startAutoSlide(10000);
-	// });
-
-	// onDestroy(() => {
-	// 	stopAutoSlide();
-	// });
-
-	function handlePause() {
-		paused = !paused;
-	}
+	onMount(() => {
+		invalidateAll();
+	});
 </script>
 
 <div class="container">
-	<Card class="w-full" size="xl" >
+	<Card class="w-full" size="xl">
 		<div class=" dark:text-gray-50  ">
-			<div >
+			<div>
 				<div class="carousel  ">
 					{#each images as image, i}
 						<div class="carousel-item {i === currentImageIndex ? 'visible' : 'hidden'}">
@@ -94,13 +84,12 @@
 	</Card>
 </div>
 
-
 <style>
 	.carousel {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		min-height:500px;
+		min-height: 500px;
 		position: relative;
 		overflow: auto;
 	}

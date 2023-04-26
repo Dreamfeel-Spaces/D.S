@@ -14,7 +14,6 @@
 	import { invalidateAll } from '$app/navigation';
 
 	onMount(() => {
-		console.log('mounted');
 		invalidateAll();
 	});
 </script>

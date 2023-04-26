@@ -2,7 +2,6 @@
 <script lang="ts">
 	//@ts-nocheck
 
-
 	import { page } from '$app/stores';
 
 	const onboarding = ($page.data?.space?.onboarding ?? [])[0];
@@ -76,6 +75,13 @@
 	function handlePause() {
 		paused = !paused;
 	}
+
+	import { onMount } from 'svelte';
+	import { invalidateAll } from '$app/navigation';
+
+	onMount(() => {
+		invalidateAll();
+	});
 </script>
 
 <div class="dark:bg-gray-900  dark:text-gray-50 mt-9">
