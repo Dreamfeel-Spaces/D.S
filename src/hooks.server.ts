@@ -227,6 +227,7 @@ export const spaceIdHandle: Handle = async ({ event, resolve }) => {
 	const end = performance.now();
 
 	console.log(end - start, event.url.pathname);
+	
 	return resolve(event);
 };
 

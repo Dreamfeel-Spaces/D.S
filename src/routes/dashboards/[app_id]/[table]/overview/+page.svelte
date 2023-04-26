@@ -45,6 +45,12 @@
 	const activeSpace = data.myapps.find((app) => app.appId === spaceName);
 	export let form: any;
 	let selectedOptions: any = {};
+	import { onMount } from 'svelte';
+	import { invalidateAll } from '$app/navigation';
+
+	onMount(() => {
+		invalidateAll();
+	});
 </script>
 
 <!-- <div>

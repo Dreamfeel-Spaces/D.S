@@ -21,6 +21,13 @@
 	function handleClickItem(role: any) {
 		externalFormModal = true;
 	}
+
+	import { onMount } from 'svelte';
+	import { invalidateAll } from '$app/navigation';
+
+	onMount(() => {
+		if (form?.roleSuccess) invalidateAll();
+	});
 </script>
 
 <svelte:head>

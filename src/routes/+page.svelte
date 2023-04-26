@@ -19,7 +19,7 @@
 
 <div class="  dark:bg-gray-900">
 	<section class="bg-neutral-100 rounded-br-full rounded-bl-3xl  dark:bg-gray-900">
-		<div class="grid max-w-screen-xl px-4 py-8  mx-auto lg:gap-8 xl:gap-0 lg:py-9 lg:grid-cols-12">
+		<div class="grid  max-w-screen-xl 	 px-4 py-8  mx-auto   lg:gap-8 xl:gap-0 lg:py-9 lg:grid-cols-12">
 			<div class="mr-auto md:pt-9 lg:pt-2 self-center min-h-105 lg:col-span-7">
 				<h1
 					class="max-w-2xl  mt-28 mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-gray-700 dark:text-white"

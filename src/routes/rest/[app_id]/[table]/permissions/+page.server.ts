@@ -124,6 +124,7 @@ export const actions: Actions = {
 					});
 			}
 		}
+		return { success: true };
 	}
 };
 
@@ -131,7 +132,6 @@ export async function load({ params, locals }: RequestEvent) {
 	const space = locals.space;
 
 	const table = space.tables.find((table) => table.name === params.table);
-
 
 	if (!table) {
 		throw error(404, 'Table not found');

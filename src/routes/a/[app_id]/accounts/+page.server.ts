@@ -61,8 +61,8 @@ export const actions: Actions = {
 		const spaceId = params['app_id'];
 		cookies.delete(`${spaceId}-accessToken`, {
 			path: '/'
-		});
-		return { signoutSuccess: true };
+		})
+		throw redirect(302, `/a/${spaceId}`);
 	},
 	async updatePassword({ cookies, params, request, locals, url }) {
 		//@ts-ignore

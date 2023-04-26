@@ -6,7 +6,7 @@
 	const space = $page.data.space;
 	const spaceSession = $page.data.spaceSession;
 	const user = spaceSession?.user;
-	const hasUser = Boolean(user?.id)
+	const hasUser = Boolean(user?.id);
 	const pathname = $page.url.pathname;
 </script>
 
@@ -235,7 +235,6 @@
 						<span class="ml-3">Preferences</span>
 					</a>
 				</li>
-				
 			</ul>
 		</div>
 	</aside>
@@ -264,7 +263,6 @@
 			</div>
 		</a>
 		<header class="header dark:bg-gray-800 bg-white shadow py-1 px-4">
-		
 			<div class="header-content flex items-center flex-row">
 				<SpaceSearch />
 				<div class="flex ml-auto">
@@ -309,7 +307,7 @@
 									>{user?.name}</span
 								>
 								<span class="truncate w-20 text-gray-500 text-xs leading-none mt-1"
-									>{user?.role?.name ?? "Unknown Role"}</span
+									>{user?.role?.name ?? 'Unknown Role'}</span
 								>
 							</span>
 						</a>

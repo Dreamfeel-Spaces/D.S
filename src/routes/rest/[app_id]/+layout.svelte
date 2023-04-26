@@ -1,4 +1,3 @@
-
 <script>
 	import {
 		DarkMode,
@@ -26,11 +25,10 @@
 	let setup = (space?.apiSetup ?? [])[0];
 	import Request from './[table]/endpoints/Request.svelte';
 	import SpaceSearch from './SpaceSearch.svelte';
+	
 </script>
 
 <SpaceNav modalOnly={true} />
-
-
 
 <Modal
 	permanent
@@ -215,7 +213,10 @@
 						>
 					</svelte:fragment>
 
-					<SidebarDropdownItem href={`/rest/${space.appId}/integrations/payments`} label={`Payments`} />
+					<SidebarDropdownItem
+						href={`/rest/${space.appId}/integrations/payments`}
+						label={`Payments`}
+					/>
 					<SidebarDropdownItem label={`File storage`} />
 					<SidebarDropdownItem label={`Logistics`} />
 					<SidebarDropdownItem label={`SMS`} />

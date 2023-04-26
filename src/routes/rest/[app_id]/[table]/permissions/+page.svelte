@@ -6,13 +6,11 @@
 	import { Checkbox, Button, Breadcrumb, BreadcrumbItem, Card } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 
-	let roles = $page.data.space.roles;
-
 	export let data: PageData;
 
 	const table = data.table;
 
-	let permissions = roles.map((role) => {
+	let permissions = $page.data.space.roles.map((role) => {
 		for (let cP of table?.aPICreatePermissions ?? []) {
 			if (cP.userRoles?.id === role?.id || role.isSuperUser) {
 				role = { ...role, createChecked: true };
@@ -38,6 +36,14 @@
 		}
 
 		return role;
+	});
+
+	import { onMount } from 'svelte';
+	import { invalidateAll } from '$app/navigation';
+
+	onMount(() => {
+		console.log('mounted');
+		invalidateAll();
 	});
 </script>
 
