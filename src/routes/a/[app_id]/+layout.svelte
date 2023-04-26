@@ -216,7 +216,7 @@
 					</li>
 					<li class="my-px">
 						<a
-							href="#"
+							href={`/a/${space.appId}/wallet`}
 							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-lg dark:text-gray-400">
@@ -234,11 +234,7 @@
 									/>
 								</svg>
 							</span>
-							<span class="ml-3">Notifications</span>
-							<span
-								class="flex items-center justify-center text-xs text-red-500 font-semibold bg-red-100 h-6 px-2 rounded-full ml-auto"
-								>1</span
-							>
+							<span class="ml-3">Wallet</span>
 						</a>
 					</li>
 					<li class="my-px">
