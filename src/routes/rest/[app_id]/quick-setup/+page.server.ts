@@ -79,5 +79,5 @@ export async function load({ params }: PageLoadEvent) {
 
 	if (onboarding?.complete) throw redirect(302, `/rest/${appId}/`);
 
-	return { apiSetup: onboarding };
+	return { setup: onboarding };
 }
