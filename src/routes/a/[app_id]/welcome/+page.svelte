@@ -6,8 +6,6 @@
 
 	import { page } from '$app/stores';
 
-	const onboarding = $page.data.space.onboarding[0];
-
 	import StepOne from './StepOne.svelte';
 	import StepTwo from './StepTwo.svelte';
 	import StepThree from './StepThree.svelte';
@@ -18,13 +16,8 @@
 
 	let props;
 
-	// StepOne = () => {
-	// 	component = StepOne;
-	// 	props = { nextImage, previousImage };
-	// };
-
 	export let images: any[] = [StepOne, StepTwo, StepThree, StepFour, StepFour];
-	let currentImageIndex = onboarding.step;
+	let currentImageIndex = $page.data.space.onboarding[0].step;
 	let timerId;
 
 	function nextImage() {
