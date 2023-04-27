@@ -54,7 +54,7 @@
 						>Collections</span
 					>
 				</li>
-				<SidebarDropdownWrapper label={'Users'}>
+				<SidebarDropdownWrapper isOpen={/\/users/.test($page.url.pathname)} label={'Users'}>
 					<svelte:fragment slot="icon">
 						<svg
 							fill="currentColor"
@@ -63,23 +63,45 @@
 							viewBox="0 96 960 960"
 							width="24"
 							><path
-								d="M140 896q-23 0-41.5-18.5T80 836V316q0-23 18.5-41.5T140 256h281l60 60h339q23 0 41.5 18.5T880 376H455l-60-60H140v520l102-400h698L833 850q-6 24-22 35t-41 11H140Zm63-60h572l84-340H287l-84 340Zm0 0 84-340-84 340Zm-63-460v-60 60Z"
+								d="M0 816v-53q0-38.567 41.5-62.784Q83 676 150.376 676q12.165 0 23.395.5Q185 677 196 678.652q-8 17.348-12 35.165T180 751v65H0Zm240 0v-65q0-32 17.5-58.5T307 646q32-20 76.5-30t96.5-10q53 0 97.5 10t76.5 30q32 20 49 46.5t17 58.5v65H240Zm540 0v-65q0-19.861-3.5-37.431Q773 696 765 678.727q11-1.727 22.171-2.227 11.172-.5 22.829-.5 67.5 0 108.75 23.768T960 763v53H780Zm-480-60h360v-6q0-37-50.5-60.5T480 666q-79 0-129.5 23.5T300 751v5ZM149.567 646Q121 646 100.5 625.438 80 604.875 80 576q0-29 20.562-49.5Q121.125 506 150 506q29 0 49.5 20.5t20.5 49.933Q220 605 199.5 625.5T149.567 646Zm660 0Q781 646 760.5 625.438 740 604.875 740 576q0-29 20.562-49.5Q781.125 506 810 506q29 0 49.5 20.5t20.5 49.933Q880 605 859.5 625.5T809.567 646ZM480 576q-50 0-85-35t-35-85q0-51 35-85.5t85-34.5q51 0 85.5 34.5T600 456q0 50-34.5 85T480 576Zm.351-60Q506 516 523 498.649t17-43Q540 430 522.851 413t-42.5-17Q455 396 437.5 413.149t-17.5 42.5Q420 481 437.351 498.5t43 17.5ZM480 756Zm0-300Z"
 							/></svg
 						>
 					</svelte:fragment>
 					<SidebarDropdownItem
+						active={/\/users\/overview/.test($page.url.pathname)}
 						href={`/dashboards/${space.appId}/users/overview`}
 						label={`Overview`}
 					/>
-					<SidebarDropdownItem href={`/dashboards/${space.appId}/users/add`} label={`Add`} />
-					<SidebarDropdownItem label={` Table`} href={`/dashboards/${space.appId}/users/table`} />
 					<SidebarDropdownItem
+						active={/\/users\/add/.test($page.url.pathname)}
+						href={`/dashboards/${space.appId}/users/add`}
+						label={`Add`}
+					/>
+					<SidebarDropdownItem
+						active={/\/users\/table/.test($page.url.pathname)}
+						label={` Table`}
+						href={`/dashboards/${space.appId}/users/table`}
+					/>
+					<SidebarDropdownItem
+						active={/\/users\/sessions/.test($page.url.pathname)}
 						href={`/dashboards/${space.appId}/users/sessions`}
 						label={`Sessions`}
 					/>
-					<SidebarDropdownItem href={`/dashboards/${space.appId}/users/geo`} label={`Geo`} />
-					<SidebarDropdownItem href={`/dashboards/${space.appId}/users/import`} label={`Import`} />
-					<SidebarDropdownItem href={`/dashboards/${space.appId}/users/export`} label={`Export `} />
+					<SidebarDropdownItem
+						active={/\/users\/geo/.test($page.url.pathname)}
+						href={`/dashboards/${space.appId}/users/geo`}
+						label={`Geo`}
+					/>
+					<SidebarDropdownItem
+						active={/\/users\/import/.test($page.url.pathname)}
+						href={`/dashboards/${space.appId}/users/import`}
+						label={`Import`}
+					/>
+					<SidebarDropdownItem
+						active={/\/users\/export/.test($page.url.pathname)}
+						href={`/dashboards/${space.appId}/users/export`}
+						label={`Export `}
+					/>
 				</SidebarDropdownWrapper>
 
 				{#each $page.data?.tables ?? [] as table}
@@ -258,7 +280,9 @@
 			</div>
 		</header>
 		<div class="main-content dark:bg-gray-700  max-h-105 flex flex-col flex-grow p-1">
-			<div class="flex flex-col  dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded ">
+			<div
+				class="flex flex-col max-w-screen-xl dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded "
+			>
 				<slot />
 			</div>
 		</div>

@@ -5,8 +5,6 @@
 	import {
 		Tabs,
 		TabItem,
-		Breadcrumb,
-		BreadcrumbItem,
 		Checkbox,
 		Button,
 		Accordion,
@@ -27,46 +25,43 @@
 	import { goto } from '$app/navigation';
 	import FileDropzone from '$lib/components/FileDropzone.svelte';
 	import DateTimeInput from '$lib/components/DateTimeInput.svelte';
-	import { cleanData } from '$lib/util/slugit';
 	import ReportModal from '../../[table]/overview/ReportModal.svelte';
 	import ChartModal from '../../[table]/overview/ChartModal.svelte';
 	import SpaceChart from '../../[table]/overview/SpaceChart.svelte';
 	import FormModal from '../../[table]/overview/FormModal.svelte';
-	import SpaceCsv from '../../[table]/overview/SpaceCSV.svelte';
-	import SpaceJson from '../../[table]/overview/SpaceJSON.svelte';
-	const spaceName = $page.params["app_id"];
-	const tableName = $page.params.table;
+	const spaceName = $page.params['app_id'];
 	let activeTab = $page.url.searchParams.get('tab') ?? 'reports';
 	const activeSpace = data.myapps.find((app) => app.appId === spaceName);
 	export let form: any;
 	let selectedOptions: any = {};
-</script>
 
-<div>
-	<div class="my-3 text-2xl text-gray-500 px-6 flex justify-between">
-		<div class="flex-1">
-			<Breadcrumb>
-				<BreadcrumbItem>Home</BreadcrumbItem>
-				<BreadcrumbItem>Dashboards</BreadcrumbItem>
-				<BreadcrumbItem>
-					{spaceName}
-				</BreadcrumbItem>
-				<BreadcrumbItem>{tableName}</BreadcrumbItem>
-				<BreadcrumbItem>Overview</BreadcrumbItem>
-			</Breadcrumb>
-		</div>
-	</div>
-</div>
+	let userReports = [];
+</script>
 
 <div class="px-6">
 	<Tabs>
-		<TabItem open={activeTab === 'reports'} on:click={() => goto('?tab=reports')} title="Reports">
-			<ReportModal columns={data.columns} />
+		<TabItem
+			open={activeTab === 'reports'}
+			on:click={() => goto('?tab=reports')}
+			title="Query Reports"
+		>
+			<ReportModal user columns={data.columns} />
 			{#if form?.reportSuccess}
 				Report has been saved
 			{/if}
-			{#if !data.reports?.length}
-				<div class="my-12">No reports have been added</div>
+			{#if !userReports?.length}
+				<Alert class="mt-3" accent >
+					<iframe src="https://embed.lottiefiles.com/animation/135714"></iframe>
+					<div class="my-4 text-2xl">No reports have been added</div>
+					<div class="my-2">No reports have been added</div>
+					<div >
+						Query reports  are a powerful way to analyze and understand your
+						data, you can quickly build custom queries
+						and visualize your results in a variety of charts and graphs. Whether you're tracking
+						sales, monitoring website traffic, or measuring user engagement, our query reports give
+						you the insights you need to make data-driven decisions for your business
+					</div>
+				</Alert>
 			{/if}
 			<Accordion size="xs" class="mt-3">
 				{#each data.reports as report}
@@ -267,12 +262,12 @@
 				{/each}
 			</Accordion>
 		</TabItem>
-		<TabItem open={activeTab === 'import'} on:click={() => goto('?tab=import')} title="Import">
+		<!-- <TabItem open={activeTab === 'import'} on:click={() => goto('?tab=import')} title="Import">
 			<div>Import data</div>
 			<div class="mt-3 grid gap-4 grid-cols-2">
 				<SpaceCsv />
 				<SpaceJson />
 			</div>
-		</TabItem>
+		</TabItem> -->
 	</Tabs>
 </div>

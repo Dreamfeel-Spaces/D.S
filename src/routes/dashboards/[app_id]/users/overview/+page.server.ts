@@ -4,10 +4,10 @@ import { error } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
 
 export async function load({ params }: RequestEvent) {
-	const tableName = params["app_id"];
+	const tableName = params['app_id'];
 	const space = await prisma.space.findUnique({
 		where: {
-			appId: params["app_id"]
+			appId: params['app_id']
 		},
 		include: { permissions: true, dashboards: true }
 	});
@@ -70,11 +70,7 @@ export async function load({ params }: RequestEvent) {
 		}
 	});
 
-	const columns = await prisma.column.findMany({
-		where: {
-			spaceTableId: table?.id
-		}
-	});
+	const columns: any = [];
 
 	const formattedRows = (table ?? { rows: [] })?.rows.map((row) => {
 		return {

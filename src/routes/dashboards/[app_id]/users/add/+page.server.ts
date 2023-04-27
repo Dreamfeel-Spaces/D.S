@@ -1,30 +1,38 @@
 import { prisma } from '$lib/db/prisma';
-import { gmailTransporter } from '$lib/mail';
 import { Token } from '$lib/token/Token';
 import { error } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
+import singupSpaceUser from '../../../../../lib/email/signupSpaceUser';
+import emailHandler from '$lib/email/Email';
 
-export async function load({ params }: RequestEvent) {
-	const spaceId = params["app_id"];
+export async function load({ params, locals }: RequestEvent) {
+	const spaceId = params['app_id'];
+
+	//@ts-ignore
+	console.log(locals.spaceSession);
 
 	const space = await prisma.space.findUnique({
 		where: {
 			appId: spaceId
 		},
 		include: {
-			permissions: true
+			roles: true
 		}
 	});
 
 	return {
 		space,
-		roles: space?.permissions ?? []
+		roles:
+			space?.roles?.map((role) => ({
+				name: role.name,
+				value: role.id
+			})) ?? []
 	};
 }
 
 export const actions: Actions = {
 	async default({ request, params }) {
-		const spaceId = params["app_id"];
+		const spaceId = params['app_id'];
 
 		const space = await prisma.space.findUnique({
 			where: {
@@ -46,10 +54,26 @@ export const actions: Actions = {
 			data: {
 				spaceId: space.id,
 				name,
-				role,
+				userRolesId: role,
 				username,
 				password
 			}
+		});
+
+		const htmlEmail = singupSpaceUser({
+			userName: name,
+			userEmail: username,
+			userPass: 'testPass123',
+			ownerName: '',
+			appName: space.name ?? 'Unknown app'
+		});
+
+		await emailHandler({
+			firstName: name,
+			lastName: '',
+			email: username,
+			message: htmlEmail,
+			subject: `Welcome to ${space?.name}`
 		});
 
 		// let info = await gmailTransporter.sendMail({

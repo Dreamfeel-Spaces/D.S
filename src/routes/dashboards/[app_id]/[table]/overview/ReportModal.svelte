@@ -32,9 +32,7 @@
 </script>
 
 <div class="text-end">
-	<Button size="xs"  gradient  on:click={() => (formModal = true)}
-		>+ Add Report</Button
-	>
+	<Button size="xs" gradient on:click={() => (formModal = true)}>+ Add Report</Button>
 </div>
 <form class="flex flex-col space-y-3" action="?/addReport&tab=reports" method="POST">
 	<Modal bind:open={formModal} autoclose={false} class="w-full text-left">
