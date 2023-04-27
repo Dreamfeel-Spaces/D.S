@@ -69,7 +69,6 @@ export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 
 	if (event.request.method === 'POST') {
 		await event.request.formData();
-		console.log(event.request);
 		throw redirect(301, `${event.request.action}`);
 
 		//
@@ -80,7 +79,7 @@ export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 			renderSubdomainApp: true,
 			subdomain: pageManager.sbd
 		});
-		if (htmlError) throw htmlError;
+		if (htmlError) throw error(500, 'An internal server error occured');
 		let response = new Response(html);
 		response.headers.set('content-type', 'text/html');
 		return response;
@@ -227,7 +226,7 @@ export const spaceIdHandle: Handle = async ({ event, resolve }) => {
 	const end = performance.now();
 
 	console.log(end - start, event.url.pathname);
-	
+
 	return resolve(event);
 };
 

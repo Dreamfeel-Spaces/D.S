@@ -23,7 +23,6 @@
 	<TableHead>
 		<TableHeadCell>ID</TableHeadCell>
 		<TableHeadCell>Email</TableHeadCell>
-		<TableHeadCell>Role</TableHeadCell>
 		<TableHeadCell>Status</TableHeadCell>
 		<TableHeadCell>Date Added</TableHeadCell>
 	</TableHead>
@@ -32,7 +31,6 @@
 			<TableBodyRow>
 				<TableBodyCell>{admin.id}</TableBodyCell>
 				<TableBodyCell>{admin.username}</TableBodyCell>
-				<TableBodyCell>{admin.role}</TableBodyCell>
 				<TableBodyCell>{admin.status}</TableBodyCell>
 				<TableBodyCell>{admin.dateCreated}</TableBodyCell>
 			</TableBodyRow>

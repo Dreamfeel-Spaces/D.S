@@ -28,6 +28,25 @@ model SpaceSession {
   @@index([userId])
 }
 
+model Page {
+  id               String         @id @default(cuid())
+  version          SpaceUIVersion @relation(fields: [spaceUIVersionId], references: [id])
+  spaceUIVersionId String
+  name             String
+  icon             String?
+  path             String?
+  components       Component[]
+  html             String?        @db.Text
+  pathRegexp       String?
+  uiDef            String?        @db.Text
+  roles            UserRoles?     @relation(fields: [userRolesId], references: [id])
+  userRolesId      String?
+  layout           Boolean        @default(false)
+
+  @@index([spaceUIVersionId])
+  @@index([userRolesId])
+}
+
 model EA {
   id      String  @id @default(cuid())
   name    String
@@ -85,25 +104,6 @@ model Component {
   classNames String?
 
   @@index([pageId])
-}
-
-model Page {
-  id               String         @id @default(cuid())
-  version          SpaceUIVersion @relation(fields: [spaceUIVersionId], references: [id])
-  spaceUIVersionId String
-  name             String
-  icon             String?
-  path             String?
-  components       Component[]
-  html             String?
-  pathRegexp       String?
-  uiDef            String?
-  roles            UserRoles?     @relation(fields: [userRolesId], references: [id])
-  userRolesId      String?
-  layout           Boolean        @default(false)
-
-  @@index([spaceUIVersionId])
-  @@index([userRolesId])
 }
 
 model ConfigVars {

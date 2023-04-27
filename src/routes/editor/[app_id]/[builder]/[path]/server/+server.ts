@@ -68,7 +68,7 @@ export async function GET({ params, url, fetch }: RequestEvent) {
 		throw error(404, 'Page not found');
 	}
 
-	const spaceId = params["app_id"];
+	const spaceId = params['app_id'];
 	const versionId = params.builder;
 
 	const space = await prisma.space.findUnique({
@@ -116,7 +116,8 @@ export async function GET({ params, url, fetch }: RequestEvent) {
 					tables,
 					pages: [page],
 					pageId: page.id,
-					headless: true
+					headless: true,
+					space
 				})
 		]
 	});

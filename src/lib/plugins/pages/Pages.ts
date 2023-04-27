@@ -8,6 +8,7 @@ import appCss from '../../../app.css?inline';
 import type { JsonData } from '../../../routes/editor/[app_id]/[builder]/[path]/server/+server';
 import { gSpaceApIList } from '../grapes/space-ui/spaceApiList';
 import { JSDOM } from 'jsdom';
+import type { getLogger } from 'nodemailer/lib/shared';
 
 export class Pages {
 	private subdomain: string;
@@ -90,7 +91,6 @@ export class Pages {
 
 		const ui = page?.html ?? '';
 
-
 		const pageData: JsonData = page.uiDef;
 
 		const grapesEditor = grapesjs.init({
@@ -101,7 +101,8 @@ export class Pages {
 						tables,
 						pages: [draft],
 						pageId: draft.id,
-						headless: true
+						headless: true,
+						space: space
 					})
 			]
 		});
@@ -113,17 +114,18 @@ export class Pages {
 		const js = grapesEditor.getJs();
 
 		const pagePreset = `
-    <!doctype html>
-    <html  >
-	<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>${space?.name ?? 'Dreamfeel Space'}</title>
-	</head>
-	<style>${appCss} </style>
-	${htmlContent}
-    </html>
-	`;
+		<!doctype html>
+		<html  >
+		<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>${space?.name ?? 'Dreamfeel Space'}</title>
+		</head>
+		<style>${appCss} </style>
+		${htmlContent}
+		</html>
+		`;
+
 
 		const dom = new JSDOM(pagePreset);
 		const document = dom.window.document;
@@ -136,13 +138,13 @@ export class Pages {
 			}
 		}
 
-		const apiList = document.querySelectorAll('[data-type=list]');
+			const apiList = document.querySelectorAll('[data-type=list]');
 
-		for (let api of apiList) {
-			// console.log(api);
-		}
+			for (let api of apiList) {
+				// console.log(api);
+			}
 
-		const renderedPage = dom.serialize();
+			const renderedPage = dom.serialize();
 		return [renderedPage, null];
 	}
 
