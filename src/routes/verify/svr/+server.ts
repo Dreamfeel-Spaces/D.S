@@ -19,7 +19,7 @@ export async function POST({ locals }: RequestEvent) {
 	const htmlEmail = await confirmationEmail({ name: user?.name ?? '', code });
 
 	await emailHandler({
-		firstName: user?.name,
+		firstName: 'Dreamfeel Spaces',
 		lastName: '',
 		email: user?.email,
 		message: htmlEmail,
