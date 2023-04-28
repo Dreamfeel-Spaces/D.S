@@ -10,7 +10,7 @@ export async function load({ locals }: RequestEvent) {
 	if (!user) throw redirect(302, `/accounts?next=/create`);
 	//@ts-ignore
 	if (!user.emailVerified) {
-		throw redirect(302, '/verify');
+		throw redirect(302, '/verify?next=/create');
 	}
 }
 

@@ -38,16 +38,21 @@ export const actions: Actions = {
 		});
 
 		return { apiUpdateSuccess: true, data: updatedSpace };
-	},
-	
+	}
 };
 
 export async function load({ locals }: PageServerLoadEvent) {
 	//@ts-ignore
 	const space = locals.space;
 	//@ts-ignore
-
 	let user: any = locals.spaceSession?.user;
+	//@ts-ignore
+	let megaUser = locals.user;
+
+	if (megaUser && !megaUser.emailVerified) {
+		throw redirect(302, `/verify?next=/a/${space?.appId}`);
+	}
+
 	if (user) user.role = space.roles.find((role: { id: any }) => role.id === user?.userRolesId);
 
 	const onboarding = space.onboarding[0];

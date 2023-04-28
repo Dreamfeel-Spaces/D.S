@@ -11,6 +11,13 @@ export async function load({ cookies, params, locals }: RequestEvent) {
 	// @ts-ignore
 	let spaceSession = locals.spaceSession;
 
+	//@ts-ignore
+	let megaUser = locals.user;
+
+	if (megaUser && !megaUser.emailVerified) {
+		throw redirect(302, `/verify?next=/rest/${space?.appId}`);
+	}
+
 	let user: any = spaceSession?.user;
 
 	if (user) user.role = space.roles.find((role: { id: any }) => role.id === user?.userRolesId);
