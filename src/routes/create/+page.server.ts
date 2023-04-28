@@ -6,8 +6,12 @@ import type { RequestEvent } from './$types';
 
 export async function load({ locals }: RequestEvent) {
 	//@ts-ignore
-	const session = await locals.getSession();
-	if (!session?.user?.email) throw redirect(302, `/accounts?next=/create`);
+	const user = locals.user;
+	if (!user) throw redirect(302, `/accounts?next=/create`);
+	//@ts-ignore
+	if (!user.emailVerified) {
+		throw redirect(302, '/verify');
+	}
 }
 
 // export const actions = {

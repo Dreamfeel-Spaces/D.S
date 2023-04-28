@@ -77,9 +77,10 @@ export function isReservedRoute(pathname: string) {
 	let isFeedback = /^\/feedback/.test(pathname);
 	let isEarlyAccess = /^\/early-access/.test(pathname);
 	let isLab = /^\/lab/.test(pathname);
-
+	let isVerify = /^\/verify/.test(pathname);
 
 	let reservedRoutes = [
+		isVerify,
 		isFeedback,
 		isAccounts,
 		isAdmin,

@@ -156,15 +156,13 @@ export const apiAuth: Handle = async ({ event, resolve }) => {
 export const activeUser: Handle = async ({ event, resolve }) => {
 	const { locals } = event;
 	const session = await locals.getSession();
-	if (session) {
+	if (session || dev) {
 		const user = await prisma.user.findUnique({
 			where: {
-				email: String(session?.user?.email)
+				email: String(session?.user?.email ?? dev ? 'bryodiiidah@gmail.com' : null)
 			}
 		});
-
 		event.locals.user = user;
-
 		return resolve(event);
 	}
 	return resolve(event);

@@ -2,11 +2,17 @@
 	//@ts-nocheck
 	import logo from '../assets/logo.png';
 	export let form: any;
+	import { onMount } from 'svelte';
 	export let data: any;
 	import { Alert, Button, Card, Avatar } from 'flowbite-svelte';
 
 	import Cursort from './Cursort.svelte';
 	import HeroCarousel from './HeroCarousel.svelte';
+	import { invalidateAll } from '$app/navigation';
+
+	onMount(() => {
+		invalidateAll();
+	});
 </script>
 
 <Cursort />
@@ -19,7 +25,9 @@
 
 <div class="  dark:bg-gray-900">
 	<section class="bg-neutral-100 rounded-br-full rounded-bl-3xl  dark:bg-gray-900">
-		<div class="grid  max-w-screen-xl 	 px-4 py-8  mx-auto   lg:gap-8 xl:gap-0 lg:py-9 lg:grid-cols-12">
+		<div
+			class="grid  max-w-screen-xl 	 px-4 py-8  mx-auto   lg:gap-8 xl:gap-0 lg:py-9 lg:grid-cols-12"
+		>
 			<div class="mr-auto md:pt-9 lg:pt-2 self-center min-h-105 lg:col-span-7">
 				<h1
 					class="max-w-2xl  mt-28 mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-gray-700 dark:text-white"
@@ -969,7 +977,7 @@
 										</div>
 										<div class="grow ml-6">
 											<p class="font-bold mb-1">Technical support</p>
-											<p class="text-gray-500">support@dreamfeel.io</p>
+											<p class="text-gray-500">support@dreamfeel.me</p>
 											<!-- <p class="text-gray-500">+1 234-567-89</p> -->
 										</div>
 									</div>
@@ -999,7 +1007,7 @@
 										</div>
 										<div class="grow ml-6">
 											<p class="font-bold mb-1">Sales questions</p>
-											<p class="text-gray-500">sales@dreamfeel.io</p>
+											<p class="text-gray-500">sales@dreamfeel.me</p>
 											<!-- <p class="text-gray-500">+1 234-567-89</p> -->
 										</div>
 									</div>
@@ -1029,7 +1037,7 @@
 										</div>
 										<div class="grow ml-6">
 											<p class="font-bold mb-1">Press</p>
-											<p class="text-gray-500">press@dreamfeel.io</p>
+											<p class="text-gray-500">press@dreamfeel.me</p>
 											<!-- <p class="text-gray-500">+1 234-567-89</p> -->
 										</div>
 									</div>
@@ -1059,7 +1067,7 @@
 										</div>
 										<div class="grow ml-6">
 											<p class="font-bold mb-1">Bug report</p>
-											<p class="text-gray-500">bugs@dreamfeel.io</p>
+											<p class="text-gray-500">bugs@dreamfeel.me</p>
 											<!-- <p class="text-gray-500">+1 234-567-89</p> -->
 										</div>
 									</div>

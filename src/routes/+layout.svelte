@@ -95,30 +95,30 @@
 			class="flex-no-wrap fixed z-50 lg:flex w-full items-center justify-between bg-neutral-100   dark:bg-gray-900 pb-2 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
 			data-te-navbar-ref
 		>
-		<a class="w-full" href="/early-access">
-			<div class="bg-indigo-900 w-full text-center lg:px-4">
-				<div
-					class="p-1 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
-					role="alert"
-				>
-					<span class="flex rounded-full bg-indigo-500 uppercase px-2 text-xs font-bold mr-3"
-						>Alpha preview</span
+			<a class="w-full" href="/early-access">
+				<div class="bg-indigo-900 w-full text-center lg:px-4">
+					<div
+						class="p-1 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+						role="alert"
 					>
-					<span class=" mr-2 text-left text-xs flex-auto"
-						>Join the waitlist to be among the first to enjoy the limited possibilities of Spaces.</span
-					>
-					<svg
-						class="fill-current opacity-75 h-4 w-4"
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 20 20"
-						><path
-							d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"
-						/></svg
-					>
+						<span class="flex rounded-full bg-indigo-500 uppercase px-2 text-xs font-bold mr-3"
+							>Alpha preview</span
+						>
+						<span class=" mr-2 text-left text-xs flex-auto"
+							>Join the waitlist to be among the first to enjoy the limited possibilities of Spaces.</span
+						>
+						<svg
+							class="fill-current opacity-75 h-4 w-4"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 20 20"
+							><path
+								d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"
+							/></svg
+						>
+					</div>
 				</div>
-			</div>
-		</a>
-			
+			</a>
+
 			<div class="flex w-full flex-wrap items-center  pt-1 justify-between px-6">
 				<button
 					on:click={() => (hidden2 = false)}
@@ -198,7 +198,7 @@
 								<DropdownItem class="flex items-center justify-between">
 									<p slot="header">Enterprise</p>
 									<Chevron placement="right">
-										<p>UI builder, Tailwind CSS and Native components</p>
+										<p>Tailored experiences</p>
 									</Chevron>
 								</DropdownItem>
 								<Dropdown placement="right-start">
