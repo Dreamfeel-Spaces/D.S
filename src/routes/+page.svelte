@@ -32,31 +32,99 @@
 				<h1
 					class="max-w-2xl  mt-28 mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-gray-700 dark:text-white"
 				>
-					Create scalable APIs without touching a line of code
+					The Ultimate No-Code Framework to Bring Your Vision to Life!
 				</h1>
-				<p
-					class="max-w-2xl  mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400"
-				>
-					Create APIs without coding. Streamline your workflow and empower your team with Dreamfeel
-					spaces. Build, test, and deploy in minutes..
-				</p>
-				<Button class="mr-3" size="lg" href="/accounts" gradient color="pinkToOrange">
-					Get started
-					<svg
-						class="w-5 h-5 ml-2 -mr-1"
-						fill="currentColor"
-						viewBox="0 0 20 20"
-						xmlns="http://www.w3.org/2000/svg"
-						><path
-							fill-rule="evenodd"
-							d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-							clip-rule="evenodd"
-						/></svg
+				<div class="inline-flex rounded-full">
+					<a
+						href="javascript:void(0)"
+						class="border-primary bg-primary hover:bg-primary hover:border-primary inline-flex items-center justify-center rounded-l-full border py-[10px] px-[12px] text-center text-base font-semibold text-white transition-all hover:text-white sm:py-3 sm:px-6"
 					>
-				</Button>
-				<a target="blank" href="/a/demo">
-					<Button size="lg" gradient color="purpleToBlue">Try Live Demo</Button>
-				</a>
+					<span class="pr-2 text-green-500">
+					
+						<svg
+							fill="currentColor"
+							class="text-green-500"
+							xmlns="http://www.w3.org/2000/svg"
+							height="24"
+							viewBox="0 96 960 960"
+							width="24"><path d="M378 810 154 586l43-43 181 181 384-384 43 43-427 427Z" /></svg
+						>
+					</span>
+						Datasource
+					</a>
+					<a
+						href="javascript:void(0)"
+						class="border-light border-r hover:bg-primary hover:border-primary inline-flex items-center justify-center border-y py-[10px] px-[12px] text-center text-sm font-semibold text-black transition-all hover:text-white dark:text-white sm:py-3 sm:px-6 sm:text-base"
+					>
+					<span class="pr-2 text-green-500">
+					
+						<svg
+							fill="currentColor"
+							class="text-green-500"
+							xmlns="http://www.w3.org/2000/svg"
+							height="24"
+							viewBox="0 96 960 960"
+							width="24"><path d="M378 810 154 586l43-43 181 181 384-384 43 43-427 427Z" /></svg
+						>
+					</span>
+						UI Builder
+					</a>
+					<a
+						href="javascript:void(0)"
+						class="border-light hover:bg-primary hover:border-primary inline-flex items-center justify-center border-y py-[10px] px-[12px] text-center text-sm font-semibold text-black transition-all hover:text-white dark:text-white sm:py-3 sm:px-6 sm:text-base"
+					>
+					<span class="pr-2 text-green-500">
+					
+						<svg
+							fill="currentColor"
+							class="text-green-500"
+							xmlns="http://www.w3.org/2000/svg"
+							height="24"
+							viewBox="0 96 960 960"
+							width="24"><path d="M378 810 154 586l43-43 181 181 384-384 43 43-427 427Z" /></svg
+						>
+					</span>
+						Rest API
+					</a>
+
+					<a
+						href="javascript:void(0)"
+						class="border-light dark:text-white hover:bg-primary hover:border-primary inline-flex items-center justify-center rounded-r-full border py-[10px] px-[12px] text-center text-sm font-semibold text-black transition-all hover:text-white sm:py-3 sm:px-6 sm:text-base"
+					>
+						<span class="pr-2 text-green-500">
+					
+							<svg
+								fill="currentColor"
+								class="text-green-500"
+								xmlns="http://www.w3.org/2000/svg"
+								height="24"
+								viewBox="0 96 960 960"
+								width="24"><path d="M378 810 154 586l43-43 181 181 384-384 43 43-427 427Z" /></svg
+							>
+						</span>
+						Dashboards
+					</a>
+				</div>
+				<br />
+				<div class="pt-8">
+					<Button class="mr-3" size="lg" href="/accounts" gradient color="pinkToOrange">
+						Get started
+						<svg
+							class="w-5 h-5 ml-2 -mr-1"
+							fill="currentColor"
+							viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg"
+							><path
+								fill-rule="evenodd"
+								d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+								clip-rule="evenodd"
+							/></svg
+						>
+					</Button>
+					<a target="blank" href="/a/demo">
+						<Button size="lg" gradient color="purpleToBlue">Try Live Demo</Button>
+					</a>
+				</div>
 			</div>
 			<div class="lg:mt-1 lg:col-span-5 lg:pt-1 sm:pt-28">
 				<Card
