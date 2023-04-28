@@ -6,11 +6,17 @@ import type { RequestEvent } from './$types';
 import bcrypt from 'bcrypt';
 export async function POST({ locals }: RequestEvent) {
 	//@ts-ignore
-	const user = locals.user;
+	const session = await locals.getSession();
+
+	const user = await prisma.user.findUnique({
+		where: {
+			email: String(session?.user?.email)
+		}
+	});
 
 	let code = generateVerificationCode();
 
-	const htmlEmail = await confirmationEmail({ name: user?.name, code });
+	const htmlEmail = await confirmationEmail({ name: user?.name ?? '', code });
 
 	await emailHandler({
 		firstName: user?.name,
@@ -24,7 +30,7 @@ export async function POST({ locals }: RequestEvent) {
 
 	await prisma.verificationToken.create({
 		data: {
-			identifier: user?.id,
+			identifier: String(user?.id),
 			token: encrypted,
 			expires: calculateDate24HoursFromNow()
 		}
