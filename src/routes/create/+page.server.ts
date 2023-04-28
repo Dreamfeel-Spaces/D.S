@@ -6,8 +6,14 @@ import type { RequestEvent } from './$types';
 
 export async function load({ locals }: RequestEvent) {
 	//@ts-ignore
-	const user = locals.user;
-	if (!user) throw redirect(302, `/accounts?next=/create`);
+	const session = await locals.getSession();
+	if (!session) throw redirect(302, '/accounts');
+
+	const user = await prisma.user.findUnique({
+		where: {
+			email: session?.user?.email ?? ''
+		}
+	});
 	//@ts-ignore
 	if (!user.emailVerified) {
 		throw redirect(302, '/verify?next=/create');
