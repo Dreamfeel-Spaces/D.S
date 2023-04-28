@@ -10,9 +10,9 @@
 	import HeroCarousel from './HeroCarousel.svelte';
 	import { invalidateAll } from '$app/navigation';
 
-	onMount(() => {
-		invalidateAll();
-	});
+	// onMount(() => {
+	// 	invalidateAll();
+	// });
 </script>
 
 <Cursort />
