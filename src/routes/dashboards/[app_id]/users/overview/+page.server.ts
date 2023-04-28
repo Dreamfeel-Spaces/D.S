@@ -89,7 +89,6 @@ export async function load({ params }: RequestEvent) {
 				return [...prev, curr.field];
 			}, []);
 			let rows = cleanData(rep.filters, rep.fields, formattedRows);
-			console.log(rep.filters);
 			return { ...rep, columns: cols, rows };
 		}) ?? [];
 

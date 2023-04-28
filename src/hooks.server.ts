@@ -159,7 +159,7 @@ export const activeUser: Handle = async ({ event, resolve }) => {
 	if (session || dev) {
 		const user = await prisma.user.findUnique({
 			where: {
-				email: String(session?.user?.email ?? dev ? 'bryodiiidah@gmail.com' : null)
+				email: String(session?.user?.email)
 			}
 		});
 		event.locals.user = user;
