@@ -48,7 +48,7 @@
 						}}>Select all</Checkbox
 					>
 				</div>
-				<div class="flex gap-2 wrap">
+				<div class=" gap-2 wrap">
 					{#each columns as column}
 						<Checkbox bind:checked={column.checked} bind:value={column.checked}
 							>{column.name}</Checkbox

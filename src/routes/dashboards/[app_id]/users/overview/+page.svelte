@@ -29,6 +29,7 @@
 	import ChartModal from '../../[table]/overview/ChartModal.svelte';
 	import SpaceChart from '../../[table]/overview/SpaceChart.svelte';
 	import FormModal from '../../[table]/overview/FormModal.svelte';
+	import UserReportModal from './UserReportModal.svelte';
 	const spaceName = $page.params['app_id'];
 	let activeTab = $page.url.searchParams.get('tab') ?? 'reports';
 	const activeSpace = data.myapps.find((app) => app.appId === spaceName);
@@ -36,6 +37,26 @@
 	let selectedOptions: any = {};
 
 	let userReports = [];
+	let userCharts = [];
+	let userForms = [];
+
+	import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
+	import { browser } from '$app/environment';
+
+	let controlsLayout = [
+		// 'previousFrame',
+		// 'playpause',
+		// 'stop',
+		// 'nextFrame',
+		// 'progress',
+		// 'frame',
+		// 'loop',
+		// 'spacer',
+		// 'background',
+		// 'snapshot',
+		// 'zoom',
+		// 'info'
+	];
 </script>
 
 <div class="px-6">
@@ -45,21 +66,35 @@
 			on:click={() => goto('?tab=reports')}
 			title="Query Reports"
 		>
-			<ReportModal user columns={data.columns} />
+			<UserReportModal columns={data.columns} />
 			{#if form?.reportSuccess}
 				Report has been saved
 			{/if}
 			{#if !userReports?.length}
-				<Alert class="mt-3" accent >
-					<iframe src="https://embed.lottiefiles.com/animation/135714"></iframe>
-					<div class="my-4 text-2xl">No reports have been added</div>
+				<Alert class="mt-3 text-center" accent>
+					<div class="flex justify-center">
+						{#if browser}
+							<LottiePlayer
+								src="https://assets7.lottiefiles.com/packages/lf20_tcmtbsEfLD.json"
+								autoplay={true}
+								loop={true}
+								controls={true}
+								renderer="svg"
+								background="transparent"
+								height={300}
+								width={300}
+								{controlsLayout}
+							/>
+						{/if}
+					</div>
+					<div class="text-2xl">Query reports</div>
 					<div class="my-2">No reports have been added</div>
-					<div >
-						Query reports  are a powerful way to analyze and understand your
-						data, you can quickly build custom queries
-						and visualize your results in a variety of charts and graphs. Whether you're tracking
-						sales, monitoring website traffic, or measuring user engagement, our query reports give
-						you the insights you need to make data-driven decisions for your business
+					<div>
+						Query reports are a powerful way to analyze and understand your data, you can quickly
+						build custom queries and visualize your results in a variety of charts and graphs.
+						Whether you're tracking sales, monitoring website traffic, or measuring user engagement,
+						our query reports give you the insights you need to make data-driven decisions for your
+						business
 					</div>
 				</Alert>
 			{/if}
@@ -135,6 +170,34 @@
 			title="Charts"
 		>
 			<ChartModal columns={data.columns} />
+			{#if !userCharts?.length}
+				<Alert class="mt-3 text-center" accent>
+					<div class="flex justify-center">
+						{#if browser}
+							<LottiePlayer
+								src="https://assets8.lottiefiles.com/packages/lf20_9gjl3xik.json"
+								autoplay={true}
+								loop={true}
+								controls={true}
+								renderer="svg"
+								background="transparent"
+								height={300}
+								width={300}
+								{controlsLayout}
+							/>
+						{/if}
+					</div>
+					<div class="text-2xl">Charts</div>
+					<div class="my-2">No charts have been added</div>
+					<div>
+						Query charts are a powerful way to analyze and understand your data, you can quickly
+						build custom queries and visualize your results in a variety of charts and graphs.
+						Whether you're tracking sales, monitoring website traffic, or measuring user engagement,
+						our query reports give you the insights you need to make data-driven decisions for your
+						business
+					</div>
+				</Alert>
+			{/if}
 			<div class="mt-3 grid lg:grid-cols-2 grid-cols-1 gap-2">
 				{#if !data.charts.length}
 					<div class="mb-12">No charts have been added</div>
@@ -157,8 +220,34 @@
 			{#if form?.miniFormUpdateSuccess}
 				<div>Record updated</div>
 			{/if}
-			{#if !data.forms.length}
-				<div class="my-12">No forms have been added</div>
+
+			{#if !userForms?.length}
+				<Alert class="mt-3 text-center" accent>
+					<div class="flex justify-center">
+						{#if browser}
+							<LottiePlayer
+								src="https://assets2.lottiefiles.com/packages/lf20_tpa51dr0.json"
+								autoplay={true}
+								loop={true}
+								controls={true}
+								renderer="svg"
+								background="transparent"
+								height={300}
+								width={300}
+								{controlsLayout}
+							/>
+						{/if}
+					</div>
+					<div class="text-2xl">Charts</div>
+					<div class="my-2">No charts have been added</div>
+					<div>
+						Query charts are a powerful way to analyze and understand your data, you can quickly
+						build custom queries and visualize your results in a variety of charts and graphs.
+						Whether you're tracking sales, monitoring website traffic, or measuring user engagement,
+						our query reports give you the insights you need to make data-driven decisions for your
+						business
+					</div>
+				</Alert>
 			{/if}
 			<Accordion class="mt-3">
 				{#each data.forms as form}

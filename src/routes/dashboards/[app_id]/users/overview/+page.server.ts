@@ -70,7 +70,46 @@ export async function load({ params }: RequestEvent) {
 		}
 	});
 
-	const columns: any = [];
+	const columns: any = [
+		{
+			name: 'name',
+			type: 'string'
+		},
+		{
+			name: 'name',
+			type: 'string'
+		}
+		,
+		{
+			name: 'phone',
+			type: 'string'
+		}
+		,
+		{
+			name: 'dateCreated',
+			type: 'string'
+		},
+		{
+			name: 'updatedAt',
+			type: 'string'
+		},
+		{
+			name: 'username',
+			type: 'string'
+		},
+		{
+			name: 'status',
+			type: 'string'
+		},
+		{
+			name: 'name',
+			type: 'string'
+		},
+		{
+			name: 'avatar',
+			type: 'string'
+		}
+	];
 
 	const formattedRows = (table ?? { rows: [] })?.rows.map((row) => {
 		return {
