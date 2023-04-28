@@ -28,13 +28,29 @@ export async function POST({ locals }: RequestEvent) {
 
 	let encrypted = bcrypt.hashSync(code, 8);
 
-	await prisma.verificationToken.create({
-		data: {
-			identifier: String(user?.id),
-			token: encrypted,
-			expires: calculateDate24HoursFromNow()
+	const existing = await prisma.verificationToken.findFirst({
+		where: {
+			identifier: String(user?.id)
 		}
 	});
+
+	if (!existing)
+		await prisma.verificationToken.create({
+			data: {
+				identifier: String(user?.id),
+				token: encrypted,
+				expires: calculateDate24HoursFromNow()
+			}
+		});
+	else
+		await prisma.verificationToken.update({
+			where: {
+				token: existing.token
+			},
+			data: {
+				token: encrypted,
+			}
+		});
 
 	return new Response('{success:true}');
 }
