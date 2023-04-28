@@ -3,7 +3,6 @@ import { error, redirect } from '@sveltejs/kit';
 import { CAPTCHA_SITEKEY } from '$env/static/private';
 import { prisma } from '$lib/db/prisma';
 export async function load({ locals }: RequestEvent) {
-	//@ts-ignore
 	const session = await locals.getSession();
 
 	if (!session) throw redirect(302, '/accounts');
