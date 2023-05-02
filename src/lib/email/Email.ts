@@ -31,7 +31,7 @@ export default async function emailHandler(options: any) {
 	const mailData = {
 		from: {
 			name: `${firstName} ${lastName}`,
-			address: 'myEmail@gmail.com'
+			address: 'dreamfeel.spaces@gmail.com'
 		},
 		replyTo: email,
 		to: email,

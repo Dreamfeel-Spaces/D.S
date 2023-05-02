@@ -1,16 +1,41 @@
 <script>
-	import { DarkMode, Button } from 'flowbite-svelte';
+	// @ts-nocheck
+
+	import { DarkMode, Button, Modal } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import SpaceNav from '$lib/components/SpaceNav.svelte';
 	import SpaceSearch from '../../rest/[app_id]/SpaceSearch.svelte';
+	import Tooltip from '$lib/components/Tooltip.svelte';
 	const space = $page.data.space;
 	const spaceSession = $page.data.spaceSession;
 	const user = spaceSession?.user;
 	const hasUser = Boolean(user?.id);
 	const pathname = $page.url.pathname;
+
+	let demoDialogOpen = $page.data.space.appId === 'demo';
 </script>
 
 <SpaceNav modalOnly={true} />
+
+<Modal size="lg" class="w-full" bind:open={demoDialogOpen}>
+	<div slot="header">Watch demo video?</div>
+	<div>
+		<div style="position: relative; padding-bottom: 56.25%; height: 0;">
+			<!-- svelte-ignore a11y-missing-attribute -->
+			<iframe
+				src="https://www.loom.com/embed/79f5ac8bd1584acfb618285a01a156b0"
+				frameborder="0"
+				webkitallowfullscreen
+				mozallowfullscreen
+				allowfullscreen
+				style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+			/>
+		</div>
+	</div>
+	<div slot="footer" class="flex justify-end">
+		<Button on:click={() => (demoDialogOpen = false)}>Skip</Button>
+	</div>
+</Modal>
 
 {#if /\/pos/.test(pathname)}
 	<div>
@@ -62,7 +87,7 @@
 					</li>
 					<li class="my-px">
 						<a
-							href={`/rest/${space.appId}`}
+							id="rest_link"
 							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-lg dark:text-gray-400">
