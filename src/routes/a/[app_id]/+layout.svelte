@@ -28,7 +28,7 @@
 		let permanentDisableDemoVideo = localStorage.getItem('permanentDisableDemoVideo');
 		if (permanentDisableDemoVideo) {
 			demoDialogOpen = false;
-		} else $page.data.space.appId === 'demo';
+		} else demoDialogOpen = true;
 	});
 
 	let help = false;
