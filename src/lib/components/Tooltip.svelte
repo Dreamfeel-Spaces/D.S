@@ -380,7 +380,7 @@
 						<button on:click={handleSkip}>Skip</button>
 					</div>
 					<div>
-						<button class="bg-green-600" on:click={() => handleNextClick(1)}>Next</button>
+						<button class="bg-green-600" on:click={() => handleNextClick(10)}>Next</button>
 					</div>
 				</div>
 			</div>
