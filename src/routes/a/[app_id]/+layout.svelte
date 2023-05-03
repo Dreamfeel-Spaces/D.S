@@ -37,6 +37,8 @@
 	</div>
 </Modal>
 
+<Tooltip />
+
 {#if /\/pos/.test(pathname)}
 	<div>
 		<slot />
@@ -44,7 +46,7 @@
 {:else}
 	<div class="flex flex-row min-h-screen dark:bg-gray-900 bg-gray-100 text-gray-800">
 		<aside
-			class="sidebar dark:text-gray-900 w-64 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
+			class="sidebar dark:text-gray-900 w-64  z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
 		>
 			<div class="sidebar-header flex items-center  ml-7 py-4">
 				<div class="inline-flex">
@@ -87,6 +89,7 @@
 					</li>
 					<li class="my-px">
 						<a
+							href="/rest/{$page.params['app_id']}"
 							id="rest_link"
 							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 						>

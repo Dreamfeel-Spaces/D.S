@@ -122,7 +122,7 @@
 						>
 					</Button>
 					<a target="blank" href="/a/demo">
-						<Button size="lg" gradient color="purpleToBlue">Try Live Demo</Button>
+						<Button size="lg" gradient color="purpleToBlue">Live Demo</Button>
 					</a>
 				</div>
 			</div>
