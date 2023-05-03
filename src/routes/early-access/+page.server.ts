@@ -12,14 +12,14 @@ export const actions: Actions = {
 		const role = String(data.get('role'));
 
 		try {
-			// const ea = await prisma.eA.create({
-			// 	data: {
-			// 		email,
-			// 		name,
-			// 		company,
-			// 		role
-			// 	}
-			// });
+			const ea = await prisma.eA.create({
+				data: {
+					email,
+					name,
+					company,
+					role
+				}
+			});
 
 			const htmlEmail = earlyAccess(name);
 
