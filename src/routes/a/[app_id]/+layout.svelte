@@ -1,23 +1,39 @@
 <script>
 	// @ts-nocheck
 
-	import { DarkMode, Button, Modal } from 'flowbite-svelte';
+	import { DarkMode, Button, Modal, Checkbox } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import SpaceNav from '$lib/components/SpaceNav.svelte';
 	import SpaceSearch from '../../rest/[app_id]/SpaceSearch.svelte';
 	import Tooltip from '$lib/components/Tooltip.svelte';
+	import { onMount } from 'svelte';
 	const space = $page.data.space;
 	const spaceSession = $page.data.spaceSession;
 	const user = spaceSession?.user;
 	const hasUser = Boolean(user?.id);
 	const pathname = $page.url.pathname;
 
-	let demoDialogOpen = $page.data.space.appId === 'demo';
+	let demoDialogOpen = false;
+
+	let neverShowAgain = false;
+
+	function handleDismiss() {
+		demoDialogOpen = false;
+		localStorage.setItem('demovideoDismissed', 'true');
+		if (neverShowAgain) localStorage.setItem('permanentDisableDemoVideo', 'true');
+	}
+
+	onMount(() => {
+		let permanentDisableDemoVideo = localStorage.getItem('permanentDisableDemoVideo');
+		if (permanentDisableDemoVideo) {
+			demoDialogOpen = false;
+		} else $page.data.space.appId === 'demo';
+	});
 </script>
 
 <SpaceNav modalOnly={true} />
 
-<Modal size="lg" class="w-full" bind:open={demoDialogOpen}>
+<Modal permanent size="lg" class="w-full" bind:open={demoDialogOpen}>
 	<div slot="header">Watch demo video?</div>
 	<div>
 		<div style="position: relative; padding-bottom: 56.25%; height: 0;">
@@ -33,7 +49,11 @@
 		</div>
 	</div>
 	<div slot="footer" class="flex justify-end">
-		<Button on:click={() => (demoDialogOpen = false)}>Skip</Button>
+		<div>
+			<Checkbox bind:value={neverShowAgain} bind:checked={neverShowAgain}>Never show again</Checkbox
+			>
+			<Button class="mt-2" on:click={handleDismiss}>Skip</Button>
+		</div>
 	</div>
 </Modal>
 

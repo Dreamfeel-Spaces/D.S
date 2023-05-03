@@ -1,7 +1,7 @@
 <script lang="ts">
 	//@ts-nocheck
 
-	let step = 0;
+	let step = 1;
 
 	import { page } from '$app/stores';
 
