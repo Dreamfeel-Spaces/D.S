@@ -1,22 +1,37 @@
 <script lang="ts">
 	//@ts-nocheck
 
-	let step = 1;
+	let step = $qsLauncher.step;
 
 	import { page } from '$app/stores';
 
 	function handleNextClick(nextStep: number) {
-		step = nextStep;
+		qsLauncher.set({ skipped: false, step: nextStep });
 	}
 
-	let skipped = false;
+	let donotSHOWaGAIN = false;
 
 	function handleSkip() {
-		skipped = true;
+		qsLauncher.set({ skipped: true, step: 10 });
+		if (donotSHOWaGAIN) {
+			localStorage.setItem('qsHidePermanent', 'true');
+		}
 	}
 
 	import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
 	import { browser } from '$app/environment';
+	import { qsLauncher } from '../../routes/a/[app_id]/quickSetup';
+	import { onMount } from 'svelte';
+	import { Checkbox } from 'flowbite-svelte';
+
+	onMount(() => {
+		let isStopped = localStorage.getItem('qsHidePermanent');
+		if (isStopped === 'true') {
+			handleSkip();
+		} else {
+			qsLauncher.set({ skipped: false, step: 0 });
+		}
+	});
 
 	let controlsLayout = [
 		// 'previousFrame',
@@ -34,8 +49,8 @@
 	];
 </script>
 
-{#if !skipped}
-	{#if step === 0}
+{#if !$qsLauncher.skipped}
+	{#if $qsLauncher.step === 0}
 		<div class="backdrop-blur-sm bg-white/30 h-screen w-screen fixed z-40">
 			<div
 				class="modal-content max-w-md z-96 dark:bg-gray-800 dark:text-white"
@@ -61,9 +76,16 @@
 					This quick quide will help you get to configure and customize your Dreamfeel Spaces Admin,
 					roles, Rest API, Dashboards and UI Builder.
 				</p>
+				<div class="mb-3">
+					<Checkbox bind:checked={donotSHOWaGAIN} bind:value={donotSHOWaGAIN}
+						>Never show again</Checkbox
+					>
+				</div>
 				<div class="flex gap-3">
 					<div>
-						<button on:click={handleSkip}>Skip</button>
+						<button class="dark:text-white text-black" on:click={handleSkip}
+							><span class="text-black">Skip</span></button
+						>
 					</div>
 					<div>
 						<button class="bg-green-600" on:click={() => handleNextClick(1)}>Next</button>
@@ -72,8 +94,7 @@
 			</div>
 		</div>
 	{/if}
-
-	{#if step === 1}
+	{#if $qsLauncher.step === 1}
 		<div class="backdrop-blur-sm bg-white/30 h-screen w-screen fixed z-10">
 			<div
 				class="modal-content max-w-md z-96 dark:bg-gray-800 dark:text-white"
@@ -97,10 +118,16 @@
 						/></svg
 					>
 				</div>
-
+				<div class="mb-3">
+					<Checkbox bind:checked={donotSHOWaGAIN} bind:value={donotSHOWaGAIN}
+						>Never show again</Checkbox
+					>
+				</div>
 				<div class="flex gap-3">
 					<div>
-						<button on:click={handleSkip}>Skip</button>
+						<button class="dark:text-white text-black" on:click={handleSkip}
+							><span class="text-black">Skip</span></button
+						>
 					</div>
 					<div>
 						<button class="bg-green-600" on:click={() => handleNextClick(2)}>Next</button>
@@ -109,8 +136,7 @@
 			</div>
 		</div>
 	{/if}
-
-	{#if step === 2}
+	{#if $qsLauncher.step === 2}
 		<div class="backdrop-blur-sm bg-white/30 h-screen w-screen fixed z-10">
 			<div
 				class="modal-content max-w-md z-96 dark:bg-gray-800 dark:text-white"
@@ -135,9 +161,16 @@
 					>
 				</div>
 
+				<div class="mb-3">
+					<Checkbox bind:checked={donotSHOWaGAIN} bind:value={donotSHOWaGAIN}
+						>Never show again</Checkbox
+					>
+				</div>
 				<div class="flex gap-3">
 					<div>
-						<button on:click={handleSkip}>Skip</button>
+						<button class="dark:text-white text-black" on:click={handleSkip}
+							><span class="text-black">Skip</span></button
+						>
 					</div>
 					<div>
 						<button class="bg-green-600" on:click={() => handleNextClick(3)}>Next</button>
@@ -146,8 +179,7 @@
 			</div>
 		</div>
 	{/if}
-
-	{#if step === 3}
+	{#if $qsLauncher.step === 3}
 		<div class="backdrop-blur-sm bg-white/30 h-screen w-screen fixed z-10">
 			<div
 				class="modal-content ma max-w-md z-96 dark:bg-gray-800 dark:text-white"
@@ -170,10 +202,16 @@
 						/></svg
 					>
 				</div>
-
+				<div class="mb-3">
+					<Checkbox bind:checked={donotSHOWaGAIN} bind:value={donotSHOWaGAIN}
+						>Never show again</Checkbox
+					>
+				</div>
 				<div class="flex gap-3">
 					<div>
-						<button on:click={handleSkip}>Skip</button>
+						<button class="dark:text-white text-black" on:click={handleSkip}
+							><span class="text-black">Skip</span></button
+						>
 					</div>
 					<div>
 						<button class="bg-green-600" on:click={() => handleNextClick(4)}>Next</button>
@@ -182,8 +220,7 @@
 			</div>
 		</div>
 	{/if}
-
-	{#if step === 4}
+	{#if $qsLauncher.step === 4}
 		<div class="backdrop-blur-sm bg-white/30 h-screen w-screen fixed z-10">
 			<div
 				class="modal-content ma max-w-md z-96 dark:bg-gray-800 dark:text-white"
@@ -205,9 +242,16 @@
 					>
 				</div>
 
+				<div class="mb-3">
+					<Checkbox bind:checked={donotSHOWaGAIN} bind:value={donotSHOWaGAIN}
+						>Never show again</Checkbox
+					>
+				</div>
 				<div class="flex gap-3">
 					<div>
-						<button>Skip</button>
+						<button class="dark:text-white text-black" on:click={handleSkip}
+							><span class="text-black">Skip</span></button
+						>
 					</div>
 					<div>
 						<button class="bg-green-600" on:click={() => handleNextClick(5)}>Next</button>
@@ -216,7 +260,7 @@
 			</div>
 		</div>
 	{/if}
-	{#if step === 5}
+	{#if $qsLauncher.step === 5}
 		<div class="backdrop-blur-sm bg-white/30 h-screen w-screen fixed z-10">
 			<div
 				class="modal-content ma max-w-md z-96 dark:bg-gray-800 dark:text-white"
@@ -238,9 +282,16 @@
 					>
 				</div>
 
+				<div class="mb-3">
+					<Checkbox bind:checked={donotSHOWaGAIN} bind:value={donotSHOWaGAIN}
+						>Never show again</Checkbox
+					>
+				</div>
 				<div class="flex gap-3">
 					<div>
-						<button on:click={handleSkip}>Skip</button>
+						<button class="dark:text-white text-black" on:click={handleSkip}
+							><span class="text-black">Skip</span></button
+						>
 					</div>
 					<div>
 						<button class="bg-green-600" on:click={() => handleNextClick(6)}>Next</button>
@@ -249,7 +300,7 @@
 			</div>
 		</div>
 	{/if}
-	{#if step === 6}
+	{#if $qsLauncher.step === 6}
 		<div class="backdrop-blur-sm bg-white/30 h-screen w-screen fixed z-10">
 			<div
 				class="modal-content ma max-w-md z-96 dark:bg-gray-800 dark:text-white"
@@ -274,9 +325,16 @@
 					>
 				</div>
 
+				<div class="mb-3">
+					<Checkbox bind:checked={donotSHOWaGAIN} bind:value={donotSHOWaGAIN}
+						>Never show again</Checkbox
+					>
+				</div>
 				<div class="flex gap-3">
 					<div>
-						<button on:click={handleSkip}>Skip</button>
+						<button class="dark:text-white text-black" on:click={handleSkip}
+							><span class="text-black">Skip</span></button
+						>
 					</div>
 					<div>
 						<button class="bg-green-600" on:click={() => handleNextClick(7)}>Next</button>
@@ -285,7 +343,7 @@
 			</div>
 		</div>
 	{/if}
-	{#if step === 7}
+	{#if $qsLauncher.step === 7}
 		<div class="backdrop-blur-sm bg-white/30 h-screen w-screen fixed z-10">
 			<div
 				class="modal-content ma max-w-md z-96 dark:bg-gray-800 dark:text-white"
@@ -306,9 +364,16 @@
 					>
 				</div>
 
+				<div class="mb-3">
+					<Checkbox bind:checked={donotSHOWaGAIN} bind:value={donotSHOWaGAIN}
+						>Never show again</Checkbox
+					>
+				</div>
 				<div class="flex gap-3">
 					<div>
-						<button on:click={handleSkip}>Skip</button>
+						<button class="dark:text-white text-black" on:click={handleSkip}
+							><span class="text-black">Skip</span></button
+						>
 					</div>
 					<div>
 						<button class="bg-green-600" on:click={() => handleNextClick(8)}>Next</button>
@@ -317,7 +382,7 @@
 			</div>
 		</div>
 	{/if}
-	{#if step === 8}
+	{#if $qsLauncher.step === 8}
 		<div class="backdrop-blur-sm bg-white/30 h-screen w-screen fixed z-10">
 			<div
 				class="modal-content ma max-w-md z-96 dark:bg-gray-800 dark:text-white"
@@ -337,10 +402,16 @@
 						/></svg
 					>
 				</div>
-
+				<div class="mb-3">
+					<Checkbox bind:checked={donotSHOWaGAIN} bind:value={donotSHOWaGAIN}
+						>Never show again</Checkbox
+					>
+				</div>
 				<div class="flex gap-3">
 					<div>
-						<button on:click={handleSkip}>Skip</button>
+						<button class="dark:text-white text-black" on:click={handleSkip}
+							><span class="text-black">Skip</span></button
+						>
 					</div>
 					<div>
 						<button class="bg-green-600" on:click={() => handleNextClick(9)}>Next</button>
@@ -349,8 +420,7 @@
 			</div>
 		</div>
 	{/if}
-
-	{#if step === 9}
+	{#if $qsLauncher.step === 9}
 		<div class="backdrop-blur-sm bg-white/30 h-screen w-screen fixed z-40">
 			<div
 				class="modal-content max-w-md z-96 dark:bg-gray-800 dark:text-white"
@@ -375,12 +445,24 @@
 				<p class="my-3">
 					Your now setup to start creating rich custom applications with Dreamfeel Spaces
 				</p>
+				<div class="mb-3">
+					<Checkbox bind:checked={donotSHOWaGAIN} bind:value={donotSHOWaGAIN}
+						>Never show again</Checkbox
+					>
+				</div>
 				<div class="flex gap-3">
 					<div>
-						<button on:click={handleSkip}>Skip</button>
+						<button class="dark:text-white text-black" on:click={handleSkip}
+							><span class="text-black">Skip</span></button
+						>
 					</div>
 					<div>
-						<button class="bg-green-600" on:click={() => handleNextClick(10)}>Next</button>
+						<button
+							class="bg-green-600"
+							on:click={() => {
+								handleNextClick(10);
+							}}>Finish</button
+						>
 					</div>
 				</div>
 			</div>
