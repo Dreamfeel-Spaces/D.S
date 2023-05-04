@@ -12,9 +12,14 @@
 		Alert
 	} from 'flowbite-svelte';
 	import type { PageData } from './$types';
+	import { onMount } from 'svelte';
+	import { recentlyViewed } from '$lib/wsstore';
 	export let data: PageData;
 	const uis = data.space?.spaceUis ?? [];
 	export let form: any;
+	onMount(() => {
+		recentlyViewed.set({ [$page.url.pathname]: $page, ...$recentlyViewed });
+	});
 </script>
 
 {#if !uis.length}

@@ -8,6 +8,7 @@
 	import github from '../../assets/github.png';
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { goto } from '$app/navigation';
+	
 </script>
 
 <svelte:head>
@@ -139,7 +140,7 @@
 					Totally optional short description about yourself, what you do and so on.
 				</p>
 
-				<div class="pt-4"><Button on:click={signOut} >Sign Out</Button></div>
+				<div class="pt-4"><Button on:click={signOut}>Sign Out</Button></div>
 
 				<!-- Use https://simpleicons.org/ to find the svg for your preferred product -->
 			</div>

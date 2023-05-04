@@ -13,8 +13,12 @@
 
 	let space = $page.data.space;
 
-	import { apiHelperModal } from '$lib/wsstore';
-	import { getColorCode } from '$lib/util/slugit';
+	import { apiHelperModal, recentlyViewed } from '$lib/wsstore';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		recentlyViewed.set({ [$page.url.pathname]: $page, ...$recentlyViewed });
+	});
 </script>
 
 <svelte:head>

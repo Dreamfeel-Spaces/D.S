@@ -8,6 +8,7 @@
 	import Tooltip from '$lib/components/Tooltip.svelte';
 	import { onMount } from 'svelte';
 	import { qsLauncher } from './quickSetup';
+	import { recentlyViewed } from '$lib/wsstore';
 	const space = $page.data.space;
 	const spaceSession = $page.data.spaceSession;
 	const user = spaceSession?.user;
@@ -208,7 +209,11 @@
 					<li class="my-px">
 						<a
 							href={`/a/${space.appId}/roles`}
-							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
+							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 {/\/roles/.test(
+								$page.url.pathname
+							)
+								? 'bg-blue-900'
+								: ''} hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-l">
 								<svg
@@ -228,6 +233,12 @@
 
 					<li class="my-px">
 						<a
+							on:click={() => {
+								recentlyViewed.set({
+									[`/a/${space.appId}/pos`]: { url: `/a/${space.appId}/pos` },
+									...$recentlyViewed
+								});
+							}}
 							rel="external"
 							target="blank"
 							href={`/a/${space.appId}/pos`}
@@ -256,8 +267,16 @@
 					</li>
 					<li class="my-px">
 						<a
+							on:click={() => {
+								recentlyViewed.set({
+									[`/a/${space.appId}/accounts`]: { url: `/a/${space.appId}/pos` },
+									...$recentlyViewed
+								});
+							}}
 							href={`/a/${space.appId}/accounts`}
-							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-300 hover:text-gray-700"
+							class="flex flex-row {/\/accounts/.test($page.url.pathname)
+								? 'bg-blue-900'
+								: ''}  items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-lg dark:text-gray-400">
 								<svg
@@ -277,8 +296,16 @@
 					</li>
 					<li class="my-px">
 						<a
+							on:click={() => {
+								recentlyViewed.set({
+									[`/a/${space.appId}/wallet`]: { url: `/a/${space.appId}/pos` },
+									...$recentlyViewed
+								});
+							}}
 							href={`/a/${space.appId}/wallet`}
-							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
+							class="flex flex-row items-center {/\/wallet/.test($page.url.pathname)
+								? 'bg-blue-900'
+								: ''} h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-lg dark:text-gray-400">
 								<svg
@@ -297,8 +324,16 @@
 					</li>
 					<li class="my-px">
 						<a
+							on:click={() => {
+								recentlyViewed.set({
+									[`/a/${space.appId}/preferences`]: { url: `/a/${space.appId}/pos` },
+									...$recentlyViewed
+								});
+							}}
 							href={`/a/${space.appId}/preferences`}
-							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
+							class="flex {/\/preferences/.test($page.url.pathname)
+								? 'bg-blue-900'
+								: ''} flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-lg dark:text-gray-400">
 								<svg

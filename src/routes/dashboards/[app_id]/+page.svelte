@@ -7,6 +7,12 @@
 	import Map from './Map.svelte';
 	import Chart from './Chart.svelte';
 	import WidgetDrawer from '../WidgetDrawer.svelte';
+	import { onMount } from 'svelte';
+	import { recentlyViewed } from '$lib/wsstore';
+
+	onMount(() => {
+		recentlyViewed.set({ [$page.url.pathname]: $page, ...$recentlyViewed });
+	});
 </script>
 
 <section class="container">

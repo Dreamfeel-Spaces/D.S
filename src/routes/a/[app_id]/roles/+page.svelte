@@ -24,9 +24,11 @@
 
 	import { onMount } from 'svelte';
 	import { invalidateAll } from '$app/navigation';
+	import { recentlyViewed } from '$lib/wsstore';
 
 	onMount(() => {
 		if (form?.roleSuccess) invalidateAll();
+		recentlyViewed.set({ [$page.url.pathname]: $page, ...$recentlyViewed });
 	});
 </script>
 

@@ -1,11 +1,10 @@
 <script lang="ts">
 	//@ts-nocheck
-	import logo from '../../../../assets/logo.png';
 	import { Card, Button, Alert, Label, A, Avatar } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import DemoCredentials from './DemoCredentials.svelte';
-	import { passwordResetDialog } from '$lib/wsstore';
+	import { passwordResetDialog, } from '$lib/wsstore';
 
 	const space = $page.data.space;
 
@@ -14,6 +13,11 @@
 
 	export let data: PageData;
 	export let form: any;
+
+	// import { onMount } from 'svelte';
+	// onMount(() => {
+	// 	recentlyViewed.set({ [$page.url.pathname]: $page, ...$recentlyViewed });
+	// });
 </script>
 
 <svelte:head>
