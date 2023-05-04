@@ -3,6 +3,8 @@
 	import { page } from '$app/stores';
 	const spaceName = $page.params['app_id'];
 	import { Button, Card, Breadcrumb, BreadcrumbItem, Toast } from 'flowbite-svelte';
+	//@ts-ignore
+	import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
 
 	export let data: PageData;
 
@@ -15,6 +17,7 @@
 
 	import { apiHelperModal, recentlyViewed } from '$lib/wsstore';
 	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
 
 	onMount(() => {
 		recentlyViewed.set({ [$page.url.pathname]: $page, ...$recentlyViewed });
@@ -29,10 +32,8 @@
 
 <div class="container">
 	<Card class="dark:text-white min-h-100" size="xl">
-		<div class="flex justify-between">
-			<div class="flex text-lg items-center" >
-				Collections
-			</div>
+		<div class="flex justify-between mb-2">
+			<div class="flex text-xl items-center">Collections</div>
 			<div>
 				<div class="flex justify-end py-1  pr-4 flex-wrap">
 					<Button
@@ -51,9 +52,23 @@
 		</div>
 
 		{#if !hasTables}
-			<div class="mt-20 text-center ">
-				<p class="mb-20 text-3xl dark:text-white">No collections have been added</p>
-				<a class="dark:text-white" href={`/rest/${spaceId}/table/create`}>Add collections</a>
+			<div class="mt-1 text-center pb-20 ">
+				<div class="flex justify-center">
+					{#if browser}
+						<LottiePlayer
+							src="https://assets7.lottiefiles.com/private_files/lf30_gctc76jz.json"
+							autoplay={true}
+							loop={true}
+							renderer="svg"
+							background="transparent"
+							height={300}
+							width={300}
+						/>
+					{/if}
+				</div>
+
+				<p class="mb-5 text-3xl dark:text-white">No collections have been added</p>
+				<a class="dark:text-white -20" href={`/rest/${spaceId}/table/create`}>Add collections</a>
 			</div>
 		{/if}
 

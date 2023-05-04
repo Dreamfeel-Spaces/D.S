@@ -25,7 +25,14 @@
 	let setup = (space?.apiSetup ?? [])[0];
 	import Request from './[table]/endpoints/Request.svelte';
 	import SpaceSearch from './SpaceSearch.svelte';
-	
+	import { useEffect } from '$lib/wsstore/hooks';
+
+	useEffect(
+		() => {
+			console.log(/\/rest\/([^/]+)\/([^/]+)/.test($page.url.pathname));
+		},
+		() => [$page.url.pathname]
+	);
 </script>
 
 <SpaceNav modalOnly={true} />
@@ -82,7 +89,7 @@
 
 <div class="flex flex-row min-h-screen dark:bg-gray-900 bg-gray-100 text-gray-800">
 	<aside
-		class="sidebar  dark:text-gray-900 w-72  max-h-screen overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
+		class="sidebar max-w-72 min-w dark:text-gray-900 w-72  max-h-screen overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
 	>
 		<div class="sidebar-header flex items-center   ml-7 py-4">
 			<div class="inline-flex">
@@ -99,7 +106,11 @@
 				<li class="my-px">
 					<a
 						href={`/rest/${space.appId}`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-900 dark:text-gray-300 dark:bg-gray-900 bg-gray-100"
+						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-900 dark:text-gray-300 {!/\/rest\/([^/]+)\//.test(
+							$page.url.pathname
+						)
+							? 'bg-blue-900 text-white'
+							: ''}"
 					>
 						<span class="flex items-center justify-center text-lg text-gray-400">
 							<svg
@@ -139,7 +150,11 @@
 				<li class="my-px">
 					<span class="flex font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase">API</span>
 				</li>
-				<SidebarDropdownWrapper label={'Models'}>
+				<SidebarDropdownWrapper
+					isOpen={/\/rest\/([^/]+)\/([^/]+)/.test($page.url.pathname) &&
+						!$page.url.pathname.includes('permissions')}
+					label={'Models'}
+				>
 					<svelte:fragment slot="icon">
 						<svg
 							fill="currentColor"
@@ -154,10 +169,20 @@
 					</svelte:fragment>
 
 					{#each $page.data?.tables ?? [] as table}
-						<SidebarDropdownItem href={`/rest/${space.appId}/${table.name}/`} label={table.name} />
+						<SidebarDropdownItem
+							active={$page.params.table === table.name &&
+								/\/rest\/([^/]+)\/([^/]+)/.test($page.url.pathname) &&
+								!$page.url.pathname.includes('permissions')}
+							href={`/rest/${space.appId}/${table.name}/`}
+							label={table.name}
+						/>
 					{/each}
 				</SidebarDropdownWrapper>
-				<SidebarDropdownWrapper label={'Permissions'}>
+				<SidebarDropdownWrapper
+					isOpen={/\/rest\/([^/]+)\/([^/]+)/.test($page.url.pathname) &&
+						$page.url.pathname.includes('permissions')}
+					label={'Permissions'}
+				>
 					<svelte:fragment slot="icon">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -173,6 +198,9 @@
 
 					{#each $page.data?.tables ?? [] as table}
 						<SidebarDropdownItem
+							active={$page.params.table === table.name &&
+								/\/rest\/([^/]+)\/([^/]+)/.test($page.url.pathname) &&
+								$page.url.pathname.includes('permissions')}
 							href={`/rest/${space.appId}/${table.name}/permissions`}
 							label={table.name}
 						/>
@@ -399,7 +427,7 @@
 							></Button
 						>
 					</div>
-					<div class="mr-3">
+					<div class="mx-3">
 						<DarkMode />
 					</div>
 					{#if user}
@@ -424,7 +452,9 @@
 			</div>
 		</header>
 		<div class="main-content dark:bg-gray-700  max-h-105 flex flex-col flex-grow p-1">
-			<div class="flex flex-col max-w-screen-xl  dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded ">
+			<div
+				class="flex flex-col max-w-screen-xl  dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded "
+			>
 				<slot />
 			</div>
 		</div>

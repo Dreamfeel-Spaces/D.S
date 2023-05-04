@@ -1,7 +1,6 @@
 import { error, redirect } from '@sveltejs/kit';
 import { prisma } from '$lib/db/prisma';
 import type { PageServerLoadEvent, Actions } from './$types';
-import { convertToSlug } from '$lib/util/slugit';
 
 export const actions: Actions = {
 	async updateChannels({ request, params }) {
@@ -62,4 +61,12 @@ export async function load({ locals }: PageServerLoadEvent) {
 	if (!onboarding?.complete) {
 		throw redirect(302, `/a/${space?.appId}/welcome`);
 	}
+
+	let userCount = await prisma.spaceUser?.count({
+		where: {
+			spaceId: space.id
+		}
+	});
+
+	return { userCount };
 }

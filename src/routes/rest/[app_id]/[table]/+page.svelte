@@ -70,6 +70,24 @@
 		deleting = false;
 	}
 	let whoAmi = 'manual_all';
+
+	import { invalidateAll } from '$app/navigation';
+	import { useEffect } from '$lib/wsstore/hooks';
+	import { browser } from '$app/environment';
+
+	useEffect(
+		() => {
+			columns = data.columns.length ? data.columns : [{ ...col }];
+			if (browser) {
+				window.scrollTo({
+					top: 0,
+					left: 0,
+					behavior: 'smooth'
+				});
+			}
+		},
+		() => [$page.params.table]
+	);
 </script>
 
 <!-- <div class="py-2 bg-gray-50 dark:bg-gray-900">

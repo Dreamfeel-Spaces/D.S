@@ -12,7 +12,7 @@
 
 <div class="flex flex-row min-h-screen dark:bg-gray-900 bg-gray-100 text-gray-800">
 	<aside
-		class="sidebar min-w-48 dark:text-gray-900 w-64  max-h-screen overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
+		class="sidebar min-w-72 dark:text-gray-900 w-72  max-h-screen overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
 	>
 		<div class="sidebar-header flex items-center   ml-7 py-4">
 			<div class="inline-flex">
@@ -281,7 +281,7 @@
 		</header>
 		<div class="main-content dark:bg-gray-700  max-h-105 flex flex-col flex-grow p-1">
 			<div
-				class="flex flex-col max-w-screen-lg dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded "
+				class="flex flex-col w w-3/6 max-w-6xl dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded "
 			>
 				<slot />
 			</div>

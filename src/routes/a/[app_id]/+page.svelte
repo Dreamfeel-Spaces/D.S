@@ -1,6 +1,7 @@
 <script>
 	import { recentlyViewed } from '$lib/wsstore';
 	import { Card, Heading } from 'flowbite-svelte';
+	import { page } from '$app/stores';
 </script>
 
 <section class="container">
@@ -198,17 +199,21 @@
 			</div>
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2">
 				<div class="bg-blue-600 border rounded shadow p-2">
-					<div class="flex flex-row items-center">
+					<a
+						href="/dashboards/{$page.data.space?.appId}/users/overview"
+						class="flex flex-row items-center"
+					>
 						<div class="flex-shrink pl-1 pr-4">
 							<i class="fas fa-users fa-2x fa-fw fa-inverse" />
 						</div>
 						<div class="flex-1 text-right">
 							<h5 class="text-white">Total Users</h5>
 							<h3 class="text-white text-3xl">
-								1 <span class="text-blue-400"><i class="fas fa-caret-up" /></span>
+								{$page.data.userCount}
+								<span class="text-blue-400"><i class="fas fa-caret-up" /></span>
 							</h3>
 						</div>
-					</div>
+					</a>
 				</div>
 			</div>
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2 xl:pr-3 xl:pl-1">

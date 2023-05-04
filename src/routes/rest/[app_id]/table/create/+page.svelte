@@ -12,11 +12,11 @@
 </script>
 
 <Card size="xl">
-	<div class="min-h-99 h-96 pb-36">
+	<div class="min-h-99 h-100 pb-36">
 		<div class="flex my-3 pr-6">
 			<div class=" flex-1 text-3xl px-6 text-gray-500">
 				<b class="mr-2">
-					{space}
+					{$page.data.space?.name}
 				</b>
 			</div>
 			<a href={`/rest/${space}`}>Go back</a>
