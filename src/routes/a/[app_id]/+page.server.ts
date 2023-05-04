@@ -68,5 +68,143 @@ export async function load({ locals }: PageServerLoadEvent) {
 		}
 	});
 
-	return { userCount };
+	let lastDay = Date.now() - 24 * 60 * 60 * 1000;
+	//@ts-ignore
+	lastDay = new Date(lastDay).toISOString();
+
+	const newUsers = await prisma.spaceUser.count({
+		where: {
+			AND: [
+				{
+					spaceId: space?.id
+				},
+				{
+					dateCreated: {
+						//@ts-ignore
+						gte: lastDay
+					}
+				}
+			]
+		}
+	});
+
+	const tableCount = await prisma.spaceTable.count({
+		where: {
+			appId: space?.id
+		}
+	});
+
+	const uiCount = await prisma.spaceUI.count({
+		where: {
+			spaceId: space?.id
+		}
+	});
+
+	const allUsers = await prisma.spaceUser.findMany({
+		where: {
+			spaceId: space?.id
+		}
+	});
+
+	const groupedUsers = groupDataByMonth(allUsers);
+
+	const sessions = await prisma.spaceSession.findMany({
+		where: {
+			spaceId: space?.id
+		}
+	});
+
+	const groupedSessions = groupDataByMonth(sessions);
+
+	return { userCount, newUsers, tableCount, uiCount, groupedUsers, groupedSessions };
 }
+
+function groupDataByMonth(data) {
+	// Create an object to store the grouped data
+	const groupedData = {};
+
+	// Define an array of month names to use in the output
+	const monthNames = [
+		'Jan',
+		'Feb',
+		'Mar',
+		'Apr',
+		'May',
+		'Jun',
+		'Jul',
+		'Aug',
+		'Sep',
+		'Oct',
+		'Nov',
+		'Dec'
+	];
+
+	// Loop through the data array and group objects by month
+	data.forEach((item) => {
+		// Get the month portion of the createdAt field as a number (0-11)
+		const monthNum = new Date(item.dateCreated).getMonth();
+
+		// Get the month name from the monthNames array
+		const monthName = monthNames[monthNum];
+
+		// If the month is not in the groupedData object yet, create a new entry
+		if (!groupedData[monthName]) {
+			groupedData[monthName] = {
+				month: monthName,
+				count: 0
+			};
+		}
+
+		// Increment the count for the month
+		groupedData[monthName].count++;
+	});
+
+	// Convert the grouped data object into an array of objects for Chart.js
+	const chartData = Object.values(groupedData);
+
+	return chartData;
+}
+
+async function getUserSignupData() {
+	const data = await prisma.user.groupBy({
+		by: ['DATE(created_at)'],
+		_count: {
+			createdAt: true
+		}
+	});
+
+	// Convert data to Chart.js format
+	const labels = data.map((day) => day.DATE(created_at).toISOString().substring(0, 10));
+	const counts = data.map((day) => day._count.createdAt);
+	const chartData = {
+		labels: labels,
+		datasets: [
+			{
+				label: 'User Signups',
+				data: counts,
+				backgroundColor: 'rgba(255, 99, 132, 0.2)',
+				borderColor: 'rgba(255, 99, 132, 1)',
+				borderWidth: 1
+			}
+		]
+	};
+}
+
+//   // Create and return the Chart.js chart object
+//   const chart = new Chart(document.getElementById("myChart"), {
+//     type: "line",
+//     data: chartData,
+//     options: {
+//       scales: {
+//         yAxes: [{
+//           ticks: {
+//             beginAtZero: true,
+//             stepSize: 1,
+//           },
+//         }],
+//       },
+//     },
+//   });
+
+//   return chart;
+// }

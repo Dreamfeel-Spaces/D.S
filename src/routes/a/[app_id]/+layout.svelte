@@ -207,7 +207,7 @@
 									/></svg
 								>
 							</span>
-							<span class="ml-3">User Interfaces</span>
+							<span class="ml-3">UI Groups</span>
 						</a>
 					</li>
 					<li class="my-px">

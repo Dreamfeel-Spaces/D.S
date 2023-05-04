@@ -1,11 +1,17 @@
-<script>
+<script lang="ts">
 	import { recentlyViewed } from '$lib/wsstore';
 	import { Card, Heading } from 'flowbite-svelte';
 	import { page } from '$app/stores';
+	import Uptime from '$lib/components/Uptime.svelte';
+	import Map from '../../dashboards/[app_id]/Map.svelte';
+	import Location from './Location.svelte';
+	import Userchart from './Userchart.svelte';
 </script>
 
+<Location />
+
 <section class="container">
-	<Card class="min-h-100" size="xl">
+	<Card size="xl">
 		<Heading class="ml-3" tag="h4">Home</Heading>
 
 		{#if Object.keys($recentlyViewed).length}
@@ -181,12 +187,21 @@
 				</table>
 			</div>
 		{/if}
-		<div class="flex flex-wrap pb-52">
+		<div class="flex flex-wrap">
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2">
 				<div class="bg-green-600 border rounded shadow p-2">
-					<div class="flex flex-row items-center">
+					<a href="/a/{$page.data.space?.appId}/wallet" class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
-							<i class="fa fa-wallet fa-2x fa-fw fa-inverse" />
+							<svg
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+								height="24"
+								viewBox="0 96 960 960"
+								width="24"
+								><path
+									d="M640 636q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17ZM200 856V296v560Zm0 80q-33 0-56.5-23.5T120 856V296q0-33 23.5-56.5T200 216h560q33 0 56.5 23.5T840 296v100h-80V296H200v560h560V756h80v100q0 33-23.5 56.5T760 936H200Zm320-160q-33 0-56.5-23.5T440 696V456q0-33 23.5-56.5T520 376h280q33 0 56.5 23.5T880 456v240q0 33-23.5 56.5T800 776H520Zm280-80V456H520v240h280Z"
+								/></svg
+							>
 						</div>
 						<div class="flex-1 text-right">
 							<h5 class="text-white">Total Revenue</h5>
@@ -194,7 +209,7 @@
 								0$<span class="text-green-400"><i class="fas fa-caret-down" /></span>
 							</h3>
 						</div>
-					</div>
+					</a>
 				</div>
 			</div>
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2">
@@ -204,7 +219,16 @@
 						class="flex flex-row items-center"
 					>
 						<div class="flex-shrink pl-1 pr-4">
-							<i class="fas fa-users fa-2x fa-fw fa-inverse" />
+							<svg
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+								height="24"
+								viewBox="0 96 960 960"
+								width="24"
+								><path
+									d="M0 816v-53q0-38.567 41.5-62.784Q83 676 150.376 676q12.165 0 23.395.5Q185 677 196 678.652q-8 17.348-12 35.165T180 751v65H0Zm240 0v-65q0-32 17.5-58.5T307 646q32-20 76.5-30t96.5-10q53 0 97.5 10t76.5 30q32 20 49 46.5t17 58.5v65H240Zm540 0v-65q0-19.861-3.5-37.431Q773 696 765 678.727q11-1.727 22.171-2.227 11.172-.5 22.829-.5 67.5 0 108.75 23.768T960 763v53H780Zm-480-60h360v-6q0-37-50.5-60.5T480 666q-79 0-129.5 23.5T300 751v5ZM149.567 646Q121 646 100.5 625.438 80 604.875 80 576q0-29 20.562-49.5Q121.125 506 150 506q29 0 49.5 20.5t20.5 49.933Q220 605 199.5 625.5T149.567 646Zm660 0Q781 646 760.5 625.438 740 604.875 740 576q0-29 20.562-49.5Q781.125 506 810 506q29 0 49.5 20.5t20.5 49.933Q880 605 859.5 625.5T809.567 646ZM480 576q-50 0-85-35t-35-85q0-51 35-85.5t85-34.5q51 0 85.5 34.5T600 456q0 50-34.5 85T480 576Zm.351-60Q506 516 523 498.649t17-43Q540 430 522.851 413t-42.5-17Q455 396 437.5 413.149t-17.5 42.5Q420 481 437.351 498.5t43 17.5ZM480 756Zm0-300Z"
+								/></svg
+							>
 						</div>
 						<div class="flex-1 text-right">
 							<h5 class="text-white">Total Users</h5>
@@ -220,12 +244,22 @@
 				<div class="bg-orange-600 border rounded shadow p-2">
 					<div class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
-							<i class="fas fa-user-plus fa-2x fa-fw fa-inverse" />
+							<svg
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+								height="24"
+								viewBox="0 96 960 960"
+								width="24"
+								><path
+									d="M730 656V526H600v-60h130V336h60v130h130v60H790v130h-60Zm-370-81q-66 0-108-42t-42-108q0-66 42-108t108-42q66 0 108 42t42 108q0 66-42 108t-108 42ZM40 896v-94q0-35 17.5-63.5T108 696q75-33 133.338-46.5 58.339-13.5 118.5-13.5Q420 636 478 649.5 536 663 611 696q33 15 51 43t18 63v94H40Zm60-60h520v-34q0-16-9-30.5T587 750q-71-33-120-43.5T360 696q-58 0-107.5 10.5T132 750q-15 7-23.5 21.5T100 802v34Zm260-321q39 0 64.5-25.5T450 425q0-39-25.5-64.5T360 335q-39 0-64.5 25.5T270 425q0 39 25.5 64.5T360 515Zm0-90Zm0 411Z"
+								/></svg
+							>
 						</div>
 						<div class="flex-1 text-right pr-1">
 							<h5 class="text-white">New Users</h5>
 							<h3 class="text-white text-3xl">
-								1 <span class="text-orange-400"><i class="fas fa-caret-up" /></span>
+								{$page.data.newUsers}
+								<span class="text-orange-400"><i class="fas fa-caret-up" /></span>
 							</h3>
 						</div>
 					</div>
@@ -235,43 +269,73 @@
 				<div class="bg-purple-600 border rounded shadow p-2">
 					<div class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
-							<i class="fas fa-server fa-2x fa-fw fa-inverse" />
+							<svg
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+								height="24"
+								viewBox="0 96 960 960"
+								width="24"
+								><path
+									d="M286.882 339Q266 339 251.5 353.618q-14.5 14.617-14.5 35.5Q237 410 251.618 424.5q14.617 14.5 35.5 14.5Q308 439 322.5 424.382q14.5-14.617 14.5-35.5Q337 368 322.382 353.5q-14.617-14.5-35.5-14.5Zm0 414Q266 753 251.5 767.618q-14.5 14.617-14.5 35.5Q237 824 251.618 838.5q14.617 14.5 35.5 14.5Q308 853 322.5 838.382q14.5-14.617 14.5-35.5Q337 782 322.382 767.5q-14.617-14.5-35.5-14.5ZM154 217h651q16 0 25.5 9.5t9.5 25.813V521q0 17.425-9.5 29.213Q821 562 805 562H154q-15 0-24.5-11.787Q120 538.425 120 521V252.313q0-16.313 9.5-25.813T154 217Zm26 60v225h600V277H180Zm-26 353h647q15 0 27 12.5t12 28.527V935q0 20-12 30.5T801 976H159q-16 0-27.5-10.5T120 935V671.027q0-16.027 9.5-28.527T154 630Zm26 60v226h600V690H180Zm0-413v225-225Zm0 413v226-226Z"
+								/></svg
+							>
 						</div>
 						<div class="flex-1 text-right">
 							<h5 class="text-white">Server Uptime</h5>
-							<h3 class="text-white text-3xl">0 Days</h3>
+							<h3 class="text-white text-3xl"><Uptime /></h3>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2 xl:pl-2 xl:pr-3">
 				<div class="bg-red-600 border rounded shadow p-2">
-					<div class="flex flex-row items-center">
+					<a href="/rest/{$page.data.space?.appId}/" class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
-							<i class="fas fa-tasks fa-2x fa-fw fa-inverse" />
+							<svg
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+								height="24"
+								viewBox="0 96 960 960"
+								width="24"
+								><path
+									d="M140 896q-23 0-41.5-18.5T80 836V316q0-23 18.5-41.5T140 256h281l60 60h339q23 0 41.5 18.5T880 376H455l-60-60H140v520l102-400h698L833 850q-6 24-22 35t-41 11H140Zm63-60h572l84-340H287l-84 340Zm0 0 84-340-84 340Zm-63-460v-60 60Z"
+								/></svg
+							>
 						</div>
 						<div class="flex-1 text-right">
 							<h5 class="text-white">Collections</h5>
-							<h3 class="text-white text-3xl">0 tables</h3>
+							<h3 class="text-white text-3xl">{$page.data.tableCount}</h3>
 						</div>
-					</div>
+					</a>
 				</div>
 			</div>
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
 				<div class="bg-pink-600 border rounded shadow p-2">
-					<div class="flex flex-row items-center">
+					<a href="/editor/{$page.data.space?.appId}/" class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
-							<i class="fas fa-inbox fa-2x fa-fw fa-inverse" />
+							<svg
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+								height="24"
+								viewBox="0 96 960 960"
+								width="24"
+								><path
+									d="M70 936q-12.75 0-21.375-8.675Q40 918.649 40 905.825 40 893 48.625 884.5T70 876h820q12.75 0 21.375 8.675 8.625 8.676 8.625 21.5 0 12.825-8.625 21.325T890 936H70Zm70-120q-24 0-42-18t-18-42V276q0-24 18-42t42-18h680q24 0 42 18t18 42v480q0 24-18 42t-42 18H140Zm0-60h680V276H140v480Zm0 0V276v480Z"
+								/></svg
+							>
 						</div>
 						<div class="flex-1 text-right">
-							<h5 class="text-white">User Interfaces</h5>
+							<h5 class="text-white">UI Groups</h5>
 							<h3 class="text-white text-3xl">
-								0 <span class="text-pink-400"><i class="fas fa-caret-up" /></span>
+								{$page.data.uiCount}
+								<span class="text-pink-400"><i class="fas fa-caret-up" /></span>
 							</h3>
 						</div>
-					</div>
+					</a>
 				</div>
 			</div>
 		</div>
 	</Card>
 </section>
+<Userchart />
+<Map />
