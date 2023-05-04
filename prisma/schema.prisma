@@ -16,7 +16,7 @@ datasource db {
 
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String @db.VarChar(3000)
+  sessionToken String     @db.VarChar(3000)
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?
@@ -39,9 +39,9 @@ model Page {
   icon             String?
   path             String?
   components       Component[]
-  html             String? @db.Text
+  html             String?        @db.Text
   pathRegexp       String?
-  uiDef            String? @db.Text
+  uiDef            String?        @db.Text
   roles            UserRoles?     @relation(fields: [userRolesId], references: [id])
   userRolesId      String?
   layout           Boolean        @default(false)
@@ -434,6 +434,10 @@ model Geo {
   lng     Float
   admin   SpaceUser[]
   session SpaceSession[]
+  space   Space?         @relation(fields: [spaceId], references: [id])
+  spaceId String?
+
+  @@index([spaceId])
 }
 
 model SpaceUser {
@@ -781,6 +785,7 @@ model Space {
   roles                    UserRoles[]
   apiSetup                 ApiSetup[]
   dateCreated              DateTime       @default(now())
+  geo                      Geo[]
 
   @@index([userId])
 }

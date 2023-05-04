@@ -281,7 +281,7 @@
 		</header>
 		<div class="main-content dark:bg-gray-700  max-h-105 flex flex-col flex-grow p-1">
 			<div
-				class="flex flex-col w w-3/6 max-w-6xl dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded "
+				class="flex fle dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded "
 			>
 				<slot />
 			</div>

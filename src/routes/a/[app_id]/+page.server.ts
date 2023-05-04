@@ -116,7 +116,7 @@ export async function load({ locals }: PageServerLoadEvent) {
 
 	const groupedSessions = groupDataByMonth(sessions);
 
-	return { userCount, newUsers, tableCount, uiCount, groupedUsers, groupedSessions };
+	return { userCount, newUsers, tableCount, uiCount, groupedUsers, groupedSessions, groupedRevenues:[] };
 }
 
 function groupDataByMonth(data) {

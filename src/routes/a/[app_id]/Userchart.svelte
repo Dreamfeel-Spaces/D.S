@@ -13,6 +13,8 @@
 
 	let lineChartElement: HTMLCanvasElement;
 
+	let walletChartElement: HTMLCanvasElement;
+
 	const chartData = {
 		labels: $page.data.groupedUsers.map((item: { month: any }) => item.month),
 		datasets: [
@@ -69,9 +71,36 @@
 		]
 	};
 
+	const revenueData = {
+		labels: $page.data.groupedSessions.map((item: { month: any }) => item.month),
+		datasets: [
+			{
+				label: chartType,
+				data: $page.data.groupedSessions.map((item: { revenue: any }) => 0),
+				backgroundColor: [
+					'hsl(347 38% 49%)',
+					'hsl(346 65% 63%)',
+					'hsl(346 49% 56%)',
+					'hsl(346 89% 70%)',
+					'hsl(346 90% 76%)',
+					'hsl(346 90% 73%)',
+					'hsl(346 89% 79%)',
+					'hsl(346 89% 85%)',
+					'hsl(347 89% 82%)',
+					'hsl(346 90% 88%)',
+					'hsl(347 87% 94%)',
+					'hsl(347 91% 91%)',
+					'hsl(346 87% 97%)'
+				],
+				borderColor: ['hsl(43 100% 52%)'],
+				borderRadius: 4,
+				borderWidth: 2
+			}
+		]
+	};
 	let interval: any;
 
-	async function createCharts(){
+	async function createCharts() {
 		const { Chart, registerables } = await import('chart.js');
 		Chart.register(...registerables);
 
@@ -115,21 +144,39 @@
 					}
 				}
 			});
-			// interval = setInterval(() => {
-			// 	let types = ['pie', 'bar', 'line'];
-			// 	chartType = types[Math.ceil(Math.random() * types.length)];
-			// 	console.log(chartType);
-			// }, 4000);
+
+			new Chart(walletChartElement, {
+				type: 'line',
+				data: revenueData,
+				options: {
+					plugins: {
+						legend: {
+							display: false
+						}
+					},
+					scales: {
+						// x: {
+						// 	grid: {
+						// 		color: 'hsl(43 100% 52% / 10%)'
+						// 	},
+						// 	ticks: { color: 'hsl(43 100% 52% )' }
+						// },
+					}
+				}
+			});
 		}
 	}
 
 	onMount(async () => {
-		createCharts()
+		createCharts();
 	});
 
-	useEffect(()=>{
-		createCharts()
-	}, ()=>[chartType])
+	useEffect(
+		() => {
+			createCharts();
+		},
+		() => [chartType]
+	);
 
 	onDestroy(() => {
 		clearInterval(interval);
@@ -162,7 +209,7 @@
 
 	<Card size="lg">
 		<div class="text-xl">Sessions</div>
-		<p>Sessions</p>
+		<p>Monthly sessions</p>
 		<div class="mt-3 text-xs">
 			<section class="flex justify-center">
 				<canvas bind:this={lineChartElement} />
@@ -170,3 +217,17 @@
 		</div>
 	</Card>
 </main>
+
+<section>
+	<Card size="xl">
+		<div class="h-48">
+			<div class="text-xl">Revenue</div>
+			<p>Monthly revenue</p>
+			<div class="mt-3 text-xs">
+				<section class="flex justify-center">
+					<canvas bind:this={walletChartElement} />
+				</section>
+			</div>
+		</div>
+	</Card>
+</section>

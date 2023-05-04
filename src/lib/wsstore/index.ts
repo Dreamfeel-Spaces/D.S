@@ -7,3 +7,5 @@ export const passwordResetDialog = writable({ open: false });
 export const heroSliderPaused = writable({ paused: false });
 
 export const recentlyViewed = writable({});
+
+export const geoStore = writable({});
