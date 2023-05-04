@@ -119,7 +119,7 @@
 						<span class="ml-3">Home</span>
 					</a>
 				</li>
-				<li class="my-px">
+				<!-- <li class="my-px">
 					<a
 						href={`/rest/${space.appId}/table/create`}
 						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-900 dark:text-gray-300 dark:bg-gray-900 bg-gray-100"
@@ -135,7 +135,7 @@
 						</span>
 						<span class="ml-3">Add</span>
 					</a>
-				</li>
+				</li> -->
 				<li class="my-px">
 					<span class="flex font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase">API</span>
 				</li>

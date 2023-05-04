@@ -96,7 +96,11 @@
 					<li class="my-px">
 						<a
 							href={`/a/${space?.appId}`}
-							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-100 dark:bg-gray-900 bg-gray-100"
+							class="flex flex-row items-center  h-10 px-3 {!/\/a\/([^/]+)\//.test(
+								$page.url.pathname
+							)
+								? 'bg-blue-900'
+								: ''} rounded-lg dark:text-gray-100"
 						>
 							<span class="flex items-center justify-center text-lg dark:text-gray-100">
 								<svg
@@ -239,8 +243,8 @@
 									...$recentlyViewed
 								});
 							}}
-							rel="external"
-							target="blank"
+							target="_blank"
+							rel="noreferrer"
 							href={`/a/${space.appId}/pos`}
 							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 						>

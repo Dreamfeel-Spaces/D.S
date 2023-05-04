@@ -30,14 +30,11 @@
 <div class="container">
 	<Card class="dark:text-white min-h-100" size="xl">
 		<div class="flex justify-between">
-			<Breadcrumb>
-				<BreadcrumbItem href={`/a/${data?.space?.appId}`}
-					>{data?.space?.name ?? 'Unknown space'}</BreadcrumbItem
-				>
-				<BreadcrumbItem disabled>API</BreadcrumbItem>
-			</Breadcrumb>
+			<div class="flex text-lg items-center" >
+				Collections
+			</div>
 			<div>
-				<div class="flex justify-end py-3  pr-4 flex-wrap">
+				<div class="flex justify-end py-1  pr-4 flex-wrap">
 					<Button
 						on:click={() => apiHelperModal.set({ open: true })}
 						class="mr-3"
