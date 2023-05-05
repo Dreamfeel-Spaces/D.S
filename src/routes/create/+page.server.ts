@@ -15,7 +15,7 @@ export async function load({ locals }: RequestEvent) {
 		}
 	});
 	//@ts-ignore
-	if (!user.emailVerified) {
+	if (!user?.emailVerified) {
 		throw redirect(302, '/verify?next=/create');
 	}
 }

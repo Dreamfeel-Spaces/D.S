@@ -4,7 +4,7 @@
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import DemoCredentials from './DemoCredentials.svelte';
-	import { passwordResetDialog, } from '$lib/wsstore';
+	import { passwordResetDialog } from '$lib/wsstore';
 
 	const space = $page.data.space;
 
@@ -37,6 +37,9 @@
 								<DemoCredentials />
 							</div>
 						</div>
+					{/if}
+					{#if space?.icon?.startsWith('http')}
+						<Avatar src={space?.icon} />
 					{/if}
 					<h1
 						class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
