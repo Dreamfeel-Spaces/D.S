@@ -18,6 +18,7 @@
 	import { apiHelperModal, recentlyViewed } from '$lib/wsstore';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import RequestsChart from './RequestsChart.svelte';
 
 	onMount(() => {
 		recentlyViewed.set({ [$page.url.pathname]: $page, ...$recentlyViewed });
@@ -33,7 +34,7 @@
 <div class="container">
 	<Card class="dark:text-white min-h-100" size="xl">
 		<div class="flex justify-between mb-2">
-			<div class="flex text-xl items-center">Collections</div>
+			<div />
 			<div>
 				<div class="flex justify-end py-1  pr-4 flex-wrap">
 					<Button
@@ -50,7 +51,8 @@
 				</div>
 			</div>
 		</div>
-
+		<RequestsChart />
+		<div class="flex text-xl mb-4 mt-9 items-center">Collections</div>
 		{#if !hasTables}
 			<div class="mt-1 text-center pb-20 ">
 				<div class="flex justify-center">

@@ -9,7 +9,6 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 	let user: any = space.users[0];
 	if (user) user.role = space.roles.find((role: { id: any }) => role.id === user?.userRolesId);
 
-
 	let spaceSession = { user };
 
 	let apiSetup = space.apiSetup[0];
@@ -20,5 +19,57 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 
 	const tables = space.tables ?? [];
 
-	return { tables, space };
+	const apiCount = await prisma.aPICounter.findMany({
+		where: {
+			spaceId: space?.id
+		}
+	});
+
+	return { tables, space, apiCount: groupDataByMonth(apiCount) };
+}
+
+function groupDataByMonth(data) {
+	// Create an object to store the grouped data
+	const groupedData = {};
+
+	// Define an array of month names to use in the output
+	const monthNames = [
+		'Jan',
+		'Feb',
+		'Mar',
+		'Apr',
+		'May',
+		'Jun',
+		'Jul',
+		'Aug',
+		'Sep',
+		'Oct',
+		'Nov',
+		'Dec'
+	];
+
+	// Loop through the data array and group objects by month
+	data.forEach((item) => {
+		// Get the month portion of the createdAt field as a number (0-11)
+		const monthNum = new Date(item.dateCreated).getMonth();
+
+		// Get the month name from the monthNames array
+		const monthName = monthNames[monthNum];
+
+		// If the month is not in the groupedData object yet, create a new entry
+		if (!groupedData[monthName]) {
+			groupedData[monthName] = {
+				month: monthName,
+				count: 0
+			};
+		}
+
+		// Increment the count for the month
+		groupedData[monthName].count++;
+	});
+
+	// Convert the grouped data object into an array of objects for Chart.js
+	const chartData = Object.values(groupedData);
+
+	return chartData;
 }

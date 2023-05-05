@@ -114,12 +114,27 @@ export async function load({ locals }: PageServerLoadEvent) {
 		}
 	});
 
+	const apiRecords = await prisma.aPICounter.count({
+		where: {
+			spaceId: space?.id
+		}
+	});
+
 	const groupedSessions = groupDataByMonth(sessions);
 
-	return { userCount, newUsers, tableCount, uiCount, groupedUsers, groupedSessions, groupedRevenues:[] };
+	return {
+		userCount,
+		newUsers,
+		tableCount,
+		uiCount,
+		groupedUsers,
+		groupedSessions,
+		groupedRevenues: [],
+		apiRecords
+	};
 }
 
-function groupDataByMonth(data) {
+ function groupDataByMonth(data) {
 	// Create an object to store the grouped data
 	const groupedData = {};
 

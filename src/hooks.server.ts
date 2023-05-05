@@ -142,6 +142,13 @@ export const apiAuth: Handle = async ({ event, resolve }) => {
 
 	if (!space) throw error(404, 'Space not found!');
 
+	const record = await prisma.aPICounter.create({
+		data: {
+			spaceId: space.id,
+			pathname: event.url.pathname
+		}
+	});
+
 	try {
 		const [session, sessionError] = await errorCatch(token.decodeUserToken(authorization, space));
 		if (sessionError) throw sessionError;
