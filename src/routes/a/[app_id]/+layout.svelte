@@ -1,7 +1,7 @@
 <script>
 	// @ts-nocheck
 
-	import { DarkMode, Button, Modal, Checkbox } from 'flowbite-svelte';
+	import { DarkMode, Button, Modal, Checkbox, Avatar } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import SpaceNav from '$lib/components/SpaceNav.svelte';
 	import SpaceSearch from '../../rest/[app_id]/SpaceSearch.svelte';
@@ -84,6 +84,9 @@
 		>
 			<div class="sidebar-header flex items-center  ml-7 py-4">
 				<div class="inline-flex">
+					{#if space?.icon}
+						<Avatar src={space?.icon} />
+					{/if}
 					<a href={`/a/${space.appId}`} class="inline-flex flex-row items-center">
 						<span class="leading-10 dark:text-gray-100 text-2xl font-bold ml-1 uppercase"
 							>{space.name}</span
@@ -295,7 +298,7 @@
 									<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
 								</svg>
 							</span>
-							<span class="ml-3">Profile</span>
+							<span class="ml-3">Account</span>
 						</a>
 					</li>
 					<li class="my-px">
@@ -355,7 +358,7 @@
 									<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
 								</svg>
 							</span>
-							<span class="ml-3">Preferences</span>
+							<span class="ml-3">Settings</span>
 						</a>
 					</li>
 				</ul>

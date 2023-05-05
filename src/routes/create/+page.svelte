@@ -1,7 +1,7 @@
 <script lang="ts">
+	//@ts-nocheck
 	import { convertToSlug } from '$lib/util/slugit';
 	import { Input, Button, Alert, Card, Heading, Spinner, Modal, A } from 'flowbite-svelte';
-	//@ts-ingore
 	import Dropzone from 'svelte-file-dropzone';
 
 	import { onDestroy } from 'svelte';
@@ -61,11 +61,6 @@
 
 	let coverImage = '';
 	let uploading = false;
-
-	let files = {
-		accepted: [],
-		rejected: []
-	};
 
 	function handleFilesSelect(e) {
 		uploading = true;

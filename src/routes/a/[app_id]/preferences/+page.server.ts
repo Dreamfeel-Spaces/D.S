@@ -228,6 +228,77 @@ export const actions: Actions = {
 		});
 
 		return { passwordUpdate: true };
+	},
+	async updateAppProfile({ request, params, locals }) {
+		const space = locals.space;
+
+		const data = await request.formData();
+		const name = String(data.get('name'));
+		const appId = String(data.get('appId'));
+		const domain = String(data.get('domain'));
+		const apiDomain = String(data.get('apiDomain'));
+		const description = String(data.get('description'));
+		const icon = String(data.get('icon'));
+		const country = String(data.get('country'));
+		const streetAddress = String(data.get('street'));
+		const city = String(data.get('city'));
+		const region = String(data.get('region'));
+		const postalCode = String(data.get('postalCode'));
+		const coverImage = String(data.get('cover'));
+		const _appId = params.app_id;
+
+		const updatedSpace = await prisma.space.update({
+			where: {
+				appId: _appId
+			},
+			data: {
+				name,
+				appId,
+				icon
+			}
+		});
+
+		let spaceMeta = await prisma.spaceMeta.findFirst({
+			where: {
+				spaceId: space?.id
+			}
+		});
+
+		if (spaceMeta) {
+			spaceMeta = await prisma.spaceMeta.update({
+				where: {
+					id: spaceMeta.id
+				},
+				data: {
+					domain,
+					apiDomain,
+					description,
+					coverImage,
+					country,
+					StreetAddress: streetAddress,
+					city,
+					state: region,
+					postalCode
+				}
+			});
+		} else {
+			await prisma.spaceMeta.create({
+				data: {
+					domain,
+					apiDomain,
+					description,
+					coverImage,
+					country,
+					StreetAddress: streetAddress,
+					city,
+					state: region,
+					postalCode,
+					spaceId: space?.id
+				}
+			});
+		}
+
+		return { success: true };
 	}
 };
 
@@ -248,5 +319,11 @@ export async function load({ params, cookies, locals }: PageLoadEvent) {
 
 	if (!space) throw error(404, 'Space not found');
 
-	return { space };
+	let spaceMeta = await prisma.spaceMeta.findFirst({
+		where: {
+			spaceId: space?.id
+		}
+	});
+
+	return { space, spaceMeta };
 }

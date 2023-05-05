@@ -749,6 +749,24 @@ model Intent {
   command String
 }
 
+model SpaceMeta {
+  id            String  @id @default(cuid())
+  space         Space?  @relation(fields: [spaceId], references: [id])
+  spaceId       String?
+  domain        String?
+  apiDomain     String?
+  description   String?
+  coverImage    String?
+  country       String?
+  StreetAddress String?
+  city          String?
+  state         String?
+  postalCode    String?
+  superNotify   String?
+
+  @@index([spaceId])
+}
+
 model Space {
   id                       String         @id @default(cuid())
   appId                    String         @unique
@@ -786,6 +804,8 @@ model Space {
   apiSetup                 ApiSetup[]
   dateCreated              DateTime       @default(now())
   geo                      Geo[]
+  spaceMeta                SpaceMeta[]
+  plan                     String         @default("chui")
 
   @@index([userId])
 }

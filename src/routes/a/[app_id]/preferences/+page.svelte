@@ -11,13 +11,12 @@
 		AccordionItem,
 		Input,
 		Fileupload,
-		Dropzone,
 		Modal,
-		Radio
+		Radio,
+		Spinner
 	} from 'flowbite-svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	let space = data.space ?? { apiChannel: false, uploadProvider: '' };
 	export let form;
 	import { Hr, Card, CloseButton } from 'flowbite-svelte';
 	import AdminModal from '$lib/components/AdminModal.svelte';
@@ -38,10 +37,56 @@
 		easing: sineIn
 	};
 
-	let selectedCountry = 'KE';
 	let paymode = 'mpesa';
 	import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
 	import { browser } from '$app/environment';
+	import axios from 'axios';
+
+	let checkoutPlan = 'chui';
+	let checkoutPrice = 0;
+
+	let userPhone = '';
+
+	let checkingOut = false;
+
+	let checkoutSuccess = false;
+
+	async function handlePay() {
+		checkingOut = true;
+		checkoutSuccess = false;
+		const response = await axios.post(`/a/${$page.data.space.appId}/preferences/svr`, {});
+		if (response.data) {
+			checkingOut = false;
+			checkoutSuccess = true;
+		}
+	}
+	//@ts-ingore
+	import Dropzone from 'svelte-file-dropzone';
+	import { uploadCloudinary } from '$lib/files/upload';
+
+	let space: any = $page.data.space;
+	let spaceMeta: any = $page.data.spaceMeta ?? {};
+
+	let selectedCountry = spaceMeta.country;
+
+	let iconUrl = space?.icon;
+	let coverImageUrl = spaceMeta?.coverImage;
+
+	let uploading = false;
+	let uploadType = '';
+
+	function handleFilesSelect(e, type) {
+		uploadType = type;
+		uploading = true;
+		const { acceptedFiles, fileRejections } = e.detail;
+
+		uploadCloudinary([{ fileData: acceptedFiles[0], field: 'coverImage' }]).then((data) => {
+			if (type === 'icon') iconUrl = data[0].url;
+			if (type === 'cover') coverImageUrl = data[0].url;
+			uploading = false;
+			uploadType = '';
+		});
+	}
 </script>
 
 <Drawer
@@ -52,62 +97,102 @@
 	bind:hidden={hidden8}
 	id="sidebar8"
 >
-	<div class="max-h-100 overflow-auto">
+	<div class=" max-h-screen overflow-auto">
 		<div class="flex items-center">
-			<h5
-				id="drawer-label"
-				class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"
-			>
-				<svg
-					class="w-5 h-5 mr-2"
-					aria-hidden="true"
-					fill="currentColor"
-					viewBox="0 0 20 20"
-					xmlns="http://www.w3.org/2000/svg"
-					><path
-						fill-rule="evenodd"
-						d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-						clip-rule="evenodd"
-					/></svg
-				>Subscription plan
-			</h5>
 			<CloseButton on:click={() => (hidden8 = true)} class="mb-4 dark:text-white" />
 		</div>
 		<div>
 			<div>
-				<div class="text-5xl my-3 dark:text-gray-200 text-center">
-					<span class="text-xl">Order Amount: </span> $0
-				</div>
-				<div class=" my-3 dark:text-gray-200 text-center">
-					<span class="text-sm">Selected plan: </span> Chui
-				</div>
-
-				<div class="flex justify-center my-4">
-					<Radio value="mpesa" bind:group={paymode}>M-PESA</Radio>
-					<Radio value="more" bind:group={paymode} class="ml-3">More Options</Radio>
-				</div>
-
-				{#if paymode === 'more'}
-					<div class="grid justify-center">
-						<div class="w  c w-96 ">
-							<Checkout />
+				{#if checkoutPlan === 'chui'}
+					{#if browser}
+						<div class="flex justify-center">
+							<LottiePlayer
+								src="https://assets5.lottiefiles.com/packages/lf20_40dpcS.json"
+								autoplay={true}
+								loop={true}
+								renderer="svg"
+								background="transparent"
+								height={120}
+								width={120}
+							/>
 						</div>
-					</div>
+					{/if}
 				{/if}
-				{#if paymode === 'mpesa'}
-					<div class="flex justify-center">
-						<div class="w  c w-96 ">
-							<div class="pl-16">
-								<img
-									width="81%"
-									src="https://res.cloudinary.com/dreamnerd/image/upload/v1683269032/MicrosoftTeams-image-removebg-preview_uw9vqw.png"
-									alt=""
-								/>
-							</div>
-							<Input />
-							<Button class="my-6 w-full">Send payment request</Button>
+				{#if checkoutPlan === 'simba'}
+					{#if browser}
+						<div class="flex justify-center -mt-8 mb-8">
+							<LottiePlayer
+								src="https://assets8.lottiefiles.com/packages/lf20_ivg4itkc.json"
+								autoplay={true}
+								loop={true}
+								renderer="svg"
+								background="transparent"
+								height={120}
+								width={120}
+							/>
 						</div>
+					{/if}{/if}
+				{#if checkoutPlan === 'ndovu'}
+					{#if browser}
+						<div class="flex justify-center -pt-8">
+							<LottiePlayer
+								src="https://assets5.lottiefiles.com/packages/lf20_louy1taw.json"
+								autoplay={true}
+								loop={true}
+								renderer="svg"
+								background="transparent"
+								height={120}
+								width={120}
+							/>
+						</div>
+					{/if}
+				{/if}
+				<div class=" my-3 dark:text-gray-200 text-center">
+					{checkoutPlan} <span class="text-sm">plan</span>
+				</div>
+				<div class="text-5xl my-3 dark:text-gray-200 text-center">
+					<span class="text-xl">Order Amount: </span> ${checkoutPrice}
+				</div>
+
+				{#if checkoutPlan === 'chui'}
+					<div class="flex justify-center">
+						<Button on:click={handlePay} class="my-6 "
+							>{#if checkingOut}
+								Please wait...
+							{:else}
+								Confirm plan
+							{/if}</Button
+						>
 					</div>
+				{:else}
+					<div class="flex justify-center my-4">
+						<Radio value="mpesa" bind:group={paymode}>M-PESA</Radio>
+						<Radio value="more" bind:group={paymode} class="ml-3">More Options</Radio>
+					</div>
+
+					{#if paymode === 'more'}
+						<div class="grid justify-center">
+							<div class="w  c w-96 ">
+								<Checkout />
+							</div>
+						</div>
+					{/if}
+					{#if paymode === 'mpesa'}
+						<div class="flex justify-center">
+							<div class="w  c w-96 ">
+								<div class="pl-16">
+									<img
+										width="81%"
+										src="https://res.cloudinary.com/dreamnerd/image/upload/v1683269032/MicrosoftTeams-image-removebg-preview_uw9vqw.png"
+										alt=""
+									/>
+								</div>
+								<Input placeholder="07XXXXXXXX" />
+								<Alert accent class="text-xs mt-2">M-PESA is unavailable in some regions</Alert>
+								<Button class="my-6 w-full">Submit</Button>
+							</div>
+						</div>
+					{/if}
 				{/if}
 			</div>
 		</div>
@@ -120,7 +205,11 @@
 			<Card size="xl">
 				<div>
 					<div class=" max-w-screen-xl lg:px-6">
-						<div class="text-2xl dark:text-gray-100  my-2">Plan</div>
+						{#if form?.success}
+							<Alert accent dismissable class="my-4">Changes saved!</Alert>
+						{/if}
+						<div class="text-2xl dark:text-gray-100  my-2">Available plans</div>
+
 						<Hr />
 						<div class="space-y-8 mt-3 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
 							<!-- Pricing Card -->
@@ -142,7 +231,7 @@
 								{/if}
 								<h3 class="mb-4 text-2xl font-semibold">Chui</h3>
 								<p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
-									Best option for personal use.
+									Best option for personal projects.
 								</p>
 								<div class="flex justify-center items-baseline my-8">
 									<span class="mr-2 text-5xl font-extrabold">0</span>
@@ -229,6 +318,8 @@
 								<button
 									on:click={() => {
 										hidden8 = false;
+										checkoutPlan = 'chui';
+										checkoutPrice = 0;
 									}}
 									class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-green-900"
 									>Active</button
@@ -256,7 +347,7 @@
 									Extended & premium support.
 								</p>
 								<div class="flex justify-center items-baseline my-8">
-									<span class="mr-2 text-5xl font-extrabold">$99</span>
+									<span class="mr-2 text-5xl font-extrabold">$199</span>
 									<span class="text-gray-500 dark:text-gray-400" dark:text-gray-400>/month</span>
 								</div>
 								<!-- List -->
@@ -340,6 +431,8 @@
 								<button
 									on:click={() => {
 										hidden8 = false;
+										checkoutPlan = 'simba';
+										checkoutPrice = 199;
 									}}
 									class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900"
 									>Get started</button
@@ -367,7 +460,7 @@
 									Best for large scale and enterprise uses.
 								</p>
 								<div class="flex justify-center items-baseline my-8">
-									<span class="mr-2 text-5xl font-extrabold">$799</span>
+									<span class="mr-2 text-5xl font-extrabold">$699</span>
 									<span class="text-gray-500 dark:text-gray-400">/month</span>
 								</div>
 								<!-- List -->
@@ -451,6 +544,8 @@
 								<button
 									on:click={() => {
 										hidden8 = false;
+										checkoutPlan = 'ndovu';
+										checkoutPrice = 699;
 									}}
 									class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900"
 									>Get started</button
@@ -460,15 +555,57 @@
 					</div>
 				</div>
 				<Hr class="my-6" />
-				<form>
+				<form action="?/updateAppProfile" method="post">
 					<div class="space-y-12 max-w-screen-xl lg:px-6">
 						<div class="border-b border-gray-900/10 pb-1">
 							<h2 class=" text-2xl mb-3 font-semibold leading-7 dark:text-white text-gray-900">
 								Space Profile
 							</h2>
-							<p>User Interfaces</p>
 							<Hr />
 							<div class="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+								<div class="sm:col-span-3">
+									<label
+										for="name"
+										class="block dark:text-gray-200 text-sm font-medium leading-6 text-gray-900"
+										>Name</label
+									>
+									<div class="mt-2">
+										<div
+											class="flex rounded-md shadow-sm px-2 ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
+										>
+											<input
+												type="text"
+												name="name"
+												required
+												bind:value={space.name}
+												id="name"
+												class="block dark:text-gray-200 border-0 flex-1  bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+												placeholder={$page.data.space?.name ?? 'App Name'}
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="sm:col-span-3">
+									<label
+										for="appId"
+										class="block dark:text-gray-200 text-sm font-medium leading-6 text-gray-900"
+										>App Id</label
+									>
+									<div class="mt-2">
+										<div
+											class="flex rounded-md shadow-sm px-2 ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
+										>
+											<input
+												type="text"
+												name="appId"
+												id="appId"
+												bind:value={space.appId}
+												class="block dark:text-gray-200 border-0 flex-1  bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+												placeholder={$page.data.space?.appId ?? 'App Id'}
+											/>
+										</div>
+									</div>
+								</div>
 								<div class="sm:col-span-3">
 									<label
 										for="username"
@@ -481,10 +618,11 @@
 										>
 											<input
 												type="text"
-												name="username"
-												id="username"
-												autocomplete="username"
-												class="block border-0 flex-1  bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+												disabled
+												name="subdomain"
+												value={space.appId}
+												id="subdomain"
+												class="block border-0 flex-1 dark:text-gray-200  bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
 												placeholder={$page.data.space?.appId}
 											/>
 											<span class="flex select-none items-center pl-3 text-gray-500 sm:text-sm"
@@ -507,11 +645,11 @@
 												>{$page.url.origin}/</span
 											>
 											<input
+												disabled
 												type="text"
-												name="username"
-												id="username"
+												bind:value={space.appId}
 												autocomplete="username"
-												class="block border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+												class="block dark:text-gray-200 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
 												placeholder={$page.data.space?.appId}
 											/>
 										</div>
@@ -520,9 +658,9 @@
 
 								<div class="sm:col-span-4">
 									<label
-										for="username"
+										for="domain"
 										class="block dark:text-gray-200 text-sm font-medium leading-6 text-gray-900"
-										>Domain</label
+										>Custom Domain</label
 									>
 									<div class="mt-2">
 										<div
@@ -531,9 +669,8 @@
 											<input
 												disabled
 												type="text"
-												name="username"
-												id="username"
-												autocomplete="username"
+												name="domain"
+												id="domain"
 												class="block border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
 												placeholder={'www.example.com'}
 											/>
@@ -598,16 +735,17 @@
 								</div>
 								<div class="col-span-full">
 									<label
-										for="about"
+										for="description"
 										class="block   dark:text-gray-200 text-sm font-medium leading-6 text-gray-900"
 										>Description</label
 									>
 									<div class="mt-2">
 										<textarea
-											id="about"
-											name="about"
-											rows="3"
-											class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+											bind:value={spaceMeta.description}
+											id="description"
+											name="description"
+											rows="4"
+											class="block w-full dark:text-gray-200  bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 										/>
 									</div>
 									<p class="mt-3 text-sm leading-6 text-gray-300">
@@ -621,8 +759,23 @@
 										class="block dark:text-gray-200 text-sm font-medium leading-6 text-gray-900"
 										>Logo</label
 									>
+									<input type="hidden" name="icon" bind:value={iconUrl} />
 									<div class="mt-2 flex items-center gap-x-3">
-										<Fileupload />
+										{#if iconUrl}
+											<img width="200" src={iconUrl} alt="" />
+										{:else}
+											<div class="flex  justify-center items-center dark:text-gray-200">
+												No files have been selected
+											</div>
+										{/if}
+										<Dropzone
+											accept="image/*"
+											multiple={false}
+											on:drop={(e) => handleFilesSelect(e, 'icon')}
+										/>
+										{#if uploading && uploadType === 'icon'}
+											Uploading...
+										{/if}
 									</div>
 								</div>
 
@@ -632,10 +785,26 @@
 										class="block dark:text-gray-200 text-sm font-medium leading-6 text-gray-900"
 										>Cover photo</label
 									>
+									<input type="hidden" name="cover" bind:value={coverImageUrl} />
+
 									<div
-										class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"
+										class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25"
 									>
-										<Dropzone />
+										{#if coverImageUrl}
+											<img width="200" src={coverImageUrl} alt="" />
+										{:else}
+											<div class="flex  justify-center items-center dark:text-gray-200">
+												No files have been selected
+											</div>
+										{/if}
+										<Dropzone
+											accept="image/*"
+											multiple={false}
+											on:drop={(e) => handleFilesSelect(e, 'cover')}
+										/>
+										{#if uploading && uploadType === 'cover'}
+											Uploading...
+										{/if}
 									</div>
 								</div>
 							</div>
@@ -660,6 +829,7 @@
 										<select
 											id="country"
 											name="country"
+											required
 											bind:value={selectedCountry}
 											autocomplete="country-name"
 											class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -681,10 +851,12 @@
 									>
 									<div class="mt-2">
 										<input
+											required
+											bind:value={spaceMeta.StreetAddress}
 											type="text"
-											name="street-address"
-											id="street-address"
-											autocomplete="street-address"
+											name="street"
+											id="street"
+											autocomplete="street"
 											class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 										/>
 									</div>
@@ -700,6 +872,8 @@
 										<input
 											type="text"
 											name="city"
+											required
+											bind:value={spaceMeta.city}
 											id="city"
 											autocomplete="address-level2"
 											class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -718,6 +892,8 @@
 											type="text"
 											name="region"
 											id="region"
+											required
+											bind:value={spaceMeta.state}
 											autocomplete="address-level1"
 											class="block  w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 										/>
@@ -726,138 +902,22 @@
 
 								<div class="sm:col-span-2">
 									<label
-										for="postal-code"
+										for="postalCode"
 										class="block dark:text-gray-100 text-sm font-medium leading-6 text-gray-900"
 										>ZIP / Postal code</label
 									>
 									<div class="mt-2">
 										<input
 											type="text"
-											name="postal-code"
-											id="postal-code"
+											required
+											bind:value={spaceMeta.postalCode}
+											name="postalCode"
+											id="postalCode"
 											autocomplete="postal-code"
 											class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 										/>
 									</div>
 								</div>
-							</div>
-						</div>
-
-						<div class="border-b border-gray-900/10 pb-12">
-							<h2 class="text-base font-semibold dark:text-gray-100 leading-7 text-gray-900">
-								Notifications
-							</h2>
-							<p class="mt-1 text-sm leading-6 dark:text-gray-100 text-gray-600">
-								We'll always let you know about important changes, but you pick what else you want
-								to hear about.
-							</p>
-
-							<div class="mt-10 space-y-10">
-								<fieldset>
-									<legend class="text-sm font-semibold dark:text-gray-100 leading-6 text-gray-900"
-										>By Email</legend
-									>
-									<div class="mt-6 space-y-6">
-										<!-- <div class="relative flex gap-x-3">
-											<div class="flex h-6 items-center">
-												<input
-													id="comments"
-													name="comments"
-													type="checkbox"
-													class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-												/>
-											</div>
-											<div class="text-sm leading-6">
-												<label for="comments" class="font-medium text-gray-900">Comments</label>
-												<p class="text-gray-500">
-													Get notified when someones posts a comment on a posting.
-												</p>
-											</div>
-										</div>
-										<div class="relative flex gap-x-3">
-											<div class="flex h-6 items-center">
-												<input
-													id="candidates"
-													name="candidates"
-													type="checkbox"
-													class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-												/>
-											</div>
-											<div class="text-sm leading-6">
-												<label for="candidates" class="font-medium dark:text-gray-100 text-gray-900">Candidates</label>
-												<p class="text-gray-500">
-													Get notified when a candidate applies for a job.
-												</p>
-											</div>
-										</div> -->
-										<div class="relative dark:text-gray-100 flex gap-x-3">
-											<div class="flex h-6 items-center">
-												<input
-													id="offers"
-													name="offers"
-													type="checkbox"
-													class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-												/>
-											</div>
-											<div class="text-sm leading-6">
-												<label for="offers" class="dark:text-gray-100 font-medium text-gray-900"
-													>Offers</label
-												>
-												<p class="text-gray-500 dark:text-gray-100">
-													Get notified when a candidate accepts or rejects an offer.
-												</p>
-											</div>
-										</div>
-									</div>
-								</fieldset>
-								<!-- <fieldset>
-									<legend class="text-sm font-semibold leading-6 text-gray-900"
-										>Push Notifications</legend
-									>
-									<p class="mt-1 text-sm leading-6 text-gray-600">
-										These are delivered via SMS to your mobile phone.
-									</p>
-									<div class="mt-6 space-y-6">
-										<div class="flex items-center gap-x-3">
-											<input
-												id="push-everything"
-												name="push-notifications"
-												type="radio"
-												class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-											/>
-											<label
-												for="push-everything"
-												class="block text-sm font-medium leading-6 text-gray-900">Everything</label
-											>
-										</div>
-										<div class="flex items-center gap-x-3">
-											<input
-												id="push-email"
-												name="push-notifications"
-												type="radio"
-												class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-											/>
-											<label
-												for="push-email"
-												class="block text-sm font-medium leading-6 text-gray-900"
-												>Same as email</label
-											>
-										</div>
-										<div class="flex items-center gap-x-3">
-											<input
-												id="push-nothing"
-												name="push-notifications"
-												type="radio"
-												class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-											/>
-											<label
-												for="push-nothing"
-												class="block text-sm font-medium leading-6 text-gray-900"
-												>No push notifications</label
-											>
-										</div>
-									</div>
-								</fieldset> -->
 							</div>
 						</div>
 					</div>

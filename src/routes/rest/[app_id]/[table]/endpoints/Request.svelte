@@ -345,7 +345,7 @@
 		<div>
 			<Button type="submit" class={clone ? `mt-1 w-full` : 'mt-1'}
 				>{#if loading}
-					<Spinner size="xs" />
+					Requesting...
 				{:else}Send request{/if}</Button
 			>
 		</div>
