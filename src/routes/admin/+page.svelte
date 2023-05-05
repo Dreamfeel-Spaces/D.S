@@ -14,7 +14,7 @@
 		</Card>
 		<Card>
 			<p>Users</p>
-			<p>{data.spaces}</p>
+			<p>{data.users}</p>
 			<p>{data.activeSpaces}</p>
 			<a href="/admin/users">view</a>
 		</Card>
