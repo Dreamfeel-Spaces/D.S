@@ -65,6 +65,7 @@ export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 
 	const pageManager = new Pages({ url: event.url });
 
+	if (pageManager.sbd === 'pay' || pageManager.sbd === 'pos') return resolve(event);
 	if (isReserved && !pageManager.isValidSubdomain) return resolve(event);
 
 	if (event.request.method === 'POST') {
@@ -145,7 +146,8 @@ export const apiAuth: Handle = async ({ event, resolve }) => {
 	const record = await prisma.aPICounter.create({
 		data: {
 			spaceId: space.id,
-			pathname: event.url.pathname
+			pathname: event.url.pathname,
+			method: event.request.method?.toUpperCase()
 		}
 	});
 

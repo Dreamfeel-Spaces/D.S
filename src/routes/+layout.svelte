@@ -55,8 +55,10 @@
 	import logo from '../assets/logo.png';
 	import Rt from '$lib/ws/Rt.svelte';
 	import { browser } from '$app/environment';
+	import Pos from '$lib/cbd/pos/POS.svelte';
+	import Pay from '$lib/cbd/pay/Pay.svelte';
 
-	let solutionsOpen = false;
+	let seebdm = ($page.url.toJSON()?.split('.')[0] ?? '')?.split('//')[1];
 
 	let acceptCookies = browser && JSON.parse(localStorage.getItem('cookie_consent') ?? 'false');
 </script>
@@ -81,145 +83,154 @@
 	<title>Dreamfeel spaces</title>
 </svelte:head>
 
-{#if subdomain}
-	{@html $page.data.html}
-{/if}
+{#if seebdm === 'pos'}
+	<Pos />
+{:else if seebdm === 'pay'}
+	<Pay />
+{:else}
+	{#if subdomain}
+		{@html $page.data.html}
+	{/if}
 
-{#if isPreview && !subdomain}
-	<slot />
-{/if}
+	{#if isPreview && !subdomain}
+		<slot />
+	{/if}
 
-{#if !isPreview && !subdomain}
-	<div>
-		<nav
-			class="flex-no-wrap fixed z-50 lg:flex w-full items-center justify-between bg-neutral-100   dark:bg-gray-900 pb-2 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
-			data-te-navbar-ref
-		>
-			<a class="w-full" href="/early-access">
-				<div class="bg-indigo-900 w-full text-center lg:px-4">
-					<div
-						class="p-1 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
-						role="alert"
-					>
-						<span class="flex rounded-full bg-indigo-500 uppercase px-2 text-xs font-bold mr-3"
-							>Alpha preview</span
+	{#if !isPreview && !subdomain}
+		<div>
+			<nav
+				class="flex-no-wrap fixed z-50 lg:flex w-full items-center justify-between bg-neutral-100   dark:bg-gray-900 pb-2 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
+				data-te-navbar-ref
+			>
+				<a class="w-full" href="/early-access">
+					<div class="bg-salmon-900 w-full text-center lg:px-4">
+						<div
+							class="p-1 bg-blue-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+							role="alert"
 						>
-						<span class=" mr-2 text-left text-xs flex-auto"
-							>Join the waitlist to be among the first to enjoy the limited possibilities of Spaces.</span
-						>
-						<svg
-							class="fill-current opacity-75 h-4 w-4"
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 20 20"
-							><path
-								d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"
-							/></svg
-						>
-					</div>
-				</div>
-			</a>
-
-			<div class="flex w-full flex-wrap items-center  pt-1 justify-between px-6">
-				<button
-					on:click={() => (hidden2 = false)}
-					class="block border-0 bg-transparent py-2 px-2.5 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
-					type="button"
-					data-te-collapse-init
-					data-te-target="#navbarSupportedContent1"
-					aria-controls="navbarSupportedContent1"
-					aria-expanded="false"
-					aria-label="Toggle navigation"
-				>
-					<span class="[&>svg]:w-7">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24"
-							class="h-7 w-7 dark:text-gray-100"
-							fill="currentColor"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
-								clip-rule="evenodd"
-							/>
-						</svg>
-					</span>
-				</button>
-				<div
-					class="!visible hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
-					id="navbarSupportedContent1"
-					data-te-collapse-item
-				>
-					<div class="mr-4 cursor-pointer">
-						<button on:click={() => (hidden2 = false)}>
+							<span class="flex rounded-full bg-blue-500 uppercase px-2 text-xs font-bold mr-3"
+								>Alpha preview</span
+							>
+							<span class=" mr-2 text-left text-xs flex-auto"
+								>Join the waitlist to be among the first to enjoy the limited possibilities of
+								Spaces.</span
+							>
 							<svg
-								class="dark:text-yellow-100"
-								fill="currentColor"
+								class="fill-current opacity-75 h-4 w-4"
 								xmlns="http://www.w3.org/2000/svg"
-								height="24"
-								viewBox="0 96 960 960"
-								width="24"
+								viewBox="0 0 20 20"
+								><path
+									d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"
+								/></svg
 							>
-								<path d="M120 816v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
-							</svg>
-						</button>
+						</div>
 					</div>
+				</a>
 
-					<a
-						rel="external"
-						on:click={() => (hidden2 = true)}
-						class="mt-2 mr-2 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mt-0"
-						href="/"
+				<div class="flex w-full flex-wrap items-center  pt-1 justify-between px-6">
+					<button
+						on:click={() => (hidden2 = false)}
+						class="block border-0 bg-transparent py-2 px-2.5 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
+						type="button"
+						data-te-collapse-init
+						data-te-target="#navbarSupportedContent1"
+						aria-controls="navbarSupportedContent1"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
 					>
-						<img src={logo} style="height: 30px" alt="logo transparent" loading="lazy" />
-					</a>
-					<!-- Left links -->
-					<ul class="list-style-none mr-auto flex flex-col pl-0 lg:flex-row" data-te-navbar-nav-ref>
-						<li class="lg:pr-2" data-te-dropdown-ref>
-							<button class="dark:text-white flex">
-								<div class="flex self-center">Solutions</div>
-								<div class="flex self-center  pt-1 ">
-									<Chevron />
-								</div>
-							</button>
-							<Dropdown class="w-72">
-								<DropdownItem href="/rest" rel="external">
-									<p>Rest APIs</p>
-									<small>Collections, Auth, Payments, File storage etc... </small>
-								</DropdownItem>
-								<DropdownItem href="/dashboards" rel="external">
-									<p>Dashboards</p>
-									<small>AI Analytics, reports, forms, Import, export</small>
-								</DropdownItem>
-								<DropdownItem href="/editor" rel="external">
-									<p>User interfaces</p>
-									<small>UI builder, Tailwind CSS and Native components</small>
-								</DropdownItem>
-								<DropdownItem class="flex items-center justify-between">
-									<p slot="header">Enterprise</p>
-									<Chevron placement="right">
-										<p>Tailored experiences</p>
-									</Chevron>
-								</DropdownItem>
-								<Dropdown placement="right-start">
-									<DropdownItem>E-Commerce</DropdownItem>
-									<DropdownItem>SMEs</DropdownItem>
-									<DropdownItem>Startups</DropdownItem>
-									<DropdownItem>Non Profits</DropdownItem>
-									<DropdownItem>Government organizations</DropdownItem>
-									<DropdownItem>Schools</DropdownItem>
-								</Dropdown>
-							</Dropdown>
-						</li>
-						<li class="lg:pr-2" data-te-nav-item-ref>
-							<a
-								rel="external"
-								class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-								href="/create"
-								data-te-nav-link-ref>New Space</a
+						<span class="[&>svg]:w-7">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24"
+								class="h-7 w-7 dark:text-gray-100"
+								fill="currentColor"
 							>
-						</li>
-						<!--	<li class="lg:pr-2" data-te-nav-item-ref>
+								<path
+									fill-rule="evenodd"
+									d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
+									clip-rule="evenodd"
+								/>
+							</svg>
+						</span>
+					</button>
+					<div
+						class="!visible hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
+						id="navbarSupportedContent1"
+						data-te-collapse-item
+					>
+						<div class="mr-4 cursor-pointer">
+							<button on:click={() => (hidden2 = false)}>
+								<svg
+									class="dark:text-yellow-100"
+									fill="currentColor"
+									xmlns="http://www.w3.org/2000/svg"
+									height="24"
+									viewBox="0 96 960 960"
+									width="24"
+								>
+									<path d="M120 816v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+								</svg>
+							</button>
+						</div>
+
+						<a
+							rel="external"
+							on:click={() => (hidden2 = true)}
+							class="mt-2 mr-2 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mt-0"
+							href="/"
+						>
+							<img src={logo} style="height: 30px" alt="logo transparent" loading="lazy" />
+						</a>
+						<!-- Left links -->
+						<ul
+							class="list-style-none mr-auto flex flex-col pl-0 lg:flex-row"
+							data-te-navbar-nav-ref
+						>
+							<li class="lg:pr-2" data-te-dropdown-ref>
+								<button class="dark:text-white flex">
+									<div class="flex self-center">Solutions</div>
+									<div class="flex self-center  pt-1 ">
+										<Chevron />
+									</div>
+								</button>
+								<Dropdown class="w-72">
+									<DropdownItem href="/rest" rel="external">
+										<p>Rest APIs</p>
+										<small>Collections, Auth, Payments, File storage etc... </small>
+									</DropdownItem>
+									<DropdownItem href="/dashboards" rel="external">
+										<p>Dashboards</p>
+										<small>AI Analytics, reports, forms, Import, export</small>
+									</DropdownItem>
+									<DropdownItem href="/editor" rel="external">
+										<p>User interfaces</p>
+										<small>UI builder, Tailwind CSS and Native components</small>
+									</DropdownItem>
+									<DropdownItem class="flex items-center justify-between">
+										<p slot="header">Enterprise</p>
+										<Chevron placement="right">
+											<p>Tailored experiences</p>
+										</Chevron>
+									</DropdownItem>
+									<Dropdown placement="right-start">
+										<DropdownItem>E-Commerce</DropdownItem>
+										<DropdownItem>SMEs</DropdownItem>
+										<DropdownItem>Startups</DropdownItem>
+										<DropdownItem>Non Profits</DropdownItem>
+										<DropdownItem>Government organizations</DropdownItem>
+										<DropdownItem>Schools</DropdownItem>
+									</Dropdown>
+								</Dropdown>
+							</li>
+							<li class="lg:pr-2" data-te-nav-item-ref>
+								<a
+									rel="external"
+									class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+									href="/create"
+									data-te-nav-link-ref>New Space</a
+								>
+							</li>
+							<!--	<li class="lg:pr-2" data-te-nav-item-ref>
 							<a
 								rel="external"
 								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
@@ -227,7 +238,7 @@
 								data-te-nav-link-ref>Editor <small class="text-xs"> (preview)</small></a
 							>
 						</li> -->
-						<!-- <li class="lg:pr-2" data-te-nav-item-ref>
+							<!-- <li class="lg:pr-2" data-te-nav-item-ref>
 							<a
 								rel="external"
 								class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
@@ -235,26 +246,26 @@
 								data-te-nav-link-ref>Spaces</a
 							>
 						</li> -->
-					</ul>
-					<!-- Left links -->
-				</div>
-				<!-- Collapsible wrapper -->
+						</ul>
+						<!-- Left links -->
+					</div>
+					<!-- Collapsible wrapper -->
 
-				<!-- Right elements -->
-				<div class="relative flex items-center">
-					<!-- Icon -->
-					<a
-						rel="external"
-						class="hidden-arrow mr-4 hidden lg:flex items-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-						href="/about"
-						id="dropdownMenuButton1"
-						role="button"
-						data-te-dropdown-toggle-ref
-						aria-expanded="false"
-					>
-						About us
-					</a>
-					<!-- <a
+					<!-- Right elements -->
+					<div class="relative flex items-center">
+						<!-- Icon -->
+						<a
+							rel="external"
+							class="hidden-arrow mr-4 hidden lg:flex items-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+							href="/about"
+							id="dropdownMenuButton1"
+							role="button"
+							data-te-dropdown-toggle-ref
+							aria-expanded="false"
+						>
+							About us
+						</a>
+						<!-- <a
 						rel="external"
 						class="hidden-arrow mr-4 flex items-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 						href="/docs"
@@ -265,19 +276,19 @@
 					>
 						Docs
 					</a> -->
-					<a
-						rel="external"
-						class="hidden-arrow mr-4 flex items-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-						href="/blog"
-						id="dropdownMenuButton1"
-						role="button"
-						data-te-dropdown-toggle-ref
-						aria-expanded="false"
-					>
-						Blog
-					</a>
+						<a
+							rel="external"
+							class="hidden-arrow mr-4 flex items-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+							href="/blog"
+							id="dropdownMenuButton1"
+							role="button"
+							data-te-dropdown-toggle-ref
+							aria-expanded="false"
+						>
+							Blog
+						</a>
 
-					<!-- <a
+						<!-- <a
 						rel="external"
 						class="mr-4 hidden lg:flex text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 						href="/spaces"
@@ -298,75 +309,75 @@
 						</span>
 					</a> -->
 
-					<div class="relative mr-2">
-						<DarkMode />
-					</div>
-					<div class="relative" data-te-dropdown-ref>
-						{#if $page.data.session}
-							<a
-								class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
-								href="/accounts"
-								id="dropdownMenuButton2"
-								role="button"
-								data-te-dropdown-toggle-ref
-								aria-expanded="false"
+						<div class="relative mr-2">
+							<DarkMode />
+						</div>
+						<div class="relative" data-te-dropdown-ref>
+							{#if $page.data.session}
+								<a
+									class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
+									href="/accounts"
+									id="dropdownMenuButton2"
+									role="button"
+									data-te-dropdown-toggle-ref
+									aria-expanded="false"
+								>
+									<img
+										src={$page.data.session?.user?.image}
+										class="rounded-full"
+										style="height: 25px; width: 25px"
+										alt=""
+										loading="lazy"
+									/>
+								</a>
+							{:else}
+								<a href="/create"> <Button color="pinkToOrange" gradient>Get started</Button></a>
+							{/if}
+							<ul
+								class="absolute left-auto right-0 z-[1000] float-left m-0 mt-1 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+								aria-labelledby="dropdownMenuButton2"
+								data-te-dropdown-menu-ref
 							>
-								<img
-									src={$page.data.session?.user?.image}
-									class="rounded-full"
-									style="height: 25px; width: 25px"
-									alt=""
-									loading="lazy"
-								/>
-							</a>
-						{:else}
-							<a href="/create"> <Button color="pinkToOrange" gradient>Get started</Button></a>
-						{/if}
-						<ul
-							class="absolute left-auto right-0 z-[1000] float-left m-0 mt-1 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
-							aria-labelledby="dropdownMenuButton2"
-							data-te-dropdown-menu-ref
-						>
-							<li>
-								<a
-									class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-									href="/"
-									data-te-dropdown-item-ref>Action</a
-								>
-							</li>
-							<li>
-								<a
-									class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-									href="/"
-									data-te-dropdown-item-ref>Another action</a
-								>
-							</li>
-							<li>
-								<a
-									class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-									href="/"
-									data-te-dropdown-item-ref>Something else here</a
-								>
-							</li>
-						</ul>
+								<li>
+									<a
+										class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+										href="/"
+										data-te-dropdown-item-ref>Action</a
+									>
+								</li>
+								<li>
+									<a
+										class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+										href="/"
+										data-te-dropdown-item-ref>Another action</a
+									>
+								</li>
+								<li>
+									<a
+										class="block w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+										href="/"
+										data-te-dropdown-item-ref>Something else here</a
+									>
+								</li>
+							</ul>
+						</div>
 					</div>
+					<!-- Right elements -->
 				</div>
-				<!-- Right elements -->
-			</div>
-		</nav>
-	</div>
-
-	<Drawer transitionType="fly" {transitionParams} bind:hidden={hidden2} id="sidebar2">
-		<div class="flex items-center">
-			<a on:click={() => (hidden2 = true)} href="/">
-				<img src={logo} style="height: 40px" alt="logo transparent" loading="lazy" />
-			</a>
-			<CloseButton on:click={() => (hidden2 = true)} class="mb-4 dark:text-white" />
+			</nav>
 		</div>
-		<Sidebar>
-			<SidebarWrapper divClass="overflow-y-auto py-4 px-3 ">
-				<SidebarGroup>
-					<!-- <SidebarItem
+
+		<Drawer transitionType="fly" {transitionParams} bind:hidden={hidden2} id="sidebar2">
+			<div class="flex items-center">
+				<a on:click={() => (hidden2 = true)} href="/">
+					<img src={logo} style="height: 40px" alt="logo transparent" loading="lazy" />
+				</a>
+				<CloseButton on:click={() => (hidden2 = true)} class="mb-4 dark:text-white" />
+			</div>
+			<Sidebar>
+				<SidebarWrapper divClass="overflow-y-auto py-4 px-3 ">
+					<SidebarGroup>
+						<!-- <SidebarItem
 						active={/^\/admin/.test(pathname)}
 						on:click={() => (hidden2 = true)}
 						href="/admin"
@@ -393,40 +404,40 @@
 							>
 						</svelte:fragment>
 					</SidebarItem> -->
-					<SidebarDropdownWrapper isOpen={isSpaces} label="Spaces">
-						<svelte:fragment slot="icon">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-6 h-6"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-								/></svg
-							>
-						</svelte:fragment>
-						<SidebarDropdownItem
-							on:click={() => (hidden2 = true)}
-							href={`/create`}
-							label={'New +'}
-							rel="external"
-							active={isSpaces && /$\/create/.test(pathname)}
-						/>
-						{#each $page.data.myapps as app}
+						<SidebarDropdownWrapper isOpen={isSpaces} label="Spaces">
+							<svelte:fragment slot="icon">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="w-6 h-6"
+									><path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+									/></svg
+								>
+							</svelte:fragment>
 							<SidebarDropdownItem
 								on:click={() => (hidden2 = true)}
-								href={`/a/${app.appId}`}
-								label={app.name}
+								href={`/create`}
+								label={'New +'}
 								rel="external"
-								active={isSpaces && spaceId === app.appId}
+								active={isSpaces && /$\/create/.test(pathname)}
 							/>
-						{/each}
-					</SidebarDropdownWrapper>
-					<!-- <SidebarDropdownWrapper isOpen={isBase} label="Apis">
+							{#each $page.data.myapps as app}
+								<SidebarDropdownItem
+									on:click={() => (hidden2 = true)}
+									href={`/a/${app.appId}`}
+									label={app.name}
+									rel="external"
+									active={isSpaces && spaceId === app.appId}
+								/>
+							{/each}
+						</SidebarDropdownWrapper>
+						<!-- <SidebarDropdownWrapper isOpen={isBase} label="Apis">
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -452,7 +463,7 @@
 							/>
 						{/each}
 					</SidebarDropdownWrapper> -->
-					<!-- <SidebarDropdownWrapper isOpen={isDashboard} label="Dashboards">
+						<!-- <SidebarDropdownWrapper isOpen={isDashboard} label="Dashboards">
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -479,7 +490,7 @@
 							/>
 						{/each}
 					</SidebarDropdownWrapper> -->
-					<!-- <SidebarDropdownWrapper isOpen={isEditor} label="Editor">
+						<!-- <SidebarDropdownWrapper isOpen={isEditor} label="Editor">
 						<svelte:fragment slot="icon">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -505,38 +516,38 @@
 							/>
 						{/each}
 					</SidebarDropdownWrapper> -->
-					<SidebarDropdownWrapper isOpen={/\/blog/.test(pathname)} label="Blog">
-						<svelte:fragment slot="icon">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-6 h-6"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-								/></svg
-							>
-						</svelte:fragment>
-						<SidebarDropdownItem
-							on:click={() => (hidden2 = true)}
-							label="Your posts"
-							rel="external"
-							href="/blog/my-posts"
-							active={/\/blog\/my-posts/.test(pathname)}
-						/>
-						<SidebarDropdownItem
-							on:click={() => (hidden2 = true)}
-							label="Your drafts"
-							href="/blog/drafts"
-							rel="external"
-							active={/\/blog\/drafts/.test(pathname)}
-						/>
-					</SidebarDropdownWrapper>
-					<!-- <SidebarItem label="Kanban" {spanClass}>
+						<SidebarDropdownWrapper isOpen={/\/blog/.test(pathname)} label="Blog">
+							<svelte:fragment slot="icon">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="w-6 h-6"
+									><path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+									/></svg
+								>
+							</svelte:fragment>
+							<SidebarDropdownItem
+								on:click={() => (hidden2 = true)}
+								label="Your posts"
+								rel="external"
+								href="/blog/my-posts"
+								active={/\/blog\/my-posts/.test(pathname)}
+							/>
+							<SidebarDropdownItem
+								on:click={() => (hidden2 = true)}
+								label="Your drafts"
+								href="/blog/drafts"
+								rel="external"
+								active={/\/blog\/drafts/.test(pathname)}
+							/>
+						</SidebarDropdownWrapper>
+						<!-- <SidebarItem label="Kanban" {spanClass}>
 					<svelte:fragment slot="icon">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -559,7 +570,7 @@
 						>
 					</svelte:fragment>
 				</SidebarItem> -->
-					<!-- <SidebarItem label="Inbox" {spanClass}>
+						<!-- <SidebarItem label="Inbox" {spanClass}>
 					<svelte:fragment slot="icon">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -582,7 +593,7 @@
 						>
 					</svelte:fragment>
 				</SidebarItem> -->
-					<!-- <SidebarItem label="Your account">
+						<!-- <SidebarItem label="Your account">
 					<svelte:fragment slot="icon">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -599,32 +610,33 @@
 						>
 					</svelte:fragment>
 				</SidebarItem> -->
-					<SidebarItem
-						on:click={() => (hidden2 = true)}
-						href="/accounts"
-						label={Boolean(session) ? 'Sign out' : 'Sign In'}
-					>
-						<svelte:fragment slot="icon">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-6 h-6"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-								/></svg
-							>
-						</svelte:fragment>
-					</SidebarItem>
-				</SidebarGroup>
-			</SidebarWrapper>
-		</Sidebar>
-	</Drawer>
-	<div class="pt-16 dark:bg-gray-900">
-		<slot />
-	</div>
+						<SidebarItem
+							on:click={() => (hidden2 = true)}
+							href="/accounts"
+							label={Boolean(session) ? 'Sign out' : 'Sign In'}
+						>
+							<svelte:fragment slot="icon">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="w-6 h-6"
+									><path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+									/></svg
+								>
+							</svelte:fragment>
+						</SidebarItem>
+					</SidebarGroup>
+				</SidebarWrapper>
+			</Sidebar>
+		</Drawer>
+		<div class="pt-16 dark:bg-gray-900">
+			<slot />
+		</div>
+	{/if}
 {/if}

@@ -16,7 +16,7 @@ datasource db {
 
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String     @db.VarChar(3000)
+  sessionToken String @db.VarChar(3000)
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?
@@ -39,9 +39,9 @@ model Page {
   icon             String?
   path             String?
   components       Component[]
-  html             String?        @db.Text
+  html             String? @db.Text
   pathRegexp       String?
-  uiDef            String?        @db.Text
+  uiDef            String? @db.Text
   roles            UserRoles?     @relation(fields: [userRolesId], references: [id])
   userRolesId      String?
   layout           Boolean        @default(false)
@@ -409,6 +409,8 @@ model SpaceTable {
   viewPermissions      CollectionViewPermissions[]
   aPIGETPermissions    APIGETCollectionPermissions[]
   colorCode            String?
+  posCOllection        POSCollection[]
+  icon                 String?
 
   @@index([userId])
   @@index([appId])
@@ -773,18 +775,57 @@ model APICounter {
   spaceId     String?
   dateCreated DateTime @default(now())
   pathname    String?
+  method      String   @default("GET")
+
+  @@index([spaceId])
+}
+
+model POSCollection {
+  id                String     @id @default(cuid())
+  space             Space?     @relation(fields: [spaceId], references: [id])
+  spaceId           String?
+  collection        SpaceTable @relation(fields: [spaceTableId], references: [id])
+  spaceTableId      String
+  nameCol           String?
+  imageCol          String?
+  priceCol          String?
+  compareAtPriceCol String?
+  taxable           Boolean    @default(false)
+  costPerItem       Float
+  quantityTrackable Boolean    @default(false)
+  quantityCol       String?
+  continuesToSell   Boolean    @default(false)
+  hasSkuOrBarcode   Boolean    @default(false)
+  barcodeCol        String?
+  skuCol            String?
+  type              String     @default("physical")
+
+  @@index([spaceTableId])
+  @@index([spaceId])
+}
+
+model SpacePayCred {
+  id          String    @id @default(cuid())
+  space       Space?    @relation(fields: [spaceId], references: [id])
+  spaceId     String?
+  name        String?
+  secret      String
+  key         String
+  expiry      DateTime?
+  env         String    @default("sandbox")
+  dateCreated DateTime  @default(now())
 
   @@index([spaceId])
 }
 
 model Space {
-  id                       String         @id @default(cuid())
-  appId                    String         @unique
+  id                       String          @id @default(cuid())
+  appId                    String          @unique
   name                     String?
   icon                     String?
-  owner                    User?          @relation(fields: [userId], references: [id])
+  owner                    User?           @relation(fields: [userId], references: [id])
   userId                   String?
-  active                   Boolean        @default(false)
+  active                   Boolean         @default(false)
   updates                  SpaceUpdate[]
   tables                   SpaceTable[]
   spaceUis                 SpaceUI[]
@@ -792,17 +833,17 @@ model Space {
   users                    SpaceUser[]
   configVars               ConfigVars[]
   secret                   String
-  miniAppChannel           Boolean        @default(false)
-  apiChannel               Boolean        @default(false)
-  subdomainChannel         Boolean        @default(false)
-  customDomainChannel      Boolean        @default(false)
-  standaloneMobileChannel  Boolean        @default(false)
-  standaloneDesktopChannel Boolean        @default(false)
-  uploadProvider           String?        @default("cloudinary")
-  template                 Boolean        @default(false)
+  miniAppChannel           Boolean         @default(false)
+  apiChannel               Boolean         @default(false)
+  subdomainChannel         Boolean         @default(false)
+  customDomainChannel      Boolean         @default(false)
+  standaloneMobileChannel  Boolean         @default(false)
+  standaloneDesktopChannel Boolean         @default(false)
+  uploadProvider           String?         @default("cloudinary")
+  template                 Boolean         @default(false)
   permissions              Permission[]
   defaultUIId              String?
-  deactivated              Boolean?       @default(false)
+  deactivated              Boolean?        @default(false)
   dashboards               Dashboard[]
   spaceSessions            SpaceSession[]
   superAdminSecret         String?
@@ -812,11 +853,13 @@ model Space {
   onboarding               Onboarding[]
   roles                    UserRoles[]
   apiSetup                 ApiSetup[]
-  dateCreated              DateTime       @default(now())
+  dateCreated              DateTime        @default(now())
   geo                      Geo[]
   spaceMeta                SpaceMeta[]
-  plan                     String         @default("chui")
+  plan                     String          @default("chui")
   apiCounter               APICounter[]
+  spacePayCred             SpacePayCred[]
+  posCollection            POSCollection[]
 
   @@index([userId])
 }

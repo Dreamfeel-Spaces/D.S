@@ -25,7 +25,16 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 		}
 	});
 
-	return { tables, space, apiCount: groupDataByMonth(apiCount) };
+	const counterByMethos = await prisma.aPICounter.groupBy({
+		by: ['method'],
+		_count: {
+			_all: true
+		}
+	});
+
+	const groupedCounts = counterByMethos.map((c) => ({ count: c._count._all, label: c.method }));
+
+	return { tables, space, apiCount: groupDataByMonth(apiCount), groupedCounts };
 }
 
 function groupDataByMonth(data) {

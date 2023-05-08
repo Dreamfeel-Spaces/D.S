@@ -31,7 +31,8 @@ export const Space = {
 					roles: true,
 					tables: {
 						include: {
-							columns: true
+							columns: true,
+							rows:true
 						}
 					},
 					users: {

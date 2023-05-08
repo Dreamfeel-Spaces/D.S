@@ -1,6 +1,7 @@
 <script lang="ts">
+	//@ts-nocheck
 	import { recentlyViewed } from '$lib/wsstore';
-	import { Card, Heading } from 'flowbite-svelte';
+	import { Card, Heading, Progressbar } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import Uptime from '$lib/components/Uptime.svelte';
 	import Map from '../../dashboards/[app_id]/Map.svelte';
@@ -337,23 +338,27 @@
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
 				<div class="bg-amber-600 ml-2  border rounded shadow p-2">
 					<a href="/rest/{$page.data.space?.appId}/" class="flex flex-row items-center">
-						<div class="flex-shrink pl-1 pr-4">
-							<svg
-								fill="currentColor"
-								xmlns="http://www.w3.org/2000/svg"
-								height="24"
-								viewBox="0 96 960 960"
-								width="24"
-								><path
-									d="M480 681 375 576l105-105 105 105-105 105Zm-85-294-83-83 168-168 168 168-83 83-85-85-85 85ZM208 744 40 576l168-168 83 83-85 85 85 85-83 83Zm544 0-83-83 85-85-85-85 83-83 168 168-168 168Zm-272 272L312 848l83-83 85 85 85-85 83 83-168 168Z"
-								/></svg
-							>
-						</div>
 						<div class="flex-1 text-right">
 							<h5 class="text-white">API Requests</h5>
-							<h3 class="text-white text-3xl">
-								{$page.data.apiRecords}/10k
-								<span class="text-amber-400"><i class="fas fa-caret-up" /></span>
+							<h3 class="text-white gap-4 flex text-3xl">
+								<div class=" flex-1">
+									<svg
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+										height="24"
+										viewBox="0 96 960 960"
+										width="24"
+										><path
+											d="M480 681 375 576l105-105 105 105-105 105Zm-85-294-83-83 168-168 168 168-83 83-85-85-85 85ZM208 744 40 576l168-168 83 83-85 85 85 85-83 83Zm544 0-83-83 85-85-85-85 83-83 168 168-168 168Zm-272 272L312 848l83-83 85 85 85-85 83 83-168 168Z"
+										/></svg
+									>
+									<div class="mt-3">
+										<Progressbar progress={($page.data.apiRecords / 10000) * 100} size="h-1.5" />
+									</div>
+								</div>
+								<span class="mt-2" >
+									{$page.data.apiRecords}/10k
+								</span>
 							</h3>
 						</div>
 					</a>
