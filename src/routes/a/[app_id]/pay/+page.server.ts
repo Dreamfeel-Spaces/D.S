@@ -1,4 +1,5 @@
 import { prisma } from '$lib/db/prisma';
+import { redirect } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
 import { createHash } from 'crypto';
 
@@ -28,6 +29,11 @@ export const actions: Actions = {
 export async function load({ locals }: RequestEvent) {
 	// @ts-ignore
 	const space = locals.space;
+	//@ts-ignore
+	let user: any = locals.spaceSession?.user;
+	if (user) user.role = space.roles.find((role: { id: any }) => role.id === user?.userRolesId);
+
+	if (!user?.id) throw redirect(302, `/a/${space.appId}/accounts`);
 
 	const secrets = await prisma.spacePayCred.findMany({
 		where: {

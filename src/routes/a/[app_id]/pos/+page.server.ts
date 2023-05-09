@@ -1,5 +1,6 @@
 //@ts-nocheck
 import { prisma } from '$lib/db/prisma';
+import { redirect } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
 
 export const actions: Actions = {
@@ -50,10 +51,16 @@ export const actions: Actions = {
 export async function load({ locals }: RequestEvent) {
 	const space = locals.space;
 
+	//@ts-ignore
+	let user: any = locals.spaceSession?.user;
+	if (user) user.role = space.roles.find((role: { id: any }) => role.id === user?.userRolesId);
+
+	if (!user?.id) throw redirect(302, `/a/${space.appId}/accounts`);
+
 	let collections = await prisma.pOSCollection.findMany({
 		where: {
 			spaceId: space.id
-		},
+		}
 	});
 
 	return {
