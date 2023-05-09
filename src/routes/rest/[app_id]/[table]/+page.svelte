@@ -4,24 +4,21 @@
 		Select,
 		Button,
 		Checkbox,
-		Breadcrumb,
-		BreadcrumbItem,
 		Alert,
 		Card,
 		CloseButton,
 		Spinner,
-		Radio,
-		Textarea
+		Textarea,
+		Label
 	} from 'flowbite-svelte';
 	import { columnTypes } from '$lib/coltypes/columnTypes';
 	import type { PageData } from './$types';
 	import { page } from '$app/stores';
 	import axios from 'axios';
-	import { apiHelperModal } from '$lib/wsstore';
-	const tableName = $page.params.table;
-	const spaceName = $page.params['app_id'];
 	let spaceId = $page.params['app_id'];
-	let table = $page.params.table;
+	let table = $page.data.table;
+
+	table ??= {};
 
 	export let data: PageData;
 	export let form: any;
@@ -71,57 +68,36 @@
 	}
 	let whoAmi = 'manual_all';
 
-	import { invalidateAll } from '$app/navigation';
 	import { useEffect } from '$lib/wsstore/hooks';
 	import { browser } from '$app/environment';
+	import Ac from '$lib/components/AC.svelte';
+	import { tableIcon } from '$lib/wsstore';
+	import { onMount, onDestroy } from 'svelte';
+
+	onDestroy(() => {
+		tableIcon.set('folder_open');
+	});
+
+	useEffect(
+		() => {
+			if ($page.data.table.icon) tableIcon.set($page.data.table.icon);
+		},
+		() => [$page.data.table.icon]
+	);
+
+	function scrolltoId() {
+		var access = document.getElementById('top');
+		access?.scrollIntoView({ behavior: 'smooth' });
+	}
 
 	useEffect(
 		() => {
 			columns = data.columns.length ? data.columns : [{ ...col }];
-			if (browser) {
-				window.scrollTo({
-					top: 0,
-					left: 0,
-					behavior: 'smooth'
-				});
-			}
+			scrolltoId();
 		},
 		() => [$page.params.table]
 	);
 </script>
-
-<!-- <div class="py-2 bg-gray-50 dark:bg-gray-900">
-	<div class="flex my-2">
-		<div class=" flex-1 text-xl px-6 ">
-			<Breadcrumb>
-				<BreadcrumbItem>Home</BreadcrumbItem>
-				<BreadcrumbItem>Api</BreadcrumbItem>
-				<BreadcrumbItem>
-					{spaceName}
-				</BreadcrumbItem>
-				<BreadcrumbItem>
-					{tableName}
-				</BreadcrumbItem>
-				<BreadcrumbItem>Schema</BreadcrumbItem>
-			</Breadcrumb>
-		</div>
-		<Button
-			on:click={() => apiHelperModal.set({ open: true })}
-			size="xs"
-			pill
-			gradient
-			color="pinkToOrange">Generate schema</Button
-		>
-		<div class="px-9 text-end text-lg">
-			<a
-				class="bg-blue-700 px-3  text-white rounded-3xl py-2 text-xs"
-				href={`/rest/${spaceName}/${tableName}/schema/preview`}>Preview</a
-			>
-		</div>
-	</div>
-
-	<div class="mt-4 px-6" />
-</div> -->
 
 <div class=" overflow-auto pb-12 dark:bg-gray-900 bg-gray-50">
 	{#if form?.success}
@@ -129,14 +105,35 @@
 			<Alert>
 				<div class="my-3 "><b>Schema saved</b></div>
 				<div class="mb-3">
-					<a class="hover:underline" href={`/rest/${spaceId}/${table}`}>View schema</a>
+					<a class="hover:underline" href={`/rest/${spaceId}/${table?.name}`}>View schema</a>
 				</div>
-				<a class="hover:underline" href={`/rest/${spaceId}/${table}/api`}>Configure Rest API</a>
+				<a class="hover:underline" href={`/rest/${spaceId}/${table?.name}/api`}
+					>Configure Rest API</a
+				>
 			</Alert>
 		</div>
 	{/if}
 
+	<div class="px-6 my-6 space-y-6" id="top">
+		<p class="text-3xl dark:text-gray-200">Table Details</p>
+		<Label>
+			Name
+			<Input bind:value={table.name} />
+		</Label>
+		<!-- <Label>
+			Id variant
+			<Select />
+		</Label> -->
+		<div>
+			<Label>
+				Icon
+				<Ac />
+			</Label>
+		</div>
+	</div>
+
 	{#if whoAmi === 'manual_all'}
+		<p class="text-3xl dark:text-gray-200 mx-6 mb-3">Table Schema</p>
 		<div class="grid gap-4 px-6 grid-cols-3   my-2 ">
 			{#each columns as column, index}
 				<Card>
@@ -343,7 +340,7 @@
 	<div class="px-6 mt-6">
 		<form method="POST">
 			<div class="mb-4  ">
-				<label for="displayName " class="text-3xl  text-gray-500">Display name</label>
+				<label for="displayName " class="text-3xl  text-gray-500">Metadata</label>
 				<Select
 					placeholder="Choose column type"
 					name="displayName"
@@ -355,6 +352,9 @@
 					})}
 				/>
 			</div>
+			<Textarea name="description" bind:Value={table.description} />
+			<input type="hidden" name={'icon'} bind:value={$tableIcon} />
+			<input type="hidden" name={'name'} bind:value={table.name} />
 			<input id="columns" name="columns" value={JSON.stringify(columns)} type="hidden" />
 			<Button disabled={whoAmi === 'generate_add'} type="submit" class="mt-3 w-full"
 				>Save columns</Button

@@ -7,7 +7,7 @@ import { error, redirect } from '@sveltejs/kit';
 export const actions = {
 	async default({ params, locals, request }) {
 		let space = await prisma.space.findFirst({
-			where: { appId: String(params["app_id"]) },
+			where: { appId: String(params['app_id']) },
 			include: { users: true }
 		});
 
@@ -16,6 +16,7 @@ export const actions = {
 		const data = await request.formData();
 
 		const name = String(data.get('name')).trim().toLowerCase();
+		const icon = String(data.get('icon'));
 
 		const existing = await prisma.spaceTable.findFirst({
 			where: {
@@ -28,7 +29,8 @@ export const actions = {
 
 		const table = await prisma.spaceTable.create({
 			data: {
-				name: convertToSlug(name)
+				name: convertToSlug(name),
+				icon
 			}
 		});
 
@@ -44,7 +46,6 @@ export const actions = {
 				}
 			}
 		});
-
 
 		return { success: true, data: table };
 	}

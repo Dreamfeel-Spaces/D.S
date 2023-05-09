@@ -33,6 +33,9 @@ export const actions: Actions = {
 
 		let columns = String(data.get('columns') ?? '[]');
 		let displayName = data.get('displayName');
+		let icon = String(data.get('icon'));
+		let description = String(data.get('description'));
+		let name = String(data.get('name'));
 
 		for (let column of JSON.parse(columns)) {
 			if (!Boolean(column.id)) {
@@ -105,7 +108,10 @@ export const actions: Actions = {
 		const updatedTable = await prisma.spaceTable.update({
 			where: { id: String(table?.id) },
 			data: {
-				displayName: String(displayName)
+				displayName: String(displayName),
+				name,
+				icon,
+				description
 			}
 		});
 

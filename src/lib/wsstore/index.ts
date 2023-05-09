@@ -9,3 +9,6 @@ export const heroSliderPaused = writable({ paused: false });
 export const recentlyViewed = writable({});
 
 export const geoStore = writable({});
+
+
+export const tableIcon = writable("folder_open")

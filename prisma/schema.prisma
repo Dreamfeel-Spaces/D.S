@@ -410,7 +410,10 @@ model SpaceTable {
   aPIGETPermissions    APIGETCollectionPermissions[]
   colorCode            String?
   posCOllection        POSCollection[]
-  icon                 String?
+  icon                 String?                          @default("folder_open")
+  dateCreated          DateTime                         @default(now())
+  dateUpdated          DateTime                         @default(now())
+  description          String?
 
   @@index([userId])
   @@index([appId])

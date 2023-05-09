@@ -133,7 +133,6 @@ con.setRequestMethod("GET");
 					<TabItem title="React" />
 					<TabItem title="Angular" />
 					<TabItem title="Vue" />
-					<TabItem title="Angular" />
 				</Tabs>
 			</Card>
 		</div>

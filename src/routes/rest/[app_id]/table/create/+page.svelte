@@ -3,13 +3,26 @@
 	import { page } from '$app/stores';
 	const space = $page.params['app_id'];
 	import { Alert, Card, BreadcrumbItem, Button, Input } from 'flowbite-svelte';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { invalidateAll } from '$app/navigation';
+	import Ac from '$lib/components/AC.svelte';
+	import { tableIcon } from '$lib/wsstore';
 
 	onMount(() => {
 		if (form?.success) invalidateAll();
 	});
+
+	onDestroy(() => {
+		tableIcon.set('folder_open');
+	});
 </script>
+
+<svelte:head>
+	<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+	/>
+</svelte:head>
 
 <Card size="xl">
 	<div class="min-h-99 h-100 pb-36">
@@ -31,8 +44,8 @@
 			</div>
 		{/if}
 
-		<form method="post" class="mt-9 mx-3 px-6">
-			<div class="mb-6">
+		<form method="post" class="mt-9 space-y-6 mx-3 px-6">
+			<div>
 				<label class="dark:text-gray-100 text-xl mb-2" for="name">Table name</label>
 				<Input
 					required
@@ -43,6 +56,8 @@
 					class="w-full"
 				/>
 			</div>
+			<input type="hidden" name="icon" value={$tableIcon} />
+			<Ac />
 			<Button type="submit" class="w-full">Submit</Button>
 		</form>
 	</div>

@@ -34,7 +34,9 @@
 <div class="container">
 	<Card class="dark:text-white min-h-100" size="xl">
 		<div class="flex justify-between mb-2">
-			<div />
+			<div class="text-2xl flex items-center">
+				Datasource
+			</div>
 			<div>
 				<div class="flex justify-end py-1  pr-4 flex-wrap">
 					<Button

@@ -35,6 +35,13 @@
 	);
 </script>
 
+<svelte:head>
+	<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+	/>
+</svelte:head>
+
 <SpaceNav modalOnly={true} />
 
 <Modal
@@ -89,7 +96,7 @@
 
 <div class="flex flex-row min-h-screen dark:bg-gray-900 bg-gray-100 text-gray-800">
 	<aside
-		class="sidebar max-w-72 min-w dark:text-gray-900 w-72  max-h-screen overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
+		class="sidebar min-w-[18%]  min-w dark:text-gray-900   max-h-screen overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
 	>
 		<div class="sidebar-header flex items-center   ml-7 py-4">
 			<div class="inline-flex">
@@ -152,7 +159,10 @@
 				</li>
 				<SidebarDropdownWrapper
 					isOpen={/\/rest\/([^/]+)\/([^/]+)/.test($page.url.pathname) &&
-						!$page.url.pathname.includes('permissions')}
+						!$page.url.pathname.includes('permissions') &&
+						!$page.url.pathname.includes('create') &&
+						!$page.url.pathname.includes('endpoints') &&
+						!$page.url.pathname.includes('actions')}
 					label={'Models'}
 				>
 					<svelte:fragment slot="icon">
@@ -300,21 +310,27 @@
 							href={`/rest/${space.appId}/${table.name}/endpoints/`}
 							class="flex flex-row items-center h-10 px-2 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 						>
-							<span
-								style="color:{table.colorCode}"
-								class="flex items-center justify-center text-lg"
-							>
-								<svg
-									fill="currentColor"
-									xmlns="http://www.w3.org/2000/svg"
-									height="24"
-									viewBox="0 96 960 960"
-									width="24"
-									><path
-										d="M480 681 375 576l105-105 105 105-105 105Zm-85-294-83-83 168-168 168 168-83 83-85-85-85 85ZM208 744 40 576l168-168 83 83-85 85 85 85-83 83Zm544 0-83-83 85-85-85-85 83-83 168 168-168 168Zm-272 272L312 848l83-83 85 85 85-85 83 83-168 168Z"
-									/></svg
+							{#if table.icon}
+								<span class="material-symbols-outlined">
+									{table.icon}
+								</span>
+							{:else}
+								<span
+									style="color:{table.colorCode}"
+									class="flex items-center justify-center text-lg"
 								>
-							</span>
+									<svg
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+										height="24"
+										viewBox="0 96 960 960"
+										width="24"
+										><path
+											d="M480 681 375 576l105-105 105 105-105 105Zm-85-294-83-83 168-168 168 168-83 83-85-85-85 85ZM208 744 40 576l168-168 83 83-85 85 85 85-83 83Zm544 0-83-83 85-85-85-85 83-83 168 168-168 168Zm-272 272L312 848l83-83 85 85 85-85 83 83-168 168Z"
+										/></svg
+									>
+								</span>
+							{/if}
 							<span class="ml-3 ">{table?.name}</span>
 						</a>
 					</li>
@@ -375,12 +391,12 @@
 	</aside>
 	<main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
 		<a class="w-full" rel="external" href="/early-access">
-			<div class="bg-indigo-900 w-full text-center py-1 lg:px-4">
+			<div class="bg-bdlue-900 w-full text-center py-1 lg:px-4">
 				<div
-					class="p-1 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+					class="p-1 bg-blue-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
 					role="alert"
 				>
-					<span class="flex rounded-full bg-indigo-500 uppercase px-2 text-xs font-bold mr-3"
+					<span class="flex rounded-full bg-blue-500 uppercase px-2 text-xs font-bold mr-3"
 						>Alpha preview</span
 					>
 					<span class=" mr-2 text-left text-xs flex-auto"
@@ -453,7 +469,7 @@
 		</header>
 		<div class="main-content dark:bg-gray-700  max-h-105 flex flex-col flex-grow p-1">
 			<div
-				class="flex flex-col max-w-screen-xl  dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded "
+				class="flex flex-col max-w-[100%]  dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded "
 			>
 				<slot />
 			</div>
