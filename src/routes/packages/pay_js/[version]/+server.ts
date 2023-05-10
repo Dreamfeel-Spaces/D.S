@@ -2,7 +2,9 @@ import type { RequestEvent } from './$types';
 import { readFileSync } from 'fs';
 
 export async function GET({ params }: RequestEvent) {
-	return new Response(content(), );
+	let response = new Response(content());
+	response.headers.set('content-type', 'text/javascript');
+	return response;
 }
 
 function content() {

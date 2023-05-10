@@ -64,6 +64,7 @@
 				plugins: [
 					// (editor) => gjsForms(editor),
 					// (editor) => gjsTabs(editor),
+					spacePages,
 					(editor) => gBasic(editor),
 					(editor) =>
 						gSpaceApIList(editor, {
@@ -184,6 +185,7 @@
 	let hidden2 = true;
 	let actionsHidden = true;
 	import { sineIn } from 'svelte/easing';
+	import { spacePages } from '$lib/plugins/grapes/space-ui/templates/pages/spacePagesPlugin';
 	let transitionParams = {
 		x: -320,
 		duration: 200,
