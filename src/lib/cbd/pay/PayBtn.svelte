@@ -25,7 +25,7 @@
 </script>
 
 <svelte:head>
-	<script defer src="http://cdn.localhost:5173/packages/pay_js/0.0.1"></script>
+	<script defer src="http://cdn.dreamfeel.me/packages/pay_js/0.0.1"></script>
 </svelte:head>
 
 {#if loading}
