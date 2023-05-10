@@ -31,7 +31,6 @@
 	import Checkout from '$lib/components/Checkout.svelte';
 
 	let hidden8 = true;
-	let plan = 'starter';
 	let transitionParamsBottom = {
 		y: 320,
 		duration: 200,
@@ -43,7 +42,7 @@
 	import { browser } from '$app/environment';
 	import axios from 'axios';
 
-	let checkoutPlan = 'chui';
+	let checkoutPlan = 'ndovu';
 	let checkoutPrice = 0;
 
 	let userPhone = '';
@@ -170,9 +169,9 @@
 				{:else}
 					<div>
 						<div class="my-5 text-center">
-							<Heading tag="h6" >Checkout with</Heading>
+							<Heading tag="h6">Checkout with</Heading>
 						</div>
-						<PayBtn />
+						<PayBtn {checkoutPlan} {checkoutPrice} />
 					</div>
 				{/if}
 			</div>

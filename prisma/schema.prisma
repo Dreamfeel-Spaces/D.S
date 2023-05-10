@@ -2,21 +2,21 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// datasource db {
-//   provider     = "sqlite"
-//   url          = "file:./.sqlite"
-//   relationMode = "prisma"
-// }
-
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
+  provider     = "sqlite"
+  url          = "file:./.sqlite"
   relationMode = "prisma"
 }
 
+// datasource db {
+//   provider     = "mysql"
+//   url          = env("DATABASE_URL")
+//   relationMode = "prisma"
+// }
+
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String     @db.VarChar(3000)
+  sessionToken String //@db.VarChar(3000)
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?
@@ -39,9 +39,9 @@ model Page {
   icon             String?
   path             String?
   components       Component[]
-  html             String?        @db.Text
+  html             String? //@db.Text
   pathRegexp       String?
-  uiDef            String?        @db.Text
+  uiDef            String? //@db.Text
   roles            UserRoles?     @relation(fields: [userRolesId], references: [id])
   userRolesId      String?
   layout           Boolean        @default(false)
@@ -821,6 +821,57 @@ model SpacePayCred {
   @@index([spaceId])
 }
 
+model TxnItem {
+  id             String      @id @default(cuid())
+  request        TxnRequest? @relation(fields: [txnRequestId], references: [id])
+  txnRequestId   String?
+  itemId         String?
+  name           String
+  imgUrl         String?
+  pricePerItem   String?
+  deliveryStatus String      @default("pending")
+  delivered      DateTime?
+  quantity       Int         @default(1)
+
+  @@index([txnRequestId])
+}
+
+model TxnRequest {
+  id         String       @id @default(cuid())
+  space      Space?       @relation(fields: [spaceId], references: [id])
+  spaceId    String?
+  wallet     SpaceWallet? @relation(fields: [walletId], references: [id])
+  walletId   String?
+  identifier String
+  uriToken   String
+  secret     String
+  amount     Float        @default(0)
+  currency   String       @default("KES")
+  status     String       @default("requested")
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @default(now()) @updatedAt
+  txnItems   TxnItem[]
+  type       String       @default("incoming")
+
+  @@index([spaceId])
+  @@index([walletId])
+}
+
+model SpaceWallet {
+  id              String       @id @default(cuid())
+  space           Space?       @relation(fields: [spaceId], references: [id])
+  spaceId         String?
+  name            String?
+  balance         Int          @default(0)
+  txnRequest      TxnRequest[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @default(now()) @updatedAt
+  default         Boolean      @default(false)
+  defaultCurrency String       @default("KES")
+
+  @@index([spaceId])
+}
+
 model Space {
   id                       String          @id @default(cuid())
   appId                    String          @unique
@@ -863,6 +914,8 @@ model Space {
   apiCounter               APICounter[]
   spacePayCred             SpacePayCred[]
   posCollection            POSCollection[]
+  SpaceWallet              SpaceWallet[]
+  txnRequest               TxnRequest[]
 
   @@index([userId])
 }

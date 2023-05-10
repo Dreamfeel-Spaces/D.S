@@ -86,7 +86,7 @@
 {#if seebdm === 'pos'}
 	<Pos />
 {:else if seebdm === 'pay'}
-	<Pay />
+	<Pay  />
 {:else}
 	{#if subdomain}
 		{@html $page.data.html}

@@ -79,6 +79,8 @@ export function isReservedRoute(pathname: string) {
 	let isLab = /^\/lab/.test(pathname);
 	let isVerify = /^\/verify/.test(pathname);
 	let isCDN = /^\/packages/.test(pathname);
+	let isPay = /^\/pay/.test(pathname);
+
 
 
 	let reservedRoutes = [
@@ -108,7 +110,8 @@ export function isReservedRoute(pathname: string) {
 		isCreate,
 		isEarlyAccess,
 		isLab,
-		isCDN
+		isCDN,
+		isPay
 	];
 
 	return reservedRoutes.find(Boolean);

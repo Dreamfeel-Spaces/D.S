@@ -314,12 +314,12 @@
 					<a
 						on:click={() => {
 							recentlyViewed.set({
-								[`/a/${space.appId}/wallet`]: { url: `/a/${space.appId}/pos` },
+								[`/a/${space.appId}/wallets`]: { url: `/a/${space.appId}/pos` },
 								...$recentlyViewed
 							});
 						}}
-						href={`/a/${space.appId}/wallet`}
-						class="flex flex-row items-center {/\/wallet/.test($page.url.pathname)
+						href={`/a/${space.appId}/wallets`}
+						class="flex flex-row items-center {/\/wallets/.test($page.url.pathname)
 							? 'bg-blue-900'
 							: ''} h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 					>
@@ -335,7 +335,7 @@
 								/></svg
 							>
 						</span>
-						<span class="ml-3">Wallet</span>
+						<span class="ml-3">Wallets</span>
 					</a>
 				</li>
 				<li class="my-px">

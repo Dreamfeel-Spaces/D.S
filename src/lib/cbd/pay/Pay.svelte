@@ -4,6 +4,10 @@
 	import { A, Button, Card, Hr, Input, Label, Modal, Radio, Select } from 'flowbite-svelte';
 	let moreDetailModal = false;
 	let paymethod = 'mobile_money';
+
+	import { page } from '$app/stores';
+
+	console.log($page.data.transactionRequest);
 </script>
 
 <svelte:head>
@@ -13,13 +17,46 @@
 
 <Modal bind:open={moreDetailModal} class="w-full">
 	<h6 class="text-lg" slot="header">Order details</h6>
+
+	<div class="relative overflow-x-auto">
+		<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+			<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+				<tr>
+					<th scope="col" class="px-6 py-3"> Product name </th>
+					<th scope="col" class="px-6 py-3"> Quantity </th>
+
+					<th scope="col" class="px-6 py-3"> Price </th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each $page.data.transactionRequest?.txnItems ?? [] as item}
+					<tr class="bg-white dark:bg-gray-800">
+						<th
+							scope="row"
+							class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+						>
+							{item.name}
+						</th>
+						<td class="px-6 py-4">
+							x {item.quantity}
+						</td>
+
+						<td class="px-6 py-4">
+							{item.pricePerItem}
+						</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	</div>
+
 	<div slot="footer" class="flex justify-between">
 		<div>TOTAL TO PAY</div>
-		<div>KES: 3000</div>
+		<div>KES: {$page.data.transactionRequest?.amount ?? 0}</div>
 	</div>
 </Modal>
 
-<section class="bg-gray-100 min-h-screen pb-20">
+<section class="bg-gray-100 min-h-screen  pb-20">
 	<nav class="bg-white border-gray-200 dark:bg-gray-900">
 		<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 			<span class="flex items-center">
@@ -27,8 +64,8 @@
 			</span>
 		</div>
 	</nav>
-	<div class=" sm:block lg:flex justify-center pt-3">
-		<div  class="space-y-6" >
+	<div class=" sm:block lg:flex px-6 justify-center pt-3">
+		<div class="space-y-6">
 			<Card size="xl">
 				<div class="flex text-lg justify-between">
 					<div class="flex  self-center">
@@ -51,7 +88,7 @@
 				<Hr class="my-4" />
 				<div class="flex text-xl justify-between">
 					<h6>TOTAL TO PAY</h6>
-					<h6>KES: 3000</h6>
+					<h6>KES: {$page.data.transactionRequest?.amount}</h6>
 				</div>
 			</Card>
 			<div class="flex text-lg justify-between">

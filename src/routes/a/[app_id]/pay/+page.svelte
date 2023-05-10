@@ -16,11 +16,29 @@
 	let hidden = true;
 	let addEnv = 'sandbox';
 	let payModalOpen = false;
+	let simOpen = false;
 	export let form;
 	import { page } from '$app/stores';
+	import PayBtn from '$lib/cbd/pay/PayBtn.svelte';
 	let secrets = $page.data.secrets;
 	let viewEnv = 'sandbox';
+	let checkoutPrice = 1;
+	let checkoutPlan = 'Nyati';
 </script>
+
+<Modal bind:open={simOpen} class="w-full space-y-3">
+	<div slot="header" class="text-lg">Simulate</div>
+	<Label>
+		Amount
+		<Input bind:value={checkoutPrice} required />
+	</Label>
+	<Label>
+		Plan
+		<Input bind:value={checkoutPlan} required />
+	</Label>
+	<div class="text-center text-3xl">Checkout with</div>
+	<PayBtn {checkoutPrice} {checkoutPlan} />
+</Modal>
 
 <form method="post">
 	<Modal bind:open={payModalOpen} class="w-full space-y-3">
@@ -57,7 +75,8 @@
 				<Heading tag="h6">Dreamfeel Pay</Heading>
 			</div>
 
-			<div>
+			<div class="flex gap-3">
+				<Button on:click={() => (simOpen = true)}>Simulate</Button>
 				<Button on:click={() => (payModalOpen = true)}>Add credentials</Button>
 			</div>
 		</div>
@@ -147,9 +166,9 @@
 				</tbody>
 			</table>
 			{#if !secrets?.filter((v) => v.env === viewEnv).length}
-			<div class="text-center mt-5 ">
-				<p class="text-lg">No payment credentials have been added to Dreamfeel Pay</p>
-			</div>
+				<div class="text-center mt-5 ">
+					<p class="text-lg">No payment credentials have been added to Dreamfeel Pay</p>
+				</div>
 			{/if}
 		</div>
 	</div>

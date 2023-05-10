@@ -6,6 +6,21 @@ import type { LayoutServerLoad } from './$types';
 export const csr = true;
 
 export const load: LayoutServerLoad = async ({ locals, url, cookies }) => {
+	const pages = new Pages({ url });
+
+	const identifier = url.searchParams.get('transaction_id');
+
+	if (pages.sbd === 'pay') {
+		const transactionRequest = await prisma.txnRequest.findFirst({
+			where: { identifier },
+			include: {
+				txnItems: true
+			}
+		});
+
+		return { transactionRequest };
+	}
+
 	const session = await locals.getSession();
 	if (session) {
 		const user = await prisma.user.findUnique({
