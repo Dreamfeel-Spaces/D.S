@@ -84,7 +84,7 @@ export async function initDreamfeelPay({ CLIENT_ID, CLIENT_SECRET }) {
 
 
             // Set the iframe source to a webpage of your choice
-            iframe.src = `http://pay.dreamfeel.me?transaction_id=${identifier}`;
+            iframe.src = `http://pay.localhost:5173?transaction_id=${identifier}`;
 
             // Show the loading indicator until the iframe has finished loading
             iframe.addEventListener("load", function () {
