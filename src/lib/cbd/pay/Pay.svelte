@@ -27,8 +27,8 @@
 			</span>
 		</div>
 	</nav>
-	<div class="flex justify-center pt-3">
-		<div class="max-w-lg space-y-7 w-1/2">
+	<div class=" sm:block lg:flex justify-center pt-3">
+		<div  class="space-y-6" >
 			<Card size="xl">
 				<div class="flex text-lg justify-between">
 					<div class="flex  self-center">

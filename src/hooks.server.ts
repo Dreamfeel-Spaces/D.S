@@ -65,7 +65,8 @@ export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 
 	const pageManager = new Pages({ url: event.url });
 
-	if (pageManager.sbd === 'pay' || pageManager.sbd === 'pos') return resolve(event);
+	if (pageManager.sbd === 'pay' || pageManager.sbd === 'pos' || pageManager.sbd === 'cdn')
+		return resolve(event);
 	if (isReserved && !pageManager.isValidSubdomain) return resolve(event);
 
 	if (event.request.method === 'POST') {

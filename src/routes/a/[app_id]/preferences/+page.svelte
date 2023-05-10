@@ -13,7 +13,8 @@
 		Fileupload,
 		Modal,
 		Radio,
-		Spinner
+		Spinner,
+		Heading
 	} from 'flowbite-svelte';
 	import type { PageData } from './$types';
 	export let data: PageData;
@@ -63,6 +64,7 @@
 	//@ts-ingore
 	import Dropzone from 'svelte-file-dropzone';
 	import { uploadCloudinary } from '$lib/files/upload';
+	import PayBtn from '$lib/cbd/pay/PayBtn.svelte';
 
 	let space: any = $page.data.space;
 	let spaceMeta: any = $page.data.spaceMeta ?? {};
@@ -101,6 +103,7 @@
 		<div class="flex items-center">
 			<CloseButton on:click={() => (hidden8 = true)} class="mb-4 dark:text-white" />
 		</div>
+
 		<div>
 			<div>
 				{#if checkoutPlan === 'chui'}
@@ -165,34 +168,12 @@
 						>
 					</div>
 				{:else}
-					<div class="flex justify-center my-4">
-						<Radio value="mpesa" bind:group={paymode}>M-PESA</Radio>
-						<Radio value="more" bind:group={paymode} class="ml-3">More Options</Radio>
+					<div>
+						<div class="my-5 text-center">
+							<Heading tag="h6" >Checkout with</Heading>
+						</div>
+						<PayBtn />
 					</div>
-
-					{#if paymode === 'more'}
-						<div class="grid justify-center">
-							<div class="w  c w-96 ">
-								<Checkout />
-							</div>
-						</div>
-					{/if}
-					{#if paymode === 'mpesa'}
-						<div class="flex justify-center">
-							<div class="w  c w-96 ">
-								<div class="pl-16">
-									<img
-										width="81%"
-										src="https://res.cloudinary.com/dreamnerd/image/upload/v1683269032/MicrosoftTeams-image-removebg-preview_uw9vqw.png"
-										alt=""
-									/>
-								</div>
-								<Input placeholder="07XXXXXXXX" />
-								<Alert accent class="text-xs mt-2">M-PESA is unavailable in some regions</Alert>
-								<Button class="my-6 w-full">Submit</Button>
-							</div>
-						</div>
-					{/if}
 				{/if}
 			</div>
 		</div>

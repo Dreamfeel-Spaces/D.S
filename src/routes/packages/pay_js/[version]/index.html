@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="dreamfeel-pay-button"></div>
+		<script  src="http://cdn.localhost:5173/packages/pay_js/0.0.1"></script>
+		<!-- <script src="./script.js"></script> -->
+		<script>
+			initDreamfeelPay({
+				CLIENT_ID: 'Your client ID',
+				CLIENT_SECRET: 'Your client secret'
+			}).then((dPay) => {
+				dPay.Buttons();
+				dPay.onApprove(() => console.log('hehe'));
+				dPay.createOrder({ items: [], amount: [] });
+				dPay.renderBtn('#dreamfeel-pay-button');
+			});
+		</script>
+	</body>
+</html>
