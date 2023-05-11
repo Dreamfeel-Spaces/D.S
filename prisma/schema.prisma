@@ -16,7 +16,7 @@ datasource db {
 
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String @db.VarChar(3000)
+  sessionToken String     @db.VarChar(3000)
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?
@@ -39,9 +39,9 @@ model Page {
   icon             String?
   path             String?
   components       Component[]
-  html             String? @db.Text
+  html             String?        @db.Text
   pathRegexp       String?
-  uiDef            String? @db.Text
+  uiDef            String?        @db.Text
   roles            UserRoles?     @relation(fields: [userRolesId], references: [id])
   userRolesId      String?
   layout           Boolean        @default(false)
@@ -872,14 +872,20 @@ model SpaceWallet {
   @@index([spaceId])
 }
 
+model TemplateCategory {
+  id        String  @id @default(cuid())
+  name      String
+  templates Space[]
+}
+
 model Space {
-  id                       String          @id @default(cuid())
-  appId                    String          @unique
+  id                       String            @id @default(cuid())
+  appId                    String            @unique
   name                     String?
   icon                     String?
-  owner                    User?           @relation(fields: [userId], references: [id])
+  owner                    User?             @relation(fields: [userId], references: [id])
   userId                   String?
-  active                   Boolean         @default(false)
+  active                   Boolean           @default(false)
   updates                  SpaceUpdate[]
   tables                   SpaceTable[]
   spaceUis                 SpaceUI[]
@@ -887,17 +893,17 @@ model Space {
   users                    SpaceUser[]
   configVars               ConfigVars[]
   secret                   String
-  miniAppChannel           Boolean         @default(false)
-  apiChannel               Boolean         @default(false)
-  subdomainChannel         Boolean         @default(false)
-  customDomainChannel      Boolean         @default(false)
-  standaloneMobileChannel  Boolean         @default(false)
-  standaloneDesktopChannel Boolean         @default(false)
-  uploadProvider           String?         @default("cloudinary")
-  template                 Boolean         @default(false)
+  miniAppChannel           Boolean           @default(false)
+  apiChannel               Boolean           @default(false)
+  subdomainChannel         Boolean           @default(false)
+  customDomainChannel      Boolean           @default(false)
+  standaloneMobileChannel  Boolean           @default(false)
+  standaloneDesktopChannel Boolean           @default(false)
+  uploadProvider           String?           @default("cloudinary")
+  template                 Boolean           @default(false)
   permissions              Permission[]
   defaultUIId              String?
-  deactivated              Boolean?        @default(false)
+  deactivated              Boolean?          @default(false)
   dashboards               Dashboard[]
   spaceSessions            SpaceSession[]
   superAdminSecret         String?
@@ -907,17 +913,20 @@ model Space {
   onboarding               Onboarding[]
   roles                    UserRoles[]
   apiSetup                 ApiSetup[]
-  dateCreated              DateTime        @default(now())
+  dateCreated              DateTime          @default(now())
   geo                      Geo[]
   spaceMeta                SpaceMeta[]
-  plan                     String          @default("chui")
+  plan                     String            @default("chui")
   apiCounter               APICounter[]
   spacePayCred             SpacePayCred[]
   posCollection            POSCollection[]
   SpaceWallet              SpaceWallet[]
   txnRequest               TxnRequest[]
+  templateCategory         TemplateCategory? @relation(fields: [templateCategoryId], references: [id])
+  templateCategoryId       String?
 
   @@index([userId])
+  @@index([templateCategoryId])
 }
 
 model Example {

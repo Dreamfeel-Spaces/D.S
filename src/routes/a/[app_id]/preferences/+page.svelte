@@ -1,34 +1,12 @@
 <script lang="ts">
 	//@ts-nocheck
-	import {
-		Tabs,
-		TabItem,
-		Checkbox,
-		Button,
-		Select,
-		Alert,
-		Accordion,
-		AccordionItem,
-		Input,
-		Fileupload,
-		Modal,
-		Radio,
-		Spinner,
-		Heading
-	} from 'flowbite-svelte';
-	import type { PageData } from './$types';
-	export let data: PageData;
+	import { Button, Alert, Modal, Heading } from 'flowbite-svelte';
 	export let form;
 	import { Hr, Card, CloseButton } from 'flowbite-svelte';
-	import AdminModal from '$lib/components/AdminModal.svelte';
-	import RuleDialog from './RuleDialog.svelte';
-	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import countries, { getFlagEmoji } from '$lib/wsstore/countries';
-	let activeTab = $page.url.searchParams.get('tab') ?? 'apikeys';
-	import { Drawer, A } from 'flowbite-svelte';
+	import { Drawer } from 'flowbite-svelte';
 	import { sineIn } from 'svelte/easing';
-	import Checkout from '$lib/components/Checkout.svelte';
 
 	let hidden8 = true;
 	let transitionParamsBottom = {
@@ -37,15 +15,12 @@
 		easing: sineIn
 	};
 
-	let paymode = 'mpesa';
 	import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
 	import { browser } from '$app/environment';
 	import axios from 'axios';
 
 	let checkoutPlan = 'ndovu';
 	let checkoutPrice = 0;
-
-	let userPhone = '';
 
 	let checkingOut = false;
 
@@ -87,6 +62,24 @@
 			uploading = false;
 			uploadType = '';
 		});
+	}
+
+	let makingTemplate = false;
+	let templateModal = false;
+	let templateSuccess = false;
+	let isTemplate = $page.data.space?.template;
+
+	async function handleCreateTemplate() {
+		makingTemplate = true;
+		templateSuccess = false;
+		const response = await axios.put(`/a/${$page.params.app_id}/preferences/svr`, {
+			template: !isTemplate
+		});
+		if (response.data) {
+			makingTemplate = false;
+			isTemplate = !isTemplate;
+			templateSuccess = true;
+		}
 	}
 </script>
 
@@ -218,7 +211,7 @@
 									<span class="text-gray-500 dark:text-gray-400">/month</span>
 								</div>
 								<!-- List -->
-								<ul role="list" class="mb-8 space-y-4 text-left">
+								<ul class="mb-8 space-y-4 text-left">
 									<li class="flex items-center space-x-3">
 										<svg
 											class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
@@ -331,7 +324,7 @@
 									<span class="text-gray-500 dark:text-gray-400" dark:text-gray-400>/month</span>
 								</div>
 								<!-- List -->
-								<ul role="list" class="mb-8 space-y-4 text-left">
+								<ul class="mb-8 space-y-4 text-left">
 									<li class="flex items-center space-x-3">
 										<!-- Icon -->
 										<svg
@@ -412,7 +405,7 @@
 									on:click={() => {
 										hidden8 = false;
 										checkoutPlan = 'simba';
-										checkoutPrice = 199;
+										checkoutPrice = 699;
 									}}
 									class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900"
 									>Get started</button
@@ -444,7 +437,7 @@
 									<span class="text-gray-500 dark:text-gray-400">/month</span>
 								</div>
 								<!-- List -->
-								<ul role="list" class="mb-8 space-y-4 text-left">
+								<ul class="mb-8 space-y-4 text-left">
 									<li class="flex items-center space-x-3">
 										<!-- Icon -->
 										<svg
@@ -525,7 +518,7 @@
 									on:click={() => {
 										hidden8 = false;
 										checkoutPlan = 'ndovu';
-										checkoutPrice = 699;
+										checkoutPrice = 999;
 									}}
 									class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900"
 									>Get started</button
@@ -902,12 +895,85 @@
 						</div>
 					</div>
 
-					<div class="mt-6 flex items-center justify-end gap-x-6">
+					<div class="my-6 flex items-center justify-end gap-x-6">
 						<button
 							type="submit"
-							class="rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+							class="rounded-md  bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 							>Update</button
 						>
+					</div>
+
+					<hr />
+					<div class="my-6 space-y-3">
+						<Alert class="bg-red-200 dark:bg-red-200 border-red-500" accent>
+							<Heading color="dark" class="text-gray-800 dark:text-gray-800" tag="h6"
+								>Public template</Heading
+							>
+							<Modal class="w-full" open={templateModal}>
+								<div slot="header">
+									<Heading tag="h6">Template settings</Heading>
+								</div>
+								<div class="flex justify-center">
+									{#if browser && makingTemplate}
+										<div class="flex justify-center -pt-8">
+											<LottiePlayer
+												src="https://assets9.lottiefiles.com/packages/lf20_f0oAgL.json"
+												autoplay={true}
+												loop={true}
+												renderer="svg"
+												background="transparent"
+												height={120}
+												width={120}
+											/>
+										</div>
+									{/if}
+									{#if browser && templateSuccess}
+										<div class="flex justify-center -pt-8">
+											<LottiePlayer
+												src="https://assets1.lottiefiles.com/packages/lf20_atippmse.json"
+												autoplay={true}
+												loop={true}
+												renderer="svg"
+												background="transparent"
+												height={120}
+												width={120}
+											/>
+										</div>
+									{/if}
+								</div>
+								<Button
+									color={isTemplate ? 'red' : 'green'}
+									on:click={handleCreateTemplate}
+									class="mt-3 w-full"
+									disabled={makingTemplate}
+									>{makingTemplate
+										? 'Please wait...'
+										: isTemplate
+										? 'Remove template'
+										: 'Create template'}</Button
+								>
+							</Modal>
+							<Button
+								color={isTemplate ? 'red' : 'green'}
+								on:click={() => (templateModal = true)}
+								class="mt-3"
+								>{makingTemplate
+									? 'Please wait...'
+									: isTemplate
+									? 'Remove template'
+									: 'Create template'}</Button
+							>
+						</Alert>
+						<Alert class="bg-red-200 dark:bg-red-200 border-red-500" accent>
+							<Heading color="dark" class="text-gray-800 dark:text-gray-800" tag="h6"
+								>Maintenance mode</Heading
+							>
+						</Alert>
+						<Alert class="bg-red-200 dark:bg-red-200 border-red-500" accent>
+							<Heading color="dark" class="text-gray-800 dark:text-gray-800" tag="h6"
+								>Deactivate</Heading
+							>
+						</Alert>
 					</div>
 				</form>
 			</Card>

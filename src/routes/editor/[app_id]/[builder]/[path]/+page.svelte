@@ -64,7 +64,7 @@
 				plugins: [
 					// (editor) => gjsForms(editor),
 					// (editor) => gjsTabs(editor),
-					// spacePages,
+					spacePages,
 					(editor) => gBasic(editor),
 					(editor) =>
 						gSpaceApIList(editor, {
