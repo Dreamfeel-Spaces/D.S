@@ -10,16 +10,18 @@ export async function PUT({ request, locals }: RequestEvent) {
 
 	const data = await request.json();
 
-	const template = data['template']
+	const template = data['template'];
 
-	console.log(template, data);
+	const category = data['category'];
 
 	const updatedSpace = await prisma.space.update({
+		//@ts-ignore
 		where: {
 			id: space.id
 		},
 		data: {
-			template
+			template,
+			tempCat: category
 		}
 	});
 

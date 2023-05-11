@@ -4,7 +4,6 @@
 	import { DarkMode, Button, Modal, Checkbox, Avatar } from 'flowbite-svelte';
 	let space = $page.data.space;
 	import categories from '$lib/templates/templatecategories.json';
-	console.log($page.data.templates);
 </script>
 
 <div class="flex flex-row min-h-screen dark:bg-gray-900 bg-gray-100 text-gray-800">

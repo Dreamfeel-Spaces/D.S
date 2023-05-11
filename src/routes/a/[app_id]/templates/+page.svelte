@@ -14,28 +14,23 @@
 				<img
 					class="w-full"
 					loading="lazy"
-					src="https://res.cloudinary.com/dreamnerd/image/upload/v1683785200/download_y6vqef.png"
+					src="https://res.cloudinary.com/dreamnerd/image/upload/v1683813200/Screenshot_from_2023-05-11_16-51-40_drnmo8.png"
 					alt="Sunset in the mountains"
 				/>
 				<div class="px-6 py-4">
 					<div class="font-bold text-xl mb-2">{template.name}</div>
-					<p class="text-gray-700 text-base">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla!
-						Maiores et perferendis eaque, exercitationem praesentium nihil.
-					</p>
 				</div>
 				<div class="px-6 pt-4 pb-2">
-					<span
+					<button
+						on:click={(e) => e.stopPropagation()}
 						class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-						>#photography</span
+						>Install</button
 					>
-					<span
+					<a
+						target="blank"
+						href="/{$page.data.space?.appId}"
 						class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-						>#travel</span
-					>
-					<span
-						class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-						>#winter</span
+						>Preview</a
 					>
 				</div>
 			</a>

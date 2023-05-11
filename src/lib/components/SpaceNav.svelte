@@ -13,7 +13,7 @@
 		Modal,
 		Input,
 		Label,
-		Select
+		Select,A
 	} from 'flowbite-svelte';
 	import logo from '../../assets/logo.png';
 	const space = $page?.data?.space;
@@ -44,6 +44,11 @@
 		value: role.id
 	}));
 </script>
+
+<Modal class="w-full" open>
+	<div class="text-3xl">Start from a template</div>
+	<A href="/a/{$page.data.space?.appId}/templates">Pick a template</A>
+</Modal>
 
 <form
 	action={`/a/${$page.data.space?.appId}/accounts?/updatePassword&next=${$page.url.pathname}`}

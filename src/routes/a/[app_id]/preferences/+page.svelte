@@ -1,13 +1,16 @@
 <script lang="ts">
 	//@ts-nocheck
-	import { Button, Alert, Modal, Heading } from 'flowbite-svelte';
+	import { Button, Alert, Modal, Heading, Select, Label } from 'flowbite-svelte';
 	export let form;
 	import { Hr, Card, CloseButton } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import countries, { getFlagEmoji } from '$lib/wsstore/countries';
 	import { Drawer } from 'flowbite-svelte';
 	import { sineIn } from 'svelte/easing';
+	import categories from '$lib/templates/templatecategories.json';
 
+	let category = $page.data.space?.tempCat;
+	let items = categories.map((c) => ({ name: c.name, value: c.url }));
 	let hidden8 = true;
 	let transitionParamsBottom = {
 		y: 320,
@@ -73,7 +76,8 @@
 		makingTemplate = true;
 		templateSuccess = false;
 		const response = await axios.put(`/a/${$page.params.app_id}/preferences/svr`, {
-			template: !isTemplate
+			template: !isTemplate,
+			category
 		});
 		if (response.data) {
 			makingTemplate = false;
@@ -941,6 +945,10 @@
 										</div>
 									{/if}
 								</div>
+								<Label>
+									Template category
+									<Select bind:value={category} {items} />
+								</Label>
 								<Button
 									color={isTemplate ? 'red' : 'green'}
 									on:click={handleCreateTemplate}
