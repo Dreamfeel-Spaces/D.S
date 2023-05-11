@@ -39,9 +39,9 @@ model Page {
   icon             String?
   path             String?
   components       Component[]
-  html             String?        @db.Text
+  html             String?        @db.LongText
   pathRegexp       String?
-  uiDef            String?        @db.Text
+  uiDef            String?        @db.LongText
   roles            UserRoles?     @relation(fields: [userRolesId], references: [id])
   userRolesId      String?
   layout           Boolean        @default(false)
