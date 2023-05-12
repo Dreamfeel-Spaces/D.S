@@ -21,7 +21,7 @@
 <div class="  dark:bg-gray-900">
 	<section class="bg-neutral-100 rounded-br-full rounded-bl-3xl  dark:bg-gray-900">
 		<div
-			class="grid  max-w-screen xl:px-28 2xl:px-[8rem] 2xl:py-20  	 px-4 py-8  mx-auto   lg:gap-8 xl:gap-0 lg:py-9 lg:grid-cols-12"
+			class="grid  max-w-screen xl:px-28 2xl:px-[13rem]  4xl:px-[20rem] 2xl:py-32   	 px-4 py-8  mx-auto   lg:gap-8 xl:gap-0 lg:py-9 lg:grid-cols-12"
 		>
 			<div class="mr-auto md:pt-9 lg:pt-2 self-center min-h-105 lg:col-span-7">
 				<h1
@@ -131,7 +131,7 @@
 </div>
 
 <section class="bg-white dark:bg-gray-900">
-	<div class="py-8 px-4 mx-auto max-w-screen  sm:py-16 lg:px-6">
+	<div class="py-8 px-4 xl:px-28 2xl:px-[13rem]  4xl:px-[20rem] 2xl:py-32  mx-auto max-w-screen  sm:py-16 lg:px-6">
 		<div class="max-w-screen mb-8 lg:mb-16">
 			<h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-700 dark:text-white">
 				Designed for fast moving teams, like yours

@@ -10,5 +10,6 @@ export const recentlyViewed = writable({});
 
 export const geoStore = writable({});
 
+export const tableIcon = writable('folder_open');
 
-export const tableIcon = writable("folder_open")
+export const templateModalOpen = writable(false);

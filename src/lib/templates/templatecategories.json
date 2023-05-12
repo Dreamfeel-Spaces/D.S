@@ -1,7 +1,12 @@
 [
 	{ "name": "Landing Pages", "icon": "web", "url": "landing_pages", "imageUrl": "" },
 	{ "name": "Social Links", "icon": "share", "url": "social_links", "imageUrl": "" },
-	{ "name": "E-Commerce", "icon": "storefront", "url": "landing_pages", "imageUrl": "" },
+	{
+		"name": "E-Commerce",
+		"icon": "storefront",
+		"url": "e_commerce",
+		"imageUrl": "https://res.cloudinary.com/dreamnerd/image/upload/v1683813200/Screenshot_from_2023-05-11_16-51-40_drnmo8.png"
+	},
 	{ "name": "Blog", "icon": "rss_feed", "url": "blog", "imageUrl": "" },
 	{ "name": "School", "icon": "school", "url": "school", "imageUrl": "" },
 	{ "name": "Business", "icon": "corporate_fare", "url": "business", "imageUrl": "" },

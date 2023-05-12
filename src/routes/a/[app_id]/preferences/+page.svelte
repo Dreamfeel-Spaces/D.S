@@ -42,6 +42,7 @@
 	import Dropzone from 'svelte-file-dropzone';
 	import { uploadCloudinary } from '$lib/files/upload';
 	import PayBtn from '$lib/cbd/pay/PayBtn.svelte';
+	import { templateModalOpen } from '$lib/wsstore/index.js';
 
 	let space: any = $page.data.space;
 	let spaceMeta: any = $page.data.spaceMeta ?? {};
@@ -180,6 +181,34 @@
 	<div class="flex-1">
 		<div>
 			<Card size="xl">
+				<div class="space-y-8 mt-3  lg:space-y-0">
+					<!-- Pricing Card -->
+					<div
+						class="flex flex-col p-6 mx-auto max-w-full  text-gray-800 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white"
+					>
+						<div class="text-2xl dark:text-gray-100  my-2">Theme</div>
+						<Hr class="mb-4" />
+						{#if browser}
+							<div class="flex mb-9">
+								<img
+									alt="Template screenshot"
+									width="300"
+									src="https://res.cloudinary.com/dreamnerd/image/upload/v1683813200/Screenshot_from_2023-05-11_16-51-40_drnmo8.png"
+								/>
+							</div>
+						{/if}
+
+						<button
+							on:click={() => {
+								templateModalOpen.set(true)
+								
+							}}
+							class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-green-900"
+							>Change template</button
+						>
+					</div>
+				</div>
+
 				<div>
 					<div class=" max-w-screen-xl lg:px-6">
 						{#if form?.success}

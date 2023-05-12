@@ -13,13 +13,17 @@
 		Modal,
 		Input,
 		Label,
-		Select,A
+		Select,
+		A,
+
+		Alert
+
 	} from 'flowbite-svelte';
 	import logo from '../../assets/logo.png';
 	const space = $page?.data?.space;
 	import { sineIn } from 'svelte/easing';
 	import SpaceSearch from '../../routes/rest/[app_id]/SpaceSearch.svelte';
-	import { passwordResetDialog } from '$lib/wsstore';
+	import { passwordResetDialog, templateModalOpen } from '$lib/wsstore';
 	let hidden2 = true;
 	let transitionParams = {
 		x: 320,
@@ -45,9 +49,26 @@
 	}));
 </script>
 
-<Modal class="w-full" open>
+<Modal
+	class="w-full text-center "
+	on:close={() => {
+		templateModalOpen.set(false);
+	}}
+	bind:open={$templateModalOpen}
+>
 	<div class="text-3xl">Start from a template</div>
-	<A href="/a/{$page.data.space?.appId}/templates">Pick a template</A>
+
+
+	<Alert	accent >
+
+	</Alert>
+
+	<A
+		on:close={() => {
+			templateModalOpen.set(false);
+		}}
+		href="/a/{$page.data.space?.appId}/templates">Pick a template</A
+	>
 </Modal>
 
 <form

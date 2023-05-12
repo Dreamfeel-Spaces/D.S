@@ -1,6 +1,25 @@
 <script>
 	import { page } from '$app/stores';
-	import { Card } from 'flowbite-svelte';
+	import axios from 'axios';
+	import { Card, Spinner } from 'flowbite-svelte';
+	let saving = false;
+
+	async function handleSave() {
+		try {
+			saving = true;
+			const response = await axios.put(
+				`/a/${$page.params.app_id}/templates/${$page.params.id}/install`
+			);
+			if (response.data) {
+				
+				saving = false;
+				alert("Template saved")
+			}
+		} catch (e) {
+			saving = false;
+			alert('An error occured');
+		}
+	}
 </script>
 
 <Card size="xl">
@@ -8,39 +27,39 @@
 		<div class="xl:w-2/6 lg:w-2/5 w-80 md:block hidden">
 			<img
 				class="w-full"
-				alt="image of a girl posing"
+				alt=" of a girl posing"
 				src="https://res.cloudinary.com/dreamnerd/image/upload/v1683813200/Screenshot_from_2023-05-11_16-51-40_drnmo8.png"
 			/>
 			<img
 				class="mt-6 w-full"
-				alt="image of a girl posing"
+				alt=" of a girl posing"
 				src="https://res.cloudinary.com/dreamnerd/image/upload/v1683813519/Screenshot_from_2023-05-11_16-58-12_wqiwrn.png"
 			/>
 		</div>
 		<div class="md:hidden">
 			<img
 				class="w-full"
-				alt="image of a girl posing"
+				alt=" of a girl posing"
 				src="https://i.ibb.co/QMdWfzX/component-image-one.png"
 			/>
 			<div class="flex items-center justify-between mt-3 space-x-4 md:space-x-0">
 				<img
-					alt="image-tag-one"
+					alt="-tag-one"
 					class="md:w-48 md:h-48 w-full"
 					src="https://i.ibb.co/cYDrVGh/Rectangle-245.png"
 				/>
 				<img
-					alt="image-tag-one"
+					alt="-tag-one"
 					class="md:w-48 md:h-48 w-full"
 					src="https://i.ibb.co/f17NXrW/Rectangle-244.png"
 				/>
 				<img
-					alt="image-tag-one"
+					alt="-tag-one"
 					class="md:w-48 md:h-48 w-full"
 					src="https://i.ibb.co/cYDrVGh/Rectangle-245.png"
 				/>
 				<img
-					alt="image-tag-one"
+					alt="-tag-one"
 					class="md:w-48 md:h-48 w-full"
 					src="https://i.ibb.co/f17NXrW/Rectangle-244.png"
 				/>
@@ -79,7 +98,9 @@
 			<div class="py-4 border-b border-gray-200 flex items-center justify-between">
 				<p class="text-base leading-4 text-gray-800 dark:text-gray-300">Category</p>
 				<div class="flex items-center justify-center">
-					<p class="text-sm leading-none text-gray-600 dark:text-gray-300 mr-3">{$page.data.space?.tempCat}</p>
+					<p class="text-sm leading-none text-gray-600 dark:text-gray-300 mr-3">
+						{$page.data.space?.tempCat}
+					</p>
 
 					<img
 						class="dark:hidden"
@@ -94,9 +115,15 @@
 				</div>
 			</div>
 			<button
-				class="dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-base flex items-center justify-center leading-none text-white bg-gray-800 w-full py-4 hover:bg-gray-700 focus:outline-none"
+				on:click={handleSave}
+				class="dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100  focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-base flex items-center justify-center leading-none text-white bg-gray-800 w-full py-4 hover:bg-gray-700 focus:outline-none"
 			>
-				Install template
+				{#if !saving}
+					Install template
+				{:else}
+					<Spinner class="mr-3" />
+					Installing template...
+				{/if}
 			</button>
 			<div>
 				<p

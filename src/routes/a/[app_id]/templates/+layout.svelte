@@ -27,8 +27,8 @@
 				<li class="my-px">
 					<a
 						href={`/a/${space?.appId}/templates`}
-						class="flex flex-row items-center  h-10 px-3 {!/\/a\/([^/]+)\//.test($page.url.pathname)
-							? 'bg-blue-900'
+						class="flex flex-row items-center  h-10 px-3 {!$page.params.url && !$page.params.id
+							? 'bg-blue-900 text-white'
 							: ''} rounded-lg dark:text-gray-100"
 					>
 						<span class="flex items-center justify-center text-lg dark:text-gray-100">
@@ -57,10 +57,11 @@
 				{#each categories as category}
 					<li class="my-px">
 						<a
-							href="/rest/{$page.params['app_id']}"
+							href={`/a/${space?.appId}/templates/c/${category.url}`}
 							id="rest_link"
-							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
-							>{category.name}</a
+							class="flex flex-row items-center  h-10 px-3 {$page.params.url === category.url
+								? 'bg-blue-900 text-white'
+								: ''} rounded-lg dark:text-gray-100">{category.name}</a
 						>
 					</li>
 				{/each}
