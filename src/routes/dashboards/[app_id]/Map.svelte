@@ -46,11 +46,11 @@
 	});
 </script>
 
-<main>
-	<Card size="xl">
+<main  >
+	<div class="xl bg-gray-200 mt-9 pt-4 rounded-lg p-4 mx-6">
 		<p class="text-xl mb-4 text-gray-600">Live Sessions</p>
 		<div bind:this={mapElement} />
-	</Card>
+	</div>
 </main>
 
 <style>

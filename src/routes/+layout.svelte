@@ -104,7 +104,7 @@
 			>
 				<a class="w-full" href="/early-access">
 					<div class="bg-salmon-900 w-full text-center lg:px-4">
-						<div
+						<!-- <div
 							class="p-1 bg-blue-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
 							role="alert"
 						>
@@ -123,7 +123,8 @@
 									d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"
 								/></svg
 							>
-						</div>
+						</div> -->
+						
 					</div>
 				</a>
 

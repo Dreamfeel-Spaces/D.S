@@ -76,7 +76,7 @@
 		datasets: [
 			{
 				label: chartType,
-				data: $page.data.groupedSessions.map((item: { revenue: any }) => 0),
+				data: $page.data.groupedSessions.map((item: { revenue: any }) => null),
 				backgroundColor: [
 					'hsl(347 38% 49%)',
 					'hsl(346 65% 63%)',
@@ -183,12 +183,12 @@
 	});
 </script>
 
-<main class="main-container grid grid-cols-2 gap-4 ">
-	<Card size="lg">
+<main class="main-container bg-gray-200 relative pt-4 4xl:grid-cols-1  mt-9 rounded-lg mx-3 grid grid-cols-2 gap-4 p-2">
+	<div>
 		<div class="flex justify-between">
 			<div>
-				<div class="text-xl">Signups</div>
-				<p>Monthly user signup</p>
+				<div class="text-xl 4xl:text-4xl">Signups</div>
+				<p class="4xl:text-3xl" >Monthly user signup</p>
 			</div>
 			<!-- <div>
 				<Select
@@ -202,32 +202,33 @@
 			</div> -->
 		</div>
 
-		<section class="flex  justify-center">
+		<section class="flex bg-gray-300 mt-2 z-40 back backdrop-blur-2xl   p-3 rounded-xl justify-center">
 			<canvas bind:this={barChartElement} />
 		</section>
-	</Card>
+	</div>
 
-	<Card size="lg">
-		<div class="text-xl">Sessions</div>
-		<p>Monthly sessions</p>
+	<div class=" ">
+		<div class="text-xl 4xl:text-4xl">Sessions</div>
+		<p class="4xl:text-3xl" >Monthly sessions</p>
 		<div class="mt-3 text-xs">
-			<section class="flex justify-center">
+			<section class="flex bg-gray-300 mt-2 z-40 back backdrop-blur-2xl   p-3 rounded-xl justify-center">
 				<canvas bind:this={lineChartElement} />
 			</section>
+			
 		</div>
-	</Card>
+	</div>
 </main>
 
 <section>
-	<Card size="xl">
-		<div class="h-48">
-			<div class="text-xl">Revenue</div>
-			<p>Monthly revenue</p>
+	<div >
+		<div class=" mt-9 mx-6  pt-3 rounded-lg bg-gray-200 text-center px-8">
+			<div class="text-xl 4xl:text-4xl">Revenue</div>
+			<p class="t 4xl:text-4xl">Monthly revenue</p>
 			<div class="mt-3 text-xs">
-				<section class="flex justify-center">
+				<section class="flex h-72 4xl:max-h-[69rem] 4xl:h-[69rem] py-4 rounded-lg max-h-72 bg-gray-300 justify-center">
 					<canvas bind:this={walletChartElement} />
 				</section>
 			</div>
 		</div>
-	</Card>
+	</div>
 </section>

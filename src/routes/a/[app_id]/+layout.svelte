@@ -26,10 +26,10 @@
 	}
 
 	onMount(() => {
-		let permanentDisableDemoVideo = localStorage.getItem('permanentDisableDemoVideo');
-		if (permanentDisableDemoVideo) {
-			demoDialogOpen = false;
-		} else demoDialogOpen = true;
+		// let permanentDisableDemoVideo = localStorage.getItem('permanentDisableDemoVideo');
+		// if (permanentDisableDemoVideo) {
+		// 	demoDialogOpen = false;
+		// } else demoDialogOpen = true;
 	});
 
 	let help = false;
@@ -80,7 +80,7 @@
 
 	<div class="flex flex-row min-h-screen dark:bg-gray-900 bg-gray-100 text-gray-800">
 		<aside
-			class="sidebar dark:text-gray-900 w-72  z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
+			class="sidebar dark:text-gray-900 w-72 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
 		>
 			<div class="sidebar-header flex items-center  ml-7 py-3">
 				<div class="inline-flex">
@@ -94,15 +94,15 @@
 					</a>
 				</div>
 			</div>
-			<div class="sidebar-content px-4 py-1">
+			<div class="sidebar-content 4xl:py-9 px-4 py-1">
 				<ul class="flex flex-col w-full">
-					<li class="my-px">
+					<li class="4xl:space-y-9 space 6xl:space-y-16">
 						<a
 							href={`/a/${space?.appId}`}
-							class="flex flex-row items-center  h-10 px-3 {!/\/a\/([^/]+)\//.test(
+							class="flex   flex-row items-center 4xl:py-9 6xl:py-16  h-10 px-3 {!/\/a\/([^/]+)\//.test(
 								$page.url.pathname
 							)
-								? 'bg-blue-900'
+								? 'bg-blue-900 text-gray-200'
 								: ''} rounded-lg dark:text-gray-100"
 						>
 							<span class="flex items-center justify-center text-lg dark:text-gray-100">
@@ -120,11 +120,12 @@
 									/>
 								</svg>
 							</span>
-							<span class="ml-3">Home</span>
+							<span class="ml-3 4xl:text-4xl 6xl:text-6xl  ">Home</span>
 						</a>
 					</li>
 					<li class="my-px">
-						<span class="flex font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase"
+						<span
+							class="flex 4xl:text-3xl font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase"
 							>Space</span
 						>
 					</li>
@@ -132,7 +133,7 @@
 						<a
 							href="/rest/{$page.params['app_id']}"
 							id="rest_link"
-							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
+							class="flex 4xl:text-4xl 4xl:py-9 hover:text-gray-100 flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 dark:hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-lg dark:text-gray-400">
 								<svg
@@ -146,7 +147,7 @@
 									/></svg
 								>
 							</span>
-							<span class="ml-3">Datasource</span>
+							<span class="ml-3 l">Datasource</span>
 						</a>
 					</li>
 					<!-- <li class="my-px">
@@ -172,7 +173,7 @@
 					<li class="my-px">
 						<a
 							href={`/dashboards/${space.appId}`}
-							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
+							class="flex 4xl:text-4xl 4xl:py-9 hover:text-gray-100  flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 dark:hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-lg dark:text-gray-400">
 								<svg
@@ -196,7 +197,7 @@
 					<li class="my-px">
 						<a
 							href={`/editor/${space.appId}`}
-							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
+							class="flex  flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 4xl:text-4xl 4xl:py-9 hover:text-gray-100 dark:hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-l">
 								<svg
@@ -220,7 +221,7 @@
 								$page.url.pathname
 							)
 								? 'bg-blue-900'
-								: ''} hover:text-gray-700"
+								: ''} 4xl:text-4xl 4xl:py-9 hover:text-gray-100  dark:hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-l">
 								<svg
@@ -249,7 +250,7 @@
 							href={`/a/${space.appId}/pos`}
 							class="flex {/\/pos/.test($page.url.pathname)
 								? 'bg-blue-900'
-								: ''} flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
+								: ''} flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 4xl:text-4xl 4xl:py-9 hover:text-gray-100  dark:hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-l">
 								<svg
@@ -277,7 +278,7 @@
 							href={`/a/${space.appId}/pay`}
 							class="flex {/\/pay/.test($page.url.pathname)
 								? 'bg-blue-900'
-								: ''} flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
+								: ''} flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 4xl:text-4xl 4xl:py-9 hover:text-gray-100 dark:hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-l">
 								<svg
@@ -295,7 +296,8 @@
 						</a>
 					</li>
 					<li class="my-px">
-						<span class="flex font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase"
+						<span
+							class="flex  4xl:text-3xl font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase"
 							>Account</span
 						>
 					</li>
@@ -310,7 +312,7 @@
 							href={`/a/${space.appId}/accounts`}
 							class="flex flex-row {/\/accounts/.test($page.url.pathname)
 								? 'bg-blue-900'
-								: ''}  items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
+								: ''}  items-center h-10 px-3 rounded-lg dark:text-gray-300 4xl:text-4xl 4xl:py-9  dark:hover:bg-gray-600 hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-lg dark:text-gray-400">
 								<svg
@@ -339,7 +341,7 @@
 							href={`/a/${space.appId}/wallets`}
 							class="flex flex-row items-center {/\/wallets/.test($page.url.pathname)
 								? 'bg-blue-900'
-								: ''} h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
+								: ''} h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 4xl:text-4xl 4xl:py-9 hover:text-gray-100"
 						>
 							<span class="flex items-center justify-center text-lg dark:text-gray-400">
 								<svg
@@ -367,7 +369,7 @@
 							href={`/a/${space.appId}/preferences`}
 							class="flex {/\/preferences/.test($page.url.pathname)
 								? 'bg-blue-900'
-								: ''} flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
+								: ''} flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 4xl:text-4xl 4xl:py-9 hover:text-gray-100"
 						>
 							<span class="flex items-center justify-center text-lg dark:text-gray-400">
 								<svg
@@ -392,7 +394,7 @@
 			</div>
 		</aside>
 		<main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
-			<a class="w-full" rel="external" href="/early-access">
+			<!-- <a class="w-full" rel="external" href="/early-access">
 				<div class="bg-blue-ss w-full text-center py-1 lg:px-4">
 					<div
 						class="p-1 bg-blue-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
@@ -414,7 +416,7 @@
 						>
 					</div>
 				</div>
-			</a>
+			</a> -->
 			<header class="header dark:bg-gray-800 bg-white shadow py-1 px-4">
 				<div class="header-content flex items-center flex-row">
 					<SpaceSearch />
@@ -491,7 +493,7 @@
 					</div>
 				</div>
 			</header>
-			<div class="main-content dark:bg-gray-700  max-h-105 flex flex-col flex-grow p-2">
+			<div class="main-content dark:bg-gray-700  flex flex-col flex-grow p-2">
 				<div class="flex flex-col  dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded ">
 					<slot />
 				</div>

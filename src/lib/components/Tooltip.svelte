@@ -25,12 +25,12 @@
 	import { Checkbox } from 'flowbite-svelte';
 
 	onMount(() => {
-		let isStopped = localStorage.getItem('qsHidePermanent');
-		if (isStopped === 'true') {
-			handleSkip();
-		} else {
-			qsLauncher.set({ skipped: false, step: 0 });
-		}
+		// let isStopped = localStorage.getItem('qsHidePermanent');
+		// if (isStopped === 'true') {
+		// 	handleSkip();
+		// } else {
+		// 	qsLauncher.set({ skipped: false, step: 0 });
+		// }
 	});
 
 	let controlsLayout = [

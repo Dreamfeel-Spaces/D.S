@@ -8,11 +8,7 @@
 
 	import Cursort from './Cursort.svelte';
 	import HeroCarousel from './HeroCarousel.svelte';
-	
-
 </script>
-
-
 
 <Cursort />
 
@@ -25,18 +21,18 @@
 <div class="  dark:bg-gray-900">
 	<section class="bg-neutral-100 rounded-br-full rounded-bl-3xl  dark:bg-gray-900">
 		<div
-			class="grid  max-w-screen-xl 	 px-4 py-8  mx-auto   lg:gap-8 xl:gap-0 lg:py-9 lg:grid-cols-12"
+			class="grid  max-w-screen xl:px-28 2xl:px-[8rem] 2xl:py-20  	 px-4 py-8  mx-auto   lg:gap-8 xl:gap-0 lg:py-9 lg:grid-cols-12"
 		>
 			<div class="mr-auto md:pt-9 lg:pt-2 self-center min-h-105 lg:col-span-7">
 				<h1
-					class="max-w-2xl  mt-28 mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-gray-700 dark:text-white"
+					class="max-w-xl  mt-9 mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-gray-700 dark:text-white"
 				>
 					The Ultimate No-Code Framework to Bring Your Vision to Life!
 				</h1>
 				<div class="inline-flex rounded-full">
 					<a
 						href="javascript:void(0)"
-						class="border-primary bg-primary hover:bg-primary hover:border-primary inline-flex items-center justify-center rounded-l-full border py-[10px] px-[12px] text-center text-base font-semibold text-white transition-all hover:text-white sm:py-3 sm:px-6"
+						class="border-primary bg-primary text-black hover:bg-primary hover:border-primary inline-flex items-center justify-center rounded-l-full border py-[10px] px-[12px] text-center text-base font-semibold dark:text-white transition-all hover:text-white sm:py-3 sm:px-6"
 					>
 						<span class="pr-2 text-green-500">
 							<svg
@@ -135,8 +131,8 @@
 </div>
 
 <section class="bg-white dark:bg-gray-900">
-	<div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-		<div class="max-w-screen-md mb-8 lg:mb-16">
+	<div class="py-8 px-4 mx-auto max-w-screen  sm:py-16 lg:px-6">
+		<div class="max-w-screen mb-8 lg:mb-16">
 			<h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-700 dark:text-white">
 				Designed for fast moving teams, like yours
 			</h2>
@@ -283,7 +279,7 @@
 </section>
 
 <section class="bg-white dark:bg-gray-900">
-	<div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
+	<div class="py-8 px-4 mx-auto  max-w-screen xl:px-28 text-center lg:py-16 lg:px-6">
 		<div class="mx-auto max-w-screen-sm">
 			<h2 class="mb-4 text-4xl tracking-tight font-extrabold text-pink-700 dark:text-white">
 				Testimonials
