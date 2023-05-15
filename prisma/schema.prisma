@@ -16,7 +16,7 @@ datasource db {
 
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String @db.VarChar(3000)
+  sessionToken String     @db.VarChar(3000)
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?
@@ -39,9 +39,9 @@ model Page {
   icon             String?
   path             String?
   components       Component[]
-  html             String? @db.LongText
+  html             String?        @db.LongText
   pathRegexp       String?
-  uiDef            String? @db.LongText
+  uiDef            String?        @db.LongText
   roles            UserRoles?     @relation(fields: [userRolesId], references: [id])
   userRolesId      String?
   layout           Boolean        @default(false)
@@ -878,6 +878,21 @@ model TemplateCategory {
   templates Space[]
 }
 
+model Event {
+  id         String  @id @default(cuid())
+  space      Space?  @relation(fields: [spaceId], references: [id])
+  spaceId    String?
+  name       String
+  type       String
+  trigger    String
+  targetType String
+  target     String
+  action     String
+  data       String
+
+  @@index([spaceId])
+}
+
 model Space {
   id                       String            @id @default(cuid())
   appId                    String            @unique
@@ -926,6 +941,7 @@ model Space {
   templateCategoryId       String?
   tempCat                  String?
   templated                DateTime?
+  events                   Event[]
 
   @@index([userId])
   @@index([templateCategoryId])

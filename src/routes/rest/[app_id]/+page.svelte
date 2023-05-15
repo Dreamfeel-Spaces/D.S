@@ -32,7 +32,7 @@
 </svelte:head>
 
 <div class="container">
-	<Card class="dark:text-white min-h-100" size="xl">
+	<div class="dark:text-white min-h-100" >
 		<div class="flex justify-between mb-2">
 			<div class="text-2xl flex items-center">
 				Datasource
@@ -184,5 +184,5 @@
 				{/each}
 			</div>
 		{/if} -->
-	</Card>
+		</div>
 </div>

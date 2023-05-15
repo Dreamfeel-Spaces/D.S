@@ -5,15 +5,12 @@
 </script>
 
 <div class="container">
-	<Card size="xl">
+	<div class="dark:bg-gray-900 p-6 h-full rounded-xl">
 		<div class="flex justify-between">
 			<Heading tag="h4">Actions</Heading>
 			<div><Button on:click={() => (modalOpen = true)}>Add</Button></div>
 		</div>
-        <div>
-            
-        </div>
-	</Card>
+	</div>
 </div>
 
 <div>

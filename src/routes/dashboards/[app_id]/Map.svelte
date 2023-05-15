@@ -47,7 +47,7 @@
 </script>
 
 <main  >
-	<div class="xl bg-gray-200 mt-9 pt-4 rounded-lg p-4 mx-6">
+	<div class="xl bg-gray-200 mt-9 py-9 rounded-lg p-4 mx-6">
 		<p class="text-xl mb-4 text-gray-600">Live Sessions</p>
 		<div bind:this={mapElement} />
 	</div>
@@ -57,5 +57,6 @@
 	@import 'leaflet/dist/leaflet.css';
 	main div {
 		height: 360px;
+		padding-bottom: 20px;
 	}
 </style>

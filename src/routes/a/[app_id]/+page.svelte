@@ -190,7 +190,7 @@
 		<div class="flex flex-wrap">
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2">
 				<div class="bg-green-600  backdrop-blur-sm border 2xl:min-h-[10rem] 4xl:min-h-[20rem] rounded-lg shadow p-2">
-					<a href="/a/{$page.data.space?.appId}/wallet" class="flex flex-row items-center">
+					<a href="/a/{$page.data.space?.appId}/wallets" class="flex flex-row items-center">
 						<div class="flex-shrink  pl-1 pr-4">
 							<svg
 								fill="currentColor"

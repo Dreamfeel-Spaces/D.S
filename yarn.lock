@@ -4644,6 +4644,11 @@ svelte-prism@^1.1.6:
     prism-svelte "^0.4.7"
     prismjs "^1.27.0"
 
+svelte-range-slider-pips@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/svelte-range-slider-pips/-/svelte-range-slider-pips-2.1.1.tgz"
+  integrity sha512-fLkhfnyEc4uMOCZCl8IPyC0e9lujrjqdSyrKw28Y8j99YUPZR+pHnSxde7PqhM0ST6eyO4ugh2nFnLZTIoG9aQ==
+
 svelte@^3.2.0, svelte@^3.23.0, svelte@^3.29.0, svelte@^3.44.0, svelte@^3.54.0, svelte@^3.55, svelte@^3.55.0, svelte@>=3, svelte@>=3.19.0:
   version "3.55.1"
   resolved "https://registry.npmjs.org/svelte/-/svelte-3.55.1.tgz"
@@ -5140,6 +5145,11 @@ yn@3.1.1:
   version "3.1.1"
   resolved "https://registry.npmjs.org/yn/-/yn-3.1.1.tgz"
   integrity sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
+
+yootils@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.npmjs.org/yootils/-/yootils-0.3.1.tgz"
+  integrity sha512-A7AMeJfGefk317I/3tBoUYRcDcNavKEkpiPN/nQsBz/viI2GvT7BtrqdPD6rGqBFN8Ax7v4obf+Cl32JF9DDVw==
 
 zod@^3.11.6:
   version "3.20.6"

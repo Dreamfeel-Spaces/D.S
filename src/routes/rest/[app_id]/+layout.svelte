@@ -467,7 +467,7 @@
 				</div>
 			</div>
 		</header>
-		<div class="main-content dark:bg-gray-700  max-h-105 flex flex-col flex-grow p-1">
+		<div class="main-content dark:bg-gray-700  flex flex-col flex-grow p-1">
 			<div
 				class="flex flex-col max-w-[100%]  dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded "
 			>

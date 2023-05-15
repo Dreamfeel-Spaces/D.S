@@ -95,7 +95,9 @@
 		"socket.io-client": "^4.6.1",
 		"svelte-ace": "^1.0.21",
 		"svelte-otp": "^1.0.9",
+		"svelte-range-slider-pips": "^2.1.1",
 		"ws": "^8.12.1",
-		"xmldom": "^0.6.0"
+		"xmldom": "^0.6.0",
+		"yootils": "^0.3.1"
 	}
 }

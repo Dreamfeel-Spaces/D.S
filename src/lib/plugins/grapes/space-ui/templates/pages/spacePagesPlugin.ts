@@ -9,6 +9,7 @@ import cart from './e-commerce/cart';
 import categories1 from './e-commerce/categories1';
 import gridOne from './e-commerce/gridOne';
 import checkoutOne from './e-commerce/checkoutOne';
+import landingONe from './data.ts/landingONe';
 
 export function spacePages(editor: grapesjs.Editor) {
 	let boxed = boxedLayout();
@@ -73,5 +74,11 @@ export function spacePages(editor: grapesjs.Editor) {
 		label: 'Checkout 1',
 		category: 'Pages',
 		content: checkoutOne()
+	});
+
+	editor.BlockManager.add('Lanfing 1', {
+		label: 'Lanfing 1',
+		category: 'Pages',
+		content: landingONe()
 	});
 }
