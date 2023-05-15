@@ -2,7 +2,6 @@
 	import { browser } from '$app/environment';
 	import '@fontsource/merriweather';
 	import { onDestroy, onMount } from 'svelte';
-	import { FY2021 } from '$lib/chart.json';
 	import { Card, Select } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import { useEffect } from '$lib/wsstore/hooks';
@@ -109,9 +108,11 @@
 		Chart.register(...registerables);
 
 		if (browser && !sessionChart) {
+			const autocolors = window['chartjs-plugin-autocolors'];
 			sessionChart = new Chart(lineChartElement, {
 				type: 'line',
 				data: chart2Data,
+				plugins: [autocolors],
 				options: {
 					plugins: {
 						legend: {
@@ -130,8 +131,10 @@
 			});
 		}
 		if (browser && !signupChart) {
+			const autocolors = window['chartjs-plugin-autocolors'];
 			signupChart = new Chart(barChartElement, {
 				type: chartType as any,
+				plugins: [autocolors],
 				data: chartData,
 				options: {
 					plugins: {
@@ -244,6 +247,10 @@
 	);
 </script>
 
+<svelte:head>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-autocolors"></script>
+</svelte:head>
+
 <main
 	class="main-container bg-gray-200 relative pt-4 4xl:grid-cols-1  mt-9 rounded-lg mx-3 grid lg:grid-cols-2 grid-cols-1 gap-4 p-2"
 >
@@ -253,7 +260,7 @@
 				<div class="text-xl 4xl:text-4xl">Signups</div>
 				<p class="4xl:text-3xl">Monthly user signup</p>
 			</div>
-			<div >
+			<div>
 				<Select
 					size="sm"
 					bind:value={signupChartType}

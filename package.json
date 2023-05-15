@@ -84,6 +84,7 @@
 		"@k4ung/svelte-otp": "^0.0.9",
 		"@lottiefiles/svelte-lottie-player": "^0.3.0",
 		"@planetscale/database": "^1.6.0",
+		"chartjs-plugin-autocolors": "^0.2.2",
 		"ckeditor": "^4.12.1",
 		"grapesjs-blocks-basic": "^1.0.1",
 		"handlebars": "^4.7.7",
