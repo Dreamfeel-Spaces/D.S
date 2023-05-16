@@ -275,12 +275,12 @@
 			</div>
 		</div>
 		<div class="py-4 px-9 flex gap-3 bg-gray-300">
-			{$page.data.groupedSessions.map((item) => item.month)[
-				Math.round(signupStart * $page.data.groupedSessions.map((item) => item.month).length)
-			]}
+			{$page.data.groupedUsers.map((item) => item.month)[
+				Math.round(signupStart * $page.data.groupedUsers.map((item) => item.month).length)
+			] ?? $page.data.groupedUsers[-1]}
 			<RangeSlider bind:start={signupStart} bind:end={signupEnd} />
-			{$page.data.groupedSessions.map((item) => item.month)[
-				Math.round(signupEnd * ($page.data.groupedSessions.map((item) => item.month).length - 1))
+			{$page.data.groupedUsers.map((item) => item.month)[
+				Math.round(signupEnd * ($page.data.groupedUsers.map((item) => item.month).length - 1))
 			]}
 		</div>
 		<section
@@ -314,7 +314,7 @@
 		<div class="my-4 px-9 flex gap-3">
 			{$page.data.groupedSessions.map((item) => item.month)[
 				Math.round(sessionStart * $page.data.groupedSessions.map((item) => item.month).length)
-			]}
+			] ?? $page.data.groupedSessions[-1]}
 			<RangeSlider bind:start={sessionStart} bind:end={sessionEnd} />
 			{$page.data.groupedSessions.map((item) => item.month)[
 				Math.round(sessionEnd * ($page.data.groupedSessions.map((item) => item.month).length - 1))
