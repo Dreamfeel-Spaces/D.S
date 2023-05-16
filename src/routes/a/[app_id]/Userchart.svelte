@@ -191,10 +191,10 @@
 
 	useEffect(
 		() => {
-			let length = $page.data.groupedSessions.map((item: { month: any }) => item.month).length - 1;
+			let length = $page.data.groupedUsers.map((item: { month: any }) => item.month).length - 1;
 			let start = Math.round(signupStart * length);
 			let end = Math.round(signupEnd * length);
-			let validData = $page.data.groupedSessions.filter((item, i) => {
+			let validData = $page.data.groupedUsers.filter((item, i) => {
 				return i >= start && i <= end;
 			});
 			if (signupChart) {
