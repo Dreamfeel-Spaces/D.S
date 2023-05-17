@@ -98,8 +98,8 @@
 				</div>
 				<br />
 				<div class="pt-8">
-					<Button class="mr-3" size="lg" href="/accounts" gradient color="pinkToOrange">
-						Get started
+					<Button class="mr-3" size="lg" href="/early-access" gradient color="pinkToOrange">
+						Early Access
 						<svg
 							class="w-5 h-5 ml-2 -mr-1"
 							fill="currentColor"
