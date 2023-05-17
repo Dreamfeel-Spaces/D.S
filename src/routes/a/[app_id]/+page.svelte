@@ -204,7 +204,7 @@
 							>
 						</div>
 						<div class="flex-1 text-right">
-							<h5 class="text-white 2xl:text-3xl 4xl:text-5xl">Total Revenue</h5>
+							<h5 class="text-green-400 2xl:text-3xl  4xl:text-5xl">Total Revenue</h5>
 							<h3 class="text-white 2xl:text-6xl 2xl:pt-4 4xl:text-9xl 4xl:mt-12 text-3xl">
 								0$<span class="text-green-400"><i class="fas fa-caret-down" /></span>
 							</h3>

@@ -212,7 +212,7 @@
 </script>
 
 <main class="main-container2 grid grid-cols-1 lg:grid-cols-2 gap-4 ">
-	<div class="dark:bg-gray-900 p-6 rounded-xl">
+	<div class="dark:bg-gray-900 bg-gray-300 p-6 rounded-xl">
 		<div class="text-xl max-h-72 pb-6">Monthly requests</div>
 		<div class="px-9 mb-4">
 			<DoubleRangeSlider bind:start={barStart} bind:end={barEend} />
@@ -220,10 +220,8 @@
 		<section class="">
 			<canvas bind:this={barChartElement} />
 		</section>
-
-		<div />
 	</div>
-	<div class="dark:bg-gray-900 p-6 rounded-xl">
+	<div class="dark:bg-gray-900 bg-gray-300  p-6 rounded-xl">
 		<div>
 			<div class="text-xl mb-3">By Request Method</div>
 			<div class="px-9 mb-4">
@@ -236,7 +234,7 @@
 	</div>
 </main>
 
-<div class="dark:bg-gray-900 p-6 rounded-xl mt-5">
+<div class="dark:bg-gray-900 bg-gray-300  p-6 rounded-xl mt-5">
 	<div>
 		<div class="text-xl mb-3">Table reads</div>
 		<div class="px-9 mb-4">

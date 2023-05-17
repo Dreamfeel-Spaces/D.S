@@ -27,16 +27,14 @@
 
 <svelte:head>
 	<title>
-		{space?.name} - Collections
+		{space?.name} - Datasource
 	</title>
 </svelte:head>
 
 <div class="container">
-	<div class="dark:text-white min-h-100" >
+	<div class="dark:text-white min-h-100">
 		<div class="flex justify-between mb-2">
-			<div class="text-2xl flex items-center">
-				Datasource
-			</div>
+			<div class="text-2xl flex items-center">Datasource</div>
 			<div>
 				<div class="flex justify-end py-1  pr-4 flex-wrap">
 					<Button
@@ -184,5 +182,5 @@
 				{/each}
 			</div>
 		{/if} -->
-		</div>
+	</div>
 </div>

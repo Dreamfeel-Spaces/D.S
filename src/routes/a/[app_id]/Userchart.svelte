@@ -277,11 +277,11 @@
 		<div class="py-4 px-9 flex gap-3 bg-gray-300">
 			{$page.data.groupedUsers.map((item) => item.month)[
 				Math.round(signupStart * $page.data.groupedUsers.map((item) => item.month).length)
-			] ?? $page.data.groupedUsers[-1]}
+			] ?? $page.data.groupedUsers[-1] ?? ""}
 			<RangeSlider bind:start={signupStart} bind:end={signupEnd} />
 			{$page.data.groupedUsers.map((item) => item.month)[
 				Math.round(signupEnd * ($page.data.groupedUsers.map((item) => item.month).length - 1))
-			]}
+			] ?? ""}
 		</div>
 		<section
 			class="flex bg-gray-400 pt-2 z-40 back backdrop-blur-2xl   p-3 rounded-b-xl justify-center"
@@ -290,13 +290,13 @@
 		</section>
 	</div>
 
-	<div class="bg-gray-300 pt-3 rounded-t-xl ">
-		<div class="flex px-3">
+	<div class="">
+		<div class="flex   rounded-t-xl  bg-gray-300 p-3">
 			<div class="flex-1">
 				<div class="text-xl 4xl:text-4xl">Sessions</div>
 				<p class="4xl:text-3xl">Monthly sessions</p>
 			</div>
-			<div>
+			<div class="flex bg-gray-300 px-3">
 				<Select
 					size="sm"
 					bind:value={sessionsChartsType}
@@ -311,23 +311,21 @@
 			</div>
 		</div>
 
-		<div class="my-4 px-9 flex gap-3">
+		<div class="bg-gray-300 px-9 py-4  flex gap-3">
 			{$page.data.groupedSessions.map((item) => item.month)[
 				Math.round(sessionStart * $page.data.groupedSessions.map((item) => item.month).length)
-			] ?? $page.data.groupedSessions[-1]}
+			] ?? $page.data.groupedSessions.map((item) => item.month)[-1] ??""}
 			<RangeSlider bind:start={sessionStart} bind:end={sessionEnd} />
 			{$page.data.groupedSessions.map((item) => item.month)[
 				Math.round(sessionEnd * ($page.data.groupedSessions.map((item) => item.month).length - 1))
-			]}
+			] ?? ""}
 		</div>
 
-		<div class="mt-3 text-xs">
 			<section
 				class="flex bg-gray-400 pt-2 z-40 back backdrop-blur-2xl   rounded-b-xl justify-center"
 			>
 				<canvas bind:this={lineChartElement} />
 			</section>
-		</div>
 	</div>
 </main>
 

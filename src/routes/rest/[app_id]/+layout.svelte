@@ -162,7 +162,7 @@
 						!$page.url.pathname.includes('permissions') &&
 						!$page.url.pathname.includes('create') &&
 						!$page.url.pathname.includes('endpoints') &&
-						!$page.url.pathname.includes('actions')}
+						!$page.url.pathname.includes('events')}
 					label={'Models'}
 				>
 					<svelte:fragment slot="icon">
@@ -216,7 +216,7 @@
 						/>
 					{/each}
 				</SidebarDropdownWrapper>
-				<SidebarDropdownWrapper label={'Actions'}>
+				<SidebarDropdownWrapper label={'Events'}>
 					<svelte:fragment slot="icon">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -232,7 +232,7 @@
 
 					{#each $page.data?.tables ?? [] as table}
 						<SidebarDropdownItem
-							href={`/rest/${space.appId}/${table.name}/actions`}
+							href={`/rest/${space.appId}/${table.name}/events`}
 							label={table.name}
 						/>
 					{/each}
@@ -249,14 +249,7 @@
 								d="m561 517-42-42 119-119-118-117 42-42 118 117 119-119 42 42-119 119 119 119-42 42-119-119-119 119ZM80 536l200-360 200 360H80Zm201 400q-66 0-113-47t-47-113q0-67 47-113.5T281 616q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-60q42 0 71-29t29-71q0-42-29-71t-71-29q-42 0-71 29t-29 71q0 42 29 71t71 29Zm-99-400h196l-98-176-98 176Zm338 460V616h320v320H520Zm60-60h200V676H580v200ZM280 388Zm1 388Zm399 0Z"
 							/></svg
 						>
-					</svelte:fragment>
-
-					<SidebarDropdownItem
-						href={`/rest/${space.appId}/integrations/payments`}
-						label={`Payments`}
-					/>
-					<SidebarDropdownItem label={`File storage`} />
-					<SidebarDropdownItem label={`Logistics`} />
+					</svelte:fragment>					<SidebarDropdownItem label={`File storage`} />
 					<SidebarDropdownItem label={`SMS`} />
 					<SidebarDropdownItem label={`Mail`} />
 					<SidebarDropdownItem label={`Push notifications`} />
