@@ -181,7 +181,7 @@
 				error = e;
 				loading = false;
 			}
-		} else if (action === 'create') {
+		} else if (action === 'create' || action === 'update') {
 			const body = columns.reduce((prev: any, curr: any, index: number) => {
 				return { ...prev, [curr.name]: curr.value };
 			}, {});
@@ -202,6 +202,24 @@
 		} else if (action === 'delete') {
 			try {
 				const response = await axios.delete(`${url}/${itemId}`, {
+					headers: {
+						'x-api-key': apiKey
+					}
+				});
+				data = response.data;
+				loading = false;
+				statuscode = response.status;
+				statusText = response.statusText;
+			} catch (e) {
+				error = e;
+				loading = false;
+			}
+		} else if (action === 'update') {
+			try {
+				const body = columns.reduce((prev: any, curr: any, index: number) => {
+					return { ...prev, [curr.name]: curr.value };
+				}, {});
+				const response = await axios.put(`${url}/${itemId}`, body, {
 					headers: {
 						'x-api-key': apiKey
 					}
@@ -359,7 +377,7 @@
 	{/if}
 
 	<div>
-		{#if action === 'create' || action === 'signup' || action === 'signin'}
+		{#if action === 'create' || action === 'signup' || action === 'signin' || action === 'update'}
 			<div class="flex my-6">
 				<div class="flex flex-1">
 					<Radio value="form_data" bind:group={datatype}>Form Data</Radio>
