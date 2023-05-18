@@ -7,14 +7,13 @@
 	import Map from '../../dashboards/[app_id]/Map.svelte';
 	import Location from './Location.svelte';
 	import Userchart from './Userchart.svelte';
-	import { fade, scale } from "svelte/transition";
-
+	import { fade, scale } from 'svelte/transition';
 </script>
 
 <Location />
 
 <section>
-	<div >
+	<div>
 		<Heading tag="h4">Home</Heading>
 		{#if Object.keys($recentlyViewed).length}
 			<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -190,8 +189,10 @@
 			</div>
 		{/if}
 		<div class="flex flex-wrap">
-			<div transition:scale class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2">
-				<div  class="bg-green-600  backdrop-blur-sm border 2xl:min-h-[10rem] 4xl:min-h-[20rem] rounded-lg shadow p-2">
+			<div transition:fade class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2">
+				<div
+					class="bg-green-600  backdrop-blur-sm border 2xl:min-h-[10rem] 4xl:min-h-[20rem] rounded-lg shadow p-2"
+				>
 					<a href="/a/{$page.data.space?.appId}/wallets" class="flex flex-row items-center">
 						<div class="flex-shrink  pl-1 pr-4">
 							<svg
@@ -214,7 +215,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2">
+			<div transition:fade class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2">
 				<div class="bg-blue-600 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2">
 					<a
 						href="/dashboards/{$page.data.space?.appId}/users/overview"
@@ -242,8 +243,10 @@
 					</a>
 				</div>
 			</div>
-			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2 xl:pr-3 xl:pl-1">
-				<div class="bg-orange-600 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2">
+			<div transition:fade class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2 xl:pr-3 xl:pl-1">
+				<div
+					class="bg-orange-600 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2"
+				>
 					<div class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
 							<svg
@@ -267,8 +270,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-3 xl:pr-2">
-				<div class="bg-purple-600 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2">
+			<div transition:fade class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-3 xl:pr-2">
+				<div
+					class="bg-purple-600 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2"
+				>
 					<div class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
 							<svg
@@ -284,12 +289,14 @@
 						</div>
 						<div class="flex-1 text-right">
 							<h5 class="text-white 2xl:text-3xl ">Server Uptime</h5>
-							<h3 class="text-white 2xl:text-3xl 4xl:text-6xl 4xl:mt-12 2xl:pt-4 text-3xl"><Uptime /></h3>
+							<h3 class="text-white 2xl:text-3xl 4xl:text-6xl 4xl:mt-12 2xl:pt-4 text-3xl">
+								<Uptime />
+							</h3>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2 xl:pl-2 xl:pr-3">
+			<div transition:fade class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2 xl:pl-2 xl:pr-3">
 				<div class="bg-red-600 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2">
 					<a href="/rest/{$page.data.space?.appId}/" class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
@@ -306,12 +313,14 @@
 						</div>
 						<div class="flex-1 text-right">
 							<h5 class="text-white 2xl:text-3xl">Collections</h5>
-							<h3 class="text-white 2xl:text-6xl 4xl:text-9xl 4xl:mt-12  2xl:pt-4 text-3xl">{$page.data.tableCount}</h3>
+							<h3 class="text-white 2xl:text-6xl 4xl:text-9xl 4xl:mt-12  2xl:pt-4 text-3xl">
+								{$page.data.tableCount}
+							</h3>
 						</div>
 					</a>
 				</div>
 			</div>
-			<div class="w-full  md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
+			<div transition:fade class="w-full  md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
 				<div class="bg-pink-600 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2">
 					<a href="/editor/{$page.data.space?.appId}/" class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
@@ -336,11 +345,13 @@
 					</a>
 				</div>
 			</div>
-			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
-				<div class="bg-amber-600 4xl:min-h-[20rem]  ml-2 2xl:min-h-[10rem]  border rounded-lg shadow p-2">
+			<div transition:fade class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
+				<div
+					class="bg-amber-600 4xl:min-h-[20rem]  ml-2 2xl:min-h-[10rem]  border rounded-lg shadow p-2"
+				>
 					<a href="/rest/{$page.data.space?.appId}/" class="flex flex-row items-center">
 						<div class="flex-1 text-right">
-							<h5 class="text-white 2xl:text-3xl" >API Requests</h5>
+							<h5 class="text-white 2xl:text-3xl">API Requests</h5>
 							<h3 class="text-white gap-4 flex text-3xl">
 								<div class=" flex-1">
 									<svg
@@ -365,8 +376,10 @@
 					</a>
 				</div>
 			</div>
-			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
-				<div class="bg-indigo-600  4xl:min-h-[20rem]  ml-2 2xl:min-h-[10rem]  pb-4  border rounded-lg shadow p-2">
+			<div transition:fade class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
+				<div
+					class="bg-indigo-600  4xl:min-h-[20rem]  ml-2 2xl:min-h-[10rem]  pb-4  border rounded-lg shadow p-2"
+				>
 					<a href="/a/{$page.data.space?.appId}/roles" class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
 							<svg
