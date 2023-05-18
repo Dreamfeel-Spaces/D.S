@@ -7,7 +7,6 @@
 	import Map from '../../dashboards/[app_id]/Map.svelte';
 	import Location from './Location.svelte';
 	import Userchart from './Userchart.svelte';
-	import { fade, scale } from 'svelte/transition';
 </script>
 
 <Location />
@@ -189,7 +188,7 @@
 			</div>
 		{/if}
 		<div class="flex flex-wrap">
-			<div transition:fade class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2">
+			<div  class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2">
 				<div
 					class="bg-green-600  backdrop-blur-sm border 2xl:min-h-[10rem] 4xl:min-h-[20rem] rounded-lg shadow p-2"
 				>
@@ -215,7 +214,7 @@
 					</a>
 				</div>
 			</div>
-			<div transition:fade class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2">
+			<div  class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2">
 				<div class="bg-blue-600 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2">
 					<a
 						href="/dashboards/{$page.data.space?.appId}/users/overview"
@@ -243,7 +242,7 @@
 					</a>
 				</div>
 			</div>
-			<div transition:fade class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2 xl:pr-3 xl:pl-1">
+			<div  class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2 xl:pr-3 xl:pl-1">
 				<div
 					class="bg-orange-600 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2"
 				>
@@ -270,7 +269,7 @@
 					</div>
 				</div>
 			</div>
-			<div transition:fade class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-3 xl:pr-2">
+			<div  class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-3 xl:pr-2">
 				<div
 					class="bg-purple-600 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2"
 				>
@@ -296,7 +295,7 @@
 					</div>
 				</div>
 			</div>
-			<div transition:fade class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2 xl:pl-2 xl:pr-3">
+			<div  class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2 xl:pl-2 xl:pr-3">
 				<div class="bg-red-600 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2">
 					<a href="/rest/{$page.data.space?.appId}/" class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
@@ -320,7 +319,7 @@
 					</a>
 				</div>
 			</div>
-			<div transition:fade class="w-full  md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
+			<div  class="w-full  md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
 				<div class="bg-pink-600 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2">
 					<a href="/editor/{$page.data.space?.appId}/" class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
@@ -345,7 +344,7 @@
 					</a>
 				</div>
 			</div>
-			<div transition:fade class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
+			<div  class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
 				<div
 					class="bg-amber-600 4xl:min-h-[20rem]  ml-2 2xl:min-h-[10rem]  border rounded-lg shadow p-2"
 				>
@@ -376,7 +375,7 @@
 					</a>
 				</div>
 			</div>
-			<div transition:fade class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
+			<div  class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
 				<div
 					class="bg-indigo-600  4xl:min-h-[20rem]  ml-2 2xl:min-h-[10rem]  pb-4  border rounded-lg shadow p-2"
 				>
