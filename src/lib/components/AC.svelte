@@ -5,6 +5,7 @@
 	import { A, Input } from 'flowbite-svelte';
 	import { tableIcon } from '$lib/wsstore';
 	import { useEffect } from '$lib/wsstore/hooks';
+	import { page } from '$app/stores';
 
 	/* FILTERING countres DATA BASED ON INPUT */
 	let filteredIcons = [];
@@ -50,9 +51,16 @@
 		() => [$tableIcon]
 	);
 
+	useEffect(
+		() => {
+			tableIcon.set($page.data.table?.icon ?? 'folder_open');
+			inputValue = $tableIcon;
+		},
+		() => [$page.params.table]
+	);
+
 	const submitValue = () => {
 		if (inputValue) {
-			console.log(`${inputValue} is submitted!`);
 			setTimeout(clearInput, 1000);
 		} else {
 			alert("You didn't type anything.");
@@ -137,6 +145,6 @@
 		padding: 0;
 		top: 0;
 		border: 1px solid #ddd;
-		background-color: #ddd;
+		/* background-color: #ddd; */
 	}
 </style>

@@ -4,12 +4,11 @@ import { error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
 export async function GET(event: RequestEvent) {
-	const { params, request, locals } = event;
+	const { params, request, locals, url } = event;
 	const tableName = params.table;
-	const recordId = params["id"];
+	const recordId = params['id'];
 	const apiKey = request.headers.get('x-api-key');
 	const authorization = request.headers.get('authorization');
-	console.log(apiKey)
 
 	if (!apiKey) throw error(403, 'Api key / authorization token required');
 
@@ -45,13 +44,22 @@ export async function GET(event: RequestEvent) {
 
 	delete (formattedResponse as any)['tableData'];
 
+	const log = await prisma.tableRead.create({
+		data: {
+			spaceTableId: table.id,
+			spaceId: space.id,
+			method: request.method,
+			url: event.url.pathname
+		}
+	});
+
 	return new Response(JSON.stringify(formattedResponse));
 }
 
 export async function PUT(event: RequestEvent) {
-	const { request, params, locals } = event;
+	const { request, params, locals, url } = event;
 	const tableName = params.table;
-	const itemId = params["id"];
+	const itemId = params['id'];
 
 	const formData = await request.json();
 
@@ -115,13 +123,22 @@ export async function PUT(event: RequestEvent) {
 	//@ts-ignore
 	delete row['tableData'];
 
+	const log = await prisma.tableRead.create({
+		data: {
+			spaceTableId: table.id,
+			spaceId: space.id,
+			method: request.method,
+			url: event.url.pathname
+		}
+	});
+
 	return new Response(JSON.stringify({ ...formattedResponse, ...row }));
 }
 
 export async function PATCH(event: RequestEvent) {
-	const { request, params, locals } = event;
+	const { request, params, locals, url } = event;
 	const tableName = params.table;
-	const itemId = params["id"];
+	const itemId = params['id'];
 
 	const formData = await request.json();
 
@@ -185,11 +202,20 @@ export async function PATCH(event: RequestEvent) {
 	//@ts-ignore
 	delete row['tableData'];
 
+	const log = await prisma.tableRead.create({
+		data: {
+			spaceTableId: table.id,
+			spaceId: space.id,
+			method: request.method,
+			url: url.pathname
+		}
+	});
+
 	return new Response(JSON.stringify({ ...formattedResponse, ...row }));
 }
 
-export async function DELETE({ params }: RequestEvent) {
-	const item = params["id"];
+export async function DELETE({ params, request, url }: RequestEvent) {
+	const item = params['id'];
 	const row = await prisma.row.findUnique({
 		where: { id: item }
 	});
@@ -198,8 +224,31 @@ export async function DELETE({ params }: RequestEvent) {
 		throw error(404, 'Item not found');
 	}
 
+	// @ts-ignore
+	const space = locals.space;
+
+	const table = await prisma.spaceTable.findFirst({
+		where: {
+			name: params.table,
+			appId: space.id
+		},
+		include: {
+			columns: true
+		}
+	});
+
+	if (!table) throw error(404, 'Table not found');
+
 	const deleted = await prisma.row.delete({
 		where: { id: item }
+	});
+	const log = await prisma.tableRead.create({
+		data: {
+			spaceTableId: table.id,
+			spaceId: space.id,
+			method: request.method,
+			url: url.pathname
+		}
 	});
 	return new Response(JSON.stringify(deleted));
 }

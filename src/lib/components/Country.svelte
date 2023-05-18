@@ -36,7 +36,7 @@
 		right: 0;
 		padding: 10px;
 		cursor: pointer;
-		background-color: #fff;
+		/* background-color: #fff; */
 	}
 
 	li.autocomplete-items:hover {

@@ -31,6 +31,21 @@ model SpaceSession {
   @@index([geoId])
 }
 
+model Event {
+  id         String  @id @default(cuid())
+  space      Space?  @relation(fields: [spaceId], references: [id])
+  spaceId    String?
+  name       String
+  type       String
+  trigger    String ///
+  targetType String
+  target     String
+  action     String
+  data       String  @db.LongText
+
+  @@index([spaceId])
+}
+
 model Page {
   id               String         @id @default(cuid())
   version          SpaceUIVersion @relation(fields: [spaceUIVersionId], references: [id])
@@ -41,7 +56,7 @@ model Page {
   components       Component[]
   html             String?        @db.LongText
   pathRegexp       String?
-  uiDef            String?       @db.LongText
+  uiDef            String?        @db.LongText
   roles            UserRoles?     @relation(fields: [userRolesId], references: [id])
   userRolesId      String?
   layout           Boolean        @default(false)
@@ -385,6 +400,7 @@ model ReportFilter {
 model SpaceTable {
   id                   String                           @id @default(cuid())
   name                 String
+  label                String?
   columns              Column[]
   rows                 Row[]
   relations            Relations[]
@@ -414,9 +430,26 @@ model SpaceTable {
   dateCreated          DateTime                         @default(now())
   dateUpdated          DateTime                         @default(now())
   description          String?
+  deleted              Boolean                          @default(false)
+  TableRead            TableRead[]
 
   @@index([userId])
   @@index([appId])
+}
+
+model TableRead {
+  id           String     @id @default(cuid())
+  time         DateTime   @default(now())
+  table        SpaceTable @relation(fields: [spaceTableId], references: [id])
+  space        Space      @relation(fields: [spaceId], references: [id])
+  spaceId      String
+  spaceTableId String
+  method       String
+  url          String
+  multiple     Boolean    @default(false)
+
+  @@index([spaceId])
+  @@index([spaceTableId])
 }
 
 model DataRules {
@@ -878,21 +911,6 @@ model TemplateCategory {
   templates Space[]
 }
 
-model Event {
-  id         String  @id @default(cuid())
-  space      Space?  @relation(fields: [spaceId], references: [id])
-  spaceId    String?
-  name       String
-  type       String
-  trigger    String ///
-  targetType String
-  target     String
-  action     String
-  data       String @db.LongText
-
-  @@index([spaceId])
-}
-
 model Space {
   id                       String            @id @default(cuid())
   appId                    String            @unique
@@ -942,6 +960,7 @@ model Space {
   tempCat                  String?
   templated                DateTime?
   events                   Event[]
+  TableRead                TableRead[]
 
   @@index([userId])
   @@index([templateCategoryId])

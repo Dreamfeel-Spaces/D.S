@@ -28,9 +28,7 @@
 	import { useEffect } from '$lib/wsstore/hooks';
 
 	useEffect(
-		() => {
-			console.log(/\/rest\/([^/]+)\/([^/]+)/.test($page.url.pathname));
-		},
+		() => {},
 		() => [$page.url.pathname]
 	);
 </script>
@@ -96,7 +94,7 @@
 
 <div class="flex flex-row min-h-screen dark:bg-gray-900 bg-gray-100 text-gray-800">
 	<aside
-		class="sidebar min-w-[18%]  min-w dark:text-gray-900   max-h-screen overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
+		class="sidebar min-w-[18%]  min-w dark:text-gray-900   md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
 	>
 		<div class="sidebar-header flex items-center   ml-7 py-4">
 			<div class="inline-flex">
@@ -162,7 +160,14 @@
 						!$page.url.pathname.includes('permissions') &&
 						!$page.url.pathname.includes('create') &&
 						!$page.url.pathname.includes('endpoints') &&
-						!$page.url.pathname.includes('events')}
+						!$page.url.pathname.includes('events') &&
+						!$page.url.pathname.includes('file_storage') &&
+						!$page.url.pathname.includes('sms') &&
+						!/\/mail/.test($page.url.pathname) &&
+						!/\/push_notifications/.test($page.url.pathname) &&
+						!/\/logs/.test($page.url.pathname) &&
+						!/\/token-options/.test($page.url.pathname) &&
+						!/\/authentication/.test($page.url.pathname)}
 					label={'Models'}
 				>
 					<svelte:fragment slot="icon">
@@ -184,7 +189,7 @@
 								/\/rest\/([^/]+)\/([^/]+)/.test($page.url.pathname) &&
 								!$page.url.pathname.includes('permissions')}
 							href={`/rest/${space.appId}/${table.name}/`}
-							label={table.name}
+							label={table.label || table.name}
 						/>
 					{/each}
 				</SidebarDropdownWrapper>
@@ -212,11 +217,15 @@
 								/\/rest\/([^/]+)\/([^/]+)/.test($page.url.pathname) &&
 								$page.url.pathname.includes('permissions')}
 							href={`/rest/${space.appId}/${table.name}/permissions`}
-							label={table.name}
+							label={table.label ?? table?.name}
 						/>
 					{/each}
 				</SidebarDropdownWrapper>
-				<SidebarDropdownWrapper label={'Events'}>
+				<SidebarDropdownWrapper
+					isOpen={/\/rest\/([^/]+)\/([^/]+)/.test($page.url.pathname) &&
+						$page.url.pathname.includes('events')}
+					label={'Events'}
+				>
 					<svelte:fragment slot="icon">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -232,28 +241,15 @@
 
 					{#each $page.data?.tables ?? [] as table}
 						<SidebarDropdownItem
+							active={$page.params.table === table.name &&
+								/\/rest\/([^/]+)\/([^/]+)/.test($page.url.pathname) &&
+								$page.url.pathname.includes('events')}
 							href={`/rest/${space.appId}/${table.name}/events`}
-							label={table.name}
+							label={table.label ?? table?.name}
 						/>
 					{/each}
 				</SidebarDropdownWrapper>
-				<SidebarDropdownWrapper label={'Integrations'}>
-					<svelte:fragment slot="icon">
-						<svg
-							fill="currentColor"
-							xmlns="http://www.w3.org/2000/svg"
-							height="24"
-							viewBox="0 96 960 960"
-							width="24"
-							><path
-								d="m561 517-42-42 119-119-118-117 42-42 118 117 119-119 42 42-119 119 119 119-42 42-119-119-119 119ZM80 536l200-360 200 360H80Zm201 400q-66 0-113-47t-47-113q0-67 47-113.5T281 616q66 0 113 47t47 113q0 66-47 113t-113 47Zm0-60q42 0 71-29t29-71q0-42-29-71t-71-29q-42 0-71 29t-29 71q0 42 29 71t71 29Zm-99-400h196l-98-176-98 176Zm338 460V616h320v320H520Zm60-60h200V676H580v200ZM280 388Zm1 388Zm399 0Z"
-							/></svg
-						>
-					</svelte:fragment>					<SidebarDropdownItem label={`File storage`} />
-					<SidebarDropdownItem label={`SMS`} />
-					<SidebarDropdownItem label={`Mail`} />
-					<SidebarDropdownItem label={`Push notifications`} />
-				</SidebarDropdownWrapper>
+
 				<SidebarItem
 					href={`/rest/${space.appId}/authentication/token-options`}
 					label={'Token Options'}
@@ -280,7 +276,9 @@
 				<li class="my-px">
 					<a
 						href={`/rest/${space.appId}/authentication`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-300 hover:text-gray-700"
+						class="flex flex-row items-center h-10 {/\/authentication/.test($page.url.pathname)
+							? 'bg-gray-600 dark:text-gray-300'
+							: 'dark:text-gray-300'} px-3 rounded-lg  hover:bg-gray-600 hover:text-gray-700"
 					>
 						<span class="flex items-center justify-center text-lg dark:text-gray-300">
 							<svg
@@ -294,14 +292,18 @@
 								/></svg
 							>
 						</span>
-						<span class="ml-3">Authentication</span>
+						<span class="ml-3">Auth</span>
 					</a>
 				</li>
 				{#each $page.data?.tables ?? [] as table}
 					<li class="my-px">
 						<a
 							href={`/rest/${space.appId}/${table.name}/endpoints/`}
-							class="flex flex-row items-center h-10 px-2 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
+							class="flex flex-row items-center h-10 px-2 rounded-lg {/\/endpoints/.test(
+								$page.url.pathname
+							) && $page.params.table === table.name
+								? 'bg-gray-600'
+								: 'dark:text-gray-300'} dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
 						>
 							{#if table.icon}
 								<span class="material-symbols-outlined">
@@ -324,66 +326,62 @@
 									>
 								</span>
 							{/if}
-							<span class="ml-3 ">{table?.name}</span>
+							<span class="ml-3 ">{table?.label ?? table?.name}</span>
 						</a>
 					</li>
 				{/each}
 				<li class="my-px">
-					{#if user}
-						<form method="post" action={`/a/${space.appId}/accounts?/signout`}>
-							<button
-								type="submit"
-								class="flex w-full flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
-							>
-								<span class="flex items-center justify-center text-lg text-red-400">
-									<svg
-										fill="none"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										class="h-6 w-6"
-									>
-										<path
-											d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
-										/>
-									</svg>
-								</span>
-								<span class="ml-3 dark:text-gray-300 text-gray-800"
-									>{user ? 'Sign out' : 'Sign in'}</span
-								>
-							</button>
-						</form>
-					{:else}
-						<a
-							href="#"
-							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
-						>
-							<span class="flex items-center justify-center text-lg text-red-400">
-								<svg
-									fill="none"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									class="h-6 w-6"
-								>
-									<path
-										d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
-									/>
-								</svg>
-							</span>
-							<span class="ml-3">{user ? 'Sign out' : 'Sign in'}</span>
-						</a>
-					{/if}
+					<span class="flex font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase"
+						>Preferences</span
+					>
 				</li>
+				<SidebarItem
+					active={/\/file_storage/.test($page.url.pathname)}
+					href={`/rest/${space.appId}/file_storage`}
+					label={`File storage`}
+				>
+					<span slot="icon" class="flex items-center justify-center text-lg dark:text-gray-300">
+						<span class="material-symbols-outlined"> home_storage </span>
+					</span></SidebarItem
+				>
+				<SidebarItem
+					href={`/rest/${space.appId}/sms`}
+					active={/\/sms/.test($page.url.pathname)}
+					label={`SMS`}
+				>
+					<span slot="icon" class="material-symbols-outlined"> sms </span></SidebarItem
+				>
+				<SidebarItem
+					href={`/rest/${space.appId}/mail`}
+					active={/\/mail/.test($page.url.pathname)}
+					label={`Mail`}
+				>
+					<span slot="icon" class="material-symbols-outlined"> mail </span></SidebarItem
+				>
+				<SidebarItem
+					href={`/rest/${space.appId}/push_notifications`}
+					active={/\/push_notifications/.test($page.url.pathname)}
+					label={`Push notifications`}
+				>
+					<span slot="icon" class="material-symbols-outlined"> schedule_send </span></SidebarItem
+				>
+				<li class="my-px">
+					<span class="flex font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase"
+						>Application</span
+					>
+				</li>
+				<SidebarItem
+					href={`/rest/${space.appId}/logs`}
+					active={/\/logs/.test($page.url.pathname)}
+					label={`Logs`}
+				>
+					<span slot="icon" class="material-symbols-outlined"> electric_meter </span></SidebarItem
+				>
 			</ul>
 		</div>
 	</aside>
 	<main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
-		<a class="w-full" rel="external" href="/early-access">
+		<!-- <a class="w-full" rel="external" href="/early-access">
 			<div class="bg-bdlue-900 w-full text-center py-1 lg:px-4">
 				<div
 					class="p-1 bg-blue-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
@@ -405,7 +403,7 @@
 					>
 				</div>
 			</div>
-		</a>
+		</a> -->
 
 		<header class="header dark:bg-gray-800 bg-white shadow py-1 px-4">
 			<div class="header-content flex items-center flex-row">

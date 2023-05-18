@@ -15,7 +15,7 @@ export const actions = {
 
 		const data = await request.formData();
 
-		const name = String(data.get('name')).trim().toLowerCase();
+		const name = String(data.get('name'));
 		const icon = String(data.get('icon'));
 
 		const existing = await prisma.spaceTable.findFirst({
@@ -30,7 +30,8 @@ export const actions = {
 		const table = await prisma.spaceTable.create({
 			data: {
 				name: convertToSlug(name),
-				icon
+				icon,
+				label: name
 			}
 		});
 

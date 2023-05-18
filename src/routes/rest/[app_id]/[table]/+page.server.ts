@@ -1,6 +1,7 @@
 import { prisma } from '$lib/db/prisma';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { RequestEvent, Actions } from './$types';
+import { convertToSlug } from '$lib/util/slugit';
 
 export async function load({ params, locals }: RequestEvent) {
 	const tableName = params.table;
@@ -22,7 +23,7 @@ export async function load({ params, locals }: RequestEvent) {
 }
 
 export const actions: Actions = {
-	async default({ params, request, locals }) {
+	async update({ params, request, locals }) {
 		// @ts-ignore
 		const space = locals.space;
 
@@ -109,12 +110,30 @@ export const actions: Actions = {
 			where: { id: String(table?.id) },
 			data: {
 				displayName: String(displayName),
-				name,
+				name: convertToSlug(name),
 				icon,
-				description
+				description,
+				label: name
 			}
 		});
 
-		return { success: true, data: { fields, table: updatedTable } };
+		throw redirect(302, `/rest/${space.appId}/${updatedTable.name}`);
+		// return { success: true, data: { fields, table: updatedTable } };
+	},
+	async delete({ params, locals }) {
+		// @ts-ignore
+		const space = locals.space;
+
+		const table = space.tables.find((table: { name: string }) => table.name === params.table);
+
+		await prisma.spaceTable.update({
+			where: {
+				id: table?.id
+			},
+			data: {
+				deleted: true
+			}
+		});
+		throw redirect(302, `/rest/${space.appId}`);
 	}
 };

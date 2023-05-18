@@ -14,6 +14,9 @@ export const Space = {
 				onboarding: true,
 				roles: true,
 				tables: {
+					where: {
+						deleted: false
+					},
 					include: {
 						columns: true
 					}
@@ -30,9 +33,12 @@ export const Space = {
 					onboarding: true,
 					roles: true,
 					tables: {
+						where: {
+							deleted: false
+						},
 						include: {
 							columns: true,
-							rows:true
+							rows: true
 						}
 					},
 					users: {
@@ -52,6 +58,9 @@ export const Space = {
 					onboarding: true,
 					roles: true,
 					tables: {
+						where: {
+							deleted: false
+						},
 						include: {
 							columns: true
 						}
@@ -67,6 +76,9 @@ export const Space = {
 					onboarding: true,
 					roles: true,
 					tables: {
+						where: {
+							deleted: false
+						},
 						include: {
 							columns: true,
 							rows: {
@@ -93,6 +105,9 @@ export const Space = {
 					onboarding: true,
 					roles: true,
 					tables: {
+						where: {
+							deleted: false
+						},
 						include: {
 							columns: true,
 							rows: {
@@ -113,6 +128,9 @@ export const Space = {
 				include: {
 					roles: true,
 					tables: {
+						where: {
+							deleted: false
+						},
 						include: {
 							columns: true,
 							rows: {
@@ -143,6 +161,9 @@ export const Space = {
 				include: {
 					roles: true,
 					tables: {
+						where: {
+							deleted: false
+						},
 						include: {
 							columns: true,
 							rows: {
@@ -170,6 +191,9 @@ export const Space = {
 				permissions: true,
 				dashboards: true,
 				tables: {
+					where: {
+						deleted: false
+					},
 					include: {
 						columns: {
 							include: {
@@ -258,6 +282,9 @@ export const Space = {
 					onboarding: true,
 					roles: true,
 					tables: {
+						where: {
+							deleted: false
+						},
 						include: {
 							columns: {
 								include: {

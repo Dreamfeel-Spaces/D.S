@@ -6,7 +6,7 @@ import { error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
 export async function GET(event: RequestEvent) {
-	const { params, url, locals } = event;
+	const { params, url, locals, request } = event;
 	const tableName = params.table;
 
 	// @ts-ignore
@@ -21,7 +21,6 @@ export async function GET(event: RequestEvent) {
 			appId: space?.id
 		}
 	});
-	console.log("table", table)
 
 	if (!table) throw error(404, 'Table not found');
 
@@ -58,6 +57,17 @@ export async function GET(event: RequestEvent) {
 		skip,
 		data: formattedRows
 	};
+
+	const log = await prisma.tableRead.create({
+		data: {
+			spaceTableId: table.id,
+			spaceId: space.id,
+			method: request.method,
+			url: event.url.pathname,
+			multiple: true
+		}
+	});
+
 	return new Response(JSON.stringify(formattedResponse));
 }
 
@@ -83,7 +93,7 @@ export async function POST(event: RequestEvent) {
 			columns: true
 		}
 	});
-	console.log("table", table)
+	
 	if (!table) throw error(404, 'Table not found');
 	const rawData = await request.json();
 	let _dat = (column: any) => String((rawData as any)[column?.name as any]);
@@ -125,6 +135,15 @@ export async function POST(event: RequestEvent) {
 		});
 		all.push(saved);
 	}
+
+	const log = await prisma.tableRead.create({
+		data: {
+			spaceTableId: table.id,
+			spaceId: space.id,
+			method: request.method,
+			url: event.url.pathname,
+		}
+	});
 
 	return new Response(
 		JSON.stringify({

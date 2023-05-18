@@ -30,15 +30,13 @@
 	
 </div> -->
 
-<div class="container bg-gray-100 p-3 rounded-xl min-h-100 dark:bg-gray-900 ">
+<div class="container bg-gray-100 p-3 rounded-xl min-h-full dark:bg-gray-900 ">
 	<div class="flex ">
 		<Heading class="flex-1" tag="h4">Events</Heading>
 		<div><Button on:click={() => (modalOpen = true)}>Create Events</Button></div>
 	</div>
 	{#if !$page.data.events.length}
 		<div class="text-center">
-			<Heading>Sever events</Heading>
-			<Hr />
 			<P>No events have been added</P>
 		</div>
 	{/if}

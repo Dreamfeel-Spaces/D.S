@@ -49,7 +49,15 @@ export async function load({ locals }: RequestEvent) {
 	let tables = space.tables;
 
 	tables = tables.filter((table: any) => Boolean(table));
+	const tableNames = tables.map((table: { name: any }) => table.name).filter(onlyUnique);
+	tables = tableNames.map((name: any) => {
+		return tables.find((table: { name: any }) => table.name === name);
+	});
 	space = { ...space, apiSetup: [apiSetup], onboarding: [onboarding], roles, tables };
 
 	return { space, spaceSession, tables };
+}
+
+function onlyUnique(value: any, index: any, array: string | any[]) {
+	return array.indexOf(value) === index;
 }

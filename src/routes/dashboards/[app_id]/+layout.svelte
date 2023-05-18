@@ -105,18 +105,14 @@
 				</SidebarDropdownWrapper>
 
 				{#each $page.data?.tables ?? [] as table}
-					<SidebarDropdownWrapper open={$page.params.table === table.name} label={table.name}>
+					<SidebarDropdownWrapper
+						open={$page.params.table === table.name}
+						label={table.label ?? table?.name}
+					>
 						<svelte:fragment slot="icon">
-							<svg
-								fill="currentColor"
-								xmlns="http://www.w3.org/2000/svg"
-								height="24"
-								viewBox="0 96 960 960"
-								width="24"
-								><path
-									d="M140 896q-23 0-41.5-18.5T80 836V316q0-23 18.5-41.5T140 256h281l60 60h339q23 0 41.5 18.5T880 376H455l-60-60H140v520l102-400h698L833 850q-6 24-22 35t-41 11H140Zm63-60h572l84-340H287l-84 340Zm0 0 84-340-84 340Zm-63-460v-60 60Z"
-								/></svg
-							>
+							<span class="material-symbols-outlined">
+								{table.icon}
+							</span>
 						</svelte:fragment>
 						<SidebarDropdownItem
 							active={/\/overview/.test($page.url.pathname) && table.name === $page.params.table}
@@ -280,11 +276,16 @@
 			</div>
 		</header>
 		<div class="main-content dark:bg-gray-700  max-h-105 flex flex-col flex-grow p-1">
-			<div
-				class="flex fle dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded "
-			>
+			<div class="flex fle dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded ">
 				<slot />
 			</div>
 		</div>
 	</main>
 </div>
+
+<svelte:head>
+	<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+	/>
+</svelte:head>
