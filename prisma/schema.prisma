@@ -888,7 +888,7 @@ model Event {
   targetType String
   target     String
   action     String
-  data       String
+  data       String @db.LongText
 
   @@index([spaceId])
 }
