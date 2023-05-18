@@ -33,7 +33,7 @@
 		<BreadcrumbItem>Rest Auth</BreadcrumbItem>
 	</Breadcrumb>
 </div> -->
-{#if !data?.space?.apiChannel}
+<!-- {#if !data?.space?.apiChannel}
 	<div class="px-6">
 		<Alert class="mt-6">
 			<p><b>Unauthorized</b></p>
@@ -43,8 +43,8 @@
 			>
 		</Alert>
 	</div>
-{/if}
-{#if data?.space?.apiChannel}
+{/if} -->
+{#if true}
 	<div class="mt-6 px-6">
 		<Card class="text-left" size="xl" padding="xl">
 			<h5 class="mb-2 text-3xl font-bold text-gray-600 dark:text-white">Signup</h5>
