@@ -120,6 +120,27 @@ export class Pages {
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>${space?.name ?? 'Dreamfeel Space'}</title>
+
+		<!-- HTML Meta Tags -->
+		
+		<meta name="description" content="${space?.description ?? 'Dreamfeel Space'}">
+	  
+		<!-- Facebook Meta Tags -->
+		<meta property="og:url" content="${this.url}"}>
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="${space?.name ?? 'Dreamfeel Space'}">
+		<meta property="og:description" content="${space?.description ?? 'Dreamfeel Space'}">
+		<meta property="og:image" content="https://res.cloudinary.com/dreamnerd/image/upload/v1683813200/Screenshot_from_2023-05-11_16-51-40_drnmo8.png">
+	  
+		<!-- Twitter Meta Tags -->
+		<meta name="twitter:card" content="summary_large_image">
+		<meta property="twitter:domain" content="blog.dreamfeel.me">
+		<meta property="twitter:url" content="${this.url}">
+		<meta name="twitter:title" content="${space?.name ?? 'Dreamfeel Space'}">
+		<meta name="twitter:description" content="${space?.description ?? 'Dreamfeel Space'}">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dreamnerd/image/upload/v1683813200/Screenshot_from_2023-05-11_16-51-40_drnmo8.png">
+	  
+			  
 		</head>
 		<style>${appCss} </style>
 		${htmlContent}
