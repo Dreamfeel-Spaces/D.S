@@ -3,57 +3,92 @@
 	export let data: PageData;
 	import { page } from '$app/stores';
 	const spaceId = $page.params['app_id'];
-	import { Breadcrumb, BreadcrumbItem, Card, Button } from 'flowbite-svelte';
+	import { Breadcrumb, BreadcrumbItem, Card, Button, Heading, Hr } from 'flowbite-svelte';
 	import Map from './Map.svelte';
-	import Chart from './Chart.svelte';
 	import WidgetDrawer from '../WidgetDrawer.svelte';
 	import { onMount } from 'svelte';
 	import { recentlyViewed } from '$lib/wsstore';
-
+	import Chart from '$lib/components/Chart.svelte';
+	import Userchart from '../../a/[app_id]/Userchart.svelte';
+	import RequestsChart from '../../rest/[app_id]/RequestsChart.svelte';
 	onMount(() => {
 		recentlyViewed.set({ [$page.url.pathname]: $page, ...$recentlyViewed });
 	});
+
+	function getDarkColor() {
+		var color = '#';
+		for (var i = 0; i < 6; i++) {
+			color += Math.floor(Math.random() * 10);
+		}
+		return color;
+	}
 </script>
 
-<section class="container">
-	<Card size="xl">
-		<div class="my-1 flex justify-between">
-			<Breadcrumb>
-				<BreadcrumbItem href={`/a/${data?.space?.appId}`}
-					>{data?.space?.name ?? 'Unknown space'}</BreadcrumbItem
-				>
-				<BreadcrumbItem disabled>Dashboards</BreadcrumbItem>
-			</Breadcrumb>
+<section class="container p-6 dark:bg-gray-800">
+	<div>
+		<div class="my-1 flex">
+			<Heading class="flex-1" tag="h4">Dashboards</Heading>
 			<WidgetDrawer tables={data.space.tables} />
 		</div>
+		<Hr class="my-3" />
 		<div class=" overflow-auto px-2">
-			<div class="mt-2 ">
-				<Chart />
-			</div>
+			<div>
+				<div class="grid  gap-6 lg:grid-cols-2 ">
+					<div class="relative space-y-4 overflow-x-auto mb-9">
+						<Heading tag="h6">Forms</Heading>
+						<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+							<thead
+								class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+							>
+								<tr>
+									<th scope="col" class="px-6 py-3"> Name </th>
+								</tr>
+							</thead>
+							<tbody>
+								{#each $page.data.forms as form}
+									<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+										<th
+											scope="row"
+											class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+										>
+											{form.name}
+										</th>
+									</tr>
+								{/each}
+							</tbody>
+						</table>
+					</div>
+					<div class="relative space-y-4 overflow-x-auto mb-9">
+						<Heading tag="h6">Reports</Heading>
+						<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+							<thead
+								class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+							>
+								<tr>
+									<th scope="col" class="px-6 py-3"> Name </th>
+								</tr>
+							</thead>
+							<tbody>
+								{#each $page.data.reports as report}
+									<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+										<th
+											scope="row"
+											class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+										>
+											{report.name}
+										</th>
+									</tr>
+								{/each}
+							</tbody>
+						</table>
+					</div>
+				</div>
 
-			<div class="my-3">
-				<Map />
-			</div>
-
-			<Card size="xl">
-				<div class="text-lg">Collections</div>
 				<div class="grid lg:grid-cols-3  overflow-auto gap-4 ">
 					{#each data?.space?.tables ?? [] as table, index}
 						<div
-							class={`${
-								[
-									'bg-red-500',
-									'bg-green-500',
-									'bg-indigo-500',
-									'bg-blue-500',
-									'bg-purple-500',
-									'bg-gray-600',
-									'bg-red-600',
-									'bg-blue-600',
-									'bg-green-900',
-									'bg-green-600'
-								][index]
-							}  text-white text-right p-2 `}
+							class="text-white rounded p-3 rounded-xl"
+							style="background-color: {getDarkColor()};"
 						>
 							<b>{table.name}</b>
 							<div class="flex my-2 text-2xl text-left justify-between">
@@ -78,7 +113,9 @@
 						</div>
 					{/each}
 				</div>
-			</Card>
+			</div>
 		</div>
-	</Card>
+	</div>
+	<Userchart />
+	<!-- <RequestsChart /> -->
 </section>

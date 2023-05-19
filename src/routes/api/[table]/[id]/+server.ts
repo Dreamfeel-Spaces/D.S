@@ -211,6 +211,10 @@ export async function PATCH(event: RequestEvent) {
 		}
 	});
 
+	await prisma.log.create({
+		data: {}
+	});
+
 	return new Response(JSON.stringify({ ...formattedResponse, ...row }));
 }
 
@@ -249,6 +253,9 @@ export async function DELETE({ params, request, url }: RequestEvent) {
 			method: request.method,
 			url: url.pathname
 		}
+	});
+	await prisma.log.create({
+		data: {}
 	});
 	return new Response(JSON.stringify(deleted));
 }

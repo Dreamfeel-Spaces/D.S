@@ -68,6 +68,10 @@ export async function GET(event: RequestEvent) {
 		}
 	});
 
+	await prisma.log.create({
+		data: {}
+	});
+
 	return new Response(JSON.stringify(formattedResponse));
 }
 
@@ -93,7 +97,7 @@ export async function POST(event: RequestEvent) {
 			columns: true
 		}
 	});
-	
+
 	if (!table) throw error(404, 'Table not found');
 	const rawData = await request.json();
 	let _dat = (column: any) => String((rawData as any)[column?.name as any]);
@@ -141,8 +145,12 @@ export async function POST(event: RequestEvent) {
 			spaceTableId: table.id,
 			spaceId: space.id,
 			method: request.method,
-			url: event.url.pathname,
+			url: event.url.pathname
 		}
+	});
+
+	await prisma.log.create({
+		data: {}
 	});
 
 	return new Response(

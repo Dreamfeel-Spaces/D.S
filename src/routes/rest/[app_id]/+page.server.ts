@@ -26,6 +26,7 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 	});
 
 	const counterByMethos = await prisma.aPICounter.groupBy({
+		where: { spaceId: space?.id },
 		by: ['method'],
 		_count: {
 			_all: true
@@ -34,7 +35,33 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 
 	const groupedCounts = counterByMethos.map((c) => ({ count: c._count._all, label: c.method }));
 
-	return { tables, space, apiCount: groupDataByMonth(apiCount), groupedCounts };
+	const tableReads = await prisma.tableRead.groupBy({
+		where: { spaceId: space?.id },
+		by: ['spaceTableId'],
+		_count: {
+			_all: true
+		}
+	});
+
+	const logs = await prisma.log.findMany({
+		where: { spaceId: space?.id }
+	});
+
+	const groupedLogs = groupDataByMonth(logs);
+
+	const groupedReads = tableReads.map((c) => ({
+		count: c._count._all,
+		label: space?.tables?.find((table) => table.id === c.spaceTableId)?.label
+	}));
+
+	return {
+		tables,
+		space,
+		apiCount: groupDataByMonth(apiCount),
+		groupedCounts,
+		groupedReads,
+		groupedLogs
+	};
 }
 
 function groupDataByMonth(data) {
@@ -60,7 +87,7 @@ function groupDataByMonth(data) {
 	// Loop through the data array and group objects by month
 	data.forEach((item) => {
 		// Get the month portion of the createdAt field as a number (0-11)
-		const monthNum = new Date(item.dateCreated).getMonth();
+		const monthNum = new Date(item.dateCreated || item.timestamp).getMonth();
 
 		// Get the month name from the monthNames array
 		const monthName = monthNames[monthNum];

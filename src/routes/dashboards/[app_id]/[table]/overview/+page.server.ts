@@ -7,7 +7,6 @@ export async function load({ locals, params }: RequestEvent) {
 	//@ts-ignore
 	const space = locals.space;
 
-
 	if (!space) throw error(404, 'Space not found');
 
 	const table = space.tables.find((table: any) => table.name === params.table);
@@ -128,7 +127,8 @@ export const actions: Actions = {
 				layout,
 				orientation,
 				tableId: String(table?.id),
-				charts
+				charts,
+				spaceId: space.id
 			}
 		});
 
@@ -254,7 +254,8 @@ export const actions: Actions = {
 				name: convertToSlug(name),
 				description,
 				tableId: String(table?.id),
-				isUpdate: isUpdated
+				isUpdate: isUpdated,
+				spaceId: space?.id
 			}
 		});
 

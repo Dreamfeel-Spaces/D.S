@@ -25,8 +25,8 @@
 </svelte:head>
 
 {#if !data.spaceSession?.user?.id}
-	<section>
-		<div class="flex flex-col px-6 text-gray-800 mx-auto  lg:py-0">
+	<section class="w min-w-min">
+		<div class=" f px-6 text-gray-800 mx-auto  lg:py-0">
 			<div
 				class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md dark:mt-1 xl:p-0 dark:bg-gray-800 dark:border-gray-700"
 			>
@@ -120,6 +120,11 @@
 			</div>
 		</div>
 	</section>
+	<footer class="footer px-4 py-2">
+		<div class="footer-content">
+			<p class="text-xs text-gray-600 text-center">Powered by Dreamfeel Spaces</p>
+		</div>
+	</footer>
 {/if}
 
 {#if data.spaceSession?.user?.id}

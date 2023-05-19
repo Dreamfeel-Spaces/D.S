@@ -181,7 +181,7 @@
 				error = e;
 				loading = false;
 			}
-		} else if (action === 'create' || action === 'update') {
+		} else if (action === 'create') {
 			const body = columns.reduce((prev: any, curr: any, index: number) => {
 				return { ...prev, [curr.name]: curr.value };
 			}, {});
@@ -369,7 +369,7 @@
 		</div>
 	</div>
 
-	{#if action === 'find_unique' || action === 'delete'}
+	{#if action === 'find_unique' || action === 'delete' || action==="update"}
 		<div class="my-1">
 			<label for="id">ID</label>
 			<Input bind:value={itemId} required class="my-2=1" placeholder={`Enter item id`} />

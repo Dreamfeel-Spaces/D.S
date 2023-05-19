@@ -16,7 +16,7 @@ datasource db {
 
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String     @db.VarChar(3000)
+  sessionToken String @db.VarChar(3000)
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?
@@ -41,7 +41,7 @@ model Event {
   targetType String
   target     String
   action     String
-  data       String  @db.LongText
+  data       String @db.LongText
 
   @@index([spaceId])
 }
@@ -54,9 +54,9 @@ model Page {
   icon             String?
   path             String?
   components       Component[]
-  html             String?        @db.LongText
+  html             String? @db.LongText
   pathRegexp       String?
-  uiDef            String?        @db.LongText
+  uiDef            String? @db.LongText
   roles            UserRoles?     @relation(fields: [userRolesId], references: [id])
   userRolesId      String?
   layout           Boolean        @default(false)
@@ -311,8 +311,11 @@ model DashboardForm {
   fields      ReportField[]
   SQT         SQT[]
   isUpdate    Boolean       @default(false)
+  space       Space?        @relation(fields: [spaceId], references: [id])
+  spaceId     String?
 
   @@index([tableId])
+  @@index([spaceId])
 }
 
 model SQT {
@@ -373,9 +376,12 @@ model Report {
   filters         ReportFilter[]
   SQT             SQT[]
   charts          String?                 @default("[]")
+  space           Space?                  @relation(fields: [spaceId], references: [id])
+  spaceId         String?
   viewPermissions ReportViewPermissions[]
 
   @@index([tableId])
+  @@index([spaceId])
 }
 
 model ReportFilter {
@@ -961,6 +967,8 @@ model Space {
   templated                DateTime?
   events                   Event[]
   TableRead                TableRead[]
+  Report                   Report[]
+  DashboardForm            DashboardForm[]
 
   @@index([userId])
   @@index([templateCategoryId])

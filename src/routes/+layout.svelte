@@ -183,7 +183,7 @@
 							class="mt-2 mr-2 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mt-0"
 							href="/"
 						>
-							<Avatar size="lg" class="bg-white dark:bg-white" src={logo} style="height: 30px" alt="logo transparent" loading="lazy" />
+							<img class="bg-white dark:bg-gray-200 rounded" src={logo} style="height: 30px" alt="logo transparent" loading="lazy" />
 						</a>
 						<!-- Left links -->
 						<ul

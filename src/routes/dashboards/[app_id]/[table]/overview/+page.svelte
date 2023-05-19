@@ -75,7 +75,7 @@
 				<TabItem
 					open={activeTab === 'reports'}
 					on:click={() => goto('?tab=reports')}
-					title="Query Reports"
+					title="Reports"
 				>
 					<ReportModal columns={data.columns} />
 					{#if form?.reportSuccess}
@@ -337,7 +337,7 @@
 				<TabItem
 					open={activeTab === 'charts'}
 					on:click={() => goto('?tab=charts', { invalidateAll: true })}
-					title="Charts"
+					title="Analytics"
 				>
 					<ChartModal columns={data.columns} />
 					{#if !data.charts.length}

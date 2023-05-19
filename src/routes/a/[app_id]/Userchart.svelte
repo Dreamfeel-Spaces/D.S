@@ -6,6 +6,7 @@
 	import { page } from '$app/stores';
 	import { useEffect } from '$lib/wsstore/hooks';
 	import RangeSlider from '../../rest/[app_id]/RangeSlider.svelte';
+	import Chart from '$lib/components/Chart.svelte';
 
 	let chartType = 'line';
 
@@ -251,85 +252,43 @@
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-autocolors"></script>
 </svelte:head>
 
-<main
-	class="main-container bg-gray-200 relative pt-4 4xl:grid-cols-1  mt-9 rounded-lg mx-3 grid lg:grid-cols-2 grid-cols-1 gap-4 p-2"
->
+<div class="grid lg:grid-cols-2 gap-3">
 	<div>
-		<div class="flex bg-gray-300 justify-between p-3 rounded-t-xl">
-			<div>
-				<div class="text-xl 4xl:text-4xl">Signups</div>
-				<p class="4xl:text-3xl">Monthly user signup</p>
-			</div>
-			<div>
-				<Select
-					size="sm"
-					bind:value={signupChartType}
-					items={[
-						{ name: 'Bar', value: 'bar' },
-						{ name: 'Line', value: 'line' },
-						{ name: 'Pie', value: 'pie' },
-						{ name: 'Doughnut', value: 'doughnut' },
-						{ name: 'Scatter', value: 'scatter' }
-					]}
-				/>
-			</div>
-		</div>
-		<div class="py-4 px-9 flex gap-3 bg-gray-300">
-			{$page.data.groupedUsers.map((item) => item.month)[
-				Math.round(signupStart * $page.data.groupedUsers.map((item) => item.month).length)
-			] ?? $page.data.groupedUsers[-1] ?? ""}
-			<RangeSlider bind:start={signupStart} bind:end={signupEnd} />
-			{$page.data.groupedUsers.map((item) => item.month)[
-				Math.round(signupEnd * ($page.data.groupedUsers.map((item) => item.month).length - 1))
-			] ?? ""}
-		</div>
-		<section
-			class="flex bg-gray-400 pt-2 z-40 back backdrop-blur-2xl   p-3 rounded-b-xl justify-center"
-		>
-			<canvas bind:this={barChartElement} />
-		</section>
+		<Chart
+			items={$page.data.groupedUsers.map((item) => ({ label: item.month, value: item.count }))}
+			chartType="line"
+			subtitle="Accounts created per month"
+			title="User Signups"
+		/>
+	</div>
+	<div>
+		<Chart
+			items={$page.data.groupedSessions.map((item) => ({ label: item.month, value: item.count }))}
+			chartType="line"
+			subtitle="Sessions every month"
+			title="Sessions"
+		/>
 	</div>
 
-	<div class="">
-		<div class="flex   rounded-t-xl  bg-gray-300 p-3">
-			<div class="flex-1">
-				<div class="text-xl 4xl:text-4xl">Sessions</div>
-				<p class="4xl:text-3xl">Monthly sessions</p>
-			</div>
-			<div class="flex bg-gray-300 px-3">
-				<Select
-					size="sm"
-					bind:value={sessionsChartsType}
-					items={[
-						{ name: 'Bar', value: 'bar' },
-						{ name: 'Line', value: 'line' },
-						{ name: 'Pie', value: 'pie' },
-						{ name: 'Doughnut', value: 'doughnut' },
-						{ name: 'Scatter', value: 'scatter' }
-					]}
-				/>
-			</div>
-		</div>
-
-		<div class="bg-gray-300 px-9 py-4  flex gap-3">
-			{$page.data.groupedSessions.map((item) => item.month)[
-				Math.round(sessionStart * $page.data.groupedSessions.map((item) => item.month).length)
-			] ?? $page.data.groupedSessions.map((item) => item.month)[-1] ??""}
-			<RangeSlider bind:start={sessionStart} bind:end={sessionEnd} />
-			{$page.data.groupedSessions.map((item) => item.month)[
-				Math.round(sessionEnd * ($page.data.groupedSessions.map((item) => item.month).length - 1))
-			] ?? ""}
-		</div>
-
-			<section
-				class="flex bg-gray-400 pt-2 z-40 back backdrop-blur-2xl   rounded-b-xl justify-center"
-			>
-				<canvas bind:this={lineChartElement} />
-			</section>
+	<div>
+		<Chart
+			items={$page.data.groupedSessions.map((item) => ({ label: item.month, value: item.count }))}
+			chartType="bar"
+			subtitle="Conversion rate"
+			title="Conversion rate"
+		/>
 	</div>
-</main>
+	<div>
+		<Chart
+			items={$page.data.groupedSessions.map((item) => ({ label: item.month, value: item.count }))}
+			chartType="line"
+			subtitle="Sales"
+			title="Sales over time"
+		/>
+	</div>
+</div>
 
-<section>
+<!-- <section>
 	<div>
 		<div class=" py-9 mx-4 mt-9 pt-3 rounded-lg bg-gray-200 text-center px-8">
 			<div class="text-xl 4xl:text-4xl">Revenue</div>
@@ -346,4 +305,4 @@
 			</div>
 		</div>
 	</div>
-</section>
+</section> -->

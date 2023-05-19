@@ -31,8 +31,8 @@
 	</title>
 </svelte:head>
 
-<div class="container">
-	<div class="dark:text-white min-h-100">
+<div class="container  dark:bg-gray-900 min-h-screen">
+	<div class="dark:text-white ">
 		<div class="flex justify-between mb-2">
 			<div class="text-2xl flex items-center">Datasource</div>
 			<div>
@@ -75,7 +75,7 @@
 		{/if}
 
 		{#if hasTables}
-			<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+			<div class="relative dark:bg-gray-900 overflow-x-auto shadow-md sm:rounded-lg">
 				<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 					<thead
 						class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
