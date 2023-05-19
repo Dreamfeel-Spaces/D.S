@@ -503,7 +503,7 @@
 					</div>
 				</header>
 				<div class="main-content dark:bg-gray-700  flex flex-col flex-grow p-2">
-					<div class="flex flex-col  dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded ">
+					<div class="flex flex-col  dark:bg-gray-900 p-4 rounded-xl overflow-auto flex-grow  bg-white  ">
 						<slot />
 					</div>
 				</div>
