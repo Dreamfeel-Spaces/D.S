@@ -130,7 +130,7 @@ export class Pages {
 		<meta property="og:type" content="website">
 		<meta property="og:title" content="${space?.name ?? 'Dreamfeel Space'}">
 		<meta property="og:description" content="${space?.description ?? 'Dreamfeel Space'}">
-		<meta property="og:image" content="https://res.cloudinary.com/dreamnerd/image/upload/v1683813200/Screenshot_from_2023-05-11_16-51-40_drnmo8.png">
+		<meta property="og:image" content="https://res.cloudinary.com/dreamnerd/image/upload/v1684766083/Screenshot_from_2023-05-22_17-25-47_jfiskv.png">
 	  
 		<!-- Twitter Meta Tags -->
 		<meta name="twitter:card" content="summary_large_image">
@@ -138,7 +138,7 @@ export class Pages {
 		<meta property="twitter:url" content="${this.url}">
 		<meta name="twitter:title" content="${space?.name ?? 'Dreamfeel Space'}">
 		<meta name="twitter:description" content="${space?.description ?? 'Dreamfeel Space'}">
-		<meta name="twitter:image" content="https://res.cloudinary.com/dreamnerd/image/upload/v1683813200/Screenshot_from_2023-05-11_16-51-40_drnmo8.png">
+		<meta name="twitter:image" content="https://res.cloudinary.com/dreamnerd/image/upload/v1684766083/Screenshot_from_2023-05-22_17-25-47_jfiskv.png">
 	  
 			  
 		</head>
