@@ -53,6 +53,13 @@
 										>
 											{form.name}
 										</th>
+										<td>
+											
+										</td>
+										<td class="px-6 py-4"> <a
+											href="/dashboards/{$page.params.app_id}/{form.table
+												.name}/overview/f/{form.id}">View</a
+										></td>
 									</tr>
 								{/each}
 							</tbody>
@@ -77,6 +84,12 @@
 										>
 											{report.name}
 										</th>
+										<td class="px-6 py-4">
+											<a
+												href="/dashboards/{$page.params.app_id}/{report.table
+													.name}/overview/r/{report.id}">View</a
+											>
+										</td>
 									</tr>
 								{/each}
 							</tbody>

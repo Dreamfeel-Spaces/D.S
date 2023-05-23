@@ -1,6 +1,6 @@
 <script lang="ts">
 	//@ts-nocheck
-	import { recentlyViewed } from '$lib/wsstore';
+	import { recentlyViewed, colorScheme } from '$lib/wsstore';
 	import { Card, Heading, Progressbar } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import Uptime from '$lib/components/Uptime.svelte';
@@ -22,7 +22,7 @@
 	<div>
 		<Heading tag="h4">Home</Heading>
 		{#if Object.keys($recentlyViewed).length}
-			<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+			<div class="relative overflow-x-auto -md sm:rounded-lg">
 				<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 					<caption
 						class="p-5 text-lg 4xl:text-4xl font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800"
@@ -50,7 +50,7 @@
 					<tbody>
 						{#each Object.keys($recentlyViewed) as pathname}
 							{#if pathname}
-								<tr class="bg-white 4xl:text-3xl border-b dark:bg-gray-800 dark:border-gray-700">
+								<tr class="bg-white 4xl:text-3xl -b dark:bg-gray-800 dark:-gray-700">
 									<th
 										scope="row"
 										class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -197,10 +197,13 @@
 		<div class="flex flex-wrap">
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2">
 				<div
-					style="background-color:{getDarkColor()}"
-					class=" backdrop-blur-sm border 2xl:min-h-[10rem] 4xl:min-h-[20rem] rounded-lg shadow p-2"
+					style="background-color:#202C39"
+					class=" backdrop-blur-sm  2xl:min-h-[10rem] 4xl:min-h-[20rem] rounded-lg  p-2"
 				>
-					<a href="/a/{$page.data.space?.appId}/wallets" class="flex flex-row items-center">
+					<a
+						href="/a/{$page.data.space?.appId}/wallets"
+						class="flex text-white flex-row items-center"
+					>
 						<div class="flex-shrink  pl-1 pr-4">
 							<svg
 								fill="currentColor"
@@ -214,18 +217,18 @@
 							>
 						</div>
 						<div class="flex-1 text-right">
-							<h5 class="text-green-400 2xl:text-3xl  4xl:text-5xl">Total Revenue</h5>
-							<h3 class="text-white 2xl:text-6xl 2xl:pt-4 4xl:text-9xl 4xl:mt-12 text-3xl">
-								0$<span class="text-green-400"><i class="fas fa-caret-down" /></span>
+							<h5 class=" 2xl:text-3xl  4xl:text-5xl">Total Revenue</h5>
+							<h3 class="text-green-  2xl:text-6xl 2xl:pt-4 4xl:text-9xl 4xl:mt-12 text-3xl">
+								0$<span class="text-green- "><i class="fas fa-caret-down" /></span>
 							</h3>
 						</div>
 					</a>
 				</div>
 			</div>
-			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2">
+			<div class="w-full md:w-1/2 text-white xl:w-1/3 pt-3 px-3 md:pl-2">
 				<div
-					style="background-color:{getDarkColor()}"
-					class=" 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2"
+					style="background-color:#202C39"
+					class=" 4xl:min-h-[20rem]  2xl:min-h-[10rem]  rounded-lg  p-2"
 				>
 					<a
 						href="/dashboards/{$page.data.space?.appId}/users/overview"
@@ -255,8 +258,8 @@
 			</div>
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2 xl:pr-3 xl:pl-1">
 				<div
-					style="background-color:{getDarkColor()}"
-					class=" 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2"
+					style="background-color:#202C39"
+					class=" 4xl:min-h-[20rem] text-white  2xl:min-h-[10rem]  rounded-lg  p-2"
 				>
 					<div class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
@@ -283,11 +286,11 @@
 			</div>
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-3 xl:pr-2">
 				<div
-					style="background-color:{getDarkColor()}"
-					class=" 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2"
+					style="background-color:#202C39"
+					class=" 4xl:min-h-[20rem]  2xl:min-h-[10rem]  rounded-lg  p-2"
 				>
 					<div class="flex flex-row items-center">
-						<div class="flex-shrink pl-1 pr-4">
+						<div class="flex-shrink pl-1 pr-4 text-white">
 							<svg
 								fill="currentColor"
 								xmlns="http://www.w3.org/2000/svg"
@@ -310,10 +313,10 @@
 			</div>
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pr-2 xl:pl-2 xl:pr-3">
 				<div
-					style="background-color:{getDarkColor()}"
-					class=" 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2"
+					style="background-color:#202C39"
+					class=" 4xl:min-h-[20rem]  2xl:min-h-[10rem]  rounded-lg  p-2"
 				>
-					<a href="/rest/{$page.data.space?.appId}/" class="flex flex-row items-center">
+					<a href="/rest/{$page.data.space?.appId}/" class="flex text-white flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
 							<svg
 								fill="currentColor"
@@ -327,7 +330,7 @@
 							>
 						</div>
 						<div class="flex-1 text-right">
-							<h5 class="text-white 2xl:text-3xl">Collections</h5>
+							<h5 class="text-in text- -600 2xl:text-3xl">Collections</h5>
 							<h3 class="text-white 2xl:text-6xl 4xl:text-9xl 4xl:mt-12  2xl:pt-4 text-3xl">
 								{$page.data.tableCount}
 							</h3>
@@ -337,8 +340,8 @@
 			</div>
 			<div class="w-full  md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
 				<div
-					style="background-color:{getDarkColor()}"
-					class=" 4xl:min-h-[20rem]  2xl:min-h-[10rem] border rounded-lg shadow p-2"
+					style="background-color:#202C39"
+					class=" 4xl:min-h-[20rem] text-white  2xl:min-h-[10rem]  rounded-lg  p-2"
 				>
 					<a href="/editor/{$page.data.space?.appId}/" class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">
@@ -365,8 +368,8 @@
 			</div>
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
 				<div
-					style="background-color:{getDarkColor()}"
-					class=" 4xl:min-h-[20rem]  ml-2 2xl:min-h-[10rem]  border rounded-lg shadow p-2"
+					style="background-color:#202C39"
+					class=" 4xl:min-h-[20rem]  ml-2 2xl:min-h-[10rem]   rounded-lg  p-2"
 				>
 					<a href="/rest/{$page.data.space?.appId}/" class="flex flex-row items-center">
 						<div class="flex-1 text-right">
@@ -397,8 +400,8 @@
 			</div>
 			<div class="w-full md:w-1/2 xl:w-1/3 pt-3 px-3 md:pl-2 xl:pl-1">
 				<div
-					style="background-color:{getDarkColor()}"
-					class="bg-600  4xl:min-h-[20rem]  ml-2 2xl:min-h-[10rem]  pb-4  border rounded-lg shadow p-2"
+					style="background-color:#202C39"
+					class="bg-600  4xl:min-h-[20rem] text-white  ml-2 2xl:min-h-[10rem]  pb-4   rounded-lg  p-2"
 				>
 					<a href="/a/{$page.data.space?.appId}/roles" class="flex flex-row items-center">
 						<div class="flex-shrink pl-1 pr-4">

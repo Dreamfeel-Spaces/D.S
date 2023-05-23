@@ -103,10 +103,10 @@
 						{/if}
 					</div>
 
-					<div size="xs" class="mt-3 grid grid-cols-2 gap-3 mb-48">
+					<div size="xs" class="mt-3  gap-3 mb-48">
 						{#each data.reports as report}
 							<div
-								class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
+								class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
 							>
 								<div class="flex items-center justify-between mb-4">
 									<h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
@@ -390,11 +390,9 @@
 							<Alert accent class="my-16">You haven't added any forms</Alert>
 						</div>
 					{/if}
+					<!-- 
 
-					<Accordion class="mt-3">
-						{#each data.forms as form}
-							<AccordionItem>
-								<svelte:fragment slot="header">
+					<svelte:fragment slot="header">
 									<div>
 										<p>
 											{form.name}
@@ -423,102 +421,53 @@
 										tables={data.space.tables}
 										permissions={data.permissions}
 									/>
-								</div>
-								<form action="?/saveMiniform&tab=forms" method="POST">
-									<input type="hidden" value={form.id} name="form-id" id="form-id" />
-									<input type="hidden" value={form.isUpdate} name="isUpdate" id="isUpdate" />
-									{#if form.isUpdate}
-										<div class="mt-6">
-											<label for="record-id">Item</label>
-											<Select
-												name="record-id"
-												placeholder="Select item to update"
-												id="record-id"
-												bind:value={selectedOptions['record-id']}
-												items={data.rows.map((row) => ({
-													name: row[data.table.displayName],
-													value: row.id
-												}))}
+								</div> -->
+
+					<div class="relative overflow-x-auto">
+						<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+							<thead
+								class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+							>
+								<tr>
+									<th scope="col" class="px-6 py-3"> Name </th>
+									<th scope="col" class="px-6 py-3" />
+									<th scope="col" class="px-6 py-3" />
+									<th scope="col" class="px-6 py-3" />
+								</tr>
+							</thead>
+							<tbody>
+								{#each data.forms as form}
+									<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+										<th
+											scope="row"
+											class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+										>
+											{form?.name}
+										</th>
+										<td class="px-6 py-4" />
+										<td class="px-6 py-4">
+											<ShareformModal
+												type="form"
+												tab="forms"
+												title={form.name}
+												description={form.description}
+												itemId={form.id}
+												reports={data.reports}
+												tables={data.space.tables}
+												permissions={data.permissions}
 											/>
-										</div>
-									{/if}
-									{#each form.columns ?? [] as column}
-										<div class="my-6">
-											{#if column.type !== 'toggle'}
-												<label for={column.name}>{column.name}</label>
-											{/if}
-											{#if column.type === 'string'}
-												<Input id={column.name} name={column.name} />
-											{/if}
-											{#if column.type === 'number'}
-												<NumberInput id={column.name} name={column.name} />
-											{/if}
-
-											{#if column.type === 'image'}
-												<FileDropzone />
-											{/if}
-											{#if column.type === 'file'}
-												<FileDropzone />
-											{/if}
-											{#if column.type === 'datetime'}
-												<DateTimeInput />
-											{/if}
-											{#if column.type === 'select'}
-												<Select
-													name={column.name}
-													id={column.name}
-													class="mt-2"
-													items={column.options.map((option) => ({
-														name: option.label,
-														value: option.value
-													}))}
-													bind:value={selectedOptions[column?.name]}
-												/>
-											{/if}
-											{#if column.type === 'toggle'}
-												<Checkbox
-													id={column.name}
-													bind:value={selectedOptions[column.name]}
-													bind:checked={selectedOptions[column.name]}
-													name={column.name}>{column.name}</Checkbox
-												>
-											{/if}
-											{#if column.type === 'email'}
-												<Input type="email" id={column.name} name={column.name} />
-											{/if}
-											{#if column.type === 'phone'}
-												<Input type="number" id={column.name} name={column.name} />
-											{/if}
-											{#if column.type === 'password'}
-												<Input type="password" id={column.name} name={column.name} />
-											{/if}
-
-											{#if column.type === 'rel'}
-												<Select
-													placeholder={`Choose (${column.name})`}
-													name={column.name}
-													id={column.name}
-													class="mt-2"
-													items={column.options.map((option) => ({
-														name: option.label,
-														value: option.value
-													}))}
-													bind:value={selectedOptions[column?.name]}
-												/>
-											{/if}
-										</div>
-									{/each}
-									<div>
-										<Button class="mt-4 w-full" type="submit">Save</Button>
-									</div>
-								</form>
-								<form class="mt-4" action="?/deleteForm&tab=forms" method="POST">
-									<input type="hidden" name="id" value={form.id} />
-									<Button type="submit" class="w-full">Delete</Button>
-								</form>
-							</AccordionItem>
-						{/each}
-					</Accordion>
+										</td>
+										<td class="px-6 py-4">
+											<a
+												href={`/dashboards/${$page.data.space.appId}/${$page.params.table}/overview/f/${form.id}`}
+												>View</a
+											>
+										</td>
+									</tr>
+								{/each}
+							</tbody>
+						</table>
+					</div>
 				</TabItem>
 				<!-- <TabItem open={activeTab === 'actions'} on:click={() => goto('?tab=actions')} title="Actions">
 					<div class="text-center lg:px-6">

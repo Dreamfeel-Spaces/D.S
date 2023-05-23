@@ -86,12 +86,18 @@ export async function load({ locals }: RequestEvent) {
 	const reports = await prisma.report.findMany({
 		where: {
 			spaceId: space?.id
+		},
+		include: {
+			table: true
 		}
 	});
 
 	const forms = await prisma.dashboardForm.findMany({
 		where: {
 			spaceId: space?.id
+		},
+		include: {
+			table: true
 		}
 	});
 
