@@ -22,7 +22,7 @@
 </script>
 
 <section class="container">
-	<Card size="xl">
+	<div class="dark:bg-gray-900 p-6 rounded-xl min-h-full">
 		<div class="flex my-3">
 			<div class=" flex-1 text-xl px-6 text-gray-500">
 				<span class="mr-2">
@@ -140,5 +140,5 @@
 				</div>
 			{/if}
 		</form>
-	</Card>
+	</div>
 </section>

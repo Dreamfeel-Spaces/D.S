@@ -3,6 +3,8 @@
 	import { page } from '$app/stores';
 	import SpaceNav from '$lib/components/SpaceNav.svelte';
 	import SpaceSearch from '../../rest/[app_id]/SpaceSearch.svelte';
+	import { useEffect } from '$lib/wsstore/hooks';
+	import { invalidateAll } from '$app/navigation';
 	let space = $page.data.space;
 	let spaceSession = $page.data.spaceSession;
 	let user = spaceSession?.user;
@@ -12,13 +14,13 @@
 
 <div class="flex flex-row min-h-screen dark:bg-gray-900 bg-gray-100 text-gray-800">
 	<aside
-		class="sidebar min-w-64 dark:text-gray-900 w-64   overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
+		class="sidebar min-w-64 hide-print dark:text-gray-900 w-64   overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
 	>
 		<div class="sidebar-header flex items-center   ml-7 py-4">
 			<div class="inline-flex">
-				<a href={`/a/${space.appId}`} class="inline-flex flex-row items-center">
+				<a href={`/a/${$page.params.app_id}`} class="inline-flex flex-row items-center">
 					<span class="leading-10 dark:text-gray-100 text-2xl font-bold ml-1 uppercase"
-						>{space.name}</span
+						>{$page.data.space?.name}</span
 					>
 					<span class="text-xs dark:text-gray-300 ml-2 mt-2">Dash</span>
 				</a>
@@ -28,7 +30,7 @@
 			<ul class="flex flex-col w-full">
 				<li class="my-px">
 					<a
-						href={`/dashboards/${space.appId}`}
+						href={`/dashboards/${$page.params.app_id}`}
 						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-900 dark:text-gray-300 dark:bg-gray-900 bg-gray-100"
 					>
 						<span class="flex items-center justify-center text-lg text-gray-400">
@@ -69,44 +71,44 @@
 					</svelte:fragment>
 					<SidebarDropdownItem
 						active={/\/users\/overview/.test($page.url.pathname)}
-						href={`/dashboards/${space.appId}/users/overview`}
+						href={`/dashboards/${$page.params.app_id}/users/overview`}
 						label={`Overview`}
 					/>
 					<SidebarDropdownItem
 						active={/\/users\/add/.test($page.url.pathname)}
-						href={`/dashboards/${space.appId}/users/add`}
+						href={`/dashboards/${$page.params.app_id}/users/add`}
 						label={`Add`}
 					/>
 					<SidebarDropdownItem
 						active={/\/users\/table/.test($page.url.pathname)}
 						label={` Table`}
-						href={`/dashboards/${space.appId}/users/table`}
+						href={`/dashboards/${$page.params.app_id}/users/table`}
 					/>
 					<SidebarDropdownItem
 						active={/\/users\/sessions/.test($page.url.pathname)}
-						href={`/dashboards/${space.appId}/users/sessions`}
+						href={`/dashboards/${$page.params.app_id}/users/sessions`}
 						label={`Sessions`}
 					/>
 					<SidebarDropdownItem
 						active={/\/users\/geo/.test($page.url.pathname)}
-						href={`/dashboards/${space.appId}/users/geo`}
+						href={`/dashboards/${$page.params.app_id}/users/geo`}
 						label={`Geo`}
 					/>
 					<SidebarDropdownItem
 						active={/\/users\/import/.test($page.url.pathname)}
-						href={`/dashboards/${space.appId}/users/import`}
+						href={`/dashboards/${$page.params.app_id}/users/import`}
 						label={`Import`}
 					/>
 					<SidebarDropdownItem
 						active={/\/users\/export/.test($page.url.pathname)}
-						href={`/dashboards/${space.appId}/users/export`}
+						href={`/dashboards/${$page.params.app_id}/users/export`}
 						label={`Export `}
 					/>
 				</SidebarDropdownWrapper>
 
 				{#each $page.data?.tables ?? [] as table}
 					<SidebarDropdownWrapper
-						open={$page.params.table === table.name}
+						isOpen={$page.params.table === table.name}
 						label={table.label ?? table?.name}
 					>
 						<svelte:fragment slot="icon">
@@ -116,28 +118,28 @@
 						</svelte:fragment>
 						<SidebarDropdownItem
 							active={/\/overview/.test($page.url.pathname) && table.name === $page.params.table}
-							href={`/dashboards/${space.appId}/${table.name}/overview`}
+							href={`/dashboards/${$page.params.app_id}/${table.name}/overview`}
 							label={`Overview`}
 						/>
 						<SidebarDropdownItem
 							active={/\/create/.test($page.url.pathname) && table.name === $page.params.table}
-							href={`/dashboards/${space.appId}/${table.name}/create`}
+							href={`/dashboards/${$page.params.app_id}/${table.name}/create`}
 							label={`Add ${table.name}`}
 						/>
 						<SidebarDropdownItem
 							active={/^\/dashboards\/([^/]+)\/([^/]+)$/.test($page.url.pathname) &&
 								table.name === $page.params.table}
-							href={`/dashboards/${space.appId}/${table.name}`}
+							href={`/dashboards/${$page.params.app_id}/${table.name}`}
 							label={`${table.name} Table`}
 						/>
 						<SidebarDropdownItem
 							active={/\/import/.test($page.url.pathname) && table.name === $page.params.table}
-							href={`/dashboards/${space.appId}/${table.name}/import`}
+							href={`/dashboards/${$page.params.app_id}/${table.name}/import`}
 							label={`Import ${table.name}`}
 						/>
 						<SidebarDropdownItem
 							active={/\/export/.test($page.url.pathname) && table.name === $page.params.table}
-							href={`/dashboards/${space.appId}/${table.name}/export`}
+							href={`/dashboards/${$page.params.app_id}/${table.name}/export`}
 							label={`Export ${table.name}`}
 						/>
 					</SidebarDropdownWrapper>
@@ -145,7 +147,7 @@
 
 				<!-- <li class="my-px">
 					{#if user}
-						<form method="post" action={`/a/${space.appId}/accounts?/signout`}>
+						<form method="post" action={`/a/${$page.params.app_id}/accounts?/signout`}>
 							<button
 								type="submit"
 								class="flex w-full flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
@@ -198,11 +200,11 @@
 		</div>
 	</aside>
 	<main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
-		<header class="header dark:bg-gray-800 bg-white shadow py-1 px-4">
+		<header class="header hide-print dark:bg-gray-800 bg-white shadow py-1 px-4">
 			<div class="header-content flex items-center flex-row">
 				<SpaceSearch />
 				<div class="flex ml-auto">
-					{#if space.appId === 'demo' || space.appId === 'ecommerce'}
+					{#if $page.params.app_id === 'demo' || $page.params.app_id === 'ecommerce'}
 						<div class="pt-1">
 							<Button pill class="mr-4" size="xs" color="green">Official demo</Button>
 						</div>
@@ -213,7 +215,7 @@
 							size="xs"
 							rel="noreferrer"
 							target="_blank"
-							href="/{$page.data.space.appId}"
+							href="/{$page.params.app_id}"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -252,7 +254,9 @@
 			</div>
 		</header>
 		<div class="main-content dark:bg-gray-700  flex flex-col flex-grow p-1">
-			<div class="flex fle max-w-2x max-w-7xl dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded ">
+			<div
+				class="flex print-area fle max-w-2x max-w-7xl dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded "
+			>
 				<slot />
 			</div>
 		</div>
@@ -265,3 +269,14 @@
 		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
 	/>
 </svelte:head>
+
+<style>
+	@media print {
+		.hide-print {
+			display: none !important;
+		}
+		.print-area {
+			display: block;
+		}
+	}
+</style>

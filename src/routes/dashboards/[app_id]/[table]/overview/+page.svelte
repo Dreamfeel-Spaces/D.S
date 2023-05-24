@@ -69,7 +69,7 @@
 </div> -->
 
 <section class="container max-auto max-w">
-	<Card size="xl">
+	<div class="xl min-h-full rounded-xl dark:bg-gray-900">
 		<div class=" p-3 overflow-auto ">
 			<Tabs>
 				<TabItem
@@ -92,7 +92,7 @@
 							</Alert>
 						{/if}
 						{#if !data.reports?.length}
-							<div class="flex items-center text-center self-center  max-w-xl">
+							<div class="flex items-center text-center self-center  ">
 								<P class="mb-3 flex text-justify flex-wrap "
 									>With reports you can query and group your data together onto an easy to
 									manipulate tables. You can create events and perform tasks on these tables, share,
@@ -103,34 +103,29 @@
 						{/if}
 					</div>
 
-					<div size="xs" class="mt-3  gap-3 mb-48">
-						{#each data.reports as report}
-							<div
-								class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
+					<div class="relative overflow-x-auto">
+						<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+							<thead
+								class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
 							>
-								<div class="flex items-center justify-between mb-4">
-									<h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
-										{report.name}
-									</h5>
-									<div class="flex gap-6">
-										<div>
-											<a
-												href={`/dashboards/${$page.data.space.appId}/${$page.params.table}/overview/r/${report.id}`}
-												class="text-sm font-medium "
-											>
-												<svg
-													fill="currentColor"
-													xmlns="http://www.w3.org/2000/svg"
-													height="24"
-													viewBox="0 96 960 960"
-													width="24"
-													><path
-														d="M120 936V636h60v198l558-558H540v-60h300v300h-60V318L222 876h198v60H120Z"
-													/></svg
-												>
-											</a>
-										</div>
-										<div>
+								<tr>
+									<th scope="col" class="px-6 py-3"> Name </th>
+									<th scope="col" class="px-6 py-3"> Description </th>
+									<th scope="col" class="px-6 py-3"> Share </th>
+									<th scope="col" class="px-6 py-3"> View </th>
+								</tr>
+							</thead>
+							<tbody>
+								{#each data.reports as report}
+									<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+										<th
+											scope="row"
+											class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+										>
+											{report.name}
+										</th>
+										<td class="px-6 py-4"> {report?.description} ?? - </td>
+										<td class="px-6 py-4">
 											<ShareformModal
 												type="report"
 												tab="reports"
@@ -141,197 +136,19 @@
 												tables={data.space.tables}
 												permissions={data.permissions}
 											/>
-										</div>
-									</div>
-								</div>
-								<div class="flex">
-									<p class="text-sm flex-1 truncate">{report?.description}</p>
-								</div>
-								<Hr />
-								<div class="flow-root">
-									<div class="divide-y divide-gray-200 dark:divide-gray-700">
-										<div class={` justify-center   max-h-96 overflow-hidden`}>
-											<Table shadow striped={true}>
-												<!-- <TableHead>
-													<TableHeadCell
-														class="text-gray-500"
-														align="right"
-														colspan={report.columns.length}
-														>{'>'} {data.space.name} / {data?.table?.name} / {report?.name}
-													</TableHeadCell>
-												</TableHead> -->
-
-												<TableHead>
-													<TableHeadCell colspan={report.columns.length}>
-														{#each report.charts ?? [] as chart}
-															<div class="text-2xl text-gray-500">
-																<SpaceChart
-																	noDelete
-																	rows={report.rows}
-																	chart={{
-																		...chart,
-																		fields: report.fields,
-																		name: '',
-																		description: ''
-																	}}
-																/>
-															</div>
-														{/each}
-													</TableHeadCell>
-												</TableHead>
-
-												<TableHead>
-													{#each report.columns as column, index}
-														<TableHeadCell
-															align={`${
-																index + 1 === report.columns.length && report.columns.length > 1
-																	? 'right'
-																	: ''
-															}`}>{column.name}</TableHeadCell
-														>
-													{/each}
-												</TableHead>
-												<TableBody class="divide-y">
-													{#each report.rows as row}
-														<TableBodyRow>
-															{#each report.columns as column, index}
-																<TableBodyCell
-																	align={`${
-																		index + 1 === report.columns.length && report.columns.length > 1
-																			? 'right'
-																			: ''
-																	}`}>{row[column.name]}</TableBodyCell
-																>
-															{/each}
-														</TableBodyRow>
-													{/each}
-
-													<TableBodyRow>
-														<TableBodyCell colspan={report.columns.length}>
-															<span class="text-xs text-gray-500"
-																>{new Date()} - {report.description}</span
-															>
-														</TableBodyCell>
-													</TableBodyRow>
-												</TableBody>
-											</Table>
-										</div>
-										<Hr class="mt-6" />
-										<div>
-											<p>This report has been shared with</p>
-										</div>
-										{#each report.SQT as sq}
+										</td>
+										<td class="px-6 py-4">
 											<a
-												rel="external"
-												target="blank"
-												class="text-xs mt-2 text-blue-600 underline"
-												href={`/reports/${sq.id}`}>{sq.title}</a
+												href={`/dashboards/${$page.data.space.appId}/${$page.params.table}/overview/r/${report.id}`}
+												class="text-sm font-medium "
 											>
-										{/each}
-									</div>
-								</div>
-							</div>
-
-							<!-- <AccordionItem size="xs">
-								<svelte:fragment slot="header">
-									<div>
-										{report.name}
-										<div class="text-xs my-3 text-gray-500">{report.description}</div>
-										{#each report.SQT as sq}
-											<a
-												rel="external"
-												target="blank"
-												class="text-xs text-blue-600 underline"
-												href={`/reports/${sq.id}`}>{sq.title}</a
-											>
-										{/each}
-									</div>
-								</svelte:fragment>
-								<div class="flex justify-between">
-									<div>
-										<a href="/">Print</a>
-									</div>
-									<div>
-										<ShareformModal
-											type="report"
-											tab="reports"
-											title={report.name}
-											description={report.description}
-											itemId={report.id}
-											reports={data.reports}
-											tables={data.space.tables}
-											permissions={data.permissions}
-										/>
-									</div>
-								</div>
-
-								<div class={` w-full justify-center`}>
-									<Table shadow class="mt-20" striped={true}>
-										<TableHead>
-											<TableHeadCell
-												class="text-gray-500"
-												align="right"
-												colspan={report.columns.length}
-												>{'>'} {data.space.name} / {data?.table?.name} / {report?.name}
-											</TableHeadCell>
-										</TableHead>
-
-										<TableHead>
-											<TableHeadCell colspan={report.columns.length}>
-												{#each report.charts ?? [] as chart}
-													<div class="text-2xl text-gray-500">
-														<SpaceChart
-															noDelete
-															rows={report.rows}
-															chart={{ ...chart, fields: report.fields, name: '', description: '' }}
-														/>
-													</div>
-												{/each}
-											</TableHeadCell>
-										</TableHead>
-
-										<TableHead>
-											{#each report.columns as column, index}
-												<TableHeadCell
-													align={`${
-														index + 1 === report.columns.length && report.columns.length > 1
-															? 'right'
-															: ''
-													}`}>{column.name}</TableHeadCell
-												>
-											{/each}
-										</TableHead>
-										<TableBody class="divide-y">
-											{#each report.rows as row}
-												<TableBodyRow>
-													{#each report.columns as column, index}
-														<TableBodyCell
-															align={`${
-																index + 1 === report.columns.length && report.columns.length > 1
-																	? 'right'
-																	: ''
-															}`}>{row[column.name]}</TableBodyCell
-														>
-													{/each}
-												</TableBodyRow>
-											{/each}
-
-											<TableBodyRow>
-												<TableBodyCell colspan={report.columns.length}>
-													<span class="text-xs text-gray-500"
-														>{new Date()} - {report.description}</span
-													>
-												</TableBodyCell>
-											</TableBodyRow>
-										</TableBody>
-									</Table>
-								</div>
-								<form class="mt-4" action="?/deleteReport&tab=reports" method="POST">
-									<input type="hidden" name="id" value={report.id} />
-									<Button type="submit" class="w-full">Delete</Button>
-								</form>
-							</AccordionItem> -->
-						{/each}
+												View
+											</a>
+										</td>
+									</tr>
+								{/each}
+							</tbody>
+						</table>
 					</div>
 				</TabItem>
 				<TabItem
@@ -512,5 +329,5 @@
 				</TabItem> -->
 			</Tabs>
 		</div>
-	</Card>
+	</div>
 </section>

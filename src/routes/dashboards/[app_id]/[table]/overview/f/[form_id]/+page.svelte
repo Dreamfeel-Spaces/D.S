@@ -7,40 +7,43 @@
 	import DateTimeInput from '$lib/components/DateTimeInput.svelte';
 
 	let selectedOptions: any = {};
-	let form = data.form;
+	let _form = data.form;
+	export let form;
 </script>
 
-{#if data.isFilled}
-	<div class="bg-gray-200 pt-6 lg:px-64 px-4">
-		<Alert
-			>Thanks, you have already filled this form. <a
-				class="hover:underline"
-				href="/forms/id/responses">View your responses</a
-			></Alert
-		>
-	</div>
-{/if}
-
-<div class="bg-gray-200 h-full w-full overflow-auto pt-6">
-	<section class="pb-9  mx-2   pt-4">
-		<div class=" px-4 mx-auto max-w-screen-xl  lg:py-8 lg:px-12">
-			<div class="text-center">
-				<p
-					class="mb-8 text-4xl font-normal text-gray-300 lg:text-5xl sm:px-16 xl:px-48 dark:text-gray-300"
-				>
-					{data?.form?.name}
-				</p>
-				<div
-					class="flex flex-col  text-gray-300  lg:mb-9 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4"
-				>
-					{data?.form?.description}
-				</div>
-			</div>
+<div class="dark:bg-gray-900 h-full w-full overflow-auto pt-6">
+	<!-- Code block starts -->
+	<div
+		class="my-6 lg:my-2 container px-6 mx-auto flex flex-col md:flex-row items-start md:items-center justify-between pb-4 border-b border-gray-300"
+	>
+		<div>
+			<h4 class="text-2xl font-bold leading-tight text-gray-800 dark:text-gray-100">
+				{data?.form?.name}
+			</h4>
+			<ul
+				aria-label="current Status"
+				class="flex flex-col md:flex-row items-start md:items-center text-gray-600 dark:text-gray-400 text-sm mt-3"
+			>
+				<li class="flex items-center mt-4 md:mt-0">
+					<span>{data?.form?.description}</span>
+				</li>
+			</ul>
 		</div>
-	</section>
-
-	<form class="lg:px-64 px-6  mb-14" method="post">
-		{#each form.columns ?? [] as column}
+		<div class="mt-6 md:mt-0">
+			<button
+				on:click={() => history.back()}
+				class="mr-3 bg-gray-200 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 transition duration-150 ease-in-out rounded hover:bg-gray-300 text-indigo-700 dark:hover:bg-gray-600 dark:text-indigo-600 px-5 py-2 text-sm"
+				>Back</button
+			>
+		</div>
+	</div>
+	{#if form?.success}
+		<div class=" px-4">
+			<Alert accent dismissable>Data saved</Alert>
+		</div>
+	{/if}
+	<form class="lg:px- dark:text-white px-6  mb-14" method="post">
+		{#each _form.columns ?? [] as column}
 			<div class="my-6">
 				{#if column.type !== 'toggle'}
 					<label for={column.name}>{column.name}</label>

@@ -22,7 +22,7 @@
 	<div>
 		<Heading tag="h4">Home</Heading>
 		{#if Object.keys($recentlyViewed).length}
-			<div class="relative overflow-x-auto -md sm:rounded-lg">
+			<div class="relative overflow-x-auto -md px-3 rounded-lg sm:rounded-lg">
 				<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 					<caption
 						class="p-5 text-lg 4xl:text-4xl font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800"

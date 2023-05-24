@@ -42,6 +42,7 @@
 							>
 								<tr>
 									<th scope="col" class="px-6 py-3"> Name </th>
+									<th scope="col" class="px-6 py-3" />
 								</tr>
 							</thead>
 							<tbody>
@@ -53,13 +54,12 @@
 										>
 											{form.name}
 										</th>
-										<td>
-											
-										</td>
-										<td class="px-6 py-4"> <a
-											href="/dashboards/{$page.params.app_id}/{form.table
-												.name}/overview/f/{form.id}">View</a
-										></td>
+										<td class="px-6 py-4 text-right">
+											<a
+												href="/dashboards/{$page.params.app_id}/{form.table
+													.name}/overview/f/{form.id}">View</a
+											></td
+										>
 									</tr>
 								{/each}
 							</tbody>
@@ -73,6 +73,7 @@
 							>
 								<tr>
 									<th scope="col" class="px-6 py-3"> Name </th>
+									<th scope="col" class="px-6 py-3" />
 								</tr>
 							</thead>
 							<tbody>
@@ -84,7 +85,7 @@
 										>
 											{report.name}
 										</th>
-										<td class="px-6 py-4">
+										<td class="px-6 py-4 text-right">
 											<a
 												href="/dashboards/{$page.params.app_id}/{report.table
 													.name}/overview/r/{report.id}">View</a

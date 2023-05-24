@@ -14,24 +14,40 @@
 	let selectedOptions: any = {};
 	import SpaceChart from '../../SpaceChart.svelte';
 	let report = data.report;
+
+	function printAndProceed() {
+		const receiptContent = document.getElementById('print-content');
+		const titleBefore = document.title;
+		const printArea = document.getElementById('print-area');
+
+		printArea.innerHTML = receiptContent.innerHTML;
+		document.title = report.name;
+
+		window.print();
+		receiptModal = false;
+
+		printArea.innerHTML = '';
+		document.title = titleBefore;
+	}
 </script>
 
 <div class="container">
-	<Card size="xl">
-		<div class="overflow-auto min-h-112 px-6 pb-20 ">
+	<div class="dark:bg-gray-900 pt-3  rounded-xl">
+		<div class="overflow-auto hide-print min-h-112 px-6 pb-20 ">
 			<div class="flex">
 				<h1 class="text-4xl flex-1 dark:text-gray-200">{data?.space?.name}</h1>
-				<div>
+				<div class="p-2 flex gap-3">
+					<Button on:click={printAndProceed} size="xs">Print</Button>
 					<Button on:click={() => history.back()} size="xs">Back</Button>
 				</div>
 			</div>
 			<span class="text-xs text-gray-500">{new Date()} - {report.description}</span>
 
-			<div class={` w-full justify-center`}>
+			<div id="print-content" class={` w-full justify-center`}>
 				<Table class="mt-4">
 					<TableHead>
 						<TableHeadCell class="text-gray-500" align="right" colspan={report.columns.length}
-							>{'>'} {data?.space?.name} / {data?.table?.name} / {report?.name}
+							>{'>'} {data?.space?.name} / {report?.table?.name} / {report?.name}
 						</TableHeadCell>
 					</TableHead>
 
@@ -81,5 +97,7 @@
 				</Table>
 			</div>
 		</div>
-	</Card>
+
+		<div id="print-area" class="print-area" />
+	</div>
 </div>

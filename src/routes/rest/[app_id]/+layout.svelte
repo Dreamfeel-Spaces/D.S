@@ -94,7 +94,7 @@
 
 <div class="flex flex-row min-h-screen dark:bg-gray-900 bg-gray-100 text-gray-800">
 	<aside
-		class="sidebar min-w-[18%]  min-w dark:text-gray-900   md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
+		class="sidebar hidden lg:block min-h-screen dark:text-gray-900 w-72 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
 	>
 		<div class="sidebar-header flex items-center   ml-7 py-4">
 			<div class="inline-flex">
@@ -253,6 +253,7 @@
 				<SidebarItem
 					href={`/rest/${space.appId}/authentication/token-options`}
 					label={'Token Options'}
+					active={/\/token-options/.test($page.url.pathname)}
 				>
 					<span slot="icon" class="flex items-center justify-center text-lg dark:text-gray-300">
 						<svg
@@ -276,7 +277,8 @@
 				<li class="my-px">
 					<a
 						href={`/rest/${space.appId}/authentication`}
-						class="flex flex-row items-center h-10 {/\/authentication/.test($page.url.pathname)
+						class="flex flex-row items-center h-10 {/\/authentication/.test($page.url.pathname) &&
+						!/\/token-options/.test($page.url.pathname)
 							? 'bg-gray-600 dark:text-gray-300'
 							: 'dark:text-gray-300'} px-3 rounded-lg  hover:bg-gray-600 hover:text-gray-700"
 					>

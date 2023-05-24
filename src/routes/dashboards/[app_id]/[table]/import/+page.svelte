@@ -5,15 +5,13 @@
 	import SpaceJson from '../overview/SpaceJSON.svelte';
 </script>
 
-<div class="mt-3 grid gap-4 mb-4 grid-cols-3">
-	<SpaceCsv columns={[]} />
-	<SpaceJson />
-	<Card>
-		<P>Import pdf</P>
-		<Button class="mt-16" disabled>PDF</Button>
+<div>
+	<div class="mt-3 grid gap-4 mb-4 grid-cols-3">
+		<SpaceCsv columns={[]} />
+		<SpaceJson />
+	</div>
+	<Card size="xl">
+		<P tag="h6">Import from URL</P>
+		<Request clone />
 	</Card>
 </div>
-<Card size="xl">
-	<P tag="h6">Import from URL</P>
-	<Request clone />
-</Card>
