@@ -55,8 +55,6 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 	}));
 
 	return {
-		tables,
-		space,
 		apiCount: groupDataByMonth(apiCount),
 		groupedCounts,
 		groupedReads,

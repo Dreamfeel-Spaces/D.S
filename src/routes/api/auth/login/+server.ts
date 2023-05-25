@@ -23,10 +23,6 @@ export async function POST(event: RequestEvent) {
 		}
 	});
 
-
-
-
-
 	if (user?.id === space.userId) {
 		if (await token.verify(password, space.superAdminSecret)) {
 			const sessionToken = await token.createUserToken({ ...user, role: 'owner' });
@@ -45,6 +41,7 @@ export async function POST(event: RequestEvent) {
 		throw error(403, 'Incorrect credentials provided');
 	}
 
+
 	if (await token.verify(password, String(admin?.password))) {
 		delete (admin as any)['password'];
 		const sessionToken = await token.createUserToken({ admin, role: 'admin' });
@@ -52,7 +49,7 @@ export async function POST(event: RequestEvent) {
 			data: {
 				sessionToken,
 				spaceId: space.id,
-				adminId: admin.id
+				userId: admin?.id
 			}
 		});
 		return new Response(JSON.stringify({ accessToken: sessionToken }));

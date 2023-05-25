@@ -1,6 +1,6 @@
 <script lang="ts">
 	//@ts-nocheck
-	import { Card, Button, Alert, Label, A, Avatar } from 'flowbite-svelte';
+	import { Card, Button, Alert, Label, DarkMode, Avatar } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import DemoCredentials from './DemoCredentials.svelte';
@@ -20,15 +20,19 @@
 	// });
 </script>
 
+<div class="hidden">
+	<!-- <DarkMode/> -->
+</div>
+
 <svelte:head>
 	<title>{space?.name}</title>
 </svelte:head>
 
 {#if !data.spaceSession?.user?.id}
-	<section class="w min-w-min">
-		<div class=" f px-6 text-gray-800 mx-auto  lg:py-0">
+	<section class="w dark:bg-gray- min-w-min">
+		<Card size="lg" class="w-full text-gray-800  lg:py-0">
 			<div
-				class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md dark:mt-1 xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+				class="w-full bg-white rounded-lg shadow dark:border md:mt-0  dark:mt-1 xl:p-0 dark:bg-gray-800 dark:border-gray-700"
 			>
 				<div class="p-6    space-y-2 md:space-y-3  sm:p-8">
 					{#if isDemo}
@@ -118,13 +122,14 @@
 					</form>
 				</div>
 			</div>
-		</div>
+			<footer class="footer px-4 py-2">
+				<div class="footer-content">
+					<p class="text-xs text-gray-600 text-center">Powered by Dreamfeel Spaces</p>
+				</div>
+			</footer>
+		</Card>
 	</section>
-	<footer class="footer px-4 py-2">
-		<div class="footer-content">
-			<p class="text-xs text-gray-600 text-center">Powered by Dreamfeel Spaces</p>
-		</div>
-	</footer>
+	
 {/if}
 
 {#if data.spaceSession?.user?.id}

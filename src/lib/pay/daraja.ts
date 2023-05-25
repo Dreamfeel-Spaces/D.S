@@ -19,14 +19,24 @@ const mpesaConsumerKey = MPESA_CONSUMER_KEY;
 const mpesaConsumerSecret = MPESA_CONSUMER_SECRET;
 const responseWebHook = MPESA_WEBHOOK_CALLBACK_URL;
 
+export type TSTKPush = {
+	transactionType?: string;
+	accountReference?: string;
+	transactionDesc?: string;
+	amount: number;
+	phone: string;
+};
+
 export async function mpesaSTKPush({
 	transactionType = 'CustomerPayBillOnline',
 	accountReference = 'TEST',
 	transactionDesc = 'TEST',
 	amount = 1,
 	phone
-}: any) {
+}: TSTKPush) {
 	const phoneNumber = formatPhoneNumber(phone);
+
+	console.log('GGG', phoneNumber);
 
 	if (!validNumber(String(phoneNumber))) throw new Error('Invalid phone number');
 	if (!validAmount(amount)) throw new Error('Invalid amount specified');

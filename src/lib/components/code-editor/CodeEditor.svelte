@@ -26,6 +26,8 @@
 				return { suggestions: [] };
 			}
 		});
+	
+		monaco.editor.setTheme('vs-dark');
 		editor = monaco.editor.create(document.getElementById('editor'), {
 			value: code,
 			language

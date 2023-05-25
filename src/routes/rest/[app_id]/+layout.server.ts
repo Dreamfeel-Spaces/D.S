@@ -2,8 +2,46 @@ import { error, redirect } from '@sveltejs/kit';
 import { prisma } from '$lib/db/prisma';
 import type { RequestEvent } from './$types';
 
+let userTable = {
+	label: 'Users',
+	name: 'users',
+	icon: 'account_circle',
+	columns: [
+		{
+			name: 'username',
+			value: '',
+			type: 'string'
+		},
+		{
+			name: 'name',
+			value: '',
+			type: 'string'
+		},
+		{
+			name: 'email',
+			value: '',
+			type: 'string'
+		},
+		{
+			name: 'phone',
+			value: '',
+			type: 'string'
+		},
+
+		{
+			name: 'password',
+			value: '',
+			type: 'password'
+		},
+		{
+			name: 'avatar',
+			value: '',
+			type: 'string'
+		}
+	]
+};
+
 export async function load({ locals }: RequestEvent) {
-	// @ts-ignore
 	let space: any = locals.space;
 	//@ts-ignore
 	let spaceSession: any = locals.spaceSession;
@@ -23,6 +61,9 @@ export async function load({ locals }: RequestEvent) {
 	if (!space) {
 		throw error(404, 'Page not found');
 	}
+
+	space = { ...space, tables: [userTable, ...space.tables] };
+
 	const apiSetup = space.apiSetup[0];
 
 	if (!apiSetup) {

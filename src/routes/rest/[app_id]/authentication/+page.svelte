@@ -14,7 +14,7 @@
 	} from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import Request from '../[table]/endpoints/Request.svelte';
-	const spaceName = $page.params["app_id"];
+	const spaceName = $page.params['app_id'];
 </script>
 
 <!-- <div class="my-3 mx-6  flex justify-between text-3xl text-gray-500">
@@ -51,27 +51,7 @@
 			<p class="text-lg my-3">Endpoint: <b>{`/api/signup`}</b></p>
 			<Tabs>
 				<TabItem open title="Simulate">
-					<Request
-						table={{
-							columns: [
-								{
-									name: 'email',
-									type: 'email'
-								},
-								{
-									name: 'name',
-									type: 'string'
-								},
-								{
-									name: 'password',
-									type: 'password'
-								}
-							]
-						}}
-						action="signup"
-						url={`${$page.url.origin}/api/auth/register/`}
-						method={'post'}
-					/>
+					<Request action="signup" url={`${$page.url.origin}/api/auth/register/`} method={'post'} />
 				</TabItem>
 				<TabItem title="cURL" />
 				<TabItem title="JS" />

@@ -74,7 +74,7 @@ async function initDreamfeelPay({ CLIENT_ID, CLIENT_SECRET }) {
             myWindow.document.body.style.padding = "0";
 
             // Set the iframe source to a webpage of your choice
-            iframe.src = "https://pay.localhost:5173";
+            iframe.src = "https://pay.dreamfeel.me";
 
             // Show the loading indicator until the iframe has finished loading
             iframe.addEventListener("load", function () {

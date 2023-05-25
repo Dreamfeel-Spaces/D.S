@@ -1,4 +1,5 @@
 import { prisma } from '$lib/db/prisma';
+import { Pay } from '$lib/pay/Pay';
 import type { RequestEvent } from './$types';
 import crypto from 'crypto';
 
@@ -54,6 +55,13 @@ export async function POST({ request }: RequestEvent) {
 	});
 
 	return new Response(JSON.stringify(transactionId));
+}
+
+export async function PUT({ request }: RequestEvent) {
+	const handler = new Pay();
+	const data = await handler.stkPush({ phone: '0795040851', amount: 1 });
+
+	return new Response('{ OK: 0000000 }');
 }
 
 function generateTransactionId() {

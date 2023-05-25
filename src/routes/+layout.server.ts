@@ -10,7 +10,7 @@ export const load: LayoutServerLoad = async ({ locals, url, cookies }) => {
 
 	const identifier = url.searchParams.get('transaction_id');
 
-	if (pages.sbd === 'pay') {
+	if (pages.sbd === 'pay' && identifier) {
 		const transactionRequest = await prisma.txnRequest.findFirst({
 			where: { identifier },
 			include: {

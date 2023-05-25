@@ -6,13 +6,17 @@
 
 	export let data: PageData;
 
-	let action = 'create';
+	$: action = 'create';
 
-	import { Card, Tabs, TabItem, Alert, Select, Heading } from 'flowbite-svelte';
+	import { Card, Tabs, TabItem, Alert, Select, Heading, Button } from 'flowbite-svelte';
 	import Code from '../../../../Code.svelte';
 	import CodeEditor from '$lib/components/code-editor/CodeEditor.svelte';
 	const origin = $page.url.origin;
 	export let me = 'Brian Odida';
+
+	import { fade } from 'svelte/transition';
+
+	$: mode = 'docs';
 </script>
 
 <!-- {#if !data?.table?.columns?.length && data?.space?.apiChannel}
@@ -31,19 +35,36 @@
 	<!-- {#if data?.table?.columns?.length && data?.space?.apiChannel} -->
 	<div class="overflow-auto">
 		<div class="flex">
-			<div>
+			<div class="flex my-4 flex-1 gap-3">
 				<Select
 					bind:value={action}
 					items={[
-						{ name: 'Create', value: 'create' },
-						{ name: 'Find Many', value: 'find_many' },
-						{ name: 'Find Unique', value: 'find_unique' },
-						{ name: 'Find First', value: 'find_first' },
-						{ name: 'Update', value: 'update' },
-						{ name: 'Delete', value: 'delete' }
-					].map((item) => ({ ...item, name: `${item.name} ${$page.params.table}` }))}
+						...[
+							{ name: 'Create', value: 'create' },
+							{ name: 'Find Many', value: 'find_many' },
+							{ name: 'Find Unique', value: 'find_unique' },
+							{ name: 'Find First', value: 'find_first' },
+							{ name: 'Update', value: 'update' },
+							{ name: 'Delete', value: 'delete' },
+							$page.params.table === 'users'
+								? { ...{ name: 'Signin', value: 'signin' } }
+								: { ...{} }
+						].map((item) => ({ ...item, name: `${item.name} ${$page.params.table}` }))
+					].filter((c) => Boolean(c.name))}
 					placeholder="Choose	 an action"
 				/>
+				<Button
+					on:click={() => {
+						if (mode === 'docs') {
+							mode = 'code';
+						} else mode = 'docs';
+					}}
+					class="flex-1"
+					color="dark"
+					size="xs"
+				>
+					<span class="material-symbols-outlined"> developer_mode </span> Code</Button
+				>
 			</div>
 			<div class="flex-1 text-right">
 				<Code
@@ -58,11 +79,39 @@
 					<div />
 				</div>
 			</div>
+
 			<Tabs>
 				<TabItem open title="Simulate">
+					{#if mode === 'code'}
+						<div transition:fade>
+							<div class="my-6">
+								<Heading tag="h5">Override endpoint code</Heading>
+							</div>
+							<CodeEditor
+								code={`
+	import type {RequestEvent} from "@dreamfeel/sveltekit-endpoint-adapter"
+	import db from "@dreamfeel-js"
+	
+	export async function GET({request,locals, cookies, session}:RequestEvent){
+				
+	// Write your code here
+						
+	const saved = await db.save('my-product', {data})
+				
+	const response = new Response({//...data})
+	return response;
+	}
+					
+					
+					`}
+								language="javascript"
+							/>
+						</div>
+					{/if}
 					<Request
 						tables={data?.tables}
-						{action}
+						bind:action
+						bind:mode
 						url={`${origin}/api/${$page.params.table}`}
 						method={'get'}
 					/>
@@ -129,28 +178,5 @@ con.setRequestMethod("GET");
 		</div>
 	</div>
 
-	<div class="my-6">
-		<Heading tag="h5">Override endpoint code</Heading>
-	</div>
-
-	<CodeEditor
-		code={`
-	import type {RequestEvent} from "@dreamfeel/sveltekit-endpoint-adapter"
-	import db from "@dreamfeel-js"
-	
-	export async function GET({request,locals, cookies, session}:RequestEvent){
-
-		// Write your code here
-		
-		const saved = await db.save('my-product', {data})
-
-		const response = new Response({//...data})
-		return response;
-	}
-	
-	
-	`}
-		language="javascript"
-	/>
 	<!-- {/if} -->
 </div>

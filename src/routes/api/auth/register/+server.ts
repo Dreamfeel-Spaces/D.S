@@ -28,7 +28,6 @@ export async function POST(event: RequestEvent) {
 	const admin = await prisma.spaceUser.create({
 		data: {
 			spaceId: String(space.id),
-			role: 'user',
 			username: String(username),
 			password: await token.encryptSync(password),
 			name: String(name)
@@ -38,7 +37,7 @@ export async function POST(event: RequestEvent) {
 	const sessionToken = await token.createUserToken(admin);
 	await prisma.spaceSession.create({
 		data: {
-			adminId: String(admin.id),
+			userId: String(admin.id),
 			sessionToken,
 			spaceId: String(space.id)
 		}

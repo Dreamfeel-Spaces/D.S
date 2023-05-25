@@ -15,6 +15,7 @@
 	import axios from 'axios';
 	import { page } from '$app/stores';
 	import Code from '../../../../Code.svelte';
+	import CodeEditor from '$lib/components/code-editor/CodeEditor.svelte';
 
 	export let url = '';
 	export let method = '';
@@ -22,6 +23,7 @@
 	let loading = false;
 
 	export let action: any = '';
+	export let mode = '';
 
 	export let clone: Boolean = false;
 
@@ -181,7 +183,7 @@
 				error = e;
 				loading = false;
 			}
-		} else if (action === 'create') {
+		} else if (action === 'create' && $page.params.table !== 'users') {
 			const body = columns.reduce((prev: any, curr: any, index: number) => {
 				return { ...prev, [curr.name]: curr.value };
 			}, {});
@@ -247,7 +249,7 @@
 				error = e;
 				loading = false;
 			}
-		} else if (action === 'signup') {
+		} else if (action === 'create' && $page.params.table === 'users') {
 			const body = columns.reduce((prev: any, curr: any, index: number) => {
 				return { ...prev, [curr.name]: curr.value };
 			}, {});
@@ -369,7 +371,7 @@
 		</div>
 	</div>
 
-	{#if action === 'find_unique' || action === 'delete' || action==="update"}
+	{#if action === 'find_unique' || action === 'delete' || action === 'update'}
 		<div class="my-1">
 			<label for="id">ID</label>
 			<Input bind:value={itemId} required class="my-2=1" placeholder={`Enter item id`} />
@@ -386,9 +388,18 @@
 			</div>
 
 			{#if datatype === 'form_data'}
-				{#each columns as col, index}
+				{#each columns.filter((col) => {
+					if ($page.params.table === 'users' && action === 'signin') {
+						return col.name === 'username' || col.name === 'password';
+					}
+					return true;
+				}) as col, index}
 					{#if col.type === 'string' || col.type === 'number' || col.type === 'email' || col.type === 'password' || col.type === 'image'}
-						<div class="grid grid-cols-5 gap-3 my-2 ${index % 2 === 0 ? 'bg-gray-500' : ''}">
+						<div
+							class="grid grid-cols-5 dark:text-white gap-3 my-2 ${index % 2 === 0
+								? 'bg-gray-500'
+								: ''}"
+						>
 							<div>
 								<p>{col.name}</p>
 							</div>
@@ -427,40 +438,42 @@
 		{/if}
 	</div>
 
-	{#if action === 'find_first'}
-		<div class="grid grid-cols-2 gap-3 my-2">
-			<div>
-				<p>Take</p>
-			</div>
-			<NumberInput bind:value={take} placeholder={`Take`} />
-		</div>
-		<div class="grid grid-cols-2 gap-3 my-2">
-			<div>
-				<p>Skip</p>
-			</div>
-			<NumberInput bind:value={skip} placeholder={`Skip`} />
-		</div>
-		{#each columns as col}
-			{#if col.type === 'string' || col.type === 'number' || col.type === 'email'}
-				<div class="grid grid-cols-2 gap-3 my-2">
-					<div>
-						<p>{col.name}</p>
-					</div>
-					{#if col.type === 'number'}
-						<NumberInput
-							type={col.type}
-							bind:value={col.value}
-							placeholder={`Enter ${col.name}..`}
-						/>
-					{:else if col.type === 'email'}
-						<Input type={'email'} bind:value={col.value} placeholder={`Enter ${col.name}..`} />
-					{:else}
-						<Input bind:value={col.value} placeholder={`Enter ${col.name}..`} />
-					{/if}
+	<div class="dark:text-white">
+		{#if action === 'find_first'}
+			<div class="grid  dark:text-white grid-cols-2 gap-3 my-2">
+				<div>
+					<p>Take</p>
 				</div>
-			{/if}
-		{/each}
-	{/if}
+				<NumberInput bind:value={take} placeholder={`Take`} />
+			</div>
+			<div class="grid grid-cols-2 gap-3 my-2">
+				<div>
+					<p>Skip</p>
+				</div>
+				<NumberInput bind:value={skip} placeholder={`Skip`} />
+			</div>
+			{#each columns as col}
+				{#if col.type === 'string' || col.type === 'number' || col.type === 'email'}
+					<div class="grid grid-cols-2 gap-3 my-2">
+						<div>
+							<p>{col.name}</p>
+						</div>
+						{#if col.type === 'number'}
+							<NumberInput
+								type={col.type}
+								bind:value={col.value}
+								placeholder={`Enter ${col.name}..`}
+							/>
+						{:else if col.type === 'email'}
+							<Input type={'email'} bind:value={col.value} placeholder={`Enter ${col.name}..`} />
+						{:else}
+							<Input bind:value={col.value} placeholder={`Enter ${col.name}..`} />
+						{/if}
+					</div>
+				{/if}
+			{/each}
+		{/if}
+	</div>
 
 	<div class="mt-3">
 		{#if data && !clone}
@@ -468,8 +481,8 @@
 			<div class="mt-1">
 				<p>{statuscode}: {statusText}</p>
 			</div>
-			<div class={`my-1 text-green-500 text-wrap max-w-96 max-h-64 overflow-auto`}>
-				<Code code={JSON.stringify(data, null, '\t')} />
+			<div class={`my-1 text-green-500  text-wrap max-w-96 max-h-64 overflow-auto`}>
+				<CodeEditor language="json" code={JSON.stringify(data, null, '\t')} />
 			</div>
 		{/if}
 

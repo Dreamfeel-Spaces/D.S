@@ -1,14 +1,12 @@
 import { prisma } from '$lib/db/prisma';
 import type { RequestEvent } from './$types';
 
-export async function load({ params }: RequestEvent) {
+
+
+export async function load({ params, locals }: RequestEvent) {
 	const tableName = params.table;
 	const spaceId = params['app_id'];
-	const space = await prisma.space.findUnique({
-		where: {
-			appId: String(spaceId)
-		}
-	});
+	let space = locals.space;
 	const permissions = await prisma.permission.findMany({
 		where: {
 			spaceId: String(space?.id)
