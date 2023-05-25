@@ -2,7 +2,7 @@
 async function initDreamfeelPay({ CLIENT_ID, CLIENT_SECRET }) {
     return {
         Buttons() {
-            // console.log("BTNS")
+            // console.log("BTN  S")
             return this
         },
         createOrder(data, action) {
