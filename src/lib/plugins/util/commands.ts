@@ -70,18 +70,18 @@ export function addGCommands(editor: any) {
 		}
 	});
 
-	editor.Commands.add('show-traits', {
-		getTraitsEl(editor) {
-			const row = editor.getContainer().closest('.editor-row');
-			return row.querySelector('.traits-container');
-		},
-		run(editor, sender) {
-			this.getTraitsEl(editor).style.display = '';
-		},
-		stop(editor, sender) {
-			this.getTraitsEl(editor).style.display = 'none';
-		}
-	});
+	// editor.Commands.add('show-traits', {
+	// 	getTraitsEl(editor) {
+	// 		const row = editor.getContainer().closest('.editor-row');
+	// 		return row.querySelector('.traits-container');
+	// 	},
+	// 	run(editor, sender) {
+	// 		this.getTraitsEl(editor).style.display = '';
+	// 	},
+	// 	stop(editor, sender) {
+	// 		this.getTraitsEl(editor).style.display = 'none';
+	// 	}
+	// });
 	editor.Commands.add('set-device-desktop', {
 		run: (editor) => editor.setDevice('Desktop')
 	});
@@ -105,6 +105,24 @@ export function addGCommands(editor: any) {
 			editor.CssComposer.clear();
 			editor.setComponents('');
 			editor.setStyle('');
+		}
+	});
+
+	editor.Commands.add('manual-save', {
+		run: (editor: any) => handleSave()
+	});
+
+	
+
+	editor.Commands.add('open-actions', {
+		run: () => {
+			actionsHidden = false;
+		}
+	});
+
+	editor.Commands.add('go-home', {
+		run: () => {
+			goto(`/editor/${$page.data.space.appId}`);
 		}
 	});
 }

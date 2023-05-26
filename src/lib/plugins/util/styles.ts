@@ -1,6 +1,4 @@
-import type grapesjs from 'grapesjs';
-
-export function gStyles(editor: grapesjs.Editor) {
+export function gStyles() {
 	return {
 		appendTo: '.styles-container',
 		sectors: [
@@ -8,13 +6,13 @@ export function gStyles(editor: grapesjs.Editor) {
 				name: 'Container',
 				open: false,
 				// Use built-in properties
-				buildProps: ['display', 'flex-wrap', "flex-direction", "overflow"]
+				buildProps: ['display', 'flex-wrap', 'flex-direction', 'overflow']
 			},
 			{
 				name: 'Dimension',
 				open: false,
 				// Use built-in properties
-				buildProps: ['width', 'min-height', 'padding', "margin", "max-width"],
+				buildProps: ['width', 'min-height', 'padding', 'margin', 'max-width'],
 				// Use `properties` to define/override single property
 				properties: [
 					{

@@ -9,26 +9,30 @@
 }
 
 .gjs-one-bg {
-	background-color: rgb(17 24 39) !important;
+	background-color: inherit !important;
 }
 
 /* Secondary color for the text color */
 .gjs-two-color {
-	color: white !important;
+	color: inherit !important;
 }
 
 /* Tertiary color for the background */
 .gjs-three-bg {
-	background-color: rgb(17 24 39) !important;
-	color: white;
+	background-color: inherit !important;
+	color: inherit !important;
 }
 
 /* Quaternary color for the text color */
 .gjs-four-color,
 .gjs-four-color-h:hover {
-	color: lightslategray;
+	color: inherit !important;
 }
 
 .panel__previews {
 	position: initial;
+}
+
+.gjs-pn-panels {
+	display: none !important;
 }

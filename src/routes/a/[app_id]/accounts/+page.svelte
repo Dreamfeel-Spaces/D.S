@@ -124,12 +124,14 @@
 			</div>
 			<footer class="footer px-4 py-2">
 				<div class="footer-content">
-					<p class="text-xs text-gray-600 text-center">Powered by Dreamfeel Spaces</p>
+					<p class="text-xs my-3 text-gray-600 text-center">
+						Powered by <a rel="external" target="blank" href="/">Dreamfeel Spaces</a>
+					</p>
+
 				</div>
 			</footer>
 		</Card>
 	</section>
-	
 {/if}
 
 {#if data.spaceSession?.user?.id}

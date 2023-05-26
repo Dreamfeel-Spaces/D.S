@@ -1,13 +1,129 @@
 import type grapesjs from 'grapesjs';
 
 export function addGpanels(editor: grapesjs.Editor) {
+	// editor.Panels.addPanel({
+	// 	id: 'panel-top',
+	// 	el: '.panel__top'
+	// });
+}
+
+export function gPanels(editor: grapesjs.Editor) {
+	return {
+		defaults: [
+			{
+				id: 'layers',
+				el: '.panel__right',
+				// Make the panel resizable
+				resizable: {
+					maxDim: 350,
+					minDim: 200,
+					tc: 0, // Top handler
+					cl: 1, // Left handler
+					cr: 0, // Right handler
+					bc: 0, // Bottom handler
+					// Being a flex child we need to change `flex-basis` property
+					// instead of the `width` (default)
+					keyWidth: 'flex-basis'
+				}
+			},
+			{
+				id: 'panel-switcher',
+				el: '.panel__switcher',
+				buttons: [
+					{
+						id: 'show-blocks',
+						active: true,
+						command: 'show-blocks',
+						togglable: true,
+						label: `<svg
+						class="dark:text-gray-100"
+						fill="currentColor"
+						xmlns="http://www.w3.org/2000/svg"
+						height="24"
+						viewBox="0 96 960 960"
+						width="24"
+					>
+						<path
+							d="M666 616 440 390l226-226 226 226-226 226Zm-546-80V216h320v320H120Zm400 400V616h320v320H520Zm-400 0V616h320v320H120Zm80-480h160V296H200v160Zm467 48 113-113-113-113-113 113 113 113Zm-67 352h160V696H600v160Zm-400 0h160V696H200v160Zm160-400Zm194-65ZM360 696Zm240 0Z"
+						/>
+					</svg>`
+					},
+					{
+						id: 'show-layers',
+						active: true,
+						command: 'show-layers',
+						// Once activated disable the possibility to turn it off
+						togglable: false,
+						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M480 926 120 646l50-37 310 241 310-241 50 37-360 280Zm0-152L120 494l360-280 360 280-360 280Zm0-301Zm0 225 262-204-262-204-262 204 262 204Z"/></svg>`
+					},
+					{
+						id: 'show-traits',
+						active: true,
+						command: 'show-traits',
+						togglable: false,
+						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="m388 976-20-126q-19-7-40-19t-37-25l-118 54-93-164 108-79q-2-9-2.5-20.5T185 576q0-9 .5-20.5T188 535L80 456l93-164 118 54q16-13 37-25t40-18l20-127h184l20 126q19 7 40.5 18.5T669 346l118-54 93 164-108 77q2 10 2.5 21.5t.5 21.5q0 10-.5 21t-2.5 21l108 78-93 164-118-54q-16 13-36.5 25.5T592 850l-20 126H388Zm92-270q54 0 92-38t38-92q0-54-38-92t-92-38q-54 0-92 38t-38 92q0 54 38 92t92 38Zm0-60q-29 0-49.5-20.5T410 576q0-29 20.5-49.5T480 506q29 0 49.5 20.5T550 576q0 29-20.5 49.5T480 646Zm0-70Zm-44 340h88l14-112q33-8 62.5-25t53.5-41l106 46 40-72-94-69q4-17 6.5-33.5T715 576q0-17-2-33.5t-7-33.5l94-69-40-72-106 46q-23-26-52-43.5T538 348l-14-112h-88l-14 112q-34 7-63.5 24T306 414l-106-46-40 72 94 69q-4 17-6.5 33.5T245 576q0 17 2.5 33.5T254 643l-94 69 40 72 106-46q24 24 53.5 41t62.5 25l14 112Z"/></svg>`
+					},
+					{
+						id: 'show-style',
+						active: true,
+						command: 'show-styles',
+						togglable: false,
+						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M437 976q-24 0-42-17.625T377 916V716H220q-24 0-42-18t-18-42V353q0-55 39.656-96T295 216h505v440q0 24-18 42t-42 18H583v200q0 24.75-18 42.375T523 976h-86ZM220 502h520V276h-56v171h-60V276h-71v85h-60v-85H295q-32 0-53.5 23T220 353v149Zm0 154h520v-94H220v94Zm0-94v94-94Z"/></svg>`
+					}
+				]
+			},
+			{
+				id: 'panel-devices',
+				el: '.panel__devices',
+				buttons: [
+					{
+						id: 'toggle-theme',
+						attributes: {
+							title: 'Open projects and templates'
+						},
+						command: 'toggle-theme',
+						label: `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>`
+					},
+					{
+						id: 'device-desktop',
+						command: 'set-device-desktop',
+						active: true,
+						label: `<svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 96 960 960" width="24"><path d="M70 936q-12.75 0-21.375-8.675Q40 918.649 40 905.825 40 893 48.625 884.5T70 876h820q12.75 0 21.375 8.675 8.625 8.676 8.625 21.5 0 12.825-8.625 21.325T890 936H70Zm70-120q-24 0-42-18t-18-42V276q0-24 18-42t42-18h680q24 0 42 18t18 42v480q0 24-18 42t-42 18H140Zm0-60h680V276H140v480Zm0 0V276v480Z"/></svg>`
+					},
+					{
+						id: 'device-tablet',
+						command: 'set-device-tablet',
+						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M480.175 941q12.825 0 21.325-8.675 8.5-8.676 8.5-21.5 0-12.825-8.675-21.325-8.676-8.5-21.5-8.5-12.825 0-21.325 8.675-8.5 8.676-8.5 21.5 0 12.825 8.675 21.325 8.676 8.5 21.5 8.5ZM180 1016q-24.75 0-42.375-17.625T120 956V196q0-24.75 17.625-42.375T180 136h600q24.75 0 42.375 17.625T840 196v760q0 24.75-17.625 42.375T780 1016H180Zm0-150v90h600v-90H180Zm0-60h600V286H180v520Zm0-580h600v-30H180v30Zm0 0v-30 30Zm0 640v90-90Z"/></svg>`
+					},
+					{
+						id: 'device-mobile',
+						command: 'set-device-mobile',
+						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M260 1016q-24 0-42-18t-18-42V196q0-24 18-42t42-18h440q24 0 42 18t18 42v760q0 24-18 42t-42 18H260Zm0-90v30h440v-30H260Zm0-60h440V286H260v580Zm0-640h440v-30H260v30Zm0 0v-30 30Zm0 700v30-30Z"/></svg>`
+					}
+				]
+			}
+		]
+	};
+}
+
+export function updateNewEditorPanelsConfig(editor: grapesjs.Editor) {
 	editor.Panels.addPanel({
 		id: 'panel-top',
 		el: '.panel__top'
 	});
 	editor.Panels.addPanel({
+		id: 'panel-left',
+		el: '.panel__left'
+	});
+
+	editor.Panels.addPanel({
+		id: 'panel-right',
+		el: '.panel__right'
+	});
+
+	editor.Panels.addPanel({
 		id: 'basic-actions',
-		el: '.panel__basic-actions',
+		el: '#basic-actions',
 		buttons: [
 			{
 				id: 'go-home',
@@ -107,103 +223,4 @@ export function addGpanels(editor: grapesjs.Editor) {
 			}
 		]
 	});
-}
-
-export function gPanels(editor: grapesjs.Editor) {
-	return {
-		defaults: [
-			{
-				id: 'layers',
-				el: '.panel__right',
-				// Make the panel resizable
-				resizable: {
-					maxDim: 350,
-					minDim: 200,
-					tc: 0, // Top handler
-					cl: 1, // Left handler
-					cr: 0, // Right handler
-					bc: 0, // Bottom handler
-					// Being a flex child we need to change `flex-basis` property
-					// instead of the `width` (default)
-					keyWidth: 'flex-basis'
-				}
-			},
-			{
-				id: 'panel-switcher',
-				el: '.panel__switcher',
-				buttons: [
-					{
-						id: 'show-layers',
-						active: true,
-						command: 'show-layers',
-						// Once activated disable the possibility to turn it off
-						togglable: false,
-						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M480 926 120 646l50-37 310 241 310-241 50 37-360 280Zm0-152L120 494l360-280 360 280-360 280Zm0-301Zm0 225 262-204-262-204-262 204 262 204Z"/></svg>`
-					},
-					{
-						id: 'show-traits',
-						active: true,
-						command: 'show-traits',
-						togglable: false,
-						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="m388 976-20-126q-19-7-40-19t-37-25l-118 54-93-164 108-79q-2-9-2.5-20.5T185 576q0-9 .5-20.5T188 535L80 456l93-164 118 54q16-13 37-25t40-18l20-127h184l20 126q19 7 40.5 18.5T669 346l118-54 93 164-108 77q2 10 2.5 21.5t.5 21.5q0 10-.5 21t-2.5 21l108 78-93 164-118-54q-16 13-36.5 25.5T592 850l-20 126H388Zm92-270q54 0 92-38t38-92q0-54-38-92t-92-38q-54 0-92 38t-38 92q0 54 38 92t92 38Zm0-60q-29 0-49.5-20.5T410 576q0-29 20.5-49.5T480 506q29 0 49.5 20.5T550 576q0 29-20.5 49.5T480 646Zm0-70Zm-44 340h88l14-112q33-8 62.5-25t53.5-41l106 46 40-72-94-69q4-17 6.5-33.5T715 576q0-17-2-33.5t-7-33.5l94-69-40-72-106 46q-23-26-52-43.5T538 348l-14-112h-88l-14 112q-34 7-63.5 24T306 414l-106-46-40 72 94 69q-4 17-6.5 33.5T245 576q0 17 2.5 33.5T254 643l-94 69 40 72 106-46q24 24 53.5 41t62.5 25l14 112Z"/></svg>`
-					},
-					{
-						id: 'show-style',
-						active: true,
-						command: 'show-styles',
-						togglable: false,
-						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M437 976q-24 0-42-17.625T377 916V716H220q-24 0-42-18t-18-42V353q0-55 39.656-96T295 216h505v440q0 24-18 42t-42 18H583v200q0 24.75-18 42.375T523 976h-86ZM220 502h520V276h-56v171h-60V276h-71v85h-60v-85H295q-32 0-53.5 23T220 353v149Zm0 154h520v-94H220v94Zm0-94v94-94Z"/></svg>`
-					},
-					{
-						id: 'show-blocks',
-						active: true,
-						command: 'show-blocks',
-						togglable: false,
-						label: `<svg
-						class="dark:text-gray-100"
-						fill="currentColor"
-						xmlns="http://www.w3.org/2000/svg"
-						height="24"
-						viewBox="0 96 960 960"
-						width="24"
-					>
-						<path
-							d="M666 616 440 390l226-226 226 226-226 226Zm-546-80V216h320v320H120Zm400 400V616h320v320H520Zm-400 0V616h320v320H120Zm80-480h160V296H200v160Zm467 48 113-113-113-113-113 113 113 113Zm-67 352h160V696H600v160Zm-400 0h160V696H200v160Zm160-400Zm194-65ZM360 696Zm240 0Z"
-						/>
-					</svg>`
-					}
-				]
-			},
-			{
-				id: 'panel-devices',
-				el: '.panel__devices',
-				buttons: [
-					{
-						id: 'toggle-theme',
-						attributes: {
-							title: 'Open projects and templates'
-						},
-						command: 'toggle-theme',
-						label: `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>`
-					},
-					{
-						id: 'device-desktop',
-						command: 'set-device-desktop',
-						active: true,
-						label: `<svg xmlns="http://www.w3.org/2000/svg" height="26" viewBox="0 96 960 960" width="24"><path d="M70 936q-12.75 0-21.375-8.675Q40 918.649 40 905.825 40 893 48.625 884.5T70 876h820q12.75 0 21.375 8.675 8.625 8.676 8.625 21.5 0 12.825-8.625 21.325T890 936H70Zm70-120q-24 0-42-18t-18-42V276q0-24 18-42t42-18h680q24 0 42 18t18 42v480q0 24-18 42t-42 18H140Zm0-60h680V276H140v480Zm0 0V276v480Z"/></svg>`
-					},
-					{
-						id: 'device-tablet',
-						command: 'set-device-tablet',
-						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M480.175 941q12.825 0 21.325-8.675 8.5-8.676 8.5-21.5 0-12.825-8.675-21.325-8.676-8.5-21.5-8.5-12.825 0-21.325 8.675-8.5 8.676-8.5 21.5 0 12.825 8.675 21.325 8.676 8.5 21.5 8.5ZM180 1016q-24.75 0-42.375-17.625T120 956V196q0-24.75 17.625-42.375T180 136h600q24.75 0 42.375 17.625T840 196v760q0 24.75-17.625 42.375T780 1016H180Zm0-150v90h600v-90H180Zm0-60h600V286H180v520Zm0-580h600v-30H180v30Zm0 0v-30 30Zm0 640v90-90Z"/></svg>`
-					},
-					{
-						id: 'device-mobile',
-						command: 'set-device-mobile',
-						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M260 1016q-24 0-42-18t-18-42V196q0-24 18-42t42-18h440q24 0 42 18t18 42v760q0 24-18 42t-42 18H260Zm0-90v30h440v-30H260Zm0-60h440V286H260v580Zm0-640h440v-30H260v30Zm0 0v-30 30Zm0 700v30-30Z"/></svg>`
-					}
-				]
-			}
-		]
-	};
 }
