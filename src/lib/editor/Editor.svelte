@@ -49,15 +49,16 @@
 			panels: gPanels(editor),
 			styleManager: gStyles(),
 			canvasCss: appcSS,
+			traitManager: {
+				appendTo: '.traits-container'
+			},
 			selectorManager: {
-				appendTo: '.styles-container'
+				appendTo: '.traits-container'
 			},
 			layerManager: {
 				appendTo: '.layers-container'
 			},
-			traitManager: {
-				appendTo: '.traits-container'
-			},
+			
 			blockManager: {
 				appendTo: '#blocks',
 				blocks: []
