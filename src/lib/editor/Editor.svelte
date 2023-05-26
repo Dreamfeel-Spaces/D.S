@@ -53,12 +53,12 @@
 				appendTo: '.traits-container'
 			},
 			selectorManager: {
-				appendTo: '.traits-container'
+				appendTo: '.selector-container'
 			},
 			layerManager: {
 				appendTo: '.layers-container'
 			},
-			
+
 			blockManager: {
 				appendTo: '#blocks',
 				blocks: []
@@ -134,6 +134,7 @@
 			class=" border-t  border-gray-400 dark:bg-black panel__left w-64 max-w-64 p-2 bg-gray-100 min-h-[100%] h-screen"
 		>
 			<div class="traits-container" />
+			<div class="selector-container" />
 		</div>
 		<div id="editor-container" class="flex-1 p-2 bg-gray-100 min-h-[100%] h-screen">
 			<p class="text-center text-3xl">Hello world!</p>
@@ -220,7 +221,8 @@
 
 	#panel-devices,
 	#panel-switcher,
-	#basic-actions {
+	#basic-actions,
+	.selector-container {
 		position: initial;
 	}
 </style>
