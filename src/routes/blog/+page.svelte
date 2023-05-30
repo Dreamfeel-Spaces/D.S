@@ -12,7 +12,7 @@
 	import { Button } from 'flowbite-svelte';
 </script>
 
-<div class="flex dark:bg-gray-900 dark:text-gray-100">
+<div class="flex dark:bg-black dark:text-gray-100">
 	<div class=" flex-1  max-h-112 overflow-auto">
 		<section class="">
 			<div class="py-8 mb-4 px-4 mx-auto max-w-screen-xl  lg:py-16 ">

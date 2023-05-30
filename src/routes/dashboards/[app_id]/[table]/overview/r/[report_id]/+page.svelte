@@ -32,7 +32,7 @@
 </script>
 
 <div class="container">
-	<div class="dark:bg-gray-900 pt-3  rounded-xl">
+	<div class="dark:bg-black pt-3  rounded-xl">
 		<div class="overflow-auto hide-print min-h-112 px-6 pb-20 ">
 			<div class="flex">
 				<h1 class="text-4xl flex-1 dark:text-gray-200">{data?.space?.name}</h1>

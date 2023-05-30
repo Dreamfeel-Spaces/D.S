@@ -169,7 +169,7 @@
 </form>
 {#if !modalOnly}
 	<nav
-		class="flex-no-wrap z-48 fixed n w-full min-w-max  flex items-center justify-between dark:bg-gray-900 bg-neutral-100 py-4 shadow-md shadow-black/5  dark:shadow-black/10 lg:flex-wrap lg:justify-start "
+		class="flex-no-wrap z-48 fixed n w-full min-w-max  flex items-center justify-between dark:bg-black bg-neutral-100 py-4 shadow-md shadow-black/5  dark:shadow-black/10 lg:flex-wrap lg:justify-start "
 		data-te-navbar-ref
 	>
 		<div class="flex flex-1 flex-wrap items-center justify-between px-6">

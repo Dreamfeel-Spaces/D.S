@@ -5,7 +5,7 @@
 	import logo from '../../assets/logo.png';
 </script>
 
-<section class=" dark:bg-gray-900">
+<section class=" dark:bg-black">
 	<div class="grid lg:grid-cols-2 gap-2 ">
 		<div class="py-8 px-4  text-center max-w-screen-xl   lg:py-16	">
 			<div style="align-items:center" class="flex justify-center min-h-105 ">

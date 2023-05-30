@@ -1,4 +1,4 @@
-<section class="bg-white px-6 max-h-108 overflow-auto dark:bg-gray-900">
+<section class="bg-white px-6 max-h-108 overflow-auto dark:bg-black">
 	<div
 		class="py-8                                                         mx-auto max-w-screen-xl  lg:py-16 "
 	>

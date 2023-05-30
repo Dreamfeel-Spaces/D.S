@@ -78,10 +78,10 @@
 	<script src="https://www.google.com/recaptcha/api.js?render={key}" async defer></script>
 </svelte:head>
 
-<div class="dark:bg-gray-900 absolute w-full h-screen " style="z-index: 200000;top:0; bottom:0">
+<div class="dark:bg-black absolute w-full h-screen " style="z-index: 200000;top:0; bottom:0">
 	<div class="flex items-center justify-center min-h-screen p-5 bg-gray-600 min-w-screen">
 		<div
-			class="max-w-xl p-8 text-center text-gray-800 bg-white dark:bg-gray-900 dark:text-gray-100 shadow-xl lg:max-w-3xl rounded-3xl lg:p-12"
+			class="max-w-xl p-8 text-center text-gray-800 bg-white dark:bg-black dark:text-gray-100 shadow-xl lg:max-w-3xl rounded-3xl lg:p-12"
 		>
 			<div>
 				<a class="flex justify-center" href="/">

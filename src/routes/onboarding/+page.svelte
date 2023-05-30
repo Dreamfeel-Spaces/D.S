@@ -77,7 +77,7 @@
 	}
 </script>
 
-<div class="dark:bg-gray-900  dark:text-gray-50  min-h-112">
+<div class="dark:bg-black  dark:text-gray-50  min-h-112">
 	<div class="lg:px-80">
 		<div class="carousel  ">
 			{#each images as image, i}

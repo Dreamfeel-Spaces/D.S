@@ -11,9 +11,9 @@
 <SpaceNav modalOnly={true} />
 
 {#if !Boolean($page.params.path)}
-	<div class="flex flex-row min-h-screen dark:bg-gray-900 bg-gray-100 text-gray-800">
+	<div class="flex flex-row min-h-screen dark:bg-black bg-gray-100 text-gray-800">
 		<aside
-			class="sidebar min-w-64 w-72 dark:text-gray-900 w-64  max-h-screen overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
+			class="sidebar min-w-64 w-72 dark:text-gray-900 w-64  max-h-screen overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 		>
 			<div class="sidebar-header flex items-center   ml-7 py-4">
 				<div class="inline-flex">
@@ -30,7 +30,7 @@
 					<li class="my-px">
 						<a
 							href={`/editor/${space.appId}`}
-							class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-900 dark:text-gray-300 dark:bg-gray-900 bg-gray-100"
+							class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-900 dark:text-gray-300 dark:bg-black bg-gray-100"
 						>
 							<span class="flex items-center justify-center text-lg text-gray-400">
 								<svg
@@ -53,7 +53,7 @@
 					<li class="my-px">
 						<a
 							href={`/editor/${space.appId}/create`}
-							class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-900 dark:text-gray-300 dark:bg-gray-900 bg-gray-100"
+							class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-900 dark:text-gray-300 dark:bg-black bg-gray-100"
 						>
 							<span class="flex items-center justify-center text-lg text-gray-400">
 								<svg

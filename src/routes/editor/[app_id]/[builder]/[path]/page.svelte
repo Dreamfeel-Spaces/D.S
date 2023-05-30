@@ -132,26 +132,6 @@
 				}
 			});
 
-			editor.DeviceManager.add({
-				id: 'tablet2',
-				name: 'Tablet 2',
-				width: '800px', // This width will be applied on the canvas frame
-				widthMedia: '810px', // This width that will be used for the CSS media
-				height: '600px' // Height will be applied on the canvas frame
-			});
-
-			editor.Commands.add('set-device-tablet', {
-				run: () => {
-					editor.DeviceManager.select('tablet2');
-				}
-			});
-
-			editor.Commands.add('show-json', {
-				run: () => {
-					jsonModalContent = JSON.stringify(editor?.getComponents(), null, '\t');
-					jsonModalOpen = true;
-				}
-			});
 		}
 	}
 
@@ -322,7 +302,7 @@
 	</div>
 </Modal>
 
-<div class="dark:bg-gray-900 ">
+<div class="dark:bg-black ">
 	<div class="panel__top">
 		<div class="panel__basic-actions" />
 		<div class="panel__devices" />

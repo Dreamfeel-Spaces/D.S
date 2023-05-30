@@ -16,7 +16,7 @@
 	<p>Pick a starting point</p>
 </div>
 
-<div class="grid pb-20 grid-cols-3 gap-3 min-h-112 dark:bg-gray-900 dark:text-white px-12">
+<div class="grid pb-20 grid-cols-3 gap-3 min-h-112 dark:bg-black dark:text-white px-12">
 	<div>
 		<Card class="min-h-20">
 			<ImagePlaceholder />

@@ -16,7 +16,7 @@
 	<p>Pick a starting point</p>
 </div>
 
-<div class="grid pb-20 gap-3  dark:bg-gray-900 dark:text-white px-12">
+<div class="grid pb-20 gap-3  dark:bg-black dark:text-white px-12">
 	<div>
 		<Card size="xl" class="min-h-20">
 			<div class="text-3xl">Blank site</div>

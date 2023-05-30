@@ -24,13 +24,13 @@
 </script>
 
 <!-- <div class="container">
-	<div class="dark:bg-gray-900 p-6 h-full rounded-xl">
+	<div class="dark:bg-black p-6 h-full rounded-xl">
 	
 	</div>
 	
 </div> -->
 
-<div class="container bg-gray-100 p-3 rounded-xl min-h-full dark:bg-gray-900 ">
+<div class="container bg-gray-100 p-3 rounded-xl min-h-full dark:bg-black ">
 	<div class="flex ">
 		<Heading class="flex-1" tag="h4">Events</Heading>
 		<div><Button on:click={() => (modalOpen = true)}>Create Events</Button></div>

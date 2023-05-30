@@ -4,7 +4,7 @@
 	const apps = $page.data.myapps;
 </script>
 
-<section class=" min-h-112 pb-72 lg:px-48 dark:bg-gray-900">
+<section class=" min-h-112 pb-72 lg:px-48 dark:bg-black">
 	<div class="py-8 px-4 mx-auto max-w-screen-xl">
 		<Heading class="mb-4">REST APIs</Heading>
 		<P class="text-lg"

@@ -26,13 +26,13 @@
 </script>
 
 <!-- <div class="container">
-	<div class="dark:bg-gray-900 p-6 h-full rounded-xl">
+	<div class="dark:bg-black p-6 h-full rounded-xl">
 	
 	</div>
 	
 </div> -->
 
-<div class="container bg-gray-100 p-6 rounded-xl min-h-100 dark:bg-gray-900 ">
+<div class="container bg-gray-100 p-6 rounded-xl min-h-100 dark:bg-black ">
 	<div class="flex ">
 		<Heading class="flex-1" tag="h4">{$page.data.event?.name}</Heading>
 	</div>

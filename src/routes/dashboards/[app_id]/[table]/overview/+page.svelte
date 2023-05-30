@@ -69,7 +69,7 @@
 </div> -->
 
 <section class="container max-auto max-w">
-	<div class="xl min-h-full rounded-xl dark:bg-gray-900">
+	<div class="xl min-h-full rounded-xl dark:bg-black">
 		<div class=" p-3 overflow-auto ">
 			<Tabs>
 				<TabItem

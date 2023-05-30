@@ -1864,7 +1864,7 @@ https://tuk-cdn.s3.amazonaws.com/can-uploader/product-grid-2-svg3dark.svg"
         >
           <input
             type="text"
-            class="text-base leading-4 p-4 w-full focus:outline-none text-gray-800 dark:text-white dark:placeholder-white dark:bg-gray-900 dark:border-white placeholder-gray-800"
+            class="text-base leading-4 p-4 w-full focus:outline-none text-gray-800 dark:text-white dark:placeholder-white dark:bg-black dark:border-white placeholder-gray-800"
             placeholder="Enter your email"
           />
           <button
@@ -1898,7 +1898,7 @@ https://tuk-cdn.s3.amazonaws.com/can-uploader/product-grid-2-svg3dark.svg"
       >
         <input
           type="text"
-          class="text-base leading-4 p-4 relative z-0 w-full focus:outline-none text-gray-800 placeholder-gray-800 dark:text-white dark:placeholder-white dark:border-white dark:bg-gray-900"
+          class="text-base leading-4 p-4 relative z-0 w-full focus:outline-none text-gray-800 placeholder-gray-800 dark:text-white dark:placeholder-white dark:border-white dark:bg-black"
           placeholder="Enter your email"
         />
         <button

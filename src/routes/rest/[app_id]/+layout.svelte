@@ -92,9 +92,9 @@
 	<SelectOption ctx="setup" />
 </Modal>
 
-<div class="flex flex-row min-h-screen dark:bg-gray-900 bg-gray-100 text-gray-800">
+<div class="flex flex-row min-h-screen dark:bg-black bg-gray-100 text-gray-800">
 	<aside
-		class="sidebar hidden lg:block min-h-screen dark:text-gray-900 w-72 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
+		class="sidebar hidden lg:block min-h-screen dark:text-gray-900 w-72 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 	>
 		<div class="sidebar-header flex items-center   ml-7 py-4">
 			<div class="inline-flex">
@@ -138,7 +138,7 @@
 				<!-- <li class="my-px">
 					<a
 						href={`/rest/${space.appId}/table/create`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-900 dark:text-gray-300 dark:bg-gray-900 bg-gray-100"
+						class="flex flex-row items-center h-10 px-3 rounded-lg text-gray-900 dark:text-gray-300 dark:bg-black bg-gray-100"
 					>
 						<span class="flex items-center justify-center text-lg text-gray-400">
 							<svg
@@ -439,7 +439,7 @@
 		</header>
 		<div class="main-content dark:bg-gray-700  flex flex-col flex-grow p-1">
 			<div
-				class="flex flex-col max-w-[100%] dark:bg-gray-900 min-h-screen   p-6 rounded-xl  overflow-auto flex-grow  bg-white  "
+				class="flex flex-col max-w-[100%] dark:bg-black min-h-screen   p-6 rounded-xl  overflow-auto flex-grow  bg-white  "
 			>
 				<slot />
 			</div>

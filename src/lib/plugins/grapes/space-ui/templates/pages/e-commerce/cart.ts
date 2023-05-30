@@ -153,7 +153,7 @@ export default function(){
     </button>
   </div>
   <div
-    class="w-full h-full bg-black dark:bg-gray-900 bg-opacity-90 top-0 overflow-y-auto overflow-x-hidden fixed sticky-0"
+    class="w-full h-full bg-black dark:bg-black bg-opacity-90 top-0 overflow-y-auto overflow-x-hidden fixed sticky-0"
     id="chec-div"
   >
     <div
@@ -394,7 +394,7 @@ export default function(){
           </div>
         </div>
         <div
-          class="lg:w-96 md:w-8/12 w-full bg-gray-100 dark:bg-gray-900 h-full"
+          class="lg:w-96 md:w-8/12 w-full bg-gray-100 dark:bg-black h-full"
         >
           <div
             class="flex flex-col lg:h-screen h-auto lg:px-8 md:px-7 px-4 lg:py-20 md:py-10 py-6 justify-between overflow-y-auto"
@@ -657,7 +657,7 @@ export default function(){
         >
           <input
             type="text"
-            class="text-base leading-4 p-4 w-full focus:outline-none text-gray-800 dark:text-white dark:placeholder-white dark:bg-gray-900 dark:border-white placeholder-gray-800"
+            class="text-base leading-4 p-4 w-full focus:outline-none text-gray-800 dark:text-white dark:placeholder-white dark:bg-black dark:border-white placeholder-gray-800"
             placeholder="Enter your email"
           />
           <button
@@ -691,7 +691,7 @@ export default function(){
       >
         <input
           type="text"
-          class="text-base leading-4 p-4 relative z-0 w-full focus:outline-none text-gray-800 placeholder-gray-800 dark:text-white dark:placeholder-white dark:border-white dark:bg-gray-900"
+          class="text-base leading-4 p-4 relative z-0 w-full focus:outline-none text-gray-800 placeholder-gray-800 dark:text-white dark:placeholder-white dark:border-white dark:bg-black"
           placeholder="Enter your email"
         />
         <button

@@ -36,7 +36,7 @@
 
 <form
 	on:submit|preventDefault={handleSubmit}
-	class="container min-h-full text-black space-y-9 dark:text-gray-100 bg-gray-300 dark:bg-gray-900 p-6 rounded-xl"
+	class="container min-h-full text-black space-y-9 dark:text-gray-100 bg-gray-300 dark:bg-black p-6 rounded-xl"
 >
 	<Heading tag="h5">Mail</Heading>
 	<Hr />

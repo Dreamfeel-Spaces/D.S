@@ -36,3 +36,8 @@
 .gjs-pn-panels {
 	display: none !important;
 }
+
+.gjs-pn-buttons {
+	display: flex !important;
+	flex-direction: inherit;
+}

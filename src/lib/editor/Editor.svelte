@@ -3,7 +3,18 @@
 	import { page } from '$app/stores';
 	import 'grapesjs/dist/css/grapes.min.css';
 	import appcSS from '../../app.css?inline';
-	import { Button, DarkMode, Drawer, Heading, Input, P, Radio, Toggle } from 'flowbite-svelte';
+	import {
+		Button,
+		DarkMode,
+		Drawer,
+		Heading,
+		Input,
+		P,
+		Radio,
+		Toggle,
+		Modal,
+		Spinner
+	} from 'flowbite-svelte';
 	import gBasic from 'grapesjs-blocks-basic';
 	import { onDestroy, onMount } from 'svelte';
 	import { gStyles } from '$lib/plugins/util/styles';
@@ -15,10 +26,19 @@
 	import { spacePages } from '$lib/plugins/grapes/space-ui/templates/pages/spacePagesPlugin';
 	import { useEffect } from '$lib/wsstore/hooks';
 	import { sineIn } from 'svelte/easing';
+	import { gDevices } from '$lib/plugins/util/devices';
+	import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
+	import { browser } from '$app/environment';
+	import { enhance } from '$app/forms';
+
+	const projectID = 1;
+	const projectEndpoint = `${$page.url.origin}/projects/${projectID}`;
 
 	let theme = 'light';
 
 	let editor: grapesjs.Editor;
+
+	let editorReady = false;
 
 	function init() {
 		editor = grapesjs.init({
@@ -50,7 +70,7 @@
 			styleManager: gStyles(),
 			canvasCss: appcSS,
 			traitManager: {
-				appendTo: '.traits-container'
+				appendTo: '#panel-left'
 			},
 			selectorManager: {
 				appendTo: '.selector-container'
@@ -62,20 +82,48 @@
 			blockManager: {
 				appendTo: '#blocks',
 				blocks: []
+			},
+			deviceManager: gDevices(),
+			storageManager: {
+				type: 'remote',
+				stepsBeforeSave: 3,
+				options: {
+					remote: {
+						urlLoad: projectEndpoint,
+						urlStore: projectEndpoint,
+						// The `remote` storage uses the POST method when stores data but
+						// the json-server API requires PATCH.
+						fetchOptions: (opts: any) => (opts.method === 'POST' ? { method: 'PATCH' } : {}),
+						// As the API stores projects in this format `{id: 1, data: projectData }`,
+						// we have to properly update the body before the store and extract the
+						// project data from the response result.
+						onStore: (data) => ({ id: projectID, data }),
+						onLoad: (result) => result.data
+					}
+				}
 			}
 		});
+
+		if (editor) {
+			editorReady = true;
+		}
 
 		updateNewEditorPanelsConfig(editor);
 		addGCommands(editor);
 
-		editor.Commands.add('open-pages', {
-			run: () => {
-				hidden2 = false;
-			}
-		});
+		// editor.on('component:add', (component) => {
+		// 	editor.runCommand('do-traits', { component });
+		// });
+
+		// editor.on('component:selected', (component) => {
+		// 	console.log('Selected');
+		// 	editor.runCommand('do-traits', { component });
+		// });
 	}
 
 	let selectedPage = $page.data.pages[0] ?? {};
+
+	let pages = {};
 
 	onMount(init);
 	onDestroy(() => (editor ? editor.destroy() : () => {}));
@@ -96,7 +144,23 @@
 
 	let hidden2 = true;
 	let pageModalRadio = 'pages';
+
+	let openPages = { [($page.data.pages[0] ?? {}).id]: $page.data.pages[0] ?? {} };
 </script>
+
+<svelte:head>
+	<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+	/>
+</svelte:head>
+
+<Modal permanent open={!editorReady} class="w-full">
+	<div class="flex justify-center">
+		<Spinner />
+	</div>
+	<div class="text-center dark:text-white text-lg">Loading editor...</div>
+</Modal>
 
 <section
 	class="max-h-screen dark:bg-black dark:text-slate-200 min-h-screen overflow-hidden flex flex-col "
@@ -110,35 +174,115 @@
 				<DarkMode on:click={() => editor.runCommand('toggle-theme')} />
 			</div>
 		</div>
-		<div class=" gap-2 panel-pages">
-			<ul class="flex flex-wrap w-full overflow-auto -mb-px">
-				{#each $page.data.pages as page}
-					<li class="mr-2">
-						<button
-							on:click={() => {
-								selectedPage = page;
-							}}
-							class="inline-block  {selectedPage.id === page.id
-								? 'bg-green-800 text-white'
-								: 'bg-gray-300'}  px-2 text-xs border-b-2 dark:text-black border-transparent rounded-t-lg"
-							>{page.name}</button
-						>
-					</li>
-				{/each}
-			</ul>
+		<div class=" gap-2 panel">
+			{#if editorReady}
+				<ul class="flex flex- w-sc max-w-screen-2xl py-1 overflow-auto -mb-px">
+					{#each Object.keys(openPages).map((page) => openPages[page]) as page}
+						<li class="mr-2">
+							<button
+								on:click={() => {
+									selectedPage = page;
+								}}
+								class="inline-block  {selectedPage.id === page.id
+									? 'bg-green-800 text-white'
+									: 'bg-gray-300'} whitespace-nowrap pt-1 px-2 text-xs border-b-2 dark:text-black border-transparent rounded-t-lg"
+							>
+								<!-- • -->
+								{page.name}
+								<span style="font-size: 12px;" class="material-symbols-outlined  text-xs">
+									close
+								</span></button
+							>
+						</li>
+					{/each}
+				</ul>
+			{/if}
 		</div>
 	</div>
-	<div class="flex-1 editor-row h-full flex dark:bg-black bg-gray-100 ">
+	<div class="flex-1 innitial editor-row h-full flex dark:bg-black bg-gray-100 ">
 		<div
 			id="panel-left"
-			class=" border-t  border-gray-400 dark:bg-black panel__left w-64 max-w-64 p-2 bg-gray-100 min-h-[100%] h-screen"
+			class=" border-t flex innitial  border-gray-400 dark:bg-black panel__left  w-72 max-w-72 p-2 bg-gray-100 min-h-[100%] h-screen"
 		>
-			<div class="traits-container" />
-			<div class="selector-container" />
+			<div class="flex-1 left-switcher  flex h-full pb-2 innitial">
+				<div class="innitial border border-gray-200 h-full panel-controls flex flex-col" />
+				<div class="h-full flex-1">
+					<div class="pages-container innitial">
+						<div
+							class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
+						>
+							<p>Pages</p>
+							<div class="panel-add-page innitial" />
+						</div>
+						{#if editorReady}
+							<ul
+								class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
+							>
+								{#each $page.data.ui.pages as page}
+									<li
+										class="cursor-pointer {page.id === selectedPage.id
+											? 'bg-gray-700'
+											: ' '} hover:bg-gray-600 text-xs"
+									>
+										<button
+											on:click={() => {
+												openPages = { ...openPages, [page.id]: page };
+												selectedPage = page;
+												hidden2 = true;
+											}}
+											class="p-2 flex justify-between"
+										>
+											{page.name}
+										</button>
+									</li>
+								{/each}
+							</ul>
+						{/if}
+					</div>
+					<div style="display: none;" class="traits-and-selectors-container">
+						<div
+							class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
+						>
+							<p>Selectors</p>
+							<div class=" innitial" />
+						</div>
+						<div class="traits-container   innitial" />
+						<div class="selector-container innitial" />
+					</div>
+					<div style="display: none;" class="pages-form innitial  ">
+						<div
+							class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
+						>
+							<p>Create Page</p>
+							<div class=" innitial" />
+						</div>
+						{#if editorReady}
+							<form use:enhance method="post" class="spacing-y-6" action="?/createPage">
+								<Input size="sm" required name="name" placeholder="Name" />
+								<Input size="sm" name="icon" class="my-3" placeholder="Icon" />
+								<Input size="sm" required name="path" class="my-3" placeholder="Path" />
+								<Toggle>Layout</Toggle>
+								<Button size="xs" type="submit" class="w-full mt-3">Save</Button>
+							</form>
+						{/if}
+					</div>
+					<div style="display: none;" class="commerce-assist innitial ">
+						<div
+							class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
+						>
+							<p>Ecommerce</p>
+							<div class=" innitial" />
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div id="editor-container" class="flex-1 p-2 bg-gray-100 min-h-[100%] h-screen">
-			<p class="text-center text-3xl">Hello world!</p>
+		<div id="editor-container" class="flex-1 innitial p-2 bg-gray-100">
+			{#if editorReady}
+				<p class="text-center text-3xl">Hello world!</p>
+			{/if}
 		</div>
+
 		<div
 			id="panel-right"
 			class="w-72 border-t  border-gray-400 dark:bg-black panel__right p-2 max-w-72 bg-gray-100 min-h-[100%] overflow-auto h-screen"
@@ -152,7 +296,7 @@
 	</div>
 </section>
 
-<Drawer transitionType="fly" {transitionParams} bind:hidden={hidden2}>
+<Drawer class="dark:bg-black" transitionType="fly" {transitionParams} bind:hidden={hidden2}>
 	<div class="hidden">
 		<DarkMode />
 	</div>
@@ -166,13 +310,13 @@
 	{#if pageModalRadio === 'pages'}
 		<div>
 			<ul
-				class="w-full dark:text-gray-50 bg-white rounded-lg border min-h-96  kjk h-100 border-gray-200  dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
+				class="w-full dark:text-gray-50 bg-white border   dark:bg-black divide-y dark:divide-gray-600"
 			>
 				{#each $page.data.ui.pages as page}
 					<li
 						class="cursor-pointer {page.id === selectedPage.id
 							? 'bg-gray-700'
-							: ' '} hover:dark:bg-gray-600"
+							: ' '} hover:dark:bg-gray-600 text-xs"
 					>
 						{#if page.layout}
 							<div class="flex justify-end">
@@ -181,6 +325,7 @@
 						{/if}
 						<button
 							on:click={() => {
+								openPages = { ...openPages, [page.id]: page };
 								selectedPage = page;
 								hidden2 = true;
 							}}
@@ -193,20 +338,16 @@
 				{/each}
 			</ul>
 		</div>
-	{:else}
-		<form method="post" class="spacing-y-6" action="?/createPage">
-			<Input required name="name" placeholder="Name" />
-			<Input name="icon" class="my-3" placeholder="Icon" />
-			<Input required name="path" class="my-3" placeholder="Path" />
-			<Toggle>Layout</Toggle>
-			<Button type="submit" class="w-full mt-3">Save</Button>
-		</form>
-	{/if}
+	{:else}{/if}
 </Drawer>
 
 <style>
+	.innitial {
+		position: initial;
+	}
 	#editor-container {
 		border: 0px solid #444;
+		position: innitial;
 	}
 	#panel-right {
 		position: initial;
@@ -224,5 +365,25 @@
 	#basic-actions,
 	.selector-container {
 		position: initial;
+	}
+
+	::-webkit-scrollbar {
+		width: 3px;
+		height: 4px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #888;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #555;
 	}
 </style>

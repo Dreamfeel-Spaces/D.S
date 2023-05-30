@@ -27,7 +27,7 @@
 </svelte:head>
 
 
-<div class="dark:bg-gray-900 min-h-112 dark:text-gray-50">
+<div class="dark:bg-black min-h-112 dark:text-gray-50">
 	{#if !data.post}
 		<div class="flex align-middle justify-center h-full text-lg text-center mt-20">
 			<div>

@@ -5,7 +5,7 @@
 	const apps = $page.data.myapps;
 </script>
 
-<section class=" dark:bg-gray-900 lg:px-9 min-h-112 ">
+<section class=" dark:bg-black lg:px-9 min-h-112 ">
 	<div class="grid grid-cols-2 gap-2">
 		<div class="py-8  min-h-108 px-4 mx-auto max-w-screen-xl  lg:py-16 ">
 			<div class="flex">

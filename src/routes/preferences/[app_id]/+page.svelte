@@ -533,7 +533,7 @@
 		</div>
 	</div>
 	<div
-		class="w-36 dark:bg-gray-900 dark:text-gray-50  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72"
+		class="w-36 dark:bg-black dark:text-gray-50  ml-2  pl-4 mr-20  hidden md:block lg:block rounded align-middle  h-72"
 	>
 		<div>
 			<div class="mt-20">

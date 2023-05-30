@@ -87,9 +87,9 @@
 
 		<Tooltip />
 
-		<div class="flex flex-row  dark:bg-gray-900 bg-gray-100 text-gray-800">
+		<div class="flex flex-row  dark:bg-black bg-gray-100 text-gray-800">
 			<aside
-				class="sidebar min-h-screen dark:text-gray-900 w-72 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-gray-900 bg-gray-50"
+				class="sidebar min-h-screen dark:text-gray-900 w-72 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 			>
 				<div class="sidebar-header flex items-center  ml-7 py-3">
 					<div class="inline-flex">
@@ -504,7 +504,7 @@
 				</header>
 				<div class="main-content dark:bg-gray-700  flex flex-col flex-grow p-2">
 					<div
-						class="flex flex-col  dark:bg-gray-900 p-4 rounded-xl overflow-auto flex-grow  bg-white  "
+						class="flex flex-col  dark:bg-black p-4 rounded-xl overflow-auto flex-grow  bg-white  "
 					>
 						<slot />
 					</div>

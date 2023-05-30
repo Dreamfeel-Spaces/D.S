@@ -2,7 +2,7 @@
 	import logo from '../../assets/logo.png';
 </script>
 
-<section class="dark:bg-gray-900 min-h-108 lg:px-64">
+<section class="dark:bg-black min-h-108 lg:px-64">
 	<div class="text-center">
 		<div style="align-items:center" class="flex justify-center" />
 		<div class="py-8 px-8  mx-auto max-w-screen-xl lg:py-16 ">
@@ -40,7 +40,7 @@
 	</div>
 </section>
 
-<footer style="backdrop-filter:blur(30px)" class="p-4 md:p-8 lg:p-10  dark:bg-gray-900 bg-gray-900">
+<footer style="backdrop-filter:blur(30px)" class="p-4 md:p-8 lg:p-10  dark:bg-black bg-gray-900">
 	<div class="mx-auto max-w-screen-xl text-center">
 		<a
 			href="/"

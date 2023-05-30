@@ -115,7 +115,7 @@
 	onMount(invalidateAll);
 </script>
 
-<div class=" overflow-auto pb-12 dark:bg-gray-900 min-h-full bg-gray-50">
+<div class=" overflow-auto pb-12 dark:bg-black min-h-full bg-gray-50">
 	{#if form?.success}
 		<div class="mt-3 px-6">
 			<Alert>

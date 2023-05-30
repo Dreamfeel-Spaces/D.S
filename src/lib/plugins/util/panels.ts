@@ -55,20 +55,6 @@ export function gPanels(editor: grapesjs.Editor) {
 						// Once activated disable the possibility to turn it off
 						togglable: false,
 						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M480 926 120 646l50-37 310 241 310-241 50 37-360 280Zm0-152L120 494l360-280 360 280-360 280Zm0-301Zm0 225 262-204-262-204-262 204 262 204Z"/></svg>`
-					},
-					{
-						id: 'show-traits',
-						active: true,
-						command: 'show-traits',
-						togglable: false,
-						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="m388 976-20-126q-19-7-40-19t-37-25l-118 54-93-164 108-79q-2-9-2.5-20.5T185 576q0-9 .5-20.5T188 535L80 456l93-164 118 54q16-13 37-25t40-18l20-127h184l20 126q19 7 40.5 18.5T669 346l118-54 93 164-108 77q2 10 2.5 21.5t.5 21.5q0 10-.5 21t-2.5 21l108 78-93 164-118-54q-16 13-36.5 25.5T592 850l-20 126H388Zm92-270q54 0 92-38t38-92q0-54-38-92t-92-38q-54 0-92 38t-38 92q0 54 38 92t92 38Zm0-60q-29 0-49.5-20.5T410 576q0-29 20.5-49.5T480 506q29 0 49.5 20.5T550 576q0 29-20.5 49.5T480 646Zm0-70Zm-44 340h88l14-112q33-8 62.5-25t53.5-41l106 46 40-72-94-69q4-17 6.5-33.5T715 576q0-17-2-33.5t-7-33.5l94-69-40-72-106 46q-23-26-52-43.5T538 348l-14-112h-88l-14 112q-34 7-63.5 24T306 414l-106-46-40 72 94 69q-4 17-6.5 33.5T245 576q0 17 2.5 33.5T254 643l-94 69 40 72 106-46q24 24 53.5 41t62.5 25l14 112Z"/></svg>`
-					},
-					{
-						id: 'show-style',
-						active: true,
-						command: 'show-styles',
-						togglable: false,
-						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M437 976q-24 0-42-17.625T377 916V716H220q-24 0-42-18t-18-42V353q0-55 39.656-96T295 216h505v440q0 24-18 42t-42 18H583v200q0 24.75-18 42.375T523 976h-86ZM220 502h520V276h-56v171h-60V276h-71v85h-60v-85H295q-32 0-53.5 23T220 353v149Zm0 154h520v-94H220v94Zm0-94v94-94Z"/></svg>`
 					}
 				]
 			},
@@ -117,6 +103,11 @@ export function updateNewEditorPanelsConfig(editor: grapesjs.Editor) {
 	});
 
 	editor.Panels.addPanel({
+		id: 'panel-pages',
+		el: '.panel-pages'
+	});
+
+	editor.Panels.addPanel({
 		id: 'panel-right',
 		el: '.panel__right'
 	});
@@ -149,14 +140,7 @@ export function updateNewEditorPanelsConfig(editor: grapesjs.Editor) {
 				command: 'manual-save',
 				label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M840 373v503q0 24-18 42t-42 18H180q-24 0-42-18t-18-42V276q0-24 18-42t42-18h503l157 157Zm-60 27L656 276H180v600h600V400ZM479.765 811Q523 811 553.5 780.735q30.5-30.264 30.5-73.5Q584 664 553.735 633.5q-30.264-30.5-73.5-30.5Q437 603 406.5 633.265q-30.5 30.264-30.5 73.5Q376 750 406.265 780.5q30.264 30.5 73.5 30.5ZM233 472h358V329H233v143Zm-53-72v476-600 124Z"/></svg>`
 			},
-			{
-				id: 'open-pages',
-				attributes: {
-					title: 'Open projects and templates'
-				},
-				command: 'open-pages',
-				label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M480 896q-48-38-104-59t-116-21q-42 0-82.5 11T100 858q-21 11-40.5-1T40 822V340q0-11 5.5-21T62 304q46-24 96-36t102-12q58 0 113.5 15T480 316v506q51-33 107-49.5T700 756q36 0 78.5 7t81.5 29V287q9.886 3.75 19.443 7.875Q889 299 898 304q10 6 16 15.677 6 9.678 6 20.323v482q0 23-19.5 35t-40.5 1q-37-20-77.5-31T700 816q-60 0-116 21t-104 59Zm60-167V376l260-260v387L540 729Zm-120 63V353q-34-19-79-28t-81-9q-47 0-87.5 10T100 351.533V792q35-17 75.5-26.5t85-9.5q44.5 0 84.5 9.5t75 26.5Zm0 0V353v439Z"/></svg>`
-			},
+
 			{
 				id: 'open-actions',
 				attributes: {
@@ -223,4 +207,57 @@ export function updateNewEditorPanelsConfig(editor: grapesjs.Editor) {
 			}
 		]
 	});
+
+	editor.Panels.addPanel({
+		id: 'left-controls',
+		el: '.panel-controls',
+		buttons: [
+			{
+				id: 'pages',
+				togglable: true,
+				active: true,
+				attributes: {
+					title: 'Open projects and templates'
+				},
+				command: 'do-pages',
+				label: `<button class="material-symbols-outlined "> description </button>`
+			},
+			{
+				id: 'panel-add-page',
+				attributes: {
+					title: 'Open projects and templates'
+				},
+				command: 'do-pages-form',
+				label: `<button class="material-symbols-outlined "> post_add </button>`
+			},
+			{
+				id: 'traits',
+				attributes: {
+					title: 'Update traits and attributes'
+				},
+				command: 'do-traits',
+				label: `<span class="material-symbols-outlined">
+				tune
+				</span>`
+			},
+			{
+				id: 'assets',
+				attributes: {
+					title: 'Open projects and templates'
+				},
+				command: 'do-commerce',
+				label: `<button class="material-symbols-outlined "> shopping_cart </button>`
+			},
+			{
+				id: 'db',
+				attributes: {
+					title: 'Open projects and templates'
+				},
+				command: 'do-database',
+				label: `<button class="material-symbols-outlined "> database </button>`
+			}
+		]
+	});
 }
+
+// <span class="material-symbols-outlined"> post_add </span>

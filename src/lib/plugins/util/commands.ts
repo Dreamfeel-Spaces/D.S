@@ -1,5 +1,95 @@
 // @ts-nocheck
 export function addGCommands(editor: any) {
+	editor.Commands.add('open-pages', {
+		run: () => {
+			hidden2 = false;
+		}
+	});
+
+	editor.DeviceManager.add({
+		id: 'tablet2',
+		name: 'Tablet 2',
+		width: '800px', // This width will be applied on the canvas frame
+		widthMedia: '810px', // This width that will be used for the CSS media
+		height: '600px' // Height will be applied on the canvas frame
+	});
+
+	editor.Commands.add('set-device-tablet', {
+		run: () => {
+			editor.DeviceManager.select('tablet2');
+		}
+	});
+
+	editor.Commands.add('do-pages', {
+		getRowEl(editor) {
+			return editor.getContainer().closest('.editor-row');
+		},
+		getLayersEl(row) {
+			return row.querySelector('.pages-container');
+		},
+
+		run(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = '';
+		},
+		stop(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = 'none';
+		}
+	});
+
+	editor.Commands.add('do-traits', {
+		getRowEl(editor) {
+			return editor.getContainer().closest('.editor-row');
+		},
+		getLayersEl(row) {
+			return row.querySelector('.traits-and-selectors-container');
+		},
+
+		run(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = '';
+		},
+		stop(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = 'none';
+		}
+	});
+	editor.Commands.add('do-pages-form', {
+		getRowEl(editor) {
+			console.log("hhh")
+			return editor.getContainer().closest('.editor-row');
+		},
+		getLayersEl(row) {
+			return row.querySelector('.pages-form');
+		},
+
+		run(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = '';
+		},
+		stop(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = 'none';
+		}
+	});
+	editor.Commands.add('do-commerce', {
+		getRowEl(editor) {
+			return editor.getContainer().closest('.editor-row');
+		},
+		getLayersEl(row) {
+			return row.querySelector('.commerce-assist');
+		},
+
+		run(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = '';
+		},
+		stop(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = 'none';
+		}
+	});
 	editor.Commands.add('show-layers', {
 		getRowEl(editor) {
 			return editor.getContainer().closest('.editor-row');
@@ -17,6 +107,7 @@ export function addGCommands(editor: any) {
 			lmEl.style.display = 'none';
 		}
 	});
+
 	editor.Commands.add('show-styles', {
 		getRowEl(editor) {
 			return editor.getContainer().closest('.editor-row');
@@ -111,8 +202,6 @@ export function addGCommands(editor: any) {
 	editor.Commands.add('manual-save', {
 		run: (editor: any) => handleSave()
 	});
-
-	
 
 	editor.Commands.add('open-actions', {
 		run: () => {

@@ -2,6 +2,6 @@
 </script>
 
 
-<div class="dark:bg-gray-900  ">
+<div class="dark:bg-black  ">
 	<slot />
 </div>

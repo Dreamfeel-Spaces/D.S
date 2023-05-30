@@ -11,7 +11,7 @@
 	export let form;
 </script>
 
-<div class="dark:bg-gray-900 h-full w-full overflow-auto pt-6">
+<div class="dark:bg-black h-full w-full overflow-auto pt-6">
 	<!-- Code block starts -->
 	<div
 		class="my-6 lg:my-2 container px-6 mx-auto flex flex-col md:flex-row items-start md:items-center justify-between pb-4 border-b border-gray-300"

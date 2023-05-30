@@ -18,8 +18,8 @@
 	</Alert>
 {/if}
 
-<div class="snappy  dark:bg-gray-900">
-	<section class="bg-neutral-100 rounded-br-full rounded-bl-3xl  dark:bg-gray-900">
+<div class="snappy  dark:bg-black">
+	<section class="bg-neutral-100 rounded-br-full rounded-bl-3xl  dark:bg-black">
 		<div
 			class="grid  max-w-screen xl:px-28 2xl:px-[13rem]  4xl:px-[20rem] 2xl:py-32   	 px-4 py-8  mx-auto   lg:gap-8 xl:gap-0 lg:py-9 lg:grid-cols-12"
 		>
@@ -130,7 +130,7 @@
 	</section>
 </div>
 
-<section class="bg-white dark:bg-gray-900">
+<section class="bg-white dark:bg-black">
 	<div
 		class="py-8 px-4 xl:px-28 2xl:px-[13rem]  4xl:px-[20rem] 2xl:py-32  mx-auto max-w-screen  sm:py-16 lg:px-6"
 	>
@@ -280,7 +280,7 @@
 	</div>
 </section>
 
-<section class="bg-white dark:bg-gray-900">
+<section class="bg-white dark:bg-black">
 	<div class="py-8 px-4 mx-auto  max-w-screen xl:px-28 text-center lg:py-16 lg:px-6">
 		<div class="mx-auto max-w-screen-sm">
 			<h2 class="mb-4 text-4xl tracking-tight font-extrabold text-pink-700 dark:text-white">
@@ -415,7 +415,7 @@
 	</div>
 </section>
 
-<section class="bg-white dark:bg-gray-900">
+<section class="bg-white dark:bg-black">
 	<div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
 		<h2 class="mb-8 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
 			Frequently asked questions
@@ -637,7 +637,7 @@
 	</div>
 </section>
 
-<section class="bg-white dark:bg-gray-900">
+<section class="bg-white dark:bg-black">
 	<div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
 		<div class="mx-auto max-w-screen-sm text-center">
 			<h2
@@ -655,7 +655,7 @@
 	</div>
 </section>
 
-<section class="text-gray-600 dark:bg-gray-900 body-font overflow-hidden">
+<section class="text-gray-600 dark:bg-black body-font overflow-hidden">
 	<div class="container px-5 py-24 mx-auto">
 		<div class="flex flex-wrap -m-12">
 			{#each data.posts as post}
@@ -736,8 +736,8 @@
 	</div>
 </section>
 
-<div class="dark:bg-gray-900">
-	<div class="container dark:bg-gray-900 pb-24 px-6 -pt-20 mx-auto">
+<div class="dark:bg-black">
+	<div class="container dark:bg-black pb-24 px-6 -pt-20 mx-auto">
 		<section class="mb-32 text-gray-800">
 			<div
 				class="relative overflow-hidden bg-no-repeat bg-cover"
@@ -975,7 +975,7 @@
 	</div>
 </div>
 
-<footer style="backdrop-filter:blur(30px)" class="p-4 md:p-8 lg:p-10  dark:bg-gray-900 bg-gray-900">
+<footer style="backdrop-filter:blur(30px)" class="p-4 md:p-8 lg:p-10  dark:bg-black bg-gray-900">
 	<div class="mx-auto max-w-screen-xl text-center">
 		<a
 			href="/"

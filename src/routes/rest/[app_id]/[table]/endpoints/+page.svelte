@@ -31,7 +31,7 @@
 	</div>
 {/if} -->
 
-<div class="p-4 dark:bg-gray-900 min-h-full rounded-xl">
+<div class="p-4 dark:bg-black min-h-full rounded-xl">
 	<!-- {#if data?.table?.columns?.length && data?.space?.apiChannel} -->
 	<div class="overflow-auto">
 		<div class="flex">

@@ -55,7 +55,7 @@
 		/^\/a\/(.+)\/?/.test(pathname) ||
 		/^\/onboarding\/?/.test(pathname);
 
-	import logo from '../assets/logo.png';
+	import logo from '../assets/beta-logo.png';
 	import Rt from '$lib/ws/Rt.svelte';
 	import { browser } from '$app/environment';
 	import Pos from '$lib/cbd/pos/POS.svelte';
@@ -102,7 +102,7 @@
 	{#if !isPreview && !subdomain}
 		<div>
 			<nav
-				class="flex-no-wrap fixed z-50 lg:flex w-full items-center justify-between bg-neutral-100   dark:bg-gray-900 pb-2 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
+				class="flex-no-wrap fixed z-50 lg:flex w-full items-center justify-between bg-neutral-100   dark:bg-black pb-2 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
 				data-te-navbar-ref
 			>
 				<a class="w-full" href="/early-access">
@@ -183,7 +183,7 @@
 							class="mt-2 mr-2 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mt-0"
 							href="/"
 						>
-							<img class="bg-white dark:bg-gray-200 rounded" src={logo} style="height: 30px" alt="logo transparent" loading="lazy" />
+							<img class="rounded" src={logo} style="height: 42px" alt="logo transparent" loading="lazy" />
 						</a>
 						<!-- Left links -->
 						<ul
@@ -640,7 +640,7 @@
 				</SidebarWrapper>
 			</Sidebar>
 		</Drawer>
-		<div class="pt-16 dark:bg-gray-900">
+		<div class="pt-16 dark:bg-black">
 			<slot />
 		</div>
 	{/if}
