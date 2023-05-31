@@ -13,7 +13,14 @@
 	import HeroEditor from './HeroEditor.svelte';
 	import { heroSliderPaused } from '$lib/wsstore';
 
-	export let images: any[] = [HeroRest, HeroChart, HeroForm, HeroReport, HeroImg, HeroEditor];
+	export let images: any[] = [
+		HeroRest,
+		HeroChart,
+		// HeroForm,
+		// HeroReport,
+		// HeroImg
+		//HeroEditor
+	];
 	let currentImageIndex = 0;
 	let timerId;
 

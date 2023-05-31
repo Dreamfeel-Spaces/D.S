@@ -3,16 +3,28 @@
 	import { page } from '$app/stores';
 	import SpaceNav from '$lib/components/SpaceNav.svelte';
 	import SpaceSearch from '../../rest/[app_id]/SpaceSearch.svelte';
+	import { onMount } from 'svelte';
+	import { useEffect } from '$lib/wsstore/hooks';
+	import { fade } from 'svelte/transition';
 	const space = $page.data.space;
 	const spaceSession = $page.data.spaceSession;
 	const user = spaceSession?.user;
+	let isBuilder = false;
+	useEffect(
+		() => {
+			isBuilder = /\/editor\/([^/]+)\/([^/]+)\/([^/])/.test($page.url.pathname);
+			console.log(isBuilder);
+		},
+		() => [$page.url.pathname]
+	);
 </script>
 
 <SpaceNav modalOnly={true} />
 
-{#if !Boolean($page.params.path)}
+{#if !isBuilder}
 	<div class="flex flex-row min-h-screen dark:bg-black bg-gray-100 text-gray-800">
 		<aside
+			out:fade
 			class="sidebar min-w-64 w-72 dark:text-gray-900 w-64  max-h-screen overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 		>
 			<div class="sidebar-header flex items-center   ml-7 py-4">

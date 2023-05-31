@@ -13,7 +13,8 @@
 		Radio,
 		Toggle,
 		Modal,
-		Spinner
+		Spinner,
+		Avatar
 	} from 'flowbite-svelte';
 	import gBasic from 'grapesjs-blocks-basic';
 	import { onDestroy, onMount } from 'svelte';
@@ -27,18 +28,20 @@
 	import { useEffect } from '$lib/wsstore/hooks';
 	import { sineIn } from 'svelte/easing';
 	import { gDevices } from '$lib/plugins/util/devices';
+	//@ts-ignore
 	import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
 	import { browser } from '$app/environment';
 	import { enhance } from '$app/forms';
 
-	const projectID = 1;
-	const projectEndpoint = `${$page.url.origin}/projects/${projectID}`;
+	let selectedPage = $page.data.pages[0] ?? {};
+
+	let projectEndpoint = `${$page.url.origin}/editor/${$page.params.app_id}/${$page.params.builder}/${selectedPage.id}/svr`;
 
 	let theme = 'light';
 
 	let editor: grapesjs.Editor;
 
-	let editorReady = false;
+	let mountingEditor = true;
 
 	function init() {
 		editor = grapesjs.init({
@@ -84,32 +87,35 @@
 				blocks: []
 			},
 			deviceManager: gDevices(),
-			storageManager: {
-				type: 'remote',
-				stepsBeforeSave: 3,
-				options: {
-					remote: {
-						urlLoad: projectEndpoint,
-						urlStore: projectEndpoint,
-						// The `remote` storage uses the POST method when stores data but
-						// the json-server API requires PATCH.
-						fetchOptions: (opts: any) => (opts.method === 'POST' ? { method: 'PATCH' } : {}),
-						// As the API stores projects in this format `{id: 1, data: projectData }`,
-						// we have to properly update the body before the store and extract the
-						// project data from the response result.
-						onStore: (data) => ({ id: projectID, data }),
-						onLoad: (result) => result.data
-					}
-				}
-			}
+			// storageManager: {
+			// 	type: 'remote',
+			// 	stepsBeforeSave: 1,
+			// 	options: {
+			// 		remote: {
+			// 			// urlLoad: projectEndpoint,
+			// 			urlStore: projectEndpoint,
+			// 			// The `remote` storage uses the POST method when stores data but
+			// 			// the json-server API requires PATCH.
+			// 			fetchOptions: (opts: any) => (opts.method === 'POST' ? { method: 'PATCH' } : {}),
+			// 			// As the API stores projects in this format `{id: 1, data: projectData }`,
+			// 			// we have to properly update the body before the store and extract the
+			// 			// project data from the response result.
+			// 			onStore: (data) => ({ id: selectedPage.id, data }),
+			// 			// onLoad: (result) => {
+			// 			// 	console.log(result.data);
+			// 			// 	return result.data;
+			// 			// }
+			// 		}
+			// 	}
+			// }
 		});
-
-		if (editor) {
-			editorReady = true;
-		}
 
 		updateNewEditorPanelsConfig(editor);
 		addGCommands(editor);
+
+		editor.onReady(() => {
+			mountingEditor = false;
+		});
 
 		// editor.on('component:add', (component) => {
 		// 	editor.runCommand('do-traits', { component });
@@ -121,8 +127,6 @@
 		// });
 	}
 
-	let selectedPage = $page.data.pages[0] ?? {};
-
 	let pages = {};
 
 	onMount(init);
@@ -130,8 +134,17 @@
 
 	useEffect(
 		() => {
-			const ui = JSON.parse(selectedPage?.html ?? "{uiDef:'{assets:''}'}").uiDef;
-			editor.loadProjectData(ui);
+			console.log(projectEndpoint);
+		},
+		() => [projectEndpoint]
+	);
+
+	useEffect(
+		() => {
+			if (selectedPage?.html) {
+				const ui = JSON.parse(selectedPage?.html ?? "{uiDef:'{assets:''}'}").uiDef;
+				// editor.loadProjectData(ui);
+			}
 		},
 		() => [selectedPage.id]
 	);
@@ -155,7 +168,7 @@
 	/>
 </svelte:head>
 
-<Modal permanent open={!editorReady} class="w-full">
+<Modal permanent class="w-full">
 	<div class="flex justify-center">
 		<Spinner />
 	</div>
@@ -172,10 +185,13 @@
 			<div class="flex justify-between">
 				<div id="panel-switcher" class="panel__switcher" />
 				<DarkMode on:click={() => editor.runCommand('toggle-theme')} />
+				<div class="flex items-center">
+					<Avatar size="xs" class="mx-3" />
+				</div>
 			</div>
 		</div>
 		<div class=" gap-2 panel">
-			{#if editorReady}
+			{#if !mountingEditor}
 				<ul class="flex flex- w-sc max-w-screen-2xl py-1 overflow-auto -mb-px">
 					{#each Object.keys(openPages).map((page) => openPages[page]) as page}
 						<li class="mr-2">
@@ -214,7 +230,7 @@
 							<p>Pages</p>
 							<div class="panel-add-page innitial" />
 						</div>
-						{#if editorReady}
+						{#if !mountingEditor}
 							<ul
 								class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
 							>
@@ -256,8 +272,8 @@
 							<p>Create Page</p>
 							<div class=" innitial" />
 						</div>
-						{#if editorReady}
-							<form use:enhance method="post" class="spacing-y-6" action="?/createPage">
+						{#if mountingEditor}
+							<form use:enhance method="post" class="spacing-y-6 p-1" action="?/createPage">
 								<Input size="sm" required name="name" placeholder="Name" />
 								<Input size="sm" name="icon" class="my-3" placeholder="Icon" />
 								<Input size="sm" required name="path" class="my-3" placeholder="Path" />
@@ -278,7 +294,7 @@
 			</div>
 		</div>
 		<div id="editor-container" class="flex-1 innitial p-2 bg-gray-100">
-			{#if editorReady}
+			{#if mountingEditor}
 				<p class="text-center text-3xl">Hello world!</p>
 			{/if}
 		</div>

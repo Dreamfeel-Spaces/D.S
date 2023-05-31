@@ -1,3 +1,6 @@
+import { goto } from '$app/navigation';
+import { page } from '$app/stores';
+
 // @ts-nocheck
 export function addGCommands(editor: any) {
 	editor.Commands.add('open-pages', {
@@ -57,7 +60,7 @@ export function addGCommands(editor: any) {
 	});
 	editor.Commands.add('do-pages-form', {
 		getRowEl(editor) {
-			console.log("hhh")
+			console.log('hhh');
 			return editor.getContainer().closest('.editor-row');
 		},
 		getLayersEl(row) {

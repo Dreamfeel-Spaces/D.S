@@ -220,7 +220,9 @@ export function updateNewEditorPanelsConfig(editor: grapesjs.Editor) {
 					title: 'Open projects and templates'
 				},
 				command: 'do-pages',
-				label: `<button class="material-symbols-outlined "> description </button>`
+				label: navigator.onLine
+					? `<button class="material-symbols-outlined dark:hover:underline"> description </button>`
+					: 'D'
 			},
 			{
 				id: 'panel-add-page',
@@ -228,7 +230,9 @@ export function updateNewEditorPanelsConfig(editor: grapesjs.Editor) {
 					title: 'Open projects and templates'
 				},
 				command: 'do-pages-form',
-				label: `<button class="material-symbols-outlined "> post_add </button>`
+				label: navigator.onLine
+					? `<button class="material-symbols-outlined "> post_add </button>`
+					: '+'
 			},
 			{
 				id: 'traits',
@@ -236,9 +240,11 @@ export function updateNewEditorPanelsConfig(editor: grapesjs.Editor) {
 					title: 'Update traits and attributes'
 				},
 				command: 'do-traits',
-				label: `<span class="material-symbols-outlined">
+				label: navigator.onLine
+					? `<span class="material-symbols-outlined">
 				tune
 				</span>`
+					: 'S'
 			},
 			{
 				id: 'assets',
@@ -246,7 +252,9 @@ export function updateNewEditorPanelsConfig(editor: grapesjs.Editor) {
 					title: 'Open projects and templates'
 				},
 				command: 'do-commerce',
-				label: `<button class="material-symbols-outlined "> shopping_cart </button>`
+				label: navigator.onLine
+					? `<button class="material-symbols-outlined "> shopping_cart </button>`
+					: 'C'
 			},
 			{
 				id: 'db',
@@ -254,7 +262,9 @@ export function updateNewEditorPanelsConfig(editor: grapesjs.Editor) {
 					title: 'Open projects and templates'
 				},
 				command: 'do-database',
-				label: `<button class="material-symbols-outlined "> database </button>`
+				label: navigator.onLine
+					? `<button class="material-symbols-outlined "> database </button>`
+					: 'D'
 			}
 		]
 	});
