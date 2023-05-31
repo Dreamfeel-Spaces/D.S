@@ -146,7 +146,7 @@
 					const data = JSON.parse(
 						selectedPage?.html ?? '{"data":{"assets":[], "styles":[], "pages":[]}}'
 					)?.data;
-					editor.loadProjectData(data);
+					// editor.loadProjectData(data);
 				} catch (e) {
 					console.log(e);
 				}
