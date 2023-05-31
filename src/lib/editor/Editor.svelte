@@ -86,28 +86,27 @@
 				appendTo: '#blocks',
 				blocks: []
 			},
-			deviceManager: gDevices()
-			// storageManager: {
-			// 	type: 'remote',
-			// 	stepsBeforeSave: 1,
-			// 	options: {
-			// 		remote: {
-			// 			// urlLoad: projectEndpoint,
-			// 			urlStore: projectEndpoint,
-			// 			// The `remote` storage uses the POST method when stores data but
-			// 			// the json-server API requires PATCH.
-			// 			fetchOptions: (opts: any) => (opts.method === 'POST' ? { method: 'PATCH' } : {}),
-			// 			// As the API stores projects in this format `{id: 1, data: projectData }`,
-			// 			// we have to properly update the body before the store and extract the
-			// 			// project data from the response result.
-			// 			onStore: (data) => ({ id: selectedPage.id, data }),
-			// 			// onLoad: (result) => {
-			// 			// 	console.log(result.data);
-			// 			// 	return result.data;
-			// 			// }
-			// 		}
-			// 	}
-			// }
+			deviceManager: gDevices(),
+			storageManager: {
+				type: 'remote',
+				stepsBeforeSave: 1,
+				options: {
+					remote: {
+						urlLoad: projectEndpoint,
+						urlStore: projectEndpoint,
+						// The `remote` storage uses the POST method when stores data but
+						// the json-server API requires PATCH.
+						fetchOptions: (opts: any) => (opts.method === 'POST' ? { method: 'PATCH' } : {}),
+						// As the API stores projects in this format `{id: 1, data: projectData }`,
+						// we have to properly update the body before the store and extract the
+						// project data from the response result.
+						onStore: (data) => ({ id: selectedPage.id, data }),
+						// onLoad: (result) => {
+						// 	return result;
+						// }
+					}
+				}
+			}
 		});
 
 		updateNewEditorPanelsConfig(editor);
@@ -134,22 +133,16 @@
 
 	useEffect(
 		() => {
-			console.log(projectEndpoint);
+			console.log(mountingEditor);
 		},
-		() => [projectEndpoint]
+		() => [mountingEditor]
 	);
 
 	useEffect(
 		() => {
 			if (selectedPage?.html) {
-				try {
-					const data = JSON.parse(
-						selectedPage?.html ?? '{"data":{"assets":[], "styles":[], "pages":[]}}'
-					)?.data;
-					// editor.loadProjectData(data);
-				} catch (e) {
-					console.log(e);
-				}
+				const ui = JSON.parse(selectedPage?.html ?? "{uiDef:'{assets:''}'}").uiDef;
+				// editor.loadProjectData(ui);
 			}
 		},
 		() => [selectedPage.id]
