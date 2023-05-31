@@ -86,7 +86,7 @@
 				appendTo: '#blocks',
 				blocks: []
 			},
-			deviceManager: gDevices(),
+			deviceManager: gDevices()
 			// storageManager: {
 			// 	type: 'remote',
 			// 	stepsBeforeSave: 1,
@@ -142,8 +142,14 @@
 	useEffect(
 		() => {
 			if (selectedPage?.html) {
-				const ui = JSON.parse(selectedPage?.html ?? "{uiDef:'{assets:''}'}").uiDef;
-				// editor.loadProjectData(ui);
+				try {
+					const data = JSON.parse(
+						selectedPage?.html ?? '{"data":{"assets":[], "styles":[], "pages":[]}}'
+					)?.data;
+					editor.loadProjectData(data);
+				} catch (e) {
+					console.log(e);
+				}
 			}
 		},
 		() => [selectedPage.id]
