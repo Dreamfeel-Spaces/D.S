@@ -60,6 +60,7 @@ model Page {
   roles            UserRoles?     @relation(fields: [userRolesId], references: [id])
   userRolesId      String?
   layout           Boolean        @default(false)
+  pageData         String?        @db.LongText
 
   @@index([spaceUIVersionId])
   @@index([userRolesId])

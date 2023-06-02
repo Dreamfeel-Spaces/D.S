@@ -1,5 +1,5 @@
 <script lang="ts">
-	import grapesjs from 'grapesjs';
+	import grapesjs, { Editor } from 'grapesjs';
 	import { page } from '$app/stores';
 	import 'grapesjs/dist/css/grapes.min.css';
 	import appcSS from '../../app.css?inline';
@@ -32,6 +32,8 @@
 	import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
 	import { browser } from '$app/environment';
 	import { enhance } from '$app/forms';
+	import axios from 'axios';
+	import { goto, invalidate, invalidateAll } from '$app/navigation';
 
 	let selectedPage = $page.data.pages[0] ?? {};
 
@@ -39,14 +41,16 @@
 
 	let theme = 'light';
 
-	let editor: grapesjs.Editor;
+	let editor: Editor;
 
 	let mountingEditor = true;
 
-	function init() {
+	let projectData = {};
+
+	async function init() {
 		editor = grapesjs.init({
 			container: '#editor-container',
-			fromElement: true,
+			fromElement: false,
 			plugins: [
 				spacePages,
 				gBasic,
@@ -87,6 +91,7 @@
 				blocks: []
 			},
 			deviceManager: gDevices(),
+			projectData: $page.data?.projectData,
 			storageManager: {
 				type: 'remote',
 				stepsBeforeSave: 1,
@@ -94,27 +99,33 @@
 					remote: {
 						urlLoad: projectEndpoint,
 						urlStore: projectEndpoint,
-						// The `remote` storage uses the POST method when stores data but
-						// the json-server API requires PATCH.
 						fetchOptions: (opts: any) => (opts.method === 'POST' ? { method: 'PATCH' } : {}),
-						// As the API stores projects in this format `{id: 1, data: projectData }`,
-						// we have to properly update the body before the store and extract the
-						// project data from the response result.
 						onStore: (data) => ({ id: selectedPage.id, data }),
-						// onLoad: (result) => {
-						// 	return result;
-						// }
+						onLoad: (result) => {
+							console.log(result);
+							return result;
+						}
 					}
 				}
+			},
+			pageManager: {
+				pages: [
+					{
+						id: 'page-id',
+						styles: `.my-class { color: red }`, // or a JSON of styles
+						component: '<div class="my-class">My element</div>' // or a JSON of components
+					}
+				]
 			}
 		});
 
 		updateNewEditorPanelsConfig(editor);
 		addGCommands(editor);
 
-		editor.onReady(() => {
-			mountingEditor = false;
-		});
+		// editor.onReady(() => {
+		// 	console.log($page.data.projectData?.data);
+		// 	// editor.loadProjectData({});
+		// });
 
 		// editor.on('component:add', (component) => {
 		// 	editor.runCommand('do-traits', { component });
@@ -131,33 +142,34 @@
 	onMount(init);
 	onDestroy(() => (editor ? editor.destroy() : () => {}));
 
-	useEffect(
-		() => {
-			console.log(mountingEditor);
-		},
-		() => [mountingEditor]
-	);
-
-	useEffect(
-		() => {
-			if (selectedPage?.html) {
-				const ui = JSON.parse(selectedPage?.html ?? "{uiDef:'{assets:''}'}").uiDef;
-				// editor.loadProjectData(ui);
-			}
-		},
-		() => [selectedPage.id]
-	);
-
 	let transitionParams = {
 		x: -320,
 		duration: 200,
 		easing: sineIn
 	};
 
+	useEffect(
+		() => {
+			editor.loadProjectData($page.data.projectData);
+		},
+		() => [$page.data.projectData]
+	);
+
 	let hidden2 = true;
 	let pageModalRadio = 'pages';
 
 	let openPages = { [($page.data.pages[0] ?? {}).id]: $page.data.pages[0] ?? {} };
+
+	let changingPage = false;
+
+	function handlePageChange(_page: any) {
+		changingPage = true;
+		let url = `/editor/${$page.params.app_id}/${$page.params.builder}/${_page.id}`;
+		goto(url);
+		openPages = { ...openPages, [_page.id]: _page };
+		selectedPage = _page;
+		changingPage = false;
+	}
 </script>
 
 <svelte:head>
@@ -166,6 +178,13 @@
 		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
 	/>
 </svelte:head>
+
+<Modal bind:open={changingPage} permanent class="w-full">
+	<div class="flex justify-center">
+		<Spinner />
+	</div>
+	<div class="text-center dark:text-white text-lg">Loading editor...</div>
+</Modal>
 
 <Modal permanent class="w-full">
 	<div class="flex justify-center">
@@ -229,30 +248,21 @@
 							<p>Pages</p>
 							<div class="panel-add-page innitial" />
 						</div>
-						{#if !mountingEditor}
-							<ul
-								class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
-							>
-								{#each $page.data.ui.pages as page}
-									<li
-										class="cursor-pointer {page.id === selectedPage.id
-											? 'bg-gray-700'
-											: ' '} hover:bg-gray-600 text-xs"
-									>
-										<button
-											on:click={() => {
-												openPages = { ...openPages, [page.id]: page };
-												selectedPage = page;
-												hidden2 = true;
-											}}
-											class="p-2 flex justify-between"
-										>
-											{page.name}
-										</button>
-									</li>
-								{/each}
-							</ul>
-						{/if}
+						<ul
+							class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
+						>
+							{#each $page.data.ui.pages as _page}
+								<li
+									class="cursor-pointer {_page.id === selectedPage.id
+										? 'bg-gray-700'
+										: ' '} hover:bg-gray-600 text-xs"
+								>
+									<button on:click={() => handlePageChange(_page)} class="p-2 flex justify-between">
+										{_page.name}
+									</button>
+								</li>
+							{/each}
+						</ul>
 					</div>
 					<div style="display: none;" class="traits-and-selectors-container">
 						<div
@@ -292,11 +302,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="editor-container" class="flex-1 innitial p-2 bg-gray-100">
-			{#if mountingEditor}
-				<p class="text-center text-3xl">Hello world!</p>
-			{/if}
-		</div>
+		<div id="editor-container" class="flex-1  dark:bg-black innitial p-2 bg-gray-100" />
 
 		<div
 			id="panel-right"

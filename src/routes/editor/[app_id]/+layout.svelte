@@ -10,18 +10,11 @@
 	const spaceSession = $page.data.spaceSession;
 	const user = spaceSession?.user;
 	let isBuilder = false;
-	useEffect(
-		() => {
-			isBuilder = /\/editor\/([^/]+)\/([^/]+)\/([^/])/.test($page.url.pathname);
-			console.log(isBuilder);
-		},
-		() => [$page.url.pathname]
-	);
 </script>
 
 <SpaceNav modalOnly={true} />
 
-{#if !isBuilder}
+{#if !/\/editor\/([^/]+)\/([^/]+)\/([^/])/.test($page.url.pathname)}
 	<div class="flex flex-row min-h-screen dark:bg-black bg-gray-100 text-gray-800">
 		<aside
 			out:fade

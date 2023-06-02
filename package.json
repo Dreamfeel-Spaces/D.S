@@ -48,7 +48,7 @@
 		"classnames": "^2.3.2",
 		"flowbite": "^1.6.3",
 		"flowbite-svelte": "^0.29.13",
-		"grapesjs": "^0.20.4",
+		"grapesjs": "^0.21.2",
 		"grapesjs-plugin-ckeditor": "^0.0.10",
 		"grapesjs-plugin-forms": "^2.0.5",
 		"grapesjs-plugin-toolbox": "^1.0.15",

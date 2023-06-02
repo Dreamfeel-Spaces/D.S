@@ -147,6 +147,7 @@
 												</Button>
 											</a>
 											<a
+												rel="external"
 												href={`/editor/${$page.params['app_id']}/${version.id}/${
 													version.pages.find((page) => page.path === '/')?.id ??
 													version.pages[0]?.id

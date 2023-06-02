@@ -4,7 +4,7 @@ import { error } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
 
 export async function load({ params }: RequestEvent) {
-	const spaceId = params["app_id"];
+	const spaceId = params['app_id'];
 	const versionId = params.builder;
 
 	const space = await prisma.space.findUnique({
@@ -56,12 +56,100 @@ export async function load({ params }: RequestEvent) {
 		return { ...prev, [curr.id]: transformRows(curr.rows) };
 	}, {});
 
+	const page = await prisma.page.findFirst({
+		where: {
+			id: params.path
+		}
+	});
+
+	const data = JSON.parse(String(page?.pageData))?.data;
+
+	console.log(page.id)
+
 	return {
 		space,
 		ui,
 		tables: tables?.map((tb) => ({ ...tb, rows: transformRows(tb.rows) })) ?? [],
 		rows: withRows,
-		pages: ui?.pages ?? []
+		pages: ui?.pages ?? [],
+		projectData: data ??  {
+			assets: [],
+			styles: [],
+			pages: [
+				{
+					frames: [
+						{
+							component: {
+								type: 'wrapper',
+								stylable: [
+									'background',
+									'background-color',
+									'background-image',
+									'background-repeat',
+									'background-attachment',
+									'background-position',
+									'background-size'
+								],
+								attributes: { id: 'ih7d' },
+								components: [
+									{
+										tagName: 'p',
+										type: 'text',
+										classes: ['text-center', 'text-3xl', 's-7ZH0rBIgMesu'],
+										components: [{ type: 'textnode', content: 'Hello world!' }]
+									},
+									{
+										classes: ['flex', 'items-center', 'justify-between', 'w-full'],
+										components: [
+											{
+												classes: [
+													'flex',
+													'flex-col',
+													'lg:flex-row',
+													'w-full',
+													'items-start',
+													'lg:items-center',
+													'rounded',
+													'bg-white',
+													'shadow'
+												],
+												components: [
+													{
+														classes: [
+															'w-full',
+															{ name: 'lg:w-2-3', label: 'lg:w-2/3' },
+															'h-64',
+															'dark:bg-gray-800'
+														]
+													},
+													{
+														classes: [
+															'w-full',
+															{ name: 'lg:w-1-3', label: 'lg:w-1/3' },
+															'h-24',
+															'dark:border-gray-700',
+															'lg:h-64',
+															'border-t',
+															'lg:border-t-0',
+															'lg:border-r',
+															'lg:border-l',
+															'lg:rounded-r',
+															'dark:bg-gray-700',
+															'bg-gray-100'
+														]
+													}
+												]
+											}
+										]
+									}
+								]
+							}
+						}
+					],
+					id: 'WgVmnFPvY0moeWlm'
+				}
+			]
+		}
 	};
 }
 
