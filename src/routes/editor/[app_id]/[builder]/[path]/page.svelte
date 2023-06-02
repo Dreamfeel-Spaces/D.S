@@ -126,11 +126,7 @@
 				}
 			});
 
-			editor.Commands.add('go-home', {
-				run: () => {
-					goto(`/editor/${$page.data.space.appId}`);
-				}
-			});
+			
 
 		}
 	}

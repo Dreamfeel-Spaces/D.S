@@ -107,10 +107,10 @@ export function updateNewEditorPanelsConfig(editor: grapesjs.Editor) {
 		el: '.panel-pages'
 	});
 
-	editor.Panels.addPanel({
-		id: 'panel-right',
-		el: '.panel__right'
-	});
+	// editor.Panels.addPanel({
+	// 	id: 'panel-right',
+	// 	el: '.panel__right'
+	// });
 
 	editor.Panels.addPanel({
 		id: 'basic-actions',
@@ -245,6 +245,16 @@ export function updateNewEditorPanelsConfig(editor: grapesjs.Editor) {
 				tune
 				</span>`
 					: 'S'
+			},
+			{
+				id: 'do-hehe',
+				attributes: {
+					title: 'Open projects and templates'
+				},
+				command: 'do-styles',
+				label: navigator.onLine
+					? `<button class="material-symbols-outlined "> margin </button>`
+					: 'F'
 			},
 			{
 				id: 'assets',

@@ -14,7 +14,8 @@
 		Toggle,
 		Modal,
 		Spinner,
-		Avatar
+		Avatar,
+		Hr
 	} from 'flowbite-svelte';
 	import gBasic from 'grapesjs-blocks-basic';
 	import { onDestroy, onMount } from 'svelte';
@@ -41,7 +42,7 @@
 
 	let theme = 'light';
 
-	let editor: Editor;
+	let editor: Editor | null = null;
 
 	let mountingEditor = true;
 
@@ -122,25 +123,31 @@
 		updateNewEditorPanelsConfig(editor);
 		addGCommands(editor);
 
-		// editor.onReady(() => {
+		editor?.Commands.add('go-home', {
+			run: () => {
+				goto(`/editor/${$page.data.space.appId}`);
+			}
+		});
+
+		// editor?.onReady(() => {
 		// 	console.log($page.data.projectData?.data);
-		// 	// editor.loadProjectData({});
+		// 	// editor?.loadProjectData({});
 		// });
 
-		// editor.on('component:add', (component) => {
-		// 	editor.runCommand('do-traits', { component });
+		// editor?.on('component:add', (component) => {
+		// 	editor?.runCommand('do-traits', { component });
 		// });
 
-		// editor.on('component:selected', (component) => {
+		// editor?.on('component:selected', (component) => {
 		// 	console.log('Selected');
-		// 	editor.runCommand('do-traits', { component });
+		// 	editor?.runCommand('do-traits', { component });
 		// });
 	}
 
 	let pages = {};
 
 	onMount(init);
-	onDestroy(() => (editor ? editor.destroy() : () => {}));
+	onDestroy(() => (editor ? editor?.destroy() : () => {}));
 
 	let transitionParams = {
 		x: -320,
@@ -150,7 +157,7 @@
 
 	useEffect(
 		() => {
-			editor.loadProjectData($page.data.projectData);
+			editor?.loadProjectData($page.data.projectData);
 		},
 		() => [$page.data.projectData]
 	);
@@ -186,7 +193,8 @@
 	<div class="text-center dark:text-white text-lg">Loading editor...</div>
 </Modal>
 
-<Modal permanent class="w-full">
+<Modal permanent open={editor === null} class="w-full">
+	{console.log(editor)}
 	<div class="flex justify-center">
 		<Spinner />
 	</div>
@@ -202,14 +210,17 @@
 			<div id="panel-devices" class="flex  px-auto justify-center items-center panel__devices " />
 			<div class="flex justify-between">
 				<div id="panel-switcher" class="panel__switcher" />
-				<DarkMode on:click={() => editor.runCommand('toggle-theme')} />
+				<DarkMode
+					class={editor ? 'block' : 'hidden'}
+					on:click={() => editor?.runCommand('toggle-theme')}
+				/>
 				<div class="flex items-center">
-					<Avatar size="xs" class="mx-3" />
+					<Avatar size="xs" class="mx-3 {editor ? 'block' : 'hidden'}" />
 				</div>
 			</div>
 		</div>
 		<div class=" gap-2 panel">
-			{#if !mountingEditor}
+			{#if editor}
 				<ul class="flex flex- w-sc max-w-screen-2xl py-1 overflow-auto -mb-px">
 					{#each Object.keys(openPages).map((page) => openPages[page]) as page}
 						<li class="mr-2">
@@ -239,29 +250,38 @@
 			class=" border-t flex innitial  border-gray-400 dark:bg-black panel__left  w-72 max-w-72 p-2 bg-gray-100 min-h-[100%] h-screen"
 		>
 			<div class="flex-1 left-switcher  flex h-full pb-2 innitial">
-				<div class="innitial border border-gray-200 h-full panel-controls flex flex-col" />
+				<div class="innitial border border-gray-200 h-full panel-controls flex flex-col" >
+					
+				</div>
 				<div class="h-full flex-1">
 					<div class="pages-container innitial">
 						<div
 							class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
 						>
-							<p>Pages</p>
+							{#if editor}
+								<p>Pages</p>
+							{/if}
 							<div class="panel-add-page innitial" />
 						</div>
 						<ul
 							class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
 						>
-							{#each $page.data.ui.pages as _page}
-								<li
-									class="cursor-pointer {_page.id === selectedPage.id
-										? 'bg-gray-700'
-										: ' '} hover:bg-gray-600 text-xs"
-								>
-									<button on:click={() => handlePageChange(_page)} class="p-2 flex justify-between">
-										{_page.name}
-									</button>
-								</li>
-							{/each}
+							{#if editor}
+								{#each $page.data.ui.pages as _page}
+									<li
+										class="cursor-pointer {_page.id === selectedPage.id
+											? 'bg-gray-700'
+											: ' '} hover:bg-gray-600 text-xs"
+									>
+										<button
+											on:click={() => handlePageChange(_page)}
+											class="p-2 flex justify-between"
+										>
+											{_page.name}
+										</button>
+									</li>
+								{/each}
+							{/if}
 						</ul>
 					</div>
 					<div style="display: none;" class="traits-and-selectors-container">
@@ -274,6 +294,37 @@
 						<div class="traits-container   innitial" />
 						<div class="selector-container innitial" />
 					</div>
+					<div style="display: none;" class="styles-container" />
+					<div style="display: none;" class="db-helper p-2">
+						<div class="text-left">
+							<div
+								class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
+							>
+								<p>Collections</p>
+							</div>
+							<ul
+								class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
+							>
+								{#if editor}
+									{#each $page.data.tables as _page}
+										<li
+											class="cursor-pointer {_page.id === selectedPage.id
+												? 'bg-gray-700'
+												: ' '} hover:bg-gray-600 text-xs"
+										>
+											<button
+												on:click={() => handlePageChange(_page)}
+												class="p-2 flex justify-between"
+											>
+												{_page.name}
+											</button>
+										</li>
+									{/each}
+								{/if}
+							</ul>
+						</div>
+					</div>
+
 					<div style="display: none;" class="pages-form innitial  ">
 						<div
 							class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
@@ -309,7 +360,6 @@
 			class="w-72 border-t  border-gray-400 dark:bg-black panel__right p-2 max-w-72 bg-gray-100 min-h-[100%] overflow-auto h-screen"
 		>
 			<div class="layers-container overflow-auto" />
-			<div class="styles-container" />
 			<div class="blocks-container">
 				<div id="blocks" />
 			</div>

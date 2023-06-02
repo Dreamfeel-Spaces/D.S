@@ -62,9 +62,8 @@ export async function load({ params }: RequestEvent) {
 		}
 	});
 
-	const data = JSON.parse(String(page?.pageData))?.data;
+	const data = JSON.parse(String(page?.pageData ?? null))?.data;
 
-	console.log(page.id)
 
 	return {
 		space,

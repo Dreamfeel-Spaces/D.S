@@ -41,12 +41,47 @@ export function addGCommands(editor: any) {
 		}
 	});
 
+	editor.Commands.add('do-styles', {
+		getRowEl(editor) {
+			return editor.getContainer().closest('.editor-row');
+		},
+		getLayersEl(row) {
+			return row.querySelector('.styles-container');
+		},
+
+		run(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = '';
+		},
+		stop(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = 'none';
+		}
+	});
+
 	editor.Commands.add('do-traits', {
 		getRowEl(editor) {
 			return editor.getContainer().closest('.editor-row');
 		},
 		getLayersEl(row) {
 			return row.querySelector('.traits-and-selectors-container');
+		},
+
+		run(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = '';
+		},
+		stop(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = 'none';
+		}
+	});
+	editor.Commands.add('do-database', {
+		getRowEl(editor) {
+			return editor.getContainer().closest('.editor-row');
+		},
+		getLayersEl(row) {
+			return row.querySelector('.db-helper');
 		},
 
 		run(editor, sender) {
