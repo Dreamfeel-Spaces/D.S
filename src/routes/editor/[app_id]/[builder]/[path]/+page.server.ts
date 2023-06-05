@@ -34,6 +34,9 @@ export async function load({ params }: RequestEvent) {
 			pages: {
 				include: {
 					components: true
+				},
+				where:{
+					deleted:false
 				}
 			}
 		}

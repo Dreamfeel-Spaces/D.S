@@ -38,7 +38,7 @@ const routes: any = [];
 
 export function urlPatterns(routes: any[] = []) {
 	return routes.map((route: any, i) => {
-		let segments: string[] = route.path.split('/').filter(Boolean);
+		let segments: string[] = (route?.path?.split('/') ?? []).filter(Boolean);
 		let params: string[] = [];
 		let pattern = segments.reduce((prev: string, curr: string, index: number) => {
 			if (curr.startsWith(':') && index !== 0) {

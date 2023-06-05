@@ -22,6 +22,59 @@
 	});
 </script>
 
+<div class="relative overflow-x-auto">
+	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+			<tr>
+				<th scope="col" class="px-6 py-3"> Name </th>
+				<th scope="col" class="px-6 py-3"> Ispublished </th>
+				<th scope="col" class="px-6 py-3"> Versions </th>
+				<th scope="col" class="px-6 py-3" />
+			</tr>
+		</thead>
+		<tbody>
+			{#each uis as ui}
+				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+					<th
+						scope="row"
+						class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+					>
+						{ui.name}
+					</th>
+					<td class="">
+						{#if ui?.spaceUIVersion.find((item) => item.id === data?.space?.uiVid)}
+							<h5
+								class="text-xl px-1 py-2 text-center flex bg-green-500  font-bold leading-none text-gray-900 dark:text-white"
+							>
+								<span class=" pl-1 text-center dark:text-green-500">
+									<svg
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+										height="15"
+										viewBox="0 96 960 960"
+										width="15"
+										><path
+											d="M430 974q-72-9-134.5-43t-108-86.5Q142 792 116 723.5T90 576q0-88 41.5-168T243 266H121v-60h229v229h-60V306q-64 51-102 121.5T150 576q0 132 80 225.5T430 913v61Zm-7-228L268 591l42-42 113 113 227-227 42 42-269 269Zm187 200V717h60v129q64-52 102-122t38-148q0-132-80-225.5T530 239v-61q146 18 243 129t97 269q0 88-41.5 168T717 886h122v60H610Z"
+										/></svg
+									>
+								</span>
+							</h5>
+						{/if}
+					</td>
+					<td class="px-6 py-4"> {ui.spaceUIVersion?.length ?? 0} </td>
+					<td class="px-6 py-4">
+						<!-- <a
+							href={`/editor/${$page.params['app_id']}/${version.id}/${
+								version.pages.find((page) => page.path === '/')?.id ?? version.pages[0]?.id
+							}`}>View</a
+						> -->
+					</td>
+				</tr>
+			{/each}
+		</tbody>
+	</table>
+</div>
+
 {#if !uis.length}
 	<div class="container">
 		<Card size="xl" class="w-full min-h-108 flex self-center">
@@ -51,7 +104,7 @@
 			>
 				<div class="flex items-center justify-between mb-4">
 					<h5 class="text-xl flex font-bold leading-none text-gray-900 dark:text-white">
-						{ui.name}
+						
 						{#if ui?.spaceUIVersion.find((item) => item.id === data?.space?.uiVid)}
 							<span class=" pl-1 dark:text-green-500">
 								<svg

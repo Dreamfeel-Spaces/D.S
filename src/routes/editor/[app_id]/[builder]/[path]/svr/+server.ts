@@ -3,6 +3,18 @@ import type { RequestEvent } from './$types';
 
 //31/5/2023
 
+export async function POST({ request, params }: RequestEvent) {
+	const data = await request.json();
+	const page = await prisma.page.create({
+		data: {
+			name: data.name,
+			spaceUIVersionId: data.version,
+			path: data.path
+		}
+	});
+
+	return new Response(JSON.stringify(page));
+}
 export async function PATCH({ request, params }: RequestEvent) {
 	const pageId = params.path;
 	const data = await request.json();
@@ -116,4 +128,19 @@ export async function GET({ params }: RequestEvent) {
 	};
 
 	return new Response(JSON.stringify(data));
+}
+
+export async function DELETE({ params }: RequestEvent) {
+	const pageId = params.path;
+
+	let page = await prisma.page.update({
+		where: {
+			id: pageId
+		},
+		data: {
+			deleted: true
+		}
+	});
+
+	return new Response(page);
 }

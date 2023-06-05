@@ -14,9 +14,52 @@ datasource db {
   relationMode = "prisma"
 }
 
+model PageDataGroup {
+  id        String             @id @default(cuid())
+  name      String
+  active    Boolean            @default(false)
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+  versions  PageDataVersions[]
+}
+
+model PageDataVersions {
+  id              String         @id @default(cuid())
+  name            String
+  number          String
+  active          Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  pageGroup       PageDataGroup? @relation(fields: [pageDataGroupId], references: [id])
+  pageDataGroupId String?
+  pageData        PageData       @relation(fields: [pageDataId], references: [id])
+  pageDataId      String
+
+  @@index([pageDataGroupId])
+  @@index([pageDataId])
+}
+
+model PageData {
+  id               String             @id @default(cuid())
+  space            Space              @relation(fields: [spaceId], references: [id])
+  spaceId          String
+  draft            String? @db.LongText
+  published        String? @db.LongText
+  active           Boolean            @default(false)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  image            String
+  name             String
+  icon             String?
+  description      String?
+  PageDataVersions PageDataVersions[]
+
+  @@index([spaceId])
+}
+
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String     @db.VarChar(3000)
+  sessionToken String @db.VarChar(3000)
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?
@@ -41,26 +84,27 @@ model Event {
   targetType String
   target     String
   action     String
-  data       String  @db.LongText
+  data       String @db.LongText
 
   @@index([spaceId])
 }
 
 model Page {
   id               String         @id @default(cuid())
-  version          SpaceUIVersion @relation(fields: [spaceUIVersionId], references: [id])
-  spaceUIVersionId String
+  version          SpaceUIVersion? @relation(fields: [spaceUIVersionId], references: [id])
+  spaceUIVersionId String?
   name             String
   icon             String?
   path             String?
   components       Component[]
-  html             String?        @db.LongText
+  html             String? @db.LongText
   pathRegexp       String?
-  uiDef            String?        @db.LongText
+  uiDef            String? @db.LongText
   roles            UserRoles?     @relation(fields: [userRolesId], references: [id])
   userRolesId      String?
   layout           Boolean        @default(false)
-  pageData         String?        @db.LongText
+  pageData         String? @db.LongText
+  deleted          Boolean        @default(false)
 
   @@index([spaceUIVersionId])
   @@index([userRolesId])
@@ -971,6 +1015,7 @@ model Space {
   TableRead                TableRead[]
   Report                   Report[]
   DashboardForm            DashboardForm[]
+  PageData                 PageData[]
 
   @@index([userId])
   @@index([templateCategoryId])

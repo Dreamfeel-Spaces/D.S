@@ -30,15 +30,17 @@
 	import { sineIn } from 'svelte/easing';
 	import { gDevices } from '$lib/plugins/util/devices';
 	//@ts-ignore
-	import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
-	import { browser } from '$app/environment';
 	import { enhance } from '$app/forms';
-	import axios from 'axios';
 	import { goto, invalidate, invalidateAll } from '$app/navigation';
+	import { get } from 'svelte/store';
+	import axios from 'axios';
 
 	let selectedPage = $page.data.pages[0] ?? {};
+	let pageManager: any;
 
-	let projectEndpoint = `${$page.url.origin}/editor/${$page.params.app_id}/${$page.params.builder}/${selectedPage.id}/svr`;
+	let projectEndpoint = `${$page.url.origin}/editor/${$page.params.app_id}/${
+		$page.params.builder
+	}/${pageManager?.getSelected()?.getId() ?? selectedPage.id}/svr`;
 
 	let theme = 'light';
 
@@ -46,7 +48,7 @@
 
 	let mountingEditor = true;
 
-	let projectData = {};
+	let pages: any[] = [];
 
 	async function init() {
 		editor = grapesjs.init({
@@ -101,22 +103,15 @@
 						urlLoad: projectEndpoint,
 						urlStore: projectEndpoint,
 						fetchOptions: (opts: any) => (opts.method === 'POST' ? { method: 'PATCH' } : {}),
-						onStore: (data) => ({ id: selectedPage.id, data }),
+						onStore: (data) => ({
+							id: pageManager?.getSelected()?.getId() ?? selectedPage.id,
+							data
+						}),
 						onLoad: (result) => {
-							console.log(result);
 							return result;
 						}
 					}
 				}
-			},
-			pageManager: {
-				pages: [
-					{
-						id: 'page-id',
-						styles: `.my-class { color: red }`, // or a JSON of styles
-						component: '<div class="my-class">My element</div>' // or a JSON of components
-					}
-				]
 			}
 		});
 
@@ -129,25 +124,31 @@
 			}
 		});
 
-		// editor?.onReady(() => {
-		// 	console.log($page.data.projectData?.data);
-		// 	// editor?.loadProjectData({});
-		// });
-
-		// editor?.on('component:add', (component) => {
-		// 	editor?.runCommand('do-traits', { component });
-		// });
-
-		// editor?.on('component:selected', (component) => {
-		// 	console.log('Selected');
-		// 	editor?.runCommand('do-traits', { component });
-		// });
+		pageManager = editor.Pages;
 	}
-
-	let pages = {};
 
 	onMount(init);
 	onDestroy(() => (editor ? editor?.destroy() : () => {}));
+
+	useEffect(
+		() => {
+			let homePageId = ($page.data.pages[0] ?? {}).id;
+			if (homePageId) {
+				const page = pageManager?.get(homePageId);
+				if (!page) {
+					const newPage = pageManager?.add({
+						id: homePageId.id,
+						styles: `.my-class { color: red }`, // or a JSON of styles
+						component: `<div class="my-class">Home</div>` // or a JSON of components
+					});
+
+					openPages = { ...openPages, [homePageId]: $page.data.pages[0] };
+					pageManager.select(homePageId);
+				} else pageManager.select(homePageId);
+			}
+		},
+		() => [pageManager]
+	);
 
 	let transitionParams = {
 		x: -320,
@@ -155,12 +156,12 @@
 		easing: sineIn
 	};
 
-	useEffect(
-		() => {
-			editor?.loadProjectData($page.data.projectData);
-		},
-		() => [$page.data.projectData]
-	);
+	// useEffect(
+	// 	() => {
+	// 		editor?.loadProjectData($page.data.projectData);
+	// 	},
+	// 	() => [$page.data.projectData]
+	// );
 
 	let hidden2 = true;
 	let pageModalRadio = 'pages';
@@ -170,12 +171,79 @@
 	let changingPage = false;
 
 	function handlePageChange(_page: any) {
-		changingPage = true;
-		let url = `/editor/${$page.params.app_id}/${$page.params.builder}/${_page.id}`;
-		goto(url);
+		const page = pageManager.get(_page.id);
+		if (!page) {
+			const newPage = pageManager?.add({
+				id: _page.id,
+				styles: `.my-class { color: red }`, // or a JSON of styles
+				component: `<div class="my-class">${_page.name}</div>` // or a JSON of components
+			});
+
+			openPages = { ...openPages, [_page.id]: _page };
+			pageManager.select(_page.id);
+			return;
+		}
 		openPages = { ...openPages, [_page.id]: _page };
-		selectedPage = _page;
-		changingPage = false;
+		pageManager.select(_page.id);
+	}
+
+	let addingPage = false;
+
+	let newPageData = {};
+
+	async function handleAddPage() {
+		let addingPage = true;
+		let url = `${$page.url.origin}/editor/${$page.params.app_id}/${$page.params.builder}/${
+			pageManager?.getSelected()?.getId() ?? selectedPage.id
+		}/svr`;
+		try {
+			const response = await axios.post(url, { ...newPageData });
+			{
+				if (response) {
+					addingPage = false;
+					const newPage = pageManager?.add({
+						id: response.data.id,
+						styles: `.my-class { color: red }`, // or a JSON of styles
+						component: `<div class="my-class">${response.data.name}</div>` // or a JSON of components
+					});
+					pages = pageManager.getAll();
+					invalidateAll();
+				}
+			}
+		} catch (error) {
+			addingPage = false;
+		}
+	}
+
+	let deleting = false;
+	let deletingId = '';
+
+	async function handleDeletePage(id: string) {
+		deleting = true;
+		deletingId = id;
+		let url = `${$page.url.origin}/editor/${$page.params.app_id}/${$page.params.builder}/${
+			pageManager?.getSelected()?.getId() ?? selectedPage.id
+		}/svr`;
+		const prompt = confirm('Are you sure you want to delete this page?');
+		if (prompt) {
+			try {
+				const response = await axios.delete(url);
+				{
+					if (response) {
+						deleting = false;
+						pageManager.remove(id);
+						deletingId = '';
+						invalidateAll();
+					}
+				}
+			} catch (error) {
+				deleting = false;
+				deletingId = '';
+			}
+		} else {
+			deleting = false;
+			deletingId = '';
+		}
 	}
 </script>
 
@@ -194,7 +262,6 @@
 </Modal>
 
 <Modal permanent open={editor === null} class="w-full">
-	{console.log(editor)}
 	<div class="flex justify-center">
 		<Spinner />
 	</div>
@@ -225,10 +292,8 @@
 					{#each Object.keys(openPages).map((page) => openPages[page]) as page}
 						<li class="mr-2">
 							<button
-								on:click={() => {
-									selectedPage = page;
-								}}
-								class="inline-block  {selectedPage.id === page.id
+								on:click={() => handlePageChange(page)}
+								class="inline-block  {pageManager?.getSelected()?.getId() === page.id
 									? 'bg-green-800 text-white'
 									: 'bg-gray-300'} whitespace-nowrap pt-1 px-2 text-xs border-b-2 dark:text-black border-transparent rounded-t-lg"
 							>
@@ -250,9 +315,7 @@
 			class=" border-t flex innitial  border-gray-400 dark:bg-black panel__left  w-72 max-w-72 p-2 bg-gray-100 min-h-[100%] h-screen"
 		>
 			<div class="flex-1 left-switcher  flex h-full pb-2 innitial">
-				<div class="innitial border border-gray-200 h-full panel-controls flex flex-col" >
-					
-				</div>
+				<div class="innitial border border-gray-200 h-full panel-controls flex flex-col" />
 				<div class="h-full flex-1">
 					<div class="pages-container innitial">
 						<div
@@ -263,26 +326,35 @@
 							{/if}
 							<div class="panel-add-page innitial" />
 						</div>
-						<ul
-							class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
-						>
-							{#if editor}
-								{#each $page.data.ui.pages as _page}
+						{#if editor}
+							<ul
+								class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
+							>
+								{#each $page.data.pages ?? [] as _page}
 									<li
-										class="cursor-pointer {_page.id === selectedPage.id
+										class="cursor-pointer {_page.id === pageManager?.getSelected()?.getId()
 											? 'bg-gray-700'
-											: ' '} hover:bg-gray-600 text-xs"
+											: ' '} hover:bg-gray-600 text-xs flex"
 									>
 										<button
 											on:click={() => handlePageChange(_page)}
-											class="p-2 flex justify-between"
+											class="p-2 flex justify-between flex-1"
 										>
 											{_page.name}
 										</button>
+										{#if deleting && deletingId === _page.id}
+											<Spinner />
+										{:else}
+											<button
+												class="p-1 m-1 rounded hover:bg-gray-400"
+												on:click|stopPropagation={() => handleDeletePage(_page.id)}
+												><span class="material-symbols-outlined text-sm"> delete </span></button
+											>
+										{/if}
 									</li>
 								{/each}
-							{/if}
-						</ul>
+							</ul>
+						{/if}
 					</div>
 					<div style="display: none;" class="traits-and-selectors-container">
 						<div
@@ -308,7 +380,7 @@
 								{#if editor}
 									{#each $page.data.tables as _page}
 										<li
-											class="cursor-pointer {_page.id === selectedPage.id
+											class="cursor-pointer {_page.id === pageManager?.getSelected()?.getId()
 												? 'bg-gray-700'
 												: ' '} hover:bg-gray-600 text-xs"
 										>
@@ -332,15 +404,32 @@
 							<p>Create Page</p>
 							<div class=" innitial" />
 						</div>
-						{#if mountingEditor}
-							<form use:enhance method="post" class="spacing-y-6 p-1" action="?/createPage">
-								<Input size="sm" required name="name" placeholder="Name" />
-								<Input size="sm" name="icon" class="my-3" placeholder="Icon" />
-								<Input size="sm" required name="path" class="my-3" placeholder="Path" />
-								<Toggle>Layout</Toggle>
-								<Button size="xs" type="submit" class="w-full mt-3">Save</Button>
-							</form>
-						{/if}
+						<form method="post" class="spacing-y-6 p-1" on:submit|preventDefault={handleAddPage}>
+							<Input
+								bind:value={newPageData.name}
+								size="sm"
+								required
+								name="name"
+								placeholder="Name"
+							/>
+							<Input
+								bind:value={newPageData.icon}
+								size="sm"
+								name="icon"
+								class="my-3"
+								placeholder="Icon"
+							/>
+							<Input
+								bind:value={newPageData.path}
+								size="sm"
+								required
+								name="path"
+								class="my-3"
+								placeholder="Path"
+							/>
+							<Toggle bind:value={newPageData.layout}>Layout</Toggle>
+							<Button disabled={addingPage} size="xs" type="submit" class="w-full mt-3">{#if addingPage}<Spinner/>{:else} Save {/if} </Button>
+						</form>
 					</div>
 					<div style="display: none;" class="commerce-assist innitial ">
 						<div

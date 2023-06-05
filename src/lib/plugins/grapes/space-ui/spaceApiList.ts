@@ -9,7 +9,7 @@ export function gSpaceApIList(
 
 	const page: any = pages.find((page: { id: string; path: string }) => page.id === pageId);
 
-	const spaceUrl = urlPatterns([page])[0];
+	const spaceUrl = (urlPatterns([page]) ?? [])[0];
 
 	const params = spaceUrl?.params ?? [];
 
