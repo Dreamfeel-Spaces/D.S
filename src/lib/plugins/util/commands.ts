@@ -93,6 +93,23 @@ export function addGCommands(editor: any) {
 			lmEl.style.display = 'none';
 		}
 	});
+	editor.Commands.add('do-vcs', {
+		getRowEl(editor) {
+			return editor.getContainer().closest('.editor-row');
+		},
+		getLayersEl(row) {
+			return row.querySelector('.vcs-container');
+		},
+
+		run(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = '';
+		},
+		stop(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = 'none';
+		}
+	});
 	editor.Commands.add('do-pages-form', {
 		getRowEl(editor) {
 			console.log('hhh');
@@ -126,6 +143,14 @@ export function addGCommands(editor: any) {
 		stop(editor, sender) {
 			const lmEl = this.getLayersEl(this.getRowEl(editor));
 			lmEl.style.display = 'none';
+		}
+	});
+
+	editor.Commands.add('share', {
+		run(editor, sender) {
+			editor.Modal.open({
+				title: `<div  >Share</div>` // string | HTMLElement
+			});
 		}
 	});
 	editor.Commands.add('show-layers', {

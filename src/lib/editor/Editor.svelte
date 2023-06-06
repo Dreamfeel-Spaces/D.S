@@ -34,6 +34,8 @@
 	import { goto, invalidate, invalidateAll } from '$app/navigation';
 	import { get } from 'svelte/store';
 	import axios from 'axios';
+	import it from 'grapesjs/locale/it';
+	import tr from 'grapesjs/locale/tr';
 
 	let selectedPage = $page.data.pages[0] ?? {};
 	let pageManager: any;
@@ -112,6 +114,9 @@
 						}
 					}
 				}
+			},
+			i18n: {
+				messages: { it, tr }
 			}
 		});
 
@@ -327,6 +332,7 @@
 							<div class="panel-add-page innitial" />
 						</div>
 						{#if editor}
+							<!-- <Pages /> -->
 							<ul
 								class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
 							>
@@ -396,7 +402,15 @@
 							</ul>
 						</div>
 					</div>
-
+					<div style="display: none;" class="vcs-container">
+						<div
+							class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
+						>
+							<p>Versions</p>
+							<div class=" innitial" />
+						</div>
+						<div class="border-gray-200">lorem</div>
+					</div>
 					<div style="display: none;" class="pages-form innitial  ">
 						<div
 							class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
@@ -428,7 +442,9 @@
 								placeholder="Path"
 							/>
 							<Toggle bind:value={newPageData.layout}>Layout</Toggle>
-							<Button disabled={addingPage} size="xs" type="submit" class="w-full mt-3">{#if addingPage}<Spinner/>{:else} Save {/if} </Button>
+							<Button disabled={addingPage} size="xs" type="submit" class="w-full mt-3"
+								>{#if addingPage}Saving...{:else} Save {/if}
+							</Button>
 						</form>
 					</div>
 					<div style="display: none;" class="commerce-assist innitial ">

@@ -1,3 +1,4 @@
+import type { Editor } from 'grapesjs';
 import type grapesjs from 'grapesjs';
 
 export function addGpanels(editor: grapesjs.Editor) {
@@ -50,11 +51,23 @@ export function gPanels(editor: grapesjs.Editor) {
 					},
 					{
 						id: 'show-layers',
-						active: true,
 						command: 'show-layers',
 						// Once activated disable the possibility to turn it off
 						togglable: false,
 						label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M480 926 120 646l50-37 310 241 310-241 50 37-360 280Zm0-152L120 494l360-280 360 280-360 280Zm0-301Zm0 225 262-204-262-204-262 204 262 204Z"/></svg>`
+					},
+					{
+						id: 'show-assets',
+						command: 'show-assets',
+						// Once activated disable the possibility to turn it off
+						togglable: false,
+						label: `<button class="material-symbols-outlined "> upload </button>`
+					},
+					{
+						id: 'show-share',
+						command: 'share',
+						// Once activated disable the possibility to turn it off
+						label: `<button class="material-symbols-outlined "> share </button>`
 					}
 				]
 			},
@@ -92,7 +105,7 @@ export function gPanels(editor: grapesjs.Editor) {
 	};
 }
 
-export function updateNewEditorPanelsConfig(editor: grapesjs.Editor) {
+export function updateNewEditorPanelsConfig(editor: 	Editor) {
 	editor.Panels.addPanel({
 		id: 'panel-top',
 		el: '.panel__top'
@@ -231,7 +244,7 @@ export function updateNewEditorPanelsConfig(editor: grapesjs.Editor) {
 				},
 				command: 'do-pages-form',
 				label: navigator.onLine
-					? `<button class="material-symbols-outlined "> post_add </button>`
+					? `<button class="material-symbols-outlined "> note_add </button>`
 					: '+'
 			},
 			{
@@ -275,7 +288,27 @@ export function updateNewEditorPanelsConfig(editor: grapesjs.Editor) {
 				label: navigator.onLine
 					? `<button class="material-symbols-outlined "> database </button>`
 					: 'D'
-			}
+			},
+			{
+				id: 'vcs',
+				attributes: {
+					title: 'Open projects and templates'
+				},
+				command: 'do-vcs',
+				label: navigator.onLine
+					? `<button class="material-symbols-outlined "> alt_route </button>`
+					: '+'
+			},
+			// {
+			// 	id: 'ii8',
+			// 	attributes: {
+			// 		title: 'Open projects and templates'
+			// 	},
+			// 	command: 'do-ii8',
+			// 	label: navigator.onLine
+			// 		? `<button class="material-symbols-outlined "> translate </button>`
+			// 		: '+'
+			// }
 		]
 	});
 }
