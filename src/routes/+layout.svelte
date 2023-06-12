@@ -313,10 +313,10 @@
 							</svg>
 						</span>
 					</a> -->
-
+<!-- 
 						<div class="relative mr-2">
 							<DarkMode />
-						</div>
+						</div> -->
 						<div class="relative" data-te-dropdown-ref>
 							{#if $page.data.session}
 								<a

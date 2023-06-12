@@ -43,8 +43,8 @@ model PageData {
   id               String             @id @default(cuid())
   space            Space              @relation(fields: [spaceId], references: [id])
   spaceId          String
-  draft            String?            @db.LongText
-  published        String?            @db.LongText
+  draft            String? @db.LongText
+  published        String? @db.LongText
   active           Boolean            @default(false)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
@@ -59,7 +59,7 @@ model PageData {
 
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String     @db.VarChar(3000)
+  sessionToken String @db.VarChar(3000)
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?
@@ -84,7 +84,7 @@ model Event {
   targetType String
   target     String
   action     String
-  data       String  @db.LongText
+  data       String @db.LongText
 
   @@index([spaceId])
 }
@@ -97,14 +97,15 @@ model Page {
   icon             String?
   path             String?
   components       Component[]
-  html             String?         @db.LongText
+  html             String? @db.LongText
   pathRegexp       String?
-  uiDef            String?         @db.LongText
+  uiDef            String? @db.LongText
   roles            UserRoles?      @relation(fields: [userRolesId], references: [id])
   userRolesId      String?
   layout           Boolean         @default(false)
-  pageData         String?         @db.LongText
+  pageData         String? @db.LongText
   deleted          Boolean         @default(false)
+  screenshot       String? @db.LongText
 
   @@index([spaceUIVersionId])
   @@index([userRolesId])

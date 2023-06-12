@@ -164,7 +164,7 @@
 								<Button pill class="mr-4" size="xs" color="green">Official demo</Button>
 							</div>
 						{/if}
-						<div class="ml-1">
+						<div class="mx-3">
 							<Button
 								outline
 								size="xs"
@@ -184,9 +184,9 @@
 								></Button
 							>
 						</div>
-						<div class="mr-3">
+						<!-- <div class="mr-3">
 							<DarkMode />
-						</div>
+						</div> -->
 						{#if user}
 							<a href={`/a/${space?.appId}/accounts`} class="flex flex-row items-center">
 								<img

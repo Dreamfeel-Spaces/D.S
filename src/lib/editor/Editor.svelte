@@ -99,7 +99,7 @@
 			projectData: $page.data?.projectData,
 			storageManager: {
 				type: 'remote',
-				stepsBeforeSave: 1,
+				stepsBeforeSave: 3,
 				options: {
 					remote: {
 						urlLoad: projectEndpoint,
