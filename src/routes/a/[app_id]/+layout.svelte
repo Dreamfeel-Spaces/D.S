@@ -89,7 +89,7 @@
 
 		<div class="flex flex-row  dark:bg-black bg-gray-100 text-gray-800">
 			<aside
-				class="sidebar min-h-screen dark:text-gray-900 w-72 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
+				class="sidebar min-h-screen dark:text-gray-900  w-80 min-w-82 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 			>
 				<div class="sidebar-header flex items-center  ml-7 py-3">
 					<div class="inline-flex">
@@ -528,4 +528,6 @@
 		background-attachment: fixed;
 		background-size: cover;
 	}
+
+	
 </style>

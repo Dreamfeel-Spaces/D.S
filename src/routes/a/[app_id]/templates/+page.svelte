@@ -5,8 +5,8 @@
 
 <Card size="xl">
 	<Heading tag="h6">All templates</Heading>
-	{#each $page.data.templates as template}
-		<div class="grid mt-4 grid-cols-3 gap-3">
+	<div class="grid mt-4 grid-cols-3 gap-3">
+		{#each $page.data.templates as template}
 			<a
 				href="/a/{$page.params.app_id}/templates/{template.id}"
 				class="max-w-sm rounded overflow-hidden shadow-lg"
@@ -34,6 +34,6 @@
 					>
 				</div>
 			</a>
-		</div>
-	{/each}
+		{/each}
+	</div>
 </Card>

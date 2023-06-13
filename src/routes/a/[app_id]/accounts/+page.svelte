@@ -30,7 +30,7 @@
 
 {#if !data.spaceSession?.user?.id}
 	<section class="w dark:bg-gray- min-w-min">
-		<Card size="lg" class="w-full text-gray-800  lg:py-0">
+		<div size="lg" class="w-full text-gray-800  mt-9 lg:py-0">
 			<div
 				class="w-full bg-white rounded-lg shadow dark:border md:mt-0  dark:mt-1 xl:p-0 dark:bg-gray-800 dark:border-gray-700"
 			>
@@ -130,7 +130,7 @@
 
 				</div>
 			</footer>
-		</Card>
+		</div>
 	</section>
 {/if}
 

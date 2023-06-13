@@ -59,19 +59,15 @@
 	];
 </script>
 
-<div class="px-6">
+<div class="px-6 pt-6">
 	<Tabs>
-		<TabItem
-			open={activeTab === 'reports'}
-			on:click={() => goto('?tab=reports')}
-			title="Query Reports"
-		>
+		<TabItem open={activeTab === 'reports'} on:click={() => goto('?tab=reports')} title="Reports">
 			<UserReportModal columns={data.columns} />
 			{#if form?.reportSuccess}
 				Report has been saved
 			{/if}
 			{#if !userReports?.length}
-				<Alert class="mt-3 text-center" accent>
+				<div class="mt-3  min-w-screen w-[56rem] text-center" accent>
 					<div class="flex justify-center">
 						{#if browser}
 							<LottiePlayer
@@ -89,14 +85,7 @@
 					</div>
 					<div class="text-2xl">Query reports</div>
 					<div class="my-2">No reports have been added</div>
-					<div>
-						Query reports are a powerful way to analyze and understand your data, you can quickly
-						build custom queries and visualize your results in a variety of charts and graphs.
-						Whether you're tracking sales, monitoring website traffic, or measuring user engagement,
-						our query reports give you the insights you need to make data-driven decisions for your
-						business
-					</div>
-				</Alert>
+				</div>
 			{/if}
 			<Accordion size="xs" class="mt-3">
 				{#each data.reports as report}
@@ -167,11 +156,11 @@
 		<TabItem
 			open={activeTab === 'charts'}
 			on:click={() => goto('?tab=charts', { invalidateAll: true })}
-			title="Charts"
+			title="Analytics"
 		>
 			<ChartModal columns={data.columns} />
 			{#if !userCharts?.length}
-				<Alert class="mt-3 text-center" accent>
+				<div class="mt-3 w-[56rem] text-center" accent>
 					<div class="flex justify-center">
 						{#if browser}
 							<LottiePlayer
@@ -189,14 +178,7 @@
 					</div>
 					<div class="text-2xl">Charts</div>
 					<div class="my-2">No charts have been added</div>
-					<div>
-						Query charts are a powerful way to analyze and understand your data, you can quickly
-						build custom queries and visualize your results in a variety of charts and graphs.
-						Whether you're tracking sales, monitoring website traffic, or measuring user engagement,
-						our query reports give you the insights you need to make data-driven decisions for your
-						business
-					</div>
-				</Alert>
+				</div>
 			{/if}
 			<div class="mt-3 grid lg:grid-cols-2 grid-cols-1 gap-2">
 				{#if !data.charts.length}
@@ -222,7 +204,7 @@
 			{/if}
 
 			{#if !userForms?.length}
-				<Alert class="mt-3 text-center" accent>
+				<div class="mt-3 w-[56rem] text-center" accent>
 					<div class="flex justify-center">
 						{#if browser}
 							<LottiePlayer
@@ -240,14 +222,7 @@
 					</div>
 					<div class="text-2xl">Charts</div>
 					<div class="my-2">No charts have been added</div>
-					<div>
-						Query charts are a powerful way to analyze and understand your data, you can quickly
-						build custom queries and visualize your results in a variety of charts and graphs.
-						Whether you're tracking sales, monitoring website traffic, or measuring user engagement,
-						our query reports give you the insights you need to make data-driven decisions for your
-						business
-					</div>
-				</Alert>
+				</div>
 			{/if}
 			<Accordion class="mt-3">
 				{#each data.forms as form}

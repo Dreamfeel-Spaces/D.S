@@ -1,23 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import {
-		Card,
-		BreadcrumbItem,
-		Accordion,
-		AccordionItem,
-		List,
-		Listgroup,
-		ListgroupItem,
-		Button,
-		Alert,
-		ImagePlaceholder
-	} from 'flowbite-svelte';
+	import { Card, Button, Alert, Heading, A } from 'flowbite-svelte';
 	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
 	import { recentlyViewed } from '$lib/wsstore';
 	export let data: PageData;
 	const uis = data.space?.spaceUis ?? [];
 	export let form: any;
+	// let activeVersion = $page.data.spaceUIVersion.find((item:any) => item.id === data?.space?.uiVid)
 	onMount(() => {
 		recentlyViewed.set({ [$page.url.pathname]: $page, ...$recentlyViewed });
 	});
@@ -45,64 +35,53 @@
 {/if}
 
 <div class="container">
-	<div class="grid gap-3 lg:grid-cols-2  overflow-auto ">
-		{#each uis as ui}
-			<div
-				class="w-full  p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-black dark:border-gray-700"
-			>
-				<div class="flex items-center justify-between mb-4">
-					<h5 class="text-xl flex font-bold leading-none text-gray-900 dark:text-white">
-						{#if ui?.spaceUIVersion.find((item) => item.id === data?.space?.uiVid)}
-							<span class=" pl-1 dark:text-green-500">
-								<svg
-									fill="currentColor"
-									xmlns="http://www.w3.org/2000/svg"
-									height="15"
-									viewBox="0 96 960 960"
-									width="15"
-									><path
-										d="M430 974q-72-9-134.5-43t-108-86.5Q142 792 116 723.5T90 576q0-88 41.5-168T243 266H121v-60h229v229h-60V306q-64 51-102 121.5T150 576q0 132 80 225.5T430 913v61Zm-7-228L268 591l42-42 113 113 227-227 42 42-269 269Zm187 200V717h60v129q64-52 102-122t38-148q0-132-80-225.5T530 239v-61q146 18 243 129t97 269q0 88-41.5 168T717 886h122v60H610Z"
-									/></svg
-								>
-							</span>
-						{/if}
-					</h5>
-					<div class="flex">
-						<a
-							href={`/editor/${$page.data.space.appId}/versions/${ui.id}/create`}
-							class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+	<div
+		class="dark:bg-gray-900 mx-auto p-3 mr-3 gap-3 flex justify-between mb-2 rounded-xl min-h-72 h-80 "
+	>
+		{#if $page.data.active}
+			<div class="h-full text-left">
+				<Heading tag="h4">{$page.data.active.name}</Heading>
+				<small class="dark:text-white">Default</small>
+				<img
+					class="rounded-xl object-contain"
+					alt="UI Screenshot"
+					src={'https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image-300x225.png'}
+				/>
+			</div>
+			<div class=" h-full flex-1  ">
+				<div class="flex justify-end gap-3">
+					<div class="flex items-center">
+						<A href="/a/{$page.params.app_id}/templates">Change Template</A>
+					</div>
+					<div>
+						<Button href="/editor/{$page.params.app_id}/v/{$page.data.active?.id}" class="w-full"
+							>Open in editor</Button
 						>
-							Add version
-						</a>
 					</div>
 				</div>
-				<div class="dark:bg-gray-800 mr-3 flex justify-center mb-2 rounded ">
-					<img
-						class="rounded-xl object-contain"
-						alt="UI Screenshot"
-						src={'https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image-300x225.png'}
-					/>
-				</div>
+				<section>
+					<div class="relative overflow-x-auto mt-2">
+						<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+							<thead
+								class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+							>
+								<tr>
+									<th scope="col" class="px-6 py-3"> Version </th>
+									<th scope="col" class="px-6 py-3"> Publish </th>
+									<th scope="col" class="px-6 py-3"> Edit </th>
+								</tr>
+							</thead>
+							<tbody>
+								{#each $page.data.active.spaceUIVersion as version}
+									<tr class="bg-white dark:bg-gray-800">
+										<th
+											scope="row"
+											class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+										>
+											{version.version}. {version.name ?? version.version}
+										</th>
 
-				<div class="w-full">
-					<List size="xl" position="inside">
-						<Listgroup>
-							{#each ui.spaceUIVersion as version}
-								<ListgroupItem
-									size="xl"
-									class="w-full"
-									href={`/editor/${$page.params['app_id']}/${version.id}/${
-										version.pages.find((page) => page.path === '/')?.id ?? version.pages[0]?.id
-									}`}
-								>
-									<div class="flex justify-between ">
-										<div class="flex" style="align-items:center">
-											<a rel="external" href={`/editor/${$page.params['app_id']}/${version.id}`}
-												>Version {version.version}</a
-											>
-										</div>
-										<form action="?/setDefaultUI" method="post">
-											<input id="id" value={version.id} name="id" type="hidden" />
+										<td class="px-6 py-4">
 											<Button
 												pill
 												type="submit"
@@ -138,7 +117,8 @@
 													</span>
 												{/if}
 											</Button>
-
+										</td>
+										<td class="px-6 py-4">
 											<a
 												rel="external"
 												href={`/editor/${$page.params['app_id']}/${version.id}/${
@@ -161,14 +141,52 @@
 													</span>
 												</Button>
 											</a>
-										</form>
-									</div>
-								</ListgroupItem>
-							{/each}
-						</Listgroup>
-					</List>
-				</div>
+										</td>
+									</tr>
+								{/each}
+							</tbody>
+						</table>
+					</div>
+				</section>
 			</div>
+		{/if}
+	</div>
+	<div class="grid gap-3 lg:grid-cols-2  overflow-auto ">
+		{#each uis as ui}
+			<a
+				href="/editor/{$page.params.app_id}/v/{ui.id}"
+				class="w-full  p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-black dark:border-gray-700"
+			>
+				<div class="flex items-center justify-between mb-4">
+					<p class="text-lg dark:text-white">{ui.name}</p>
+
+					<h5 class="text-xl flex justify-end font-bold leading-none text-gray-900 dark:text-white">
+						{#if ui?.spaceUIVersion.find((item) => item.id === data?.space?.uiVid)}
+							<div>
+								<Button pill gradient color="green" size="xs" class=" pl-1 fle">
+									<svg
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+										height="15"
+										viewBox="0 96 960 960"
+										width="15"
+										><path
+											d="M430 974q-72-9-134.5-43t-108-86.5Q142 792 116 723.5T90 576q0-88 41.5-168T243 266H121v-60h229v229h-60V306q-64 51-102 121.5T150 576q0 132 80 225.5T430 913v61Zm-7-228L268 591l42-42 113 113 227-227 42 42-269 269Zm187 200V717h60v129q64-52 102-122t38-148q0-132-80-225.5T530 239v-61q146 18 243 129t97 269q0 88-41.5 168T717 886h122v60H610Z"
+										/></svg
+									> <span class="ml-3 text-sm"> Active </span>
+								</Button>
+							</div>
+						{/if}
+					</h5>
+				</div>
+				<div class="dark:bg-gray-800 mr-3 flex justify-center mb-2 rounded ">
+					<img
+						class="rounded-xl object-contain"
+						alt="UI Screenshot"
+						src={'https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image-300x225.png'}
+					/>
+				</div>
+			</a>
 		{/each}
 	</div>
 </div>

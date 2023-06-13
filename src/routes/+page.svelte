@@ -9,9 +9,12 @@
 	import HeroCarousel from './HeroCarousel.svelte';
 	import { fade } from 'svelte/transition';
 	import { inview } from 'svelte-inview';
+	import Pointer from './Pointer.svelte';
 
 	let isInView;
 </script>
+
+<!-- <Pointer /> -->
 
 <Cursort />
 
@@ -21,6 +24,87 @@
 	</Alert>
 {/if}
 
+<div class="w-full">
+	<div class=" relative z-0">
+		<div class="flex items-center justify-center w-full h-full ">
+			<div class="w-full relative flex items-center justify-center">
+				<div class="w-full h-full mx-auto overflow-x-hidden overflow-y-hidden">
+					<div
+						id="slider"
+						class="h-100 grid hero-bg rounded-xl grid-cols-4 lg:gap-8 md:gap-6 gap-14 items-center justify-start transition ease-out duration-700"
+					>
+						<!-- {#each [1, 2, 3, 4] as category}
+                <div class="flex flex-shrink-0 relative w-full sm:w-auto">
+                  <img
+                    src={"https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image-300x225.png"}
+                    alt="black chair and white table"
+                    class="object-contain h-96 w-96 object-center"
+                  />
+                  <div
+                    class="bg-gray-800 bg-opacity-30 absolute w-full h-full p-6"
+                  >
+                    <h2
+                      class="lg:text-xl leading-4 text-base lg:leading-5 text-white dark:text-gray-900"
+                    >
+                      Catalog {category}
+                    </h2>
+                    <div class="flex h-full items-end pb-6">
+                      <h3
+                        class="text-xl lg:text-2xl font-semibold leading-5 lg:leading-6 text-white dark:text-gray-900"
+                      >
+                        Catalog {category} desc
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+              {/each} -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div
+			class="absolute backdrop-blur-sm rounded-lg bg-white/30 inset-0 flex justify-center items-center z-10"
+		>
+			<div
+				class="mt-8 relative hero rounded-lg container mx-auto flex flex-col items-center pt-12 sm:pt-24 pb-24 sm:pb-32 md:pb-48 lg:pb-56 xl:pb-64"
+			>
+				<img
+					class="mr-2 lg:mr-12 mt-2 lg:mt-12 absolute right-0 top-36"
+					src="https://tuk-cdn.s3.amazonaws.com/can-uploader/center_aligned_with_image-svg2.svg"
+					alt="bg"
+				/>
+				<img
+					class="ml-2 lg:ml-12 mb-2 lg:mb-12 absolute z-30 bottom-36 left-0"
+					src="https://tuk-cdn.s3.amazonaws.com/can-uploader/center_aligned_with_image-svg3.svg"
+					alt="bg"
+				/>
+
+				<div class="w-11/12  relative sm:w-2/3 mb-5 sm:mb-10">
+					<h1
+						class="text-2xl backgro bg-opacity-100 dark:text-gray-900 mt-36 backdrop:blur-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center   text-gray-900 font-bold leading-tight"
+					>
+						The Ultimate No-Code Framework to Bring Your Vision to Life!
+					</h1>
+				</div>
+				<div class="flex justify-center items-center mb-10 sm:mb-20">
+					<a
+						href="/early-access"
+						class="hover:text-black hover:bg-transparent lg:text-xl hover:border-black border bg-red-300 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ring-offset-red-700	focus:ring-white rounded text-red-600 px-4 sm:px-8 py-1 sm:py-3 text-sm"
+						>Early Access</a
+					>
+					<a
+						rel="external"
+						target="blank"
+						href="/a/demo"
+						class="hover:bg-red- hover:text-red-600 lg:text-xl  border border-red-900 hover:red-red-600 ml-3 sm:ml-6 hover:bg-transparent transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ring-offset-red-700 focus:ring-white hover:bg-red-700 rounded hover:border hover:border-red-900 text-red-700 px-4 sm:px-8 py-1 sm:py-3 text-sm"
+						>Live Demo</a
+					>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div
 	use:inview={{ unobserveOnEnter: true, rootMargin: '-20%' }}
 	on:change={({ detail }) => {
@@ -28,46 +112,7 @@
 	}}
 	class="w-full px-6"
 >
-	<div
-		class="mt-8 relative hero-bg rounded-lg bg-red-700 container mx-auto flex flex-col items-center pt-12 sm:pt-24 pb-24 sm:pb-32 md:pb-48 lg:pb-56 xl:pb-64"
-	>
-		<img
-			class="mr-2 lg:mr-12 mt-2 lg:mt-12 absolute right-0 top-0"
-			src="https://tuk-cdn.s3.amazonaws.com/can-uploader/center_aligned_with_image-svg2.svg"
-			alt="bg"
-		/>
-		<img
-			class="ml-2 lg:ml-12 mb-2 lg:mb-12 absolute bottom-0 left-0"
-			src="https://tuk-cdn.s3.amazonaws.com/can-uploader/center_aligned_with_image-svg3.svg"
-			alt="bg"
-		/>
-		<div class="blur-3xl top-20 h-20 absolute">l;ll;l;l;</div>
-
-		<div class="w-11/12  relative sm:w-2/3 mb-5 sm:mb-10">
-		
-			<h1
-				class="text-2xl backgro bg-opacity-100 backdrop:blur-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center   text-gray-900 font-bold leading-tight"
-			>
-				The Ultimate No-Code Framework to Bring Your Vision to Life!
-			</h1>
-		</div>
-		<div class="flex justify-center items-center mb-10 sm:mb-20">
-			<a
-				href="/early-access"
-				class="hover:text-black hover:bg-transparent lg:text-xl hover:border-black border bg-red-300 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ring-offset-red-700	focus:ring-white rounded text-red-600 px-4 sm:px-8 py-1 sm:py-3 text-sm"
-				>Early Access</a
-			>
-			<a
-				rel="external"
-				target="blank"
-				href="/a/demo"
-				class="hover:bg-red- hover:text-red-600 lg:text-xl  border border-red-900 hover:red-red-600 ml-3 sm:ml-6 hover:bg-transparent transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ring-offset-red-700 focus:ring-white hover:bg-red-700 rounded hover:border hover:border-red-900 text-red-700 px-4 sm:px-8 py-1 sm:py-3 text-sm"
-				>Live Demo</a
-			>
-		</div>
-	</div>
-
-	<div class="container mx-auto flex justify-center md:-mt-56 -mt-20 sm:-mt-40">
+	<div class="container mx-auto flex justify-center md:-mt-32 -mt-16 sm:-mt-40">
 		<div class="relative sm:w-2/3 w-11/12">
 			<Card
 				padding="sm"

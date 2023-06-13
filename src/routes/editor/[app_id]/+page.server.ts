@@ -4,7 +4,7 @@ import type { RequestEvent, Actions } from './$types';
 export async function load({ params }: RequestEvent) {
 	const space = await prisma.space.findUnique({
 		where: {
-			appId: params["app_id"]
+			appId: params['app_id']
 		},
 		include: {
 			spaceUis: {
@@ -15,7 +15,7 @@ export async function load({ params }: RequestEvent) {
 						}
 					}
 				}
-		},
+			},
 			onboarding: true
 		}
 	});
@@ -24,12 +24,20 @@ export async function load({ params }: RequestEvent) {
 		throw redirect(302, `/a/${space?.appId}/welcome`);
 	}
 
-	return { space };
+	let activeUi = space.spaceUis.reduce((prev: any[], curr, i) => {
+		return [...prev, ...curr.spaceUIVersion];
+	}, []);
+
+	activeUi = activeUi.find((ui) => ui.id === space.uiVid);
+
+	let active = space.spaceUis.find(({ id }) => id === activeUi.spaceUIId);
+
+	return { space, activeVersion: activeUi, active };
 }
 
 export const actions: Actions = {
 	async setDefaultUI({ request, params }) {
-		const spaceId = params["app_id"];
+		const spaceId = params['app_id'];
 
 		const space = await prisma.space.findUnique({
 			where: {

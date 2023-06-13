@@ -1,3 +1,4 @@
+import { prisma } from '$lib/db/prisma';
 import { redirect } from '@sveltejs/kit';
 
 export async function load({ locals, params }: any) {
@@ -18,5 +19,6 @@ export async function load({ locals, params }: any) {
 	if (user) user.role = space.roles.find((role: { id: any }) => role.id === user?.userRolesId);
 
 	if (!user?.id) throw redirect(302, `/a/${space.appId}/accounts`);
+
 	return { space, spaceSession };
 }
