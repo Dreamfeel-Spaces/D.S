@@ -48,7 +48,7 @@
 					src={'https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image-300x225.png'}
 				/>
 			</div>
-			<div class=" h-full flex-1  ">
+			<div class=" h-full flex-1 flex items-end ">
 				<div class="flex justify-end gap-3">
 					<div class="flex items-center">
 						<A href="/a/{$page.params.app_id}/templates">Change Template</A>
@@ -59,7 +59,7 @@
 						>
 					</div>
 				</div>
-				<section>
+				<!-- <section>
 					<div class="relative overflow-x-auto mt-2">
 						<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 							<thead
@@ -147,7 +147,7 @@
 							</tbody>
 						</table>
 					</div>
-				</section>
+				</section> -->
 			</div>
 		{/if}
 	</div>
