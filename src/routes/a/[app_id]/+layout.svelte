@@ -87,7 +87,7 @@
 
 		<Tooltip />
 
-		<div class="flex flex-row  dark:bg-black bg-gray-100 text-gray-800">
+		<div class="flex flex-row h-screen  dark:bg-black bg-gray-100 text-gray-800">
 			<aside
 				class="sidebar min-h-screen dark:text-gray-900  w-80 min-w-82 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 			>
@@ -156,7 +156,7 @@
 										/></svg
 									>
 								</span>
-								<span class="ml-3 l">Datasource</span>
+								<span class="ml-3 l">Data & API</span>
 							</a>
 						</li>
 						<!-- <li class="my-px">
@@ -220,7 +220,7 @@
 										/></svg
 									>
 								</span>
-								<span class="ml-3">UI Groups</span>
+								<span class="ml-3">UI</span>
 							</a>
 						</li>
 						<li class="my-px">
@@ -402,7 +402,9 @@
 					</ul>
 				</div>
 			</aside>
-			<main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
+			<main
+				class="main h-full  flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in"
+			>
 				<!-- <a class="w-full" rel="external" href="/early-access">
 				<div class="bg-blue-ss w-full text-center py-1 lg:px-4">
 					<div
@@ -426,8 +428,10 @@
 					</div>
 				</div>
 			</a> -->
-				<header class="header dark:bg-gray-800 bg-white shadow py-1 px-4">
-					<div class="header-content flex items-center flex-row">
+				<header class="header dark:bg-black shadow-lg bg-white  py-1 px-4">
+					<div class="header-content flex items-center flex-row gap-3">
+						<span class="text-lg dark:text-gray-300 mt-2 ml-2">Admin</span>
+
 						<SpaceSearch />
 						<div class="flex ml-auto">
 							{#if space.appId === 'demo' || space.appId === 'ecommerce'}
@@ -502,7 +506,9 @@
 						</div>
 					</div>
 				</header>
-				<div class="main-content dark:bg-gray-700  flex flex-col flex-grow p-2">
+				<div
+					class="main-content flex-1 overflow-hidden dark:bg-gray-700  flex flex-col flex-grow p-2"
+				>
 					<div
 						class="flex flex-col  dark:bg-black p-4 rounded-xl overflow-auto flex-grow  bg-white  "
 					>
@@ -528,6 +534,4 @@
 		background-attachment: fixed;
 		background-size: cover;
 	}
-
-	
 </style>

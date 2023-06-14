@@ -12,9 +12,9 @@
 
 <SpaceNav modalOnly={true} />
 
-<div class="flex flex-row min-h-screen dark:bg-black bg-gray-100 text-gray-800">
+<div class="flex flex-row h-screen dark:bg-black bg-gray-100 text-gray-800">
 	<aside
-		class="sidebar min-w-64 hide-print dark:text-gray-900 w-64   overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
+		class="sidebar min-w-64 h-full  hide-print dark:text-gray-900 w-64   overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 	>
 		<div class="sidebar-header flex items-center   ml-7 py-4">
 			<div class="inline-flex">
@@ -22,7 +22,6 @@
 					<span class="leading-10 dark:text-gray-100 text-2xl font-bold ml-1 uppercase"
 						>{$page.data.space?.name}</span
 					>
-					<span class="text-xs dark:text-gray-300 ml-2 mt-2">Dash</span>
 				</a>
 			</div>
 		</div>
@@ -199,9 +198,12 @@
 			</ul>
 		</div>
 	</aside>
-	<main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
-		<header class="header hide-print dark:bg-gray-800 bg-white shadow py-1 px-4">
-			<div class="header-content flex items-center flex-row">
+	<main
+		class="main h-full flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in"
+	>
+		<header class="header hide-print dark:bg-black bg-white shadow py-1 px-4">
+			<div class="header-content flex items-center flex-row gap-3">
+				<span class="text-lg dark:text-gray-300 mt-2 ml-2">Dashboards</span>
 				<SpaceSearch />
 				<div class="flex ml-auto">
 					{#if $page.params.app_id === 'demo' || $page.params.app_id === 'ecommerce'}
@@ -253,13 +255,18 @@
 				</div>
 			</div>
 		</header>
-		<div class="main-content dark:bg-gray-700  flex flex-col flex-grow p-1">
+		<div class="main-content flex-1 overflow-auto  dark:bg-gray-700   flex flex-col flex-grow p-1">
 			<div
-				class="flex print-area fle max-w-2x max-w-7xl dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded "
+				class="flex print-area fle max-w-2x max-w-7xl  dark:bg-black pb-20 overflow-auto flex-grow  bg-white rounded "
 			>
 				<slot />
 			</div>
 		</div>
+		<footer class="footer px-4 py-2">
+			<div class="footer-content">
+				<p class="text-xs text-gray-600 text-center">© Dreamfeel Spaces. All rights reserved.</p>
+			</div>
+		</footer>
 	</main>
 </div>
 

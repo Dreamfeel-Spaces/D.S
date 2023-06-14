@@ -19,7 +19,7 @@
 	<div class="flex flex-row min-h-screen dark:bg-black bg-gray-100 text-gray-800">
 		<aside
 			out:fade
-			class="sidebar min-w-64 w-72 dark:text-gray-900 w-64  max-h-screen overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
+			class="sidebar min-w-64 w-72 dark:text-gray-900   max-h-screen overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 		>
 			<div class="sidebar-header flex items-center   ml-7 py-4">
 				<div class="inline-flex">
@@ -27,7 +27,6 @@
 						<span class="leading-10 dark:text-gray-100 text-2xl font-bold ml-1 uppercase"
 							>{space.name}</span
 						>
-						<span class="text-xs dark:text-gray-300 mt-2 ml-2">UI</span>
 					</a>
 				</div>
 			</div>
@@ -156,8 +155,9 @@
 			</div>
 		</aside>
 		<main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
-			<header class="header dark:bg-gray-800 bg-white shadow py-4 px-4">
-				<div class="header-content flex items-center flex-row">
+			<header class="header dark:bg-black bg-white shadow py-4 px-4">
+				<div class="header-content flex items-center flex-row gap-3">
+					<span class="text-lg dark:text-gray-300 mt-2 ml-2">User Interfaces</span>
 					<SpaceSearch />
 					<div class="flex ml-auto">
 						{#if space.appId === 'demo' || space.appId === 'ecommerce'}

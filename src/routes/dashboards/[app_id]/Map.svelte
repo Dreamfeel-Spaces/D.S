@@ -34,7 +34,7 @@
 				)
 				.addTo(map);
 
-			leaflet.marker(position).addTo(map).bindPopup('Users geo dist will appear here').openPopup();
+			leaflet.marker(position).addTo(map).bindPopup('').openPopup();
 		}
 	});
 
@@ -56,7 +56,7 @@
 <style>
 	@import 'leaflet/dist/leaflet.css';
 	main div {
-		height: 360px;
+		height: 400px;
 		padding-bottom: 20px;
 	}
 </style>

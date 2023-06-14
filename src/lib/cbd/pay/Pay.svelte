@@ -1,5 +1,5 @@
 <script>
-	import dreamfeelPayLOgo from '$lib/assets/pay-transparent.png';
+	import dreamfeelPayLOgo from '$lib/assets/beta-logo.png';
 	import payFav from '$lib/assets/pay-fav.png';
 	import {
 		A,
@@ -22,6 +22,7 @@
 	let isActive = Boolean($page.url.searchParams.get('transaction_id'));
 	let loading = false;
 	import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
+
 	import { browser } from '$app/environment';
 
 	let error = false;
@@ -45,7 +46,10 @@
 
 <svelte:head>
 	<title>feel pay</title>
-	<link rel="icon" href={payFav} />
+	<link
+		rel="icon"
+		href={'https://res.cloudinary.com/dreamnerd/image/upload/v1686721359/feel-pay_yrvuwi.png'}
+	/>
 </svelte:head>
 
 <Modal class="space-y-3 text-center" bind:open={loading}>
@@ -126,76 +130,76 @@
 		<div>KES: {$page.data.transactionRequest?.amount ?? 0}</div>
 	</div>
 </Modal>
-<nav class="w-  border-b">
-	<div class="py-6 md:py-0 container mx-auto px-6 flex items-center justify-between">
-		<div class="py-5" aria-label="Home. logo" role="img">
-			<img width="35%" src={dreamfeelPayLOgo} alt="logo" />
-		</div>
-		<div>
-			<button
-				class="dark:bg-white rounded sm:block md:hidden text-gray-500 hover:text-gray-700 dark:text-gray-200 focus:text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
-			>
-				<svg
-					aria-haspopup="true"
-					aria-label="open Main Menu"
-					xmlns="http://www.w3.org/2000/svg"
-					class="md:hidden icon icon-tabler icon-tabler-menu"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					stroke-width="1.5"
-					stroke="#2c3e50"
-					fill="none"
-					stroke-linecap="round"
-				>
-					<path stroke="none" d="M0 0h24v24H0z" />
-					<line x1="4" y1="8" x2="20" y2="8" />
-					<line x1="4" y1="16" x2="20" y2="16" />
-				</svg>
-			</button>
-			<div id="menu" class="md:block lg:block hidden">
-				<button
-					class="dark:bg-white rounded block md:hidden lg:hidden text-gray-500 hover:text-gray-700 dark:text-gray-200 focus:text-gray-700 dark:text-gray-200 fixed focus:outline-none focus:ring-2 focus:ring-gray-500 z-30 top-0 mt-6"
-				>
-					<svg
-						aria-label="close main menu"
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						stroke-width="1.5"
-						stroke="#2c3e50"
-						fill="none"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<path stroke="none" d="M0 0h24v24H0z" />
-						<line x1="18" y1="6" x2="6" y2="18" />
-						<line x1="6" y1="6" x2="18" y2="18" />
-					</svg>
-				</button>
-				<!-- <ul
-					class="flex text-3xl md:text-base items-center py-3 md:flex flex-col md:flex-row justify-center fixed md:relative top-0 bottom-0 left-0 right-0 bg-white md:bg-transparent z-20"
-				>
-					<li
-						class="text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-300 cursor-pointer text-base lg:text-lg pt-10 md:pt-0 md:ml-5 lg:ml-10"
-					>
-						<a href="javascript: void(0)">Features</a>
-					</li>
-
-					<li
-						class="text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-300 cursor-pointer text-base lg:text-lg pt-10 md:pt-0 md:ml-5 lg:ml-10"
-					>
-						<a href="javascript: void(0)">Contact</a>
-					</li>
-				</ul> -->
-			</div>
-		</div>
-	</div>
-</nav>
 
 <form class="mx-auto" on:submit|preventDefault={handleSubmit}>
 	{#if isActive}
+		<nav class="w-  border-b">
+			<div class="py-6 md:py-0 container mx-auto px-6 flex items-center justify-between">
+				<div class="py-5" aria-label="Home. logo" role="img">
+					<img width="35%" src={dreamfeelPayLOgo} alt="logo" />
+				</div>
+				<div>
+					<button
+						class="dark:bg-white rounded sm:block md:hidden text-gray-500 hover:text-gray-700 dark:text-gray-200 focus:text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500"
+					>
+						<svg
+							aria-haspopup="true"
+							aria-label="open Main Menu"
+							xmlns="http://www.w3.org/2000/svg"
+							class="md:hidden icon icon-tabler icon-tabler-menu"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="#2c3e50"
+							fill="none"
+							stroke-linecap="round"
+						>
+							<path stroke="none" d="M0 0h24v24H0z" />
+							<line x1="4" y1="8" x2="20" y2="8" />
+							<line x1="4" y1="16" x2="20" y2="16" />
+						</svg>
+					</button>
+					<div id="menu" class="md:block lg:block hidden">
+						<button
+							class="dark:bg-white rounded block md:hidden lg:hidden text-gray-500 hover:text-gray-700 dark:text-gray-200 focus:text-gray-700 dark:text-gray-200 fixed focus:outline-none focus:ring-2 focus:ring-gray-500 z-30 top-0 mt-6"
+						>
+							<svg
+								aria-label="close main menu"
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="#2c3e50"
+								fill="none"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							>
+								<path stroke="none" d="M0 0h24v24H0z" />
+								<line x1="18" y1="6" x2="6" y2="18" />
+								<line x1="6" y1="6" x2="18" y2="18" />
+							</svg>
+						</button>
+						<!-- <ul
+						class="flex text-3xl md:text-base items-center py-3 md:flex flex-col md:flex-row justify-center fixed md:relative top-0 bottom-0 left-0 right-0 bg-white md:bg-transparent z-20"
+					>
+						<li
+							class="text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-300 cursor-pointer text-base lg:text-lg pt-10 md:pt-0 md:ml-5 lg:ml-10"
+						>
+							<a href="javascript: void(0)">Features</a>
+						</li>
+	
+						<li
+							class="text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-300 cursor-pointer text-base lg:text-lg pt-10 md:pt-0 md:ml-5 lg:ml-10"
+						>
+							<a href="javascript: void(0)">Contact</a>
+						</li>
+					</ul> -->
+					</div>
+				</div>
+			</div>
+		</nav>
 		<section class="bg-gray-100 min-h-screen  pb-20">
 			<div class=" sm:block lg:flex px-6 justify-center pt-3">
 				<div class="space-y-6">
@@ -495,14 +499,19 @@
 </form>
 
 {#if !isActive}
-	<div class="bg-gray-100 dark:bg-transparent">
-		<div class="container mx-auto flex flex-col items-center py-12 sm:py-24">
+	<div class="bg-gray-100 h-screen dark:bg-black">
+		<div class="container mx-auto flex flex-col items-center  pt-12  py-24">
 			<div class="w-11/12 sm:w-2/3 lg:flex justify-center items-center flex-col  mb-5 sm:mb-10">
+				<img
+					width="200"
+					src={'https://res.cloudinary.com/dreamnerd/image/upload/v1686721359/feel-pay_yrvuwi.png'}
+					alt=""
+				/>
 				<h1
-					class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center text-gray-800 dark:text-white font-black leading-7 md:leading-10"
+					class="text-2xl sm:text-3xl md:text-4xl -mt-6 lg:text-5xl xl:text-6xl text-center text-gray-800 dark:text-white font-black leading-7 md:leading-10"
 				>
 					The Power to
-					<span class="text-pink-900">accept online payments</span>
+					<span class="text-yellow-500">accept online payments</span>
 					for any of your digital solutions
 				</h1>
 				<p
@@ -513,12 +522,12 @@
 			</div>
 			<div class="flex justify-center items-center">
 				<a
-					href="https://dreamfeel.me/create"
-					class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-700 bg-pink-700 transition duration-150 ease-in-out hover:bg-pink-600 lg:text-xl lg:font-bold  rounded text-white px-4 sm:px-10 border border-pink-700 py-2 sm:py-4 text-sm"
+					href="{$page.url.origin}/quick-start"
+					class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 bg-blue-700 transition duration-150 ease-in-out hover:bg-blue-600 lg:text-xl lg:font-bold  rounded text-white px-4 sm:px-10 border border-blue-700 py-2 sm:py-4 text-sm"
 					>Get Started</a
 				>
 				<!-- <a
-					class="ml-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-700 bg-transparent transition duration-150 ease-in-out hover:border-pink-600 lg:text-xl lg:font-bold  hover:text-pink-600 rounded border border-pink-700 text-pink-700 px-4 sm:px-10 py-2 sm:py-4 text-sm"
+					class="ml-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 bg-transparent transition duration-150 ease-in-out hover:border-blue-600 lg:text-xl lg:font-bold  hover:text-blue-600 rounded border border-blue-700 text-blue-700 px-4 sm:px-10 py-2 sm:py-4 text-sm"
 					>Learn more</a
 				> -->
 			</div>

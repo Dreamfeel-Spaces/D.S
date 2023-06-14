@@ -72,7 +72,7 @@ export async function load({ locals }: RequestEvent) {
 				spaceId: space.id
 			}
 		});
-		throw redirect(302, `/rest/${space.appId}/quick-setup`);
+		// throw redirect(302, `/rest/${space.appId}/quick-setup`);
 	}
 
 	const onboarding = await space.onboarding[0];
@@ -83,7 +83,7 @@ export async function load({ locals }: RequestEvent) {
 				spaceId: space.id
 			}
 		});
-		throw redirect(302, `/a/${space.appId}/welcome`);
+		// throw redirect(302, `/a/${space.appId}/welcome`);
 	}
 
 	const roles = space.roles;

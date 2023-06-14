@@ -2,14 +2,11 @@
 	//@ts-nocheck
 	import logo from '../assets/beta-logo.png';
 	export let form: any;
-	export let data: any;
-	import { Alert, Button, Card, Avatar } from 'flowbite-svelte';
+	import { Alert, Button, Card, } from 'flowbite-svelte';
 
 	import Cursort from './Cursort.svelte';
 	import HeroCarousel from './HeroCarousel.svelte';
-	import { fade } from 'svelte/transition';
 	import { inview } from 'svelte-inview';
-	import Pointer from './Pointer.svelte';
 
 	let isInView;
 </script>

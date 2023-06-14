@@ -10,7 +10,7 @@
 	let searchTerm = '';
 </script>
 
-<div class="mt-1">
+<div class="mt-1 flex-1">
 	<form on:submit|preventDefault={handleSearch}>
 		<Search bind:value={searchTerm} required size="sm" />
 	</form>

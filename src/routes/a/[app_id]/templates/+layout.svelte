@@ -69,7 +69,7 @@
 		</div>
 	</aside>
 	<main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
-		<header class="header dark:bg-gray-800 bg-white shadow py-1 px-4">
+		<header class="header dark:bg-black bg-white shadow py-1 px-4">
 			<div class="header-content flex items-center flex-row">
 				<div class="flex ml-auto">
 					{#if space.appId === 'demo' || space.appId === 'ecommerce'}

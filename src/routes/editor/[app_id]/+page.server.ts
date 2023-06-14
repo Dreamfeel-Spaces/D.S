@@ -21,7 +21,7 @@ export async function load({ params }: RequestEvent) {
 	});
 
 	if (!space?.onboarding[0].complete) {
-		throw redirect(302, `/a/${space?.appId}/welcome`);
+		// throw redirect(302, `/a/${space?.appId}/welcome`);
 	}
 
 	let activeUi = space.spaceUis.reduce((prev: any[], curr, i) => {

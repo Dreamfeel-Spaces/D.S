@@ -20,9 +20,7 @@
 		DropdownHeader,
 		DropdownDivider,
 		Chevron,
-
 		Avatar
-
 	} from 'flowbite-svelte';
 
 	import { sineIn } from 'svelte/easing';
@@ -60,6 +58,7 @@
 	import { browser } from '$app/environment';
 	import Pos from '$lib/cbd/pos/POS.svelte';
 	import Pay from '$lib/cbd/pay/Pay.svelte';
+	import QuickSetupPay from '$lib/cbd/pay/QuickSetupPay.svelte';
 
 	let seebdm = ($page.url.toJSON()?.split('.')[0] ?? '')?.split('//')[1];
 
@@ -89,7 +88,11 @@
 {#if seebdm === 'pos'}
 	<Pos />
 {:else if seebdm === 'pay'}
-	<Pay  />
+	{#if /\/quick-start/.test($page.url.pathname)}
+		<QuickSetupPay />
+	{:else}
+		<Pay />
+	{/if}
 {:else}
 	{#if subdomain}
 		{@html $page.data.html}
@@ -127,42 +130,20 @@
 								/></svg
 							>
 						</div> -->
-						
 					</div>
 				</a>
 
 				<div class="flex w-full flex-wrap items-center  pt-1 justify-between px-6">
-					<button
-						on:click={() => (hidden2 = false)}
-						class="block border-0 bg-transparent py-2 px-2.5 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
-						type="button"
-						data-te-collapse-init
-						data-te-target="#navbarSupportedContent1"
-						aria-controls="navbarSupportedContent1"
-						aria-expanded="false"
-						aria-label="Toggle navigation"
-					>
-						<span class="[&>svg]:w-7">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 24 24"
-								class="h-7 w-7 dark:text-gray-100"
-								fill="currentColor"
-							>
-								<path
-									fill-rule="evenodd"
-									d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
-									clip-rule="evenodd"
-								/>
-							</svg>
-						</span>
-					</button>
+					<div class="flex lg:hidden gap-3 h-14">
+						
+						<img  src={logo} alt="" />
+					</div>
 					<div
-						class="!visible hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
+						class="!visible  flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
 						id="navbarSupportedContent1"
 						data-te-collapse-item
 					>
-						<div class="mr-4 cursor-pointer">
+						<div class="mr-4 lg:hidden cursor-pointer">
 							<button on:click={() => (hidden2 = false)}>
 								<svg
 									class="dark:text-yellow-100"
@@ -183,14 +164,20 @@
 							class="mt-2 mr-2 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mt-0"
 							href="/"
 						>
-							<img class="rounded" src={logo} style="height: 42px" alt="logo transparent" loading="lazy" />
+							<img
+								class="rounded"
+								src={logo}
+								style="height: 42px"
+								alt="logo transparent"
+								loading="lazy"
+							/>
 						</a>
 						<!-- Left links -->
 						<ul
 							class="list-style-none mr-auto flex flex-col pl-0 lg:flex-row"
 							data-te-navbar-nav-ref
 						>
-							<li class="lg:pr-2" data-te-dropdown-ref>
+							<!-- <li class="lg:pr-2" data-te-dropdown-ref>
 								<button class="dark:text-white flex">
 									<div class="flex self-center">Solutions</div>
 									<div class="flex self-center  pt-1 ">
@@ -225,13 +212,29 @@
 										<DropdownItem>Schools</DropdownItem>
 									</Dropdown>
 								</Dropdown>
+							</li> -->
+							<li class="lg:pr-2" data-te-nav-item-ref>
+								<a
+									rel="external"
+									class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+									href="/create"
+									data-te-nav-link-ref>New project</a
+								>
 							</li>
 							<li class="lg:pr-2" data-te-nav-item-ref>
 								<a
 									rel="external"
 									class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 									href="/create"
-									data-te-nav-link-ref>New Project</a
+									data-te-nav-link-ref>Templates</a
+								>
+							</li>
+							<li class="lg:pr-2 dark:text-white" data-te-nav-item-ref>
+								<a
+									rel="external"
+									class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+									href="{$page.url.protocol}//pay.{$page.url.host}"
+									data-te-nav-link-ref>feelpay</a
 								>
 							</li>
 							<!--	<li class="lg:pr-2" data-te-nav-item-ref>
@@ -260,7 +263,7 @@
 						<!-- Icon -->
 						<a
 							rel="external"
-							class="hidden-arrow mr-4 hidden lg:flex items-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+							class="hidden-arrow mr-4 hidden lg:flex items-center text-black hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 							href="/about"
 							id="dropdownMenuButton1"
 							role="button"
@@ -283,7 +286,7 @@
 						<a
 							rel="external"
 							target="blank"
-							class="hidden-arrow mr-4 flex items-center text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+							class="hidden-arrow mr-4  items-center hidden lg:flex text-black hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 							href="https://blog.dreamfeel.me"
 							id="dropdownMenuButton1"
 							role="button"
@@ -313,7 +316,7 @@
 							</svg>
 						</span>
 					</a> -->
-<!-- 
+						<!-- 
 						<div class="relative mr-2">
 							<DarkMode />
 						</div> -->
@@ -336,7 +339,32 @@
 									/>
 								</a>
 							{:else}
-								<a href="/create"> <Button color="pinkToOrange" gradient>Get started</Button></a>
+								<a href="/create"  class="hidden lg:block" > <Button color="red" gradient>Get started</Button></a>
+								<button
+							on:click={() => (hidden2 = false)}
+							class="block border-0 bg-transparent py-2 px-2.5 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
+							type="button"
+							data-te-collapse-init
+							data-te-target="#navbarSupportedContent1"
+							aria-controls="navbarSupportedContent1"
+							aria-expanded="false"
+							aria-label="Toggle navigation"
+						>
+							<span class="[&>svg]:w-7">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 24 24"
+									class="h-7 w-7 dark:text-gray-100"
+									fill="currentColor"
+								>
+									<path
+										fill-rule="evenodd"
+										d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
+										clip-rule="evenodd"
+									/>
+								</svg>
+							</span>
+						</button>
 							{/if}
 							<ul
 								class="absolute left-auto right-0 z-[1000] float-left m-0 mt-1 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"

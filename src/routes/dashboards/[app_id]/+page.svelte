@@ -24,10 +24,10 @@
 	}
 </script>
 
-<section class="container p-6 dark:bg-gray-800">
+<section class="container p-6 dark:bg-black rounded-t-xl">
 	<div>
 		<div class="my-1 flex">
-			<Heading class="flex-1" tag="h4">Dashboards</Heading>
+			<span class="flex-1" />
 			<WidgetDrawer tables={data.space.tables} />
 		</div>
 		<Hr class="my-3" />
@@ -98,12 +98,9 @@
 					</div>
 				</div>
 
-				<div class="grid lg:grid-cols-3  overflow-auto gap-4 ">
+				<div class="grid lg:grid-cols-3 dark:bg-black  overflow-auto gap-4 ">
 					{#each data?.space?.tables ?? [] as table, index}
-						<div
-							class="text-white rounded p-3 rounded-xl"
-							style="background-color: {getDarkColor()};"
-						>
+						<div class="text-white  p-3 rounded-xl" style="background-color: {getDarkColor()};">
 							<b>{table.name}</b>
 							<div class="flex my-2 text-2xl text-left justify-between">
 								<div class="my-1 "><span class="text-sm">count: </span> {table.rows?.length}</div>

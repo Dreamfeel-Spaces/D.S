@@ -149,7 +149,7 @@ export const actions: Actions = {
 			}
 		});
 
-		throw redirect(303, `/a/${space.appId}/welcome/new`);
+		// throw redirect(303, `/a/${space.appId}/welcome/new`);
 	}
 };
 
@@ -168,7 +168,7 @@ export async function load({ params }: PageLoadEvent) {
 
 	let onboarding = space.onboarding[0];
 
-	if (onboarding?.complete) throw redirect(302, `/a/${appId}/welcome/new`);
+	// if (onboarding?.complete) throw redirect(302, `/a/${appId}/welcome/new`);
 
 	return { onboarding };
 }

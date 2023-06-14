@@ -20,7 +20,7 @@
 
 <section>
 	<div>
-		<Heading class="ml-2 mb-3" tag="h4">Home</Heading>
+		<!-- <Heading class="ml-2 mb-3" tag="h4">Home</Heading> -->
 		{#if Object.keys($recentlyViewed).length}
 			<div class="relative overflow-x-auto -md px-3 rounded-lg sm:rounded-lg">
 				<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">

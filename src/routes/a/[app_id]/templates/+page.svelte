@@ -3,13 +3,13 @@
 	import { page } from '$app/stores';
 </script>
 
-<Card size="xl">
+<div class="dark:bg-black h-full p-3">
 	<Heading tag="h6">All templates</Heading>
 	<div class="grid mt-4 grid-cols-3 gap-3">
 		{#each $page.data.templates as template}
 			<a
 				href="/a/{$page.params.app_id}/templates/{template.id}"
-				class="max-w-sm rounded overflow-hidden shadow-lg"
+				class="max-w-sm   dark:bg-gray-900 dark:text-white rounded overflow-hidden shadow-lg"
 			>
 				<img
 					class="w-full"
@@ -36,4 +36,4 @@
 			</a>
 		{/each}
 	</div>
-</Card>
+</div>

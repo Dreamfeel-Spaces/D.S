@@ -4,7 +4,7 @@
 	import { Button, Card } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	const next = $page.url.searchParams.get('next');
-	import logo from '../../assets/logo.png';
+	import logo from '../../assets/beta-logo.png';
 	import github from '../../assets/github.png';
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { goto } from '$app/navigation';
@@ -28,12 +28,11 @@
 								<div class="flex justify-center">
 									<img loading="lazy" width={'50%'} src={logo} alt="Dreamfeel Spaces Logo" />
 								</div>
-								<p>Dreamfeel Spaces</p>
 							</div>
 						</div>
-						<div class="text-center text-4xl mb-2 text-gray-600">
+						<!-- <div class="text-center text-4xl mb-2 text-gray-600">
 							<h1>Sign in</h1>
-						</div>
+						</div> -->
 
 						<div class="px-7">
 							<div>

@@ -2,10 +2,7 @@
 	import {
 		DarkMode,
 		Button,
-		Sidebar,
-		SidebarGroup,
 		SidebarItem,
-		SidebarWrapper,
 		SidebarDropdownItem,
 		SidebarDropdownWrapper,
 		Modal,
@@ -92,9 +89,9 @@
 	<SelectOption ctx="setup" />
 </Modal>
 
-<div class="flex flex-row min-h-screen dark:bg-black bg-gray-100 text-gray-800">
+<div class="flex flex-row h-screen dark:bg-black bg-gray-100 text-gray-800">
 	<aside
-		class="sidebar hidden lg:block min-h-screen dark:text-gray-900 w-72 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
+		class="sidebar h-full overflow-auto hidden lg:block min-h-screen dark:text-gray-900 w-72 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 	>
 		<div class="sidebar-header flex items-center   ml-7 py-4">
 			<div class="inline-flex">
@@ -102,7 +99,6 @@
 					<span class="leading-10 dark:text-gray-100 text-2xl font-bold ml-1 uppercase"
 						>{space.name}</span
 					>
-					<span class="text-xs dark:text-gray-300 mt-2 ml-2">Rest API</span>
 				</a>
 			</div>
 		</div>
@@ -359,33 +355,13 @@
 			</ul>
 		</div>
 	</aside>
-	<main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
-		<!-- <a class="w-full" rel="external" href="/early-access">
-			<div class="bg-bdlue-900 w-full text-center py-1 lg:px-4">
-				<div
-					class="p-1 bg-blue-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
-					role="alert"
-				>
-					<span class="flex rounded-full bg-blue-500 uppercase px-2 text-xs font-bold mr-3"
-						>Alpha preview</span
-					>
-					<span class=" mr-2 text-left text-xs flex-auto"
-						>Join the waitlist to be among the first to enjoy the limited possibilities of Spaces.</span
-					>
-					<svg
-						class="fill-current opacity-75 h-4 w-4"
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 20 20"
-						><path
-							d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"
-						/></svg
-					>
-				</div>
-			</div>
-		</a> -->
+	<main
+		class="main flex dark:bg-black flex-col h-full flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in"
+	>
+		<header class="header dark:bg-black bg-white shadow py-1 px-4">
+			<div class="header-content gap-4 flex items-center flex-row">
+				<span class="text-lg dark:text-gray-300 mt-2 ml-2">Data & API</span>
 
-		<header class="header dark:bg-gray-800 bg-white shadow py-1 px-4">
-			<div class="header-content flex items-center flex-row">
 				<SpaceSearch />
 				<div class="flex ml-auto">
 					{#if space.appId === 'demo' || space.appId === 'ecommerce'}
@@ -437,12 +413,19 @@
 				</div>
 			</div>
 		</header>
-		<div class="main-content dark:bg-gray-700  flex flex-col flex-grow p-1">
+		<div class="main-content flex-1 overflow-hidden dark:bg-gray-700  flex flex-col flex-grow p-2">
 			<div
-				class="flex flex-col max-w-[100%] dark:bg-black min-h-screen   p-6 rounded-xl  overflow-auto flex-grow  bg-white  "
+				class="flex flex-col max-w-[100%]  dark:bg-black   p-6 rounded-xl  overflow-auto flex-grow  bg-white  "
 			>
 				<slot />
 			</div>
+			<footer class="footer  px-4 py-2">
+				<div class="footer-content">
+					<p class="text-xs text-gray-600 dark:text-gray-300 text-center">
+						© Dreamfeel Spaces. All rights reserved.
+					</p>
+				</div>
+			</footer>
 		</div>
 	</main>
 </div>

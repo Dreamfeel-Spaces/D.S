@@ -84,7 +84,7 @@
 			});
 			if (res.status === 200) {
 				saveSpaceSuccess = true;
-				// goto(`/a/${convertToSlug(appId)}`, { invalidateAll: true });
+				goto(`/a/${convertToSlug(appId)}`);
 				// window.location.reload();
 				saving = false;
 			}

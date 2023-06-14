@@ -59,7 +59,7 @@ export async function load({ locals }: PageServerLoadEvent) {
 	if (!user?.id) throw redirect(302, `/a/${space.appId}/accounts`);
 
 	if (!onboarding?.complete) {
-		throw redirect(302, `/a/${space?.appId}/welcome`);
+		// throw redirect(302, `/a/${space?.appId}/welcome`);
 	}
 
 	let userCount = await prisma.spaceUser?.count({
