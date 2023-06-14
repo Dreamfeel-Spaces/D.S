@@ -26,7 +26,7 @@
 			<p
 				class="mt-12 uppercase  text-justify text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400"
 			>
-				THE VISION
+				OUR VISION
 			</p>
 			<p
 				class="mt-4 text-justify  text-lg font-normal text-gray-500 lg:text-xl  dark:text-gray-400"
