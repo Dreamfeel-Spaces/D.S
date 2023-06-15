@@ -14,8 +14,6 @@ export async function load({ locals }: LayoutServerLoadEvent) {
 		throw error(404, 'Page not found');
 	}
 
-	
-
 	const tables = space.tables;
 
 	const roles = space.roles;

@@ -84,7 +84,7 @@
 			});
 			if (res.status === 200) {
 				saveSpaceSuccess = true;
-				goto(`/a/${convertToSlug(appId)}`);
+				goto(`/a/${convertToSlug(appId)}/onboarding`);
 				// window.location.reload();
 				saving = false;
 			}
@@ -137,14 +137,14 @@
 		</section>
 		{#if saveSpaceSuccess}
 			<div class=" my-9">
-				<Alert accent>
+				<Modal accent>
 					<div class="mb-3">
 						<b>Congrats!</b>
 						<p>Your space, {appName} has been created.</p>
-						<A rel="external" href="/a/{convertToSlug(appId)}">Go to new space</A>
+						<A rel="external" href="/a/{convertToSlug(appId)}/onboarding">Go to new space</A>
 					</div>
 					<!-- <a class="hover:underline" rel="external" href={`/a/${form?.data?.appId}`}>Go to space</a> -->
-				</Alert>
+				</Modal>
 			</div>
 		{/if}
 		<form on:submit|preventDefault={handleSubmit}>
