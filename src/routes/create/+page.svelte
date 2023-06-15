@@ -137,7 +137,7 @@
 		</section>
 		{#if saveSpaceSuccess}
 			<div class=" my-9">
-				<Modal accent>
+				<Modal open permanent>
 					<div class="mb-3">
 						<b>Congrats!</b>
 						<p>Your space, {appName} has been created.</p>
