@@ -88,12 +88,12 @@
 
 		<div class="flex flex-row h-screen  dark:bg-black bg-gray-100 text-gray-800">
 			<aside
-				class="sidebar border-gray-700  min-h-screen dark:text-gray-900  w-80 min-w-82 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
+				class="sidebar border-gray-800 border-r  min-h-screen dark:text-gray-900  w-80 min-w-80 max-w-sm 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 			>
-				<div class="sidebar-header  flex justify-center pt-3    py-1">
-					<div class="flex  ">
+				<div class="sidebar-header border-b  border-gray-800 gap-3  flex justify-center pt-1    py-1">
+					<div class="flex gap-3 ">
 						{#if space?.icon}
-							<img width="36" alt="Space icon" src={space?.icon} />
+							<img width="33" alt="Space icon" src={space?.icon} />
 						{/if}
 						<a href={`/a/${space.appId}`} class="inline-flex flex-row items-center">
 							<span class="leading-10 dark:text-gray-100 text-xl font-bold ml-1 uppercase"
@@ -116,8 +116,7 @@
 						</a>
 					</div>
 				</div>
-				<Hr />
-				<div class="sidebar-content 4xl:py-9 px-4 py-1">
+				<div class="sidebar-content 4xl:py-9 px-4 py-1 pt-3">
 					<ul class="flex flex-col w-full">
 						<li class="4xl:space-y-9 space 6xl:space-y-16">
 							<a

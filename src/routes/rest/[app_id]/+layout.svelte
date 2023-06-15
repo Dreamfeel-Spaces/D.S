@@ -10,9 +10,7 @@
 		Dropzone,
 		Radio,
 		Alert,
-
 		Hr
-
 	} from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import SpaceNav from '$lib/components/SpaceNav.svelte';
@@ -98,33 +96,32 @@
 	<aside
 		class="sidebar h-full overflow-auto hidden lg:block min-h-screen dark:text-gray-900 w-72 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 	>
-	<div class="sidebar-header  flex justify-center pt-3    py-1">
-		<div class="flex  ">
-			{#if space?.icon}
-				<img width="36" alt="Space icon" src={space?.icon} />
-			{/if}
-			<a href={`/a/${space.appId}`} class="inline-flex flex-row items-center">
-				<span class="leading-10 dark:text-gray-100 text-xl font-bold ml-1 uppercase"
-					>{space.name}</span
-				>
-				{#if space.appId === 'demo' || space.appId === 'ecommerce'}
-					<div class="pt-1 ml-1 text-blue-500">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="currentColor"
-							height="20"
-							viewBox="0 -960 960 960"
-							width="20"
-							><path
-								d="m346-60-76-130-151-31 17-147-96-112 96-111-17-147 151-31 76-131 134 62 134-62 77 131 150 31-17 147 96 111-96 112 17 147-150 31-77 130-134-62-134 62Zm27-79 107-45 110 45 67-100 117-30-12-119 81-92-81-94 12-119-117-28-69-100-108 45-110-45-67 100-117 28 12 119-81 94 81 92-12 121 117 28 70 100Zm107-341Zm-43 133 227-225-45-41-182 180-95-99-46 45 141 140Z"
-							/></svg
-						>
-					</div>
+		<div class="sidebar-header border-b  border-gray-800 gap-3  flex justify-center pt-1    py-1">
+			<div class="flex  gap-3">
+				{#if space?.icon}
+					<img width="36" alt="Space icon" src={space?.icon} />
 				{/if}
-			</a>
+				<a href={`/rest/${space.appId}`} class="inline-flex flex-row items-center">
+					<span class="leading-10 dark:text-gray-100 text-xl font-bold ml-1 uppercase"
+						>{space.name}</span
+					>
+					{#if space.appId === 'demo' || space.appId === 'ecommerce'}
+						<div class="pt-1 ml-1 text-blue-500">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="currentColor"
+								height="20"
+								viewBox="0 -960 960 960"
+								width="20"
+								><path
+									d="m346-60-76-130-151-31 17-147-96-112 96-111-17-147 151-31 76-131 134 62 134-62 77 131 150 31-17 147 96 111-96 112 17 147-150 31-77 130-134-62-134 62Zm27-79 107-45 110 45 67-100 117-30-12-119 81-92-81-94 12-119-117-28-69-100-108 45-110-45-67 100-117 28 12 119-81 94 81 92-12 121 117 28 70 100Zm107-341Zm-43 133 227-225-45-41-182 180-95-99-46 45 141 140Z"
+								/></svg
+							>
+						</div>
+					{/if}
+				</a>
+			</div>
 		</div>
-	</div>
-	<Hr />
 		<div class="sidebar-content px-4 py-6">
 			<ul class="flex flex-col w-full">
 				<li class="my-px">

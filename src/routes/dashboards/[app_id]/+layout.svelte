@@ -19,14 +19,14 @@
 
 <div class="flex flex-row h-screen dark:bg-black bg-gray-100 text-gray-800">
 	<aside
-		class="sidebar m h-full  hide-print dark:text-gray-900 w- w-60   overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
+		class="sidebar m h-full border-r  border-gray-800  hide-print dark:text-gray-900 w- w-60   overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 	>
-		<div class="sidebar-header  flex justify-center pt-3    py-1">
+		<div class="sidebar-header border-b  border-gray-800 gap-3  flex justify-center pt-1    py-1">
 			<div class="flex  ">
 				{#if space?.icon}
 					<img width="36" alt="Space icon" src={space?.icon} />
 				{/if}
-				<a href={`/a/${space.appId}`} class="inline-flex flex-row items-center">
+				<a href={`/dashboards/${space.appId}`} class="inline-flex flex-row items-center">
 					<span class="leading-10 dark:text-gray-100 text-xl font-bold ml-1 uppercase"
 						>{space.name}</span
 					>
@@ -47,7 +47,6 @@
 				</a>
 			</div>
 		</div>
-		<Hr />
 		<div class="sidebar-content px-4 py-6">
 			<ul class="flex flex-col w-full">
 				<li class="my-px">
@@ -226,7 +225,7 @@
 	>
 		<header class="header rounded-b-lg dark:bg-black shadow-lg bg-white  py-1 px-4">
 			<div class="header-content flex items-center flex-row gap-3">
-				<span class="text-lg dark:text-gray-300  ml-2">Admin</span>
+				<span class="text-lg dark:text-gray-300  ml-2">Dashboards</span>
 
 				<SpaceSearch />
 				<div class="flex ml-auto">
