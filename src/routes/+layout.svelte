@@ -98,11 +98,11 @@
 		{@html $page.data.html}
 	{/if}
 
-	{#if isPreview && !subdomain}
+	{#if /\/templates/.test($page.url.pathname) || ( isPreview && !subdomain) }
 		<slot />
 	{/if}
 
-	{#if !isPreview && !subdomain}
+	{#if !isPreview && !subdomain && !/\/templates/.test($page.url.pathname)}
 		<div>
 			<nav
 				class="flex-no-wrap fixed z-50 lg:flex w-full items-center justify-between bg-neutral-100   dark:bg-black pb-2 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "

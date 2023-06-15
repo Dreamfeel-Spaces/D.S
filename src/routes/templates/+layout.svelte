@@ -4,62 +4,37 @@
 	import { DarkMode, Button, Modal, Checkbox, Avatar } from 'flowbite-svelte';
 	let space = $page.data.space;
 	import categories from '$lib/templates/templatecategories.json';
+	import feelLogo from '$lib/assets/beta-logo.png';
+	import SpaceSearch from '../rest/[app_id]/SpaceSearch.svelte';
+	let user = null;
 </script>
 
-<div class="flex flex-row min-h-screen dark:bg-black bg-gray-100 text-gray-800">
+<div class="flex flex-row h-screen dark:bg-black bg-gray-100 text-gray-800">
 	<aside
-		class="sidebar dark:text-gray-900 w-72  z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
+		class="sidebar h-screen overflow-auto dark:text-gray-900 w-72  z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 	>
-		<div class="sidebar-header flex items-center  ml-7 py-3">
-			<div class="inline-flex">
-				{#if space?.icon}
-					<Avatar src={space?.icon} />
-				{/if}
-				<a href={`/a/${space.appId}`} class="inline-flex flex-row items-center">
-					<span class="leading-10 dark:text-gray-100 text-2xl font-bold ml-1 uppercase"
-						>{space.name}</span
-					>
-				</a>
-			</div>
+		<div class="sidebar-header  items-center  py-3">
+			<a href="/" class="flex justify-center">
+				<img width="72" alt="Dreamfeel Spaces Logo" src={feelLogo} />
+			</a>
 		</div>
 		<div class="sidebar-content px-4 py-1">
 			<ul class="flex flex-col w-full">
 				<li class="my-px">
 					<a
-						href={`/a/${space?.appId}/templates`}
-						class="flex flex-row items-center  h-10 px-3 {!$page.params.url && !$page.params.id
+						href={`/templates/`}
+						id="rest_link"
+						class="flex flex-row   items-center  h-10 px-3 {/\/templates$/.test($page.url.pathname)
 							? 'bg-blue-900 text-white'
-							: ''} rounded-lg dark:text-gray-100"
-					>
-						<span class="flex items-center justify-center text-lg dark:text-gray-100">
-							<svg
-								fill="currentColor"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								class="h-6 w-6"
-							>
-								<path
-									d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-								/>
-							</svg>
-						</span>
-						<span class="ml-3">All</span>
-					</a>
-				</li>
-				<li class="my-px">
-					<span class="flex font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase"
-						>Categories</span
+							: ''} rounded-lg dark:text-gray-100">All</a
 					>
 				</li>
 				{#each categories as category}
 					<li class="my-px">
 						<a
-							href={`/a/${space?.appId}/templates/c/${category.url}`}
+							href={`/templates/c/${category.url}`}
 							id="rest_link"
-							class="flex flex-row items-center  h-10 px-3 {$page.params.url === category.url
+							class="flex flex-row hover:bg-blue-300 hover:text-black items-center  h-10 px-3 {$page.params.url === category.url
 								? 'bg-blue-900 text-white'
 								: ''} rounded-lg dark:text-gray-100">{category.name}</a
 						>
@@ -68,11 +43,16 @@
 			</ul>
 		</div>
 	</aside>
-	<main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
+	<main
+		class="main flex dark:bg-black flex-col h-full flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in"
+	>
 		<header class="header dark:bg-black bg-white shadow py-1 px-4">
-			<div class="header-content flex items-center flex-row">
+			<div class="header-content gap-4 flex items-center flex-row">
+				<span class="text-lg dark:text-gray-300 mt-2 ml-2">Templates</span>
+
+				<SpaceSearch />
 				<div class="flex ml-auto">
-					{#if space.appId === 'demo' || space.appId === 'ecommerce'}
+					{#if space?.appId === 'demo' || space?.appId === 'ecommerce'}
 						<div class="pt-1">
 							<Button pill class="mr-4" size="xs" color="green">Official demo</Button>
 						</div>
@@ -83,7 +63,7 @@
 							size="xs"
 							rel="noreferrer"
 							target="_blank"
-							href="/{$page.data.space.appId}"
+							href="/{$page.data.space?.appId}"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -100,17 +80,39 @@
 					<div class="mx-3">
 						<DarkMode />
 					</div>
+					{#if user}
+						<a href={`/a/${space?.appId}/accounts`} class="flex flex-row items-center">
+							<img
+								alt="User profile"
+								src="https://pbs.twimg.com/profile_images/378800000298815220/b567757616f720812125bfbac395ff54_normal.png"
+								class="h-10 w-10 bg-gray-200 border rounded-full"
+							/>
+							<span class="flex flex-col ml-2">
+								<span
+									class=" overflow-hidden dark:text-gray-100 w-20 font-semibold tracking-wide leading-none"
+									>{user?.name}</span
+								>
+								<span class="truncate w-20 text-gray-500 text-xs leading-none mt-1"
+									>{user?.role?.name}</span
+								>
+							</span>
+						</a>
+					{/if}
 				</div>
 			</div>
 		</header>
-		<div class="main-content dark:bg-gray-700  max-h-105 flex flex-col flex-grow p-2">
-			<div class="flex flex-col  dark:bg-gray-700 overflow-auto flex-grow  bg-white rounded ">
+		<div class="main-content flex-1 overflow-hidden dark:bg-gray-700  flex flex-col flex-grow p-2">
+			<div
+				class="flex flex-col max-w-[100%]  dark:bg-black   p-6 rounded-xl  overflow-auto flex-grow  bg-white  "
+			>
 				<slot />
 			</div>
 		</div>
-		<footer class="footer px-4 py-2">
+		<footer class="footer dark:bg-black mt-2  px-4 py-2">
 			<div class="footer-content">
-				<p class="text-xs text-gray-600 text-center">© Dreamfeel Spaces. All rights reserved.</p>
+				<p class="text-xs text-gray-600 dark:text-gray-300 text-center">
+					© Dreamfeel Spaces. All rights reserved.
+				</p>
 			</div>
 		</footer>
 	</main>

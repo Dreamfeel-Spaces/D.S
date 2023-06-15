@@ -419,13 +419,13 @@
 			>
 				<slot />
 			</div>
-			<footer class="footer  px-4 py-2">
-				<div class="footer-content">
-					<p class="text-xs text-gray-600 dark:text-gray-300 text-center">
-						© Dreamfeel Spaces. All rights reserved.
-					</p>
-				</div>
-			</footer>
 		</div>
+		<footer class="footer  px-4 py-2">
+			<div class="footer-content">
+				<p class="text-xs text-gray-600 dark:text-gray-300 text-center">
+					© Dreamfeel Spaces. All rights reserved.
+				</p>
+			</div>
+		</footer>
 	</main>
 </div>

@@ -11,9 +11,8 @@
 				`/a/${$page.params.app_id}/templates/${$page.params.id}/install`
 			);
 			if (response.data) {
-				
 				saving = false;
-				alert("Template saved")
+				alert('Template saved');
 			}
 		} catch (e) {
 			saving = false;
@@ -115,6 +114,7 @@
 				</div>
 			</div>
 			<button
+				disabled
 				on:click={handleSave}
 				class="dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100  focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-base flex items-center justify-center leading-none text-white bg-gray-800 w-full py-4 hover:bg-gray-700 focus:outline-none"
 			>
@@ -124,6 +124,11 @@
 					<Spinner class="mr-3" />
 					Installing template...
 				{/if}
+			</button>
+			<button
+				class="dark:bg-white mt-6 dark:text-gray-900 dark:hover:bg-gray-100  focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-base flex items-center justify-center leading-none text-white bg-gray-800 w-full py-4 hover:bg-gray-700 focus:outline-none"
+			>
+				Create new project
 			</button>
 			<div>
 				<p

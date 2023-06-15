@@ -132,6 +132,7 @@
 								<span class="ml-3 4xl:text-4xl 6xl:text-6xl  ">Home</span>
 							</a>
 						</li>
+
 						<li class="my-px">
 							<span
 								class="flex 4xl:text-3xl font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase"
@@ -156,51 +157,7 @@
 										/></svg
 									>
 								</span>
-								<span class="ml-3 l">Data & API</span>
-							</a>
-						</li>
-						<!-- <li class="my-px">
-					<a
-						href={`/preferences/${space.appId}`}
-						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
-					>
-						<span class="flex items-center justify-center text-lg dark:text-gray-400">
-							<svg
-								fill="currentColor"
-								xmlns="http://www.w3.org/2000/svg"
-								height="24"
-								viewBox="0 96 960 960"
-								width="24"
-								><path
-									d="M120 936v-60h92V216h390v45h147v261h-60V321h-87v272h-60V276H272v600h206v60H120Zm575 40-5-48q-20-6-41-17.5T615 885l-42 20-35-54 38-30q-5-23-5-41.5t5-41.5l-38-30 35-55 42 20q13-12 34-24t41-18l5-49h60l6 49q20 6 41 18t34 24l42-20 35 55-38 30q5 23 5 41.5t-5 41.5l38 30-35 54-42-20q-13 14-34 25.5T761 928l-6 48h-60Zm30-95q44 0 73-29t29-73q0-44-29-73t-73-29q-44 0-73 29t-29 73q0 44 29 73t73 29ZM451 616q-17 0-28.5-11.5T411 576q0-17 11.5-28.5T451 536q17 0 28.5 11.5T491 576q0 17-11.5 28.5T451 616ZM272 876V276v600Z"
-								/></svg
-							>
-						</span>
-						<span class="ml-3">Preferences</span>
-					</a>
-				</li> -->
-						<li class="my-px">
-							<a
-								href={`/dashboards/${space.appId}`}
-								class="flex 4xl:text-4xl 4xl:py-9 hover:text-gray-100  flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 dark:hover:text-gray-700"
-							>
-								<span class="flex items-center justify-center text-lg dark:text-gray-400">
-									<svg
-										fill="currentColor"
-										xmlns="http://www.w3.org/2000/svg"
-										height="24"
-										viewBox="0 96 960 960"
-										width="24"
-										><path
-											d="M180 936q-24 0-42-18t-18-42V276q0-24 18-42t42-18h600q24 0 42 18t18 42v600q0 24-18 42t-42 18H180Zm0-60h270V276H180v600Zm330 0h270V575H510v301Zm0-361h270V276H510v239Z"
-										/></svg
-									>
-								</span>
-								<span class="ml-3">Dashboards</span>
-								<!-- <span
-							class="flex items-center justify-center text-xs text-red-500 font-semibold bg-red-100 h-6 px-2 rounded-full ml-auto"
-							>1k</span
-						> -->
+								<span class="ml-3 l">API</span>
 							</a>
 						</li>
 						<li class="my-px">
@@ -223,30 +180,27 @@
 								<span class="ml-3">UI</span>
 							</a>
 						</li>
-						<li class="my-px">
-							<a
-								href={`/a/${space.appId}/roles`}
-								class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 {/\/roles/.test(
-									$page.url.pathname
-								)
-									? 'bg-blue-900'
-									: ''} 4xl:text-4xl 4xl:py-9 hover:text-gray-100  dark:hover:text-gray-700"
+
+						<!-- <li class="my-px">
+					<a
+						href={`/preferences/${space.appId}`}
+						class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 hover:text-gray-700"
+					>
+						<span class="flex items-center justify-center text-lg dark:text-gray-400">
+							<svg
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+								height="24"
+								viewBox="0 96 960 960"
+								width="24"
+								><path
+									d="M120 936v-60h92V216h390v45h147v261h-60V321h-87v272h-60V276H272v600h206v60H120Zm575 40-5-48q-20-6-41-17.5T615 885l-42 20-35-54 38-30q-5-23-5-41.5t5-41.5l-38-30 35-55 42 20q13-12 34-24t41-18l5-49h60l6 49q20 6 41 18t34 24l42-20 35 55-38 30q5 23 5 41.5t-5 41.5l38 30-35 54-42-20q-13 14-34 25.5T761 928l-6 48h-60Zm30-95q44 0 73-29t29-73q0-44-29-73t-73-29q-44 0-73 29t-29 73q0 44 29 73t73 29ZM451 616q-17 0-28.5-11.5T411 576q0-17 11.5-28.5T451 536q17 0 28.5 11.5T491 576q0 17-11.5 28.5T451 616ZM272 876V276v600Z"
+								/></svg
 							>
-								<span class="flex items-center justify-center text-l">
-									<svg
-										fill="currentColor"
-										xmlns="http://www.w3.org/2000/svg"
-										height="24"
-										viewBox="0 96 960 960"
-										width="24"
-										><path
-											d="M140 976q-24 0-42-18t-18-42V436q0-24 18-42t42-18h237V236q0-24 18-42t42-18h87q24 0 42 18t18 42v140h236q24 0 42 18t18 42v480q0 24-18 42t-42 18H140Zm0-60h680V436H584q0 28-18.5 44T519 496h-78q-27 0-45.5-16T377 436H140v480Zm92-107h239v-14q0-18-9-32t-23-19q-32-11-50-14.5t-35-3.5q-19 0-40.5 4.5T265 744q-15 5-24 19t-9 32v14Zm336-67h170v-50H568v50Zm-214-50q22.5 0 38.25-15.75T408 638q0-22.5-15.75-38.25T354 584q-22.5 0-38.25 15.75T300 638q0 22.5 15.75 38.25T354 692Zm214-63h170v-50H568v50ZM437 436h87V236h-87v200Zm43 240Z"
-										/></svg
-									>
-								</span>
-								<span class="ml-3">User Roles</span>
-							</a>
-						</li>
+						</span>
+						<span class="ml-3">Preferences</span>
+					</a>
+				</li> -->
 
 						<li class="my-px">
 							<a
@@ -273,7 +227,7 @@
 										/></svg
 									>
 								</span>
-								<span class="ml-3"> feelPos</span>
+								<span class="ml-3">POS</span>
 							</a>
 						</li>
 						<li class="my-px">
@@ -301,42 +255,39 @@
 										/></svg
 									>
 								</span>
-								<span class="ml-3">feelPay</span>
+								<span class="ml-3">Pay</span>
 							</a>
 						</li>
-						<li class="my-px">
-							<a
-								on:click={() => {
-									recentlyViewed.set({
-										[`/a/${space.appId}/pay`]: { url: `/a/${space.appId}/pay` },
-										...$recentlyViewed
-									});
-								}}
-								href={`/a/${space.appId}/pos`}
-								class="flex {/\/pos/.test($page.url.pathname)
-									? 'bg-blue-900'
-									: ''} flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 4xl:text-4xl 4xl:py-9 hover:text-gray-100 dark:hover:text-gray-700"
-							>
-								<span class="flex items-center justify-center text-l">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										height="24"
-										fill="currentColor"
-										viewBox="0 96 960 960"
-										width="24"
-										><path
-											d="M540 636q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35ZM220 776q-24.75 0-42.375-17.625T160 716V316q0-24.75 17.625-42.375T220 256h640q24.75 0 42.375 17.625T920 316v400q0 24.75-17.625 42.375T860 776H220Zm100-60h440q0-42 29-71t71-29V416q-42 0-71-29t-29-71H320q0 42-29 71t-71 29v200q42 0 71 29t29 71Zm480 180H100q-24.75 0-42.375-17.625T40 836V376h60v460h700v60ZM220 716V316v400Z"
-										/></svg
-									>
-								</span>
-								<span class="ml-3">feelPOS</span>
-							</a>
-						</li>
+
 						<li class="my-px">
 							<span
 								class="flex  4xl:text-3xl font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase"
-								>Account</span
+								>More</span
 							>
+						</li>
+						<li class="my-px">
+							<a
+								href={`/a/${space.appId}/roles`}
+								class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 {/\/roles/.test(
+									$page.url.pathname
+								)
+									? 'bg-blue-900'
+									: ''} 4xl:text-4xl 4xl:py-9 hover:text-gray-100  dark:hover:text-gray-700"
+							>
+								<span class="flex items-center justify-center text-l">
+									<svg
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+										height="24"
+										viewBox="0 96 960 960"
+										width="24"
+										><path
+											d="M140 976q-24 0-42-18t-18-42V436q0-24 18-42t42-18h237V236q0-24 18-42t42-18h87q24 0 42 18t18 42v140h236q24 0 42 18t18 42v480q0 24-18 42t-42 18H140Zm0-60h680V436H584q0 28-18.5 44T519 496h-78q-27 0-45.5-16T377 436H140v480Zm92-107h239v-14q0-18-9-32t-23-19q-32-11-50-14.5t-35-3.5q-19 0-40.5 4.5T265 744q-15 5-24 19t-9 32v14Zm336-67h170v-50H568v50Zm-214-50q22.5 0 38.25-15.75T408 638q0-22.5-15.75-38.25T354 584q-22.5 0-38.25 15.75T300 638q0 22.5 15.75 38.25T354 692Zm214-63h170v-50H568v50ZM437 436h87V236h-87v200Zm43 240Z"
+										/></svg
+									>
+								</span>
+								<span class="ml-3">Roles</span>
+							</a>
 						</li>
 						<li class="my-px">
 							<a

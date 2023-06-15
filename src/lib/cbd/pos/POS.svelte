@@ -1,6 +1,8 @@
 <script lang="ts">
 	//@ts-nocheck
 
+	import posLogo from '$lib/assets/pos-transparent.png';
+
 	let firstTime = true;
 	let receiptModal = false;
 
@@ -155,27 +157,22 @@
 
 <svelte:head>
 	<title>
-		{$page.data.space?.name} - POS
+		{$page.data.space?.name ?? 'Dreamfeel'} - POS
 	</title>
 </svelte:head>
 
 <div class="bg-blue-gray-50" x-data="initApp()" x-init="initDatabase()">
 	<!-- noprint-area -->
-	<div class="hide-print flex flex-row h-screen antialiased text-blue-gray-800">
+	<div class="hide-print flex flex-row h-screen antialiased text-black-gray-800">
 		<!-- left sidebar -->
 		<div class="flex flex-row w-auto flex-shrink-0 pl-4 pr-2 py-4">
-			<div class="flex flex-col items-center py-4 flex-shrink-0 w-20 bg-red-500 rounded-3xl">
+			<div class="flex flex-col items-center py-4 flex-shrink-0 w-20 bg-gray-200 rounded-3xl">
 				<a
-					href={`/a/${$page.data.space?.appId}`}
+					href={$page.data.space ? `/a/${$page.data.space?.appId}` : '/'}
 					rel="external"
-					class="flex items-center justify-center h-12 w-12 bg-cyan-50 text-cyan-700 rounded-full"
+					class="flex items-center justify-center h-12 w-12 text-black-700 rounded-full"
 				>
-					<img
-						width="180"
-						src="https://dreamfeel.me/_app/immutable/assets/logo-f130689f.png"
-						loading="lazy"
-						alt=""
-					/>
+					<img width="180" src={posLogo} loading="lazy" alt="" />
 				</a>
 				<ul class="flex flex-col space-y-2 mt-12">
 					<li>
@@ -183,7 +180,7 @@
 							<span
 								class="flex items-center justify-center h-12 w-12 rounded-2xl"
 								x-bind:class={`{
-                  'hover:bg-cyan-400 text-cyan-100': activeMenu !== 'pos',
+                  'hover:bg-cyan-400 text-black-100': activeMenu !== 'pos',
                   'bg-cyan-300 shadow-lg text-white': activeMenu === 'pos',
                 }`}
 							>
@@ -207,7 +204,7 @@
 					<li>
 						<a href="#" class="flex items-center">
 							<span
-								class="flex items-center justify-center text-cyan-100 hover:bg-cyan-400 h-12 w-12 rounded-2xl"
+								class="flex items-center justify-center text-black-100 hover:bg-cyan-400 h-12 w-12 rounded-2xl"
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -229,7 +226,7 @@
 					<li>
 						<a href="#" class="flex items-center">
 							<span
-								class="flex items-center justify-center text-cyan-100 hover:bg-cyan-400 h-12 w-12 rounded-2xl"
+								class="flex items-center justify-center text-black-100 hover:bg-cyan-400 h-12 w-12 rounded-2xl"
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -251,7 +248,7 @@
 					<li>
 						<a href="#" class="flex items-center">
 							<span
-								class="flex items-center justify-center text-cyan-100 hover:bg-cyan-400 h-12 w-12 rounded-2xl"
+								class="flex items-center justify-center text-black-100 hover:bg-cyan-400 h-12 w-12 rounded-2xl"
 							>
 								<svg
 									class="w-6 h-6"
@@ -280,18 +277,26 @@
 				<a
 					href="https://dreamfeel.me"
 					target="blank"
-					class="mt-auto flex items-center justify-center text-cyan-200 hover:text-cyan-100 h-10 w-10 focus:outline-none"
+					class="mt-auto flex items-center justify-center text-black-200 hover:text-black-100 h-10 w-10 focus:outline-none"
 				>
 					<svg
+						class="w-6 h-6"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
 						xmlns="http://www.w3.org/2000/svg"
-						class="h-8 w-8"
-						viewBox="0 0 20 20"
-						fill="currentColor"
 					>
 						<path
-							fill-rule="evenodd"
-							d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-							clip-rule="evenodd"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+						/>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
 						/>
 					</svg>
 				</a>
@@ -303,7 +308,7 @@
 			<!-- store menu -->
 			<div class="flex flex-col bg-blue-gray-50 h-full w-full py-4">
 				<div class="flex px-2 flex-row relative">
-					<div class="absolute left-5 top-3 px-2 py-2 rounded-full bg-red-500 text-white">
+					<div class="absolute left-5 top-3 px-2 py-2 rounded-full bg-gray-300 text-white">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							class="h-6 w-6"
@@ -465,7 +470,7 @@
 									<!-- trash button -->
 									<button
 										on:click={clearCart}
-										class="text-blue-gray-300 hover:text-pink-500 focus:outline-none"
+										class="text-black-gray-300 hover:text-pink-500 focus:outline-none"
 									>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
@@ -489,7 +494,7 @@
 								{#each Object.keys(cart).map((id) => ({ ...cart[id] })) as product}
 									<div x-for="item in cart" :key="item.productId">
 										<div
-											class="select-none mb-3 bg-blue-gray-50 rounded-lg w-full text-blue-gray-700 py-2 px-2 flex justify-center"
+											class="select-none mb-3 bg-blue-gray-50 rounded-lg w-full text-black-gray-700 py-2 px-2 flex justify-center"
 										>
 											<img
 												loading="lazy"
@@ -564,7 +569,7 @@
 
 					<!-- payment info -->
 					<div class="select-none h-auto w-full text-center pt-3 pb-4 px-4">
-						<div class="flex mb-3 text-lg font-semibold text-blue-gray-700">
+						<div class="flex mb-3 text-lg font-semibold text-black-gray-700">
 							<div>TOTAL</div>
 							<div class="text-right w-full" x-text="">
 								{priceFormat(
@@ -574,7 +579,7 @@
 								)}
 							</div>
 						</div>
-						<div class="mb-3 text-blue-gray-700 px-3 pt-2 pb-3 rounded-lg bg-blue-gray-50">
+						<div class="mb-3 text-black-gray-700 px-3 pt-2 pb-3 rounded-lg bg-blue-gray-50">
 							<div class="flex text-lg font-semibold">
 								<div class="flex-grow text-left">CASH</div>
 								<div class="flex text-right">
@@ -603,10 +608,10 @@
 						{#if change > 0}
 							<div
 								x-show="change > 0"
-								class="flex mb-3 text-lg font-semibold bg-cyan-50 text-blue-gray-700 rounded-lg py-2 px-3"
+								class="flex mb-3 text-lg font-semibold bg-cyan-50 text-black-gray-700 rounded-lg py-2 px-3"
 							>
-								<div class="text-cyan-800">CHANGE</div>
-								<div class="text-right flex-grow text-cyan-600" x-text="priceFormat(change)">
+								<div class="text-black-800">CHANGE</div>
+								<div class="text-right flex-grow text-black-600" x-text="priceFormat(change)">
 									{priceFormat(numberFormat(change))}
 								</div>
 							</div>
@@ -615,7 +620,7 @@
 						{#if change < 0}
 							<div
 								x-show="change < 0"
-								class="flex mb-3 text-lg font-semibold bg-pink-100 text-blue-gray-700 rounded-lg py-2 px-3"
+								class="flex mb-3 text-lg font-semibold bg-pink-100 text-black-gray-700 rounded-lg py-2 px-3"
 							>
 								<div class="text-right flex-grow text-pink-600" x-text="priceFormat(change)">
 									{priceFormat(numberFormat(change))}
@@ -625,7 +630,7 @@
 						{#if change === 0 && Object.keys(cart)?.length > 0}
 							<div
 								x-show="change == 0 && cart.length > 0"
-								class="flex justify-center mb-3 text-lg font-semibold bg-cyan-50 text-cyan-700 rounded-lg py-2 px-3"
+								class="flex justify-center mb-3 text-lg font-semibold bg-cyan-50 text-black-700 rounded-lg py-2 px-3"
 							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -661,7 +666,7 @@
 
 		<!-- modal first time -->
 
-		{#if firstTime}
+		<!-- {#if firstTime}
 			<div
 				class="fixed glass w-full h-screen left-0 top-0 z-10 flex flex-wrap justify-center content-center p-24"
 			>
@@ -743,7 +748,7 @@
 					</div>
 				</div>
 			</div>
-		{/if}
+		{/if} -->
 
 		<!-- modal receipt -->
 
