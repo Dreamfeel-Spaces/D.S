@@ -1,7 +1,7 @@
 <script>
 	// @ts-nocheck
 
-	import { DarkMode, Button, Modal, Checkbox, Avatar } from 'flowbite-svelte';
+	import { Button, Modal, Checkbox, Hr } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import SpaceNav from '$lib/components/SpaceNav.svelte';
 	import SpaceSearch from '../../rest/[app_id]/SpaceSearch.svelte';
@@ -13,7 +13,6 @@
 	const spaceSession = $page.data.spaceSession;
 	const user = spaceSession?.user;
 	const hasUser = Boolean(user?.id);
-	const pathname = $page.url.pathname;
 
 	let demoDialogOpen = false;
 
@@ -89,20 +88,35 @@
 
 		<div class="flex flex-row h-screen  dark:bg-black bg-gray-100 text-gray-800">
 			<aside
-				class="sidebar min-h-screen dark:text-gray-900  w-80 min-w-82 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
+				class="sidebar border-gray-700  min-h-screen dark:text-gray-900  w-80 min-w-82 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 			>
-				<div class="sidebar-header flex items-center  ml-7 py-3">
-					<div class="inline-flex">
+				<div class="sidebar-header  flex justify-center pt-3    py-1">
+					<div class="flex  ">
 						{#if space?.icon}
-							<Avatar src={space?.icon} />
+							<img width="36" alt="Space icon" src={space?.icon} />
 						{/if}
 						<a href={`/a/${space.appId}`} class="inline-flex flex-row items-center">
-							<span class="leading-10 dark:text-gray-100 text-2xl font-bold ml-1 uppercase"
+							<span class="leading-10 dark:text-gray-100 text-xl font-bold ml-1 uppercase"
 								>{space.name}</span
 							>
+							{#if space.appId === 'demo' || space.appId === 'ecommerce'}
+								<div class="pt-1 ml-1 text-blue-500">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="currentColor"
+										height="20"
+										viewBox="0 -960 960 960"
+										width="20"
+										><path
+											d="m346-60-76-130-151-31 17-147-96-112 96-111-17-147 151-31 76-131 134 62 134-62 77 131 150 31-17 147 96 111-96 112 17 147-150 31-77 130-134-62-134 62Zm27-79 107-45 110 45 67-100 117-30-12-119 81-92-81-94 12-119-117-28-69-100-108 45-110-45-67 100-117 28 12 119-81 94 81 92-12 121 117 28 70 100Zm107-341Zm-43 133 227-225-45-41-182 180-95-99-46 45 141 140Z"
+										/></svg
+									>
+								</div>
+							{/if}
 						</a>
 					</div>
 				</div>
+				<Hr />
 				<div class="sidebar-content 4xl:py-9 px-4 py-1">
 					<ul class="flex flex-col w-full">
 						<li class="4xl:space-y-9 space 6xl:space-y-16">
@@ -407,26 +421,23 @@
 					</div>
 				</div>
 			</a> -->
-				<header class="header dark:bg-black shadow-lg bg-white  py-1 px-4">
+				<header class="header rounded-b-lg dark:bg-black shadow-lg bg-white  py-1 px-4">
 					<div class="header-content flex items-center flex-row gap-3">
-						<span class="text-lg dark:text-gray-300 mt-2 ml-2">Admin</span>
+						<span class="text-lg dark:text-gray-300  ml-2">Admin</span>
 
 						<SpaceSearch />
 						<div class="flex ml-auto">
-							{#if space.appId === 'demo' || space.appId === 'ecommerce'}
-								<div class="pt-1">
-									<Button pill class="mr-4" size="xs" color="green">Official demo</Button>
-								</div>
-							{/if}
 							<div class="ml-1">
 								<Button
 									outline
 									size="xs"
+									class="relative"
 									rel="noreferrer"
 									target="_blank"
 									href="/{$page.data.space.appId}"
 								>
 									<svg
+										class="absolute -top-1  -right-2"
 										xmlns="http://www.w3.org/2000/svg"
 										height="18"
 										fill="currentColor"
@@ -435,11 +446,50 @@
 										><path
 											d="M180 936q-24 0-42-18t-18-42V276q0-24 18-42t42-18h279v60H180v600h600V597h60v279q0 24-18 42t-42 18H180Zm202-219-42-43 398-398H519v-60h321v321h-60V319L382 717Z"
 										/></svg
-									></Button
-								>
+									>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="currentColor"
+										height="18"
+										viewBox="0 -960 960 960"
+										width="18"
+										><path
+											d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm-43-61v-82q-35 0-59-26t-24-61v-44L149-559q-5 20-7 39.5t-2 39.5q0 130 84.5 227T437-141Zm294-108q22-24 38.5-51t28-56.5q11.5-29.5 17-60.5t5.5-63q0-106-58-192.5T607-799v18q0 35-24 61t-59 26h-87v87q0 17-13.5 28T393-568h-83v88h258q17 0 28 13t11 30v127h43q29 0 51 17t30 44Z"
+										/></svg
+									>
+								</Button>
 							</div>
 							<div class="mx-3">
-								<DarkMode />
+								<Button
+									outline
+									class="relative"
+									size="xs"
+									rel="noreferrer"
+									target="_blank"
+									href="/dashboards/{$page.data.space.appId}"
+								>
+									<svg
+										class="absolute -top-1  -right-2"
+										xmlns="http://www.w3.org/2000/svg"
+										height="18"
+										fill="currentColor"
+										viewBox="0 96 960 960"
+										width="18"
+										><path
+											d="M180 936q-24 0-42-18t-18-42V276q0-24 18-42t42-18h279v60H180v600h600V597h60v279q0 24-18 42t-42 18H180Zm202-219-42-43 398-398H519v-60h321v321h-60V319L382 717Z"
+										/></svg
+									>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="currentColor"
+										height="18"
+										viewBox="0 -960 960 960"
+										width="18"
+										><path
+											d="M510-570v-270h330v270H510ZM120-450v-390h330v390H120Zm390 330v-390h330v390H510Zm-390 0v-270h330v270H120Zm60-390h210v-270H180v270Zm390 330h210v-270H570v270Zm0-450h210v-150H570v150ZM180-180h210v-150H180v150Zm210-330Zm180-120Zm0 180ZM390-330Z"
+										/></svg
+									></Button
+								>
 							</div>
 							{#if hasUser}
 								<a href={`/a/${space?.appId}/accounts`} class="flex flex-row items-center">
@@ -461,7 +511,7 @@
 							{/if}
 
 							<div class="dark:text-white ml-2 flex self-center">
-								<button on:click={() => (help = true)}>
+								<!-- <button on:click={() => (help = true)}>
 									<svg
 										fill="currentColor"
 										xmlns="http://www.w3.org/2000/svg"
@@ -472,7 +522,7 @@
 											d="M484 809q16 0 27-11t11-27q0-16-11-27t-27-11q-16 0-27 11t-11 27q0 16 11 27t27 11Zm-35-146h59q0-26 6.5-47.5T555 566q31-26 44-51t13-55q0-53-34.5-85T486 343q-49 0-86.5 24.5T345 435l53 20q11-28 33-43.5t52-15.5q34 0 55 18.5t21 47.5q0 22-13 41.5T508 544q-30 26-44.5 51.5T449 663Zm31 313q-82 0-155-31.5t-127.5-86Q143 804 111.5 731T80 576q0-83 31.5-156t86-127Q252 239 325 207.5T480 176q83 0 156 31.5T763 293q54 54 85.5 127T880 576q0 82-31.5 155T763 858.5q-54 54.5-127 86T480 976Zm0-60q142 0 241-99.5T820 576q0-142-99-241t-241-99q-141 0-240.5 99T140 576q0 141 99.5 240.5T480 916Zm0-340Z"
 										/></svg
 									>
-								</button>
+								</button> -->
 								<Modal bind:open={help}>
 									<div slot="header" class="text-lg">Help</div>
 									<div>
