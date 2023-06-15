@@ -380,7 +380,7 @@
 	>
 		<header class="header rounded-b-lg dark:bg-black shadow-lg bg-white  py-1 px-4">
 			<div class="header-content flex items-center flex-row gap-3">
-				<span class="text-lg dark:text-gray-300  ml-2">Admin</span>
+				<span class="text-lg dark:text-gray-300  ml-2">API</span>
 
 				<SpaceSearch />
 				<div class="flex ml-auto">
