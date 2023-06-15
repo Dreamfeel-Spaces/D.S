@@ -13,7 +13,7 @@
 			<Button href="/a/{$page.params.app_id}/templates">Start from a template</Button>
 		</div>
 		<div class="text-center">
-			<A href="/a/{$page.params.id}">Get started on a blank canves</A>
+			<A href="/a/{$page.params.app_id}">Get started on a blank canves</A>
 		</div>
 	</div>
 </div>
