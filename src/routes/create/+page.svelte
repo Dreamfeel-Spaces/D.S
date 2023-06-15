@@ -3,6 +3,7 @@
 	import { convertToSlug } from '$lib/util/slugit';
 	import { Input, Button, Alert, Card, Heading, Spinner, Modal, A } from 'flowbite-svelte';
 	import Dropzone from 'svelte-file-dropzone';
+	import { Confetti } from 'svelte-confetti';
 
 	import { onDestroy } from 'svelte';
 	import axios from 'axios';
@@ -138,7 +139,8 @@
 		{#if saveSpaceSuccess}
 			<div class=" my-9">
 				<Modal open permanent>
-					<div class="mb-3">
+					<div class="mb-3 text-center">
+						<Confetti />
 						<b>Congrats!</b>
 						<p>Your space, {appName} has been created.</p>
 						<A rel="external" href="/a/{convertToSlug(appId)}/onboarding">Go to new space</A>
