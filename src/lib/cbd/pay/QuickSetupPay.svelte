@@ -59,7 +59,7 @@ export default function App(props){
 <div class="h-screen flex text-white bg-black">
 	<aside class="w-72 border-r bprder-gray-100">
 		<a href="/" class="p-3 flex justify-center">
-			<img alt="Dreamfeel Pay Logo" width="72" src={feelPay} />
+			<img alt="Dreamfeel Pay Logo" width="72" src={"https://res.cloudinary.com/dreamnerd/image/upload/v1686721359/feel-pay_yrvuwi.png"} />
 		</a>
 		<Hr />
 		<div class="mt-2 p-4">Setup</div>
