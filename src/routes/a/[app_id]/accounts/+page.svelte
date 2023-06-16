@@ -20,7 +20,7 @@
 	let loginSuccess = false;
 	let loginError = false;
 
-	function handlePasswordLessLogin() {
+	async function handlePasswordLessLogin() {
 		try {
 			logging = true;
 			loginError = false;
