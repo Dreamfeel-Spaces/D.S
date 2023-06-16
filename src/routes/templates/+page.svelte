@@ -19,7 +19,7 @@
 				<img
 					class="w-full"
 					loading="lazy"
-					src="https://res.cloudinary.com/dreamnerd/image/upload/v1683813200/Screenshot_from_2023-05-11_16-51-40_drnmo8.png"
+					src={'https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image-300x225.png'}
 					alt="Sunset in the mountains"
 				/>
 				<div class="px-6 py-4">

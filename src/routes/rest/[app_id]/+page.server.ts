@@ -14,7 +14,7 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 	let apiSetup = space.apiSetup[0];
 
 	if (!apiSetup?.complete) {
-		throw redirect(302, `/rest/${space?.appId}/quick-setup`);
+		// throw redirect(302, `/rest/${space?.appId}/quick-setup`);
 	}
 
 	const tables = space.tables ?? [];
