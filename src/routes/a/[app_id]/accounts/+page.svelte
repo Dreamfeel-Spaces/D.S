@@ -26,7 +26,7 @@
 			loginError = false;
 			const response = await axios.post(`/a/svr/${$page.params.app_id}`);
 			if (response) {
-				goto(`/a/${$page.params.app_id}`);
+				goto(`/a/${$page.params.app_id}`, { invalidateAll: true });
 			}
 		} catch (error) {
 			loginError = true;
