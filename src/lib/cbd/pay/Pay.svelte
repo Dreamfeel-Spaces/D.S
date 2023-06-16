@@ -136,7 +136,11 @@
 		<nav class="w-  border-b">
 			<div class="py-6 md:py-0 container mx-auto px-6 flex items-center justify-between">
 				<div class="py-5" aria-label="Home. logo" role="img">
-					<img width="35%" src={dreamfeelPayLOgo} alt="logo" />
+					<img
+						width="35%"
+						src={'https://res.cloudinary.com/dreamnerd/image/upload/v1686721359/feel-pay_yrvuwi.png'}
+						alt="logo"
+					/>
 				</div>
 				<div>
 					<button
@@ -519,6 +523,8 @@
 				>
 					Easiest way to accept and manage payments on orders on your digital platforms.
 				</p>
+
+				<p class="text-gray-400 mt-3">No npm install, no backend required</p>
 			</div>
 			<div class="flex justify-center items-center">
 				<a
@@ -535,7 +541,7 @@
 		<footer style="backdrop-filter:blur(30px)" class="p-4 md:p-8 lg:p-10   dark:bg-black">
 			<div class="mx-auto max-w-screen-xl text-center">
 				<a
-					href="/"
+					href="https://dreamfeel.me"
 					class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white"
 				>
 					<div class="text-center">

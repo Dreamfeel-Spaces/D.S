@@ -56,6 +56,9 @@ export async function load({ locals }: PageServerLoadEvent) {
 
 	const onboarding = space.onboarding[0];
 
+
+	
+
 	if (!user?.id) throw redirect(302, `/a/${space.appId}/accounts`);
 
 	if (!onboarding?.complete) {

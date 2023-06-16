@@ -21,6 +21,11 @@ import { dev } from '$app/environment';
 import { Space } from '$lib/djs/Space';
 import { Email } from '@auth/core/providers/email';
 
+export const withPrisma = ({ event, resolve }: Handle) => {
+	event.locals.db = prisma;
+	return resolve(event);
+};
+
 export const authHandle = SvelteKitAuth({
 	adapter: PrismaAdapter(prisma) as Adapter<boolean>,
 	session: {
@@ -239,6 +244,7 @@ export const spaceIdHandle: Handle = async ({ event, resolve }) => {
 };
 
 export const handle = sequence(
+	withPrisma,
 	apiAuth,
 	authHandle,
 	spaceAuth,

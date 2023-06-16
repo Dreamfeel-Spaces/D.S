@@ -1,6 +1,6 @@
 <script>
 	import {
-		DarkMode,
+		Avatar,
 		Button,
 		SidebarItem,
 		SidebarDropdownItem,
@@ -38,6 +38,9 @@
 		rel="stylesheet"
 		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
 	/>
+	<title>
+		{$page.data.space?.name}
+	</title>
 </svelte:head>
 
 <SpaceNav modalOnly={true} />
@@ -97,9 +100,14 @@
 		class="sidebar h-full overflow-auto hidden lg:block min-h-screen dark:text-gray-900 w-72 2xl:w-[30rem] 4xl:w-[36rem]  8xl:w-[75rem] 6xl:w-[64rem]   z-30 md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 	>
 		<div class="sidebar-header border-b  border-gray-800 gap-3  flex justify-center pt-1    py-1">
-			<div class="flex  gap-3">
+			<div class="flex gap-2  items-center">
 				{#if space?.icon}
-					<img width="36" alt="Space icon" src={space?.icon} />
+					<Avatar
+						size="xs"
+						class="bg-transparent dark:bg-transparent"
+						alt="Space icon"
+						src={space?.icon}
+					/>
 				{/if}
 				<a href={`/rest/${space.appId}`} class="inline-flex flex-row items-center">
 					<span class="leading-10 dark:text-gray-100 text-xl font-bold ml-1 uppercase"

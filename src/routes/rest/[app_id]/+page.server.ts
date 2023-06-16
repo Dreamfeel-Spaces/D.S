@@ -6,7 +6,7 @@ export async function load({ params, cookies, locals }: RequestEvent) {
 	//@ts-ignore
 	const space = locals.space;
 
-	let user: any = space.users[0];
+	let user: any = (space?.users ?? [])[0];
 	if (user) user.role = space.roles.find((role: { id: any }) => role.id === user?.userRolesId);
 
 	let spaceSession = { user };

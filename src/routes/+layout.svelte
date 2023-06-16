@@ -98,11 +98,11 @@
 		{@html $page.data.html}
 	{/if}
 
-	{#if /\/templates/.test($page.url.pathname) || ( isPreview && !subdomain) }
+	{#if /\/a$/.test($page.url.pathname) || /\/templates/.test($page.url.pathname) || (isPreview && !subdomain)}
 		<slot />
 	{/if}
 
-	{#if !isPreview && !subdomain && !/\/templates/.test($page.url.pathname)}
+	{#if !isPreview && !subdomain && !/\/templates/.test($page.url.pathname) && !/\/a$/.test($page.url.pathname)}
 		<div>
 			<nav
 				class="flex-no-wrap fixed z-50 lg:flex w-full items-center justify-between bg-neutral-100   dark:bg-black pb-2 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
@@ -135,8 +135,7 @@
 
 				<div class="flex w-full flex-wrap items-center  pt-1 justify-between px-6">
 					<div class="flex lg:hidden gap-3 h-14">
-						
-						<img  src={logo} alt="" />
+						<img src={logo} alt="" />
 					</div>
 					<div
 						class="!visible  flex-grow basis-[100%] items-center lg:!flex lg:basis-auto"
@@ -304,26 +303,28 @@
 							Blog
 						</a>
 
-						<!-- <a
-						rel="external"
-						class="mr-4 hidden lg:flex text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-						href="/spaces"
-					>
-						<span class="[&>svg]:w-5">
-							<svg
-								class="dark:text-gray-100"
-								fill="currentColor"
-								xmlns="http://www.w3.org/2000/svg"
-								height="24"
-								viewBox="0 96 960 960"
-								width="24"
-							>
-								<path
-									d="M666 616 440 390l226-226 226 226-226 226Zm-546-80V216h320v320H120Zm400 400V616h320v320H520Zm-400 0V616h320v320H120Zm80-480h160V296H200v160Zm467 48 113-113-113-113-113 113 113 113Zm-67 352h160V696H600v160Zm-400 0h160V696H200v160Zm160-400Zm194-65ZM360 696Zm240 0Z"
-								/>
-							</svg>
-						</span>
-					</a> -->
+						{#if $page.data.session}
+						<a
+							rel="external"
+							class="mr-4 hidden lg:flex text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+							href="/a"
+						>
+							<span class="[&>svg]:w-5">
+								<svg
+									class="dark:text-gray-100"
+									fill="currentColor"
+									xmlns="http://www.w3.org/2000/svg"
+									height="24"
+									viewBox="0 96 960 960"
+									width="24"
+								>
+									<path
+										d="M666 616 440 390l226-226 226 226-226 226Zm-546-80V216h320v320H120Zm400 400V616h320v320H520Zm-400 0V616h320v320H120Zm80-480h160V296H200v160Zm467 48 113-113-113-113-113 113 113 113Zm-67 352h160V696H600v160Zm-400 0h160V696H200v160Zm160-400Zm194-65ZM360 696Zm240 0Z"
+									/>
+								</svg>
+							</span>
+						</a>
+						{/if}
 						<!-- 
 						<div class="relative mr-2">
 							<DarkMode />
@@ -347,32 +348,34 @@
 									/>
 								</a>
 							{:else}
-								<a href="/create"  class="hidden lg:block" > <Button color="red" gradient>Get started</Button></a>
-								<button
-							on:click={() => (hidden2 = false)}
-							class="block border-0 bg-transparent py-2 px-2.5 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
-							type="button"
-							data-te-collapse-init
-							data-te-target="#navbarSupportedContent1"
-							aria-controls="navbarSupportedContent1"
-							aria-expanded="false"
-							aria-label="Toggle navigation"
-						>
-							<span class="[&>svg]:w-7">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 24 24"
-									class="h-7 w-7 dark:text-gray-100"
-									fill="currentColor"
+								<a href="/create" class="hidden lg:block">
+									<Button color="red" gradient>Get started</Button></a
 								>
-									<path
-										fill-rule="evenodd"
-										d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
-										clip-rule="evenodd"
-									/>
-								</svg>
-							</span>
-						</button>
+								<button
+									on:click={() => (hidden2 = false)}
+									class="block border-0 bg-transparent py-2 px-2.5 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
+									type="button"
+									data-te-collapse-init
+									data-te-target="#navbarSupportedContent1"
+									aria-controls="navbarSupportedContent1"
+									aria-expanded="false"
+									aria-label="Toggle navigation"
+								>
+									<span class="[&>svg]:w-7">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 24 24"
+											class="h-7 w-7 dark:text-gray-100"
+											fill="currentColor"
+										>
+											<path
+												fill-rule="evenodd"
+												d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
+												clip-rule="evenodd"
+											/>
+										</svg>
+									</span>
+								</button>
 							{/if}
 							<ul
 								class="absolute left-auto right-0 z-[1000] float-left m-0 mt-1 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"

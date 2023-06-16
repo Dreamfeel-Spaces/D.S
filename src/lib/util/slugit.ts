@@ -72,6 +72,7 @@ export function isReservedRoute(pathname: string) {
 	let isForms = /^\/forms/.test(pathname);
 	let isReports = /^\/reports/.test(pathname);
 	let isApp = /^\/a\/(.+)/.test(pathname);
+	let _isApps = /^\/a$/.test(pathname) || /^\/a\/d/.test(pathname);
 	let isMockServer = /^\/api\/examples/.test(pathname);
 	let isCreate = /^\/create/.test(pathname);
 	let isFeedback = /^\/feedback/.test(pathname);
@@ -113,7 +114,8 @@ export function isReservedRoute(pathname: string) {
 		isLab,
 		isCDN,
 		isPay,
-		isTemplates
+		isTemplates,
+		_isApps
 	];
 
 	return reservedRoutes.find(Boolean);

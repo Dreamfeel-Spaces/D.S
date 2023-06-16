@@ -1,6 +1,6 @@
 <script>
 	import {
-		DarkMode,
+		Avatar,
 		Button,
 		SidebarDropdownItem,
 		SidebarDropdownWrapper,
@@ -22,10 +22,17 @@
 		class="sidebar m h-full border-r  border-gray-800  hide-print dark:text-gray-900 w- w-60   overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 	>
 		<div class="sidebar-header border-b  border-gray-800 gap-3  flex justify-center pt-1    py-1">
-			<div class="flex  ">
+			<div class="flex  gap-3 items-center">
 				{#if space?.icon}
-					<img width="36" alt="Space icon" src={space?.icon} />
-				{/if}
+				<Avatar
+					size="xs"
+					class="bg-transparent dark:bg-transparent"
+					
+					alt="Space icon"
+					src={space?.icon }
+				/>
+				
+			{/if}
 				<a href={`/dashboards/${space.appId}`} class="inline-flex flex-row items-center">
 					<span class="leading-10 dark:text-gray-100 text-xl font-bold ml-1 uppercase"
 						>{space.name}</span

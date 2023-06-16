@@ -5,7 +5,9 @@
 	import type { PageData } from './$types';
 	import DemoCredentials from './DemoCredentials.svelte';
 	import { passwordResetDialog } from '$lib/wsstore';
-
+	import logo from '$lib/assets/beta-logo.png';
+	import axios from 'axios';
+	import { goto } from '$app/navigation';
 	const space = $page.data.space;
 
 	const appId = $page.params['app_id'];
@@ -13,6 +15,25 @@
 
 	export let data: PageData;
 	export let form: any;
+
+	let logging = false;
+	let loginSuccess = false;
+	let loginError = false;
+
+	function handlePasswordLessLogin() {
+		try {
+			logging = true;
+			loginError = false;
+			const response = await axios.post(`/a/svr/${$page.params.app_id}`);
+			if (response) {
+				goto(`/a/${$page.params.app_id}`);
+			}
+		} catch (error) {
+			loginError = true;
+
+			logging = false;
+		}
+	}
 
 	// import { onMount } from 'svelte';
 	// onMount(() => {
@@ -29,38 +50,69 @@
 </svelte:head>
 
 {#if !data.spaceSession?.user?.id}
-	<section class="w dark:bg-gray- min-w-min">
+	<section class="w dark:bg-black min-w-min">
 		<div size="lg" class="w-full text-gray-800  mt-9 lg:py-0">
 			<div
-				class="w-full bg-white rounded-lg shadow dark:border md:mt-0  dark:mt-1 xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+				class="w-full bg-white rounded-lg shadow dark:border md:mt-0  dark:mt-1 xl:p-0 dark:bg-black dark:border-gray-700"
 			>
 				<div class="p-6    space-y-2 md:space-y-3  sm:p-8">
-					{#if isDemo}
-						<div class=" flex justify-between text-xs ">
+					{#if true}
+						<div class=" flex {isDemo ? 'justify-between' : 'justify-center'} text-xs ">
 							<div>
 								{#if space?.icon?.startsWith('http')}
-									<Avatar src={space?.icon} />
+									<Avatar
+										rounded={false}
+										size="lg"
+										class="bg-transparent dark:bg-transparent"
+										src={space?.icon}
+									/>
+								{:else}
+									<Avatar
+										rounded={false}
+										size="lg"
+										class="bg-transparent dark:bg-transparent"
+										src={logo}
+									/>
 								{/if}
 							</div>
-							<div>
-								<DemoCredentials />
-							</div>
+							{#if isDemo}
+								<div>
+									<DemoCredentials />
+								</div>
+							{/if}
 						</div>
 					{/if}
 
 					<h1
-						class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+						class="text-xl font-bold text-center leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
 					>
 						{space.name}
 					</h1>
-					{#if form?.error}
-						<Alert dismissable size="xs" accent>{form?.data?.msg}</Alert>
+					{#if form?.error || loginError}
+						<Alert dismissable size="xs" accent>{form?.data?.msg || 'An error occured'}</Alert>
 					{/if}
 					<h1
-						class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+						class="text-xl font-bold text-center mt-9 leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white "
 					>
-						Sign in to your account
+						Sign in to {space?.name}
 					</h1>
+					{#if $page.data.session}
+						<div class="flex justify-center">
+							<button
+								on:click={handlePasswordLessLogin}
+								disabled={logging}
+								class="dark:bg-white my-6 px-4 gap-3 rounded-xl font-extrabold shadow dark:text-gray-900 dark:hover:bg-gray-100  focus:ring-2 focus:ring-offset-2 mx-20 focus:ring-gray-800 text-base flex items-center justify-center leading-none text-white bg-gray-800 w-b py-4 hover:bg-gray-700 focus:outline-none"
+							>
+								<img width={30} src={$page.data.session?.user?.image ?? logo} alt="" />
+								{#if logging}
+									<span> Logging in... </span>
+								{:else}
+									<span> Login as {$page.data.session?.user?.name} </span>
+								{/if}
+							</button>
+						</div>
+						<div class="text-center dark:text-white font-bold">-OR-</div>
+					{/if}
 
 					<form class="space-y-4 md:space-y-6" action="?/signin" method="POST">
 						<div>
@@ -127,7 +179,6 @@
 					<p class="text-xs my-3 text-gray-600 text-center">
 						Powered by <a rel="external" target="blank" href="/">Dreamfeel Spaces</a>
 					</p>
-
 				</div>
 			</footer>
 		</div>
@@ -135,7 +186,7 @@
 {/if}
 
 {#if data.spaceSession?.user?.id}
-	<Card size="lg" class="flex m-2 dark:text-white">
+	<Card size="lg" class="flex m-2 dark:bg-black dark:text-white">
 		<div>
 			<div class="my-9">
 				<div class="flex justify-end">

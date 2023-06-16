@@ -5,6 +5,8 @@
 
 	export let language = 'plaintext';
 	export let code = 'Write code here';
+	export let readOnly = true;
+	export let disableMinimap = true;
 
 	const loadMonacoEditor = async () => {
 		const monaco = await import('monaco-editor');
@@ -26,11 +28,13 @@
 				return { suggestions: [] };
 			}
 		});
-	
+
 		monaco.editor.setTheme('vs-dark');
 		editor = monaco.editor.create(document.getElementById('editor'), {
 			value: code,
-			language
+			language,
+			readOnly: readOnly,
+			minimap: { enabled: !disableMinimap }
 		});
 		editor.onDidChangeModelContent(() => {
 			code = editor.getValue();
@@ -44,4 +48,6 @@
 	onMount(loadMonacoEditor);
 </script>
 
-<div id="editor" class="min-h-72 h-72" />
+<div class="h-100 p-6 overflow-x-auto">
+	<div id="editor" class=" h-full overflow-hidden" />
+</div>

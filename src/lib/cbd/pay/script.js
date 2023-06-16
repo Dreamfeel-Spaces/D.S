@@ -29,10 +29,23 @@ export async function initDreamfeelPay({ CLIENT_ID, CLIENT_SECRET }) {
             const btn = document.createElement("button")
             const btnContent = document.createElement("span")
             const logo = document.createElement("img")
-            logo.height = "100%"
-            logo.src = "https://pay.dreamfeel.me/_app/immutable/assets/pay-transparent-45fa8770.png"
+            logo.height = "20%"
+            logo.src = "https://res.cloudinary.com/dreamnerd/image/upload/v1686721359/feel-pay_yrvuwi.png"
+            logo.style.height = "50px"
             btnContent.appendChild(logo)
             btn.append(btnContent)
+
+            const btnText = document.createElement("div")
+            btnText.innerText = "Checkout with feelpay"
+            btnText.className = "flex items-center h-full"
+            btn.className = "text-sm"
+
+
+
+            btn.append(btnText)
+
+
+            btn.className = "flex"
 
 
             btn.onclick = () => this.handleClick(identifier)

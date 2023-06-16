@@ -48,7 +48,7 @@
 	</div>
 {/if}
 <div class="flex justify-center">
-	<div class="bg-white rounded-xl w-72 flex justify-center" id="dreamfeel-pay-button" />
+	<div class="bg-white rounded w-72 flex justify-center" id="dreamfeel-pay-button" />
 </div>
 
 <style>
