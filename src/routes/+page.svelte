@@ -63,7 +63,7 @@
 			class="absolute backdrop-blur-sm rounded-lg bg-white/30 inset-0 flex justify-center items-center z-10"
 		>
 			<div
-				class="mt-8 relative hero rounded-lg container mx-auto flex flex-col items-center pt-12 sm:pt-24 pb-24 sm:pb-32 md:pb-48 lg:pb-56 xl:pb-64"
+				class="mt-8  relative hero rounded-lg container mx-auto flex flex-col items-center pt-12 sm:pt-24 pb-24 sm:pb-32 md:pb-48 lg:pb-56 xl:pb-64"
 			>
 				<img
 					class="mr-2 lg:mr-12 mt-2 lg:mt-12 absolute right-0 top-36"
@@ -76,9 +76,9 @@
 					alt="bg"
 				/>
 
-				<div class="w-11/12  relative sm:w-2/3 mb-5 sm:mb-10">
+				<div class="w-11/12 4xl:pt-96 relative sm:w-2/3 mb-5 sm:mb-10">
 					<h1
-						class="text-2xl backgro bg-opacity-100 dark:text-gray-900 mt-36 backdrop:blur-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center   text-gray-900 font-bold leading-tight"
+						class="text-2xl 4xl:my-[48rem] backgro bg-opacity-100 dark:text-gray-900 mt-36 backdrop:blur-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center   text-gray-900 font-bold leading-tight"
 					>
 						The Ultimate No-Code Framework to Bring Your Vision to Life!
 					</h1>
