@@ -17,7 +17,7 @@
 
 {#if !$page.data.session}
 	<section
-		class="bg-white flex justify-center pt-20 self-center lg:px-72 min-h-112 dark:bg-black"
+		class="bg-white flex justify-center pt-20 self-center lg:px-72 min-h-screen px-5 dark:bg-black"
 	>
 		<div>
 			<Card>

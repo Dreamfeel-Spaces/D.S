@@ -2,6 +2,7 @@
 	//@ts-nocheck
 
 	import posLogo from '$lib/assets/pos-transparent.png';
+	import {} from "flowbite-svelte"
 
 	let firstTime = true;
 	let receiptModal = false;
@@ -153,6 +154,7 @@
 		const rg = searchTerm ? new RegExp(searchTerm, 'gi') : null;
 		return products.filter((p) => !rg || p.name.match(rg));
 	}
+
 </script>
 
 <svelte:head>
@@ -165,7 +167,7 @@
 	<!-- noprint-area -->
 	<div class="hide-print flex flex-row h-screen antialiased text-black-gray-800">
 		<!-- left sidebar -->
-		<div class="flex flex-row w-auto flex-shrink-0 pl-4 pr-2 py-4">
+		<div class="hidden  md:flex flex-row w-auto flex-shrink-0 pl-4 pr-2 py-4">
 			<div class="flex flex-col items-center py-4 flex-shrink-0 w-20 bg-gray-200 rounded-3xl">
 				<a
 					href={$page.data.space ? `/a/${$page.data.space?.appId}` : '/'}
@@ -304,9 +306,9 @@
 		</div>
 
 		<!-- page content -->
-		<div class="flex-grow flex">
+		<div class="flex-grow lg:flex">
 			<!-- store menu -->
-			<div class="flex flex-col bg-blue-gray-50 h-full w-full py-4">
+			<div class="flex flex-col bg-blue-gray-50 lg:h-full w-full py-4">
 				<div class="flex px-2 flex-row relative">
 					<div class="absolute left-5 top-3 px-2 py-2 rounded-full bg-gray-300 text-white">
 						<svg
@@ -331,6 +333,20 @@
 						bind:value={searchTerm}
 						x-model="keyword"
 					/>
+					<div
+						class="absolute  lg:hidden right-5 top-3 px-2 py-2 rounded-full bg-gray-300 text-white"
+					>
+						<svg
+							class="dark:text-yellow-100"
+							fill="currentColor"
+							xmlns="http://www.w3.org/2000/svg"
+							height="24"
+							viewBox="0 96 960 960"
+							width="24"
+						>
+							<path d="M120 816v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+						</svg>
+					</div>
 				</div>
 				<div class="h-full overflow-hidden mt-4">
 					<div class="h-full overflow-y-auto px-2">
@@ -386,11 +402,11 @@
 								</p>
 							</div>
 						</div> -->
-						<div class="grid grid-cols-4 gap-4 pb-3">
+						<div class="grid grid-cols-2 lg:grid-cols-4 gap-1  lg:gap-4 pb-3">
 							{#each searchTerm ? filteredProducts() : products as product}
-								<div>
+								<div class="w-full">
 									<button
-										class="select-none cursor-pointer transition-shadow overflow-hidden rounded-2xl bg-white shadow hover:shadow-lg"
+										class="select-none w-full cursor-pointer transition-shadow overflow-hidden rounded-2xl bg-white shadow hover:shadow-lg"
 										:title="product.name"
 										on:click={() => addToCart(product)}
 									>
@@ -413,7 +429,7 @@
 			<!-- end of store menu -->
 
 			<!-- right sidebar -->
-			<div class="w-5/12 flex flex-col bg-blue-gray-50 h-full bg-white pr-4 pl-2 py-4">
+			<div class="lg:w-5/12 lg:flex lg:flex-col bg-blue-gray-50 lg:h-full bg-white pr-4 pl-2 py-4">
 				<div class="bg-white rounded-3xl flex flex-col h-full shadow">
 					<!-- empty cart -->
 
@@ -787,7 +803,7 @@
 								width="200"
 								class="mb-3 w-8 inline-block"
 							/>
-							<h2 class="text-xl font-semibold">{$page.data?.space?.name}</h2>
+							<h2 class="text-xl font-semibold">{$page.data?.space?.name ?? "DEMO"}</h2>
 							<p>Dreamfeel Spaces</p>
 						</div>
 						<div class="flex mt-4 text-xs">

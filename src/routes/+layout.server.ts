@@ -23,10 +23,6 @@ export const load: LayoutServerLoad = async ({ locals, url, cookies }) => {
 
 	const session = await locals.getSession();
 
-	if (pages.sbd === 'pos') {
-		console.log(locals);
-	}
-
 	if (session) {
 		const user = await prisma.user.findUnique({
 			where: {

@@ -7,20 +7,8 @@
 		Drawer,
 		CloseButton,
 		Sidebar,
-		SidebarDropdownItem,
-		SidebarDropdownWrapper,
-		SidebarGroup,
-		SidebarItem,
-		SidebarWrapper,
 		Button,
-		DarkMode,
-		Toast,
-		Dropdown,
-		DropdownItem,
-		DropdownHeader,
-		DropdownDivider,
-		Chevron,
-		Avatar
+		Toast
 	} from 'flowbite-svelte';
 
 	import { sineIn } from 'svelte/easing';
@@ -32,13 +20,6 @@
 	};
 	import { page } from '$app/stores';
 	const pathname = $page.url.pathname;
-	let isDashboard = /\/dashboards/.test(pathname);
-	let isEditor = /\/editor/.test(pathname);
-	let isBase = /\/rest/.test(pathname);
-	let isSpaces = /\/spaces/.test(pathname);
-	let spaceId = $page.params['app_id'];
-	let session = $page.data.session;
-
 	let subdomain = $page.data.subdomain;
 
 	let isPreview =
@@ -133,7 +114,7 @@
 					</div>
 				</a>
 
-				<div class="flex w-full flex-wrap items-center  pt-1 justify-between px-6">
+				<div class="flex w-full flex- items-center  pt-1 justify-between px-6">
 					<div class="flex lg:hidden gap-3 h-14">
 						<img src={logo} alt="" />
 					</div>
@@ -142,7 +123,7 @@
 						id="navbarSupportedContent1"
 						data-te-collapse-item
 					>
-						<div class="mr-4 lg:hidden cursor-pointer">
+						<div class="mr-4 hidden cursor-pointer">
 							<button on:click={() => (hidden2 = false)}>
 								<svg
 									class="dark:text-yellow-100"
@@ -160,7 +141,7 @@
 						<a
 							rel="external"
 							on:click={() => (hidden2 = true)}
-							class="mt-2 mr-2 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mt-0"
+							class="mt-2 mr-2 hidden  lg:flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mt-0"
 							href="/"
 						>
 							<img
@@ -173,7 +154,7 @@
 						</a>
 						<!-- Left links -->
 						<ul
-							class="list-style-none mr-auto flex flex-col pl-0 lg:flex-row"
+							class="list-style-none mr-auto  hidden lg:flex flex-col pl-0 lg:flex-row"
 							data-te-navbar-nav-ref
 						>
 							<!-- <li class="lg:pr-2" data-te-dropdown-ref>
@@ -212,7 +193,7 @@
 									</Dropdown>
 								</Dropdown>
 							</li> -->
-							<li class="lg:pr-2" data-te-nav-item-ref>
+							<li class="lg:pr-2 " data-te-nav-item-ref>
 								<a
 									rel="external"
 									class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
@@ -304,26 +285,26 @@
 						</a>
 
 						{#if $page.data.session}
-						<a
-							rel="external"
-							class="mr-4 hidden lg:flex text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-							href="/a"
-						>
-							<span class="[&>svg]:w-5">
-								<svg
-									class="dark:text-gray-100"
-									fill="currentColor"
-									xmlns="http://www.w3.org/2000/svg"
-									height="24"
-									viewBox="0 96 960 960"
-									width="24"
-								>
-									<path
-										d="M666 616 440 390l226-226 226 226-226 226Zm-546-80V216h320v320H120Zm400 400V616h320v320H520Zm-400 0V616h320v320H120Zm80-480h160V296H200v160Zm467 48 113-113-113-113-113 113 113 113Zm-67 352h160V696H600v160Zm-400 0h160V696H200v160Zm160-400Zm194-65ZM360 696Zm240 0Z"
-									/>
-								</svg>
-							</span>
-						</a>
+							<a
+								rel="external"
+								class="mr-4 hidden lg:flex text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+								href="/a"
+							>
+								<span class="[&>svg]:w-5">
+									<svg
+										class="dark:text-gray-100"
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+										height="24"
+										viewBox="0 96 960 960"
+										width="24"
+									>
+										<path
+											d="M666 616 440 390l226-226 226 226-226 226Zm-546-80V216h320v320H120Zm400 400V616h320v320H520Zm-400 0V616h320v320H120Zm80-480h160V296H200v160Zm467 48 113-113-113-113-113 113 113 113Zm-67 352h160V696H600v160Zm-400 0h160V696H200v160Zm160-400Zm194-65ZM360 696Zm240 0Z"
+										/>
+									</svg>
+								</span>
+							</a>
 						{/if}
 						<!-- 
 						<div class="relative mr-2">
@@ -418,265 +399,70 @@
 				</a>
 				<CloseButton on:click={() => (hidden2 = true)} class="mb-4 dark:text-white" />
 			</div>
-			<Sidebar>
-				<SidebarWrapper divClass="overflow-y-auto py-4 px-3 ">
-					<SidebarGroup>
-						<!-- <SidebarItem
-						active={/^\/admin/.test(pathname)}
-						on:click={() => (hidden2 = true)}
-						href="/admin"
-						rel="external"
-						label="Admin"
-					>
-						<svelte:fragment slot="icon">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-6 h-6"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z"
-								/><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z"
-								/></svg
-							>
-						</svelte:fragment>
-					</SidebarItem> -->
-						<SidebarDropdownWrapper isOpen={isSpaces} label="Spaces">
-							<svelte:fragment slot="icon">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-									><path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-									/></svg
-								>
-							</svelte:fragment>
-							<SidebarDropdownItem
-								on:click={() => (hidden2 = true)}
-								href={`/create`}
-								label={'New +'}
-								rel="external"
-								active={isSpaces && /$\/create/.test(pathname)}
-							/>
-							{#each $page.data.myapps as app}
-								<SidebarDropdownItem
-									on:click={() => (hidden2 = true)}
-									href={`/a/${app.appId}`}
-									label={app.name}
-									rel="external"
-									active={isSpaces && spaceId === app.appId}
-								/>
-							{/each}
-						</SidebarDropdownWrapper>
-						<!-- <SidebarDropdownWrapper isOpen={isBase} label="Apis">
-						<svelte:fragment slot="icon">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-6 h-6"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-								/></svg
-							>
-						</svelte:fragment>
-						{#each $page.data.myapps as app}
-							<SidebarDropdownItem
-								on:click={() => (hidden2 = true)}
-								href={`/rest/${app.appId}`}
-								label={app.name}
-								rel="external"
-								active={isBase && spaceId === app.appId}
-							/>
-						{/each}
-					</SidebarDropdownWrapper> -->
-						<!-- <SidebarDropdownWrapper isOpen={isDashboard} label="Dashboards">
-						<svelte:fragment slot="icon">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-6 h-6"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-								/></svg
-							>
-						</svelte:fragment>
 
-						{#each $page.data.myapps as app}
-							<SidebarDropdownItem
-								on:click={() => (hidden2 = true)}
-								href={`/dashboards/${app.appId}`}
-								label={app.name}
-								active={isDashboard && spaceId === app.appId}
-								rel="external"
-							/>
-						{/each}
-					</SidebarDropdownWrapper> -->
-						<!-- <SidebarDropdownWrapper isOpen={isEditor} label="Editor">
-						<svelte:fragment slot="icon">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-6 h-6"
-								><path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-								/></svg
-							>
-						</svelte:fragment>
-						{#each $page.data.myapps as app}
-							<SidebarDropdownItem
-								on:click={() => (hidden2 = true)}
-								href={`/editor/${app.appId}`}
-								label={app.name}
-								active={isEditor && spaceId === app.appId}
-								rel="external"
-							/>
-						{/each}
-					</SidebarDropdownWrapper> -->
-						<SidebarDropdownWrapper isOpen={/\/blog/.test(pathname)} label="Blog">
-							<svelte:fragment slot="icon">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-									><path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-									/></svg
-								>
-							</svelte:fragment>
-							<SidebarDropdownItem
-								on:click={() => (hidden2 = true)}
-								label="Your posts"
-								rel="external"
-								href="/blog/my-posts"
-								active={/\/blog\/my-posts/.test(pathname)}
-							/>
-							<SidebarDropdownItem
-								on:click={() => (hidden2 = true)}
-								label="Your drafts"
-								href="/blog/drafts"
-								rel="external"
-								active={/\/blog\/drafts/.test(pathname)}
-							/>
-						</SidebarDropdownWrapper>
-						<!-- <SidebarItem label="Kanban" {spanClass}>
-					<svelte:fragment slot="icon">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-							/></svg
+			<Sidebar>
+				<ul
+					class="list-style-none mr-auto pt-4 space-y-4 mt-4 border-t border-gray-700 flex-col pl-0 lg:flex-row"
+					data-te-navbar-nav-ref
+				>
+					<li class="lg:pr-2 " data-te-nav-item-ref>
+						<a
+							rel="external"
+							class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+							href="/create"
+							data-te-nav-link-ref>New project</a
 						>
-					</svelte:fragment>
-					<svelte:fragment slot="subtext">
-						<span
-							class="inline-flex justify-center items-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-300"
-							>Pro</span
+					</li>
+					<li class="lg:pr-2" data-te-nav-item-ref>
+						<a
+							rel="external"
+							class="flex-1 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+							href="/templates"
+							data-te-nav-link-ref>Templates</a
 						>
-					</svelte:fragment>
-				</SidebarItem> -->
-						<!-- <SidebarItem label="Inbox" {spanClass}>
-					<svelte:fragment slot="icon">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M9 3.75H6.912a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859M12 3v8.25m0 0l-3-3m3 3l3-3"
-							/></svg
+					</li>
+					<li class="lg:pr-2 dark:text-white" data-te-nav-item-ref>
+						<a
+							rel="external"
+							class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+							href="{$page.url.protocol}//pay.{$page.url.host}"
+							data-te-nav-link-ref>feelpay</a
 						>
-					</svelte:fragment>
-					<svelte:fragment slot="subtext">
-						<span
-							class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200"
-							>3</span
+					</li>
+					<li class="lg:pr-2 dark:text-white" data-te-nav-item-ref>
+						<a
+							rel="external"
+							class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+							href="{$page.url.protocol}//pos.{$page.url.host}"
+							data-te-nav-link-ref>feelpos</a
 						>
-					</svelte:fragment>
-				</SidebarItem> -->
-						<!-- <SidebarItem label="Your account">
-					<svelte:fragment slot="icon">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-6 h-6"
-							><path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-							/></svg
+					</li>
+					<li class="lg:pr-2 border-t border-gray-700" data-te-nav-item-ref>
+						<a
+							rel="external"
+							class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+							href="/about"
+							data-te-nav-link-ref
+							>About us
+						</a>
+					</li>
+					<li class="lg:pr-2" data-te-nav-item-ref>
+						<a
+							rel="external"
+							class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+							href="/blog"
+							data-te-nav-link-ref>Blog</a
 						>
-					</svelte:fragment>
-				</SidebarItem> -->
-						<SidebarItem
-							on:click={() => (hidden2 = true)}
+					</li>
+					<li class="lg:pr-2 border-t border-gray-700" data-te-nav-item-ref>
+						<a
+							rel="external"
+							class="text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 							href="/accounts"
-							label={Boolean(session) ? 'Sign out' : 'Sign In'}
+							data-te-nav-link-ref>Sign in</a
 						>
-							<svelte:fragment slot="icon">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-									class="w-6 h-6"
-									><path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-									/></svg
-								>
-							</svelte:fragment>
-						</SidebarItem>
-					</SidebarGroup>
-				</SidebarWrapper>
+					</li>
+				</ul>
 			</Sidebar>
 		</Drawer>
 		<div class="pt-16 dark:bg-black">
