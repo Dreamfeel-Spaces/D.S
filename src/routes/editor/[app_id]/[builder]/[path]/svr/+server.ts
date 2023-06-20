@@ -19,17 +19,17 @@ export async function POST({ request, params }: RequestEvent) {
 	return new Response(JSON.stringify(page));
 }
 export async function PATCH({ request, params, locals }: RequestEvent) {
-	const pageId = params.path;
 	const data = await request.json();
+	const pageId = params.builder;
 
-	let page = await prisma.page.findFirst({
+	let page = await prisma.spaceUIVersion.findFirst({
 		where: {
 			id: pageId
 		}
 	});
 
 	if (page) {
-		page = await prisma.page.update({
+		page = await prisma.spaceUIVersion.update({
 			where: {
 				id: pageId
 			},

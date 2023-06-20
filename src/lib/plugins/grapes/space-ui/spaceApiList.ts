@@ -7,7 +7,7 @@ export function gSpaceApIList(
 ) {
 	let { tables = [], pages = [], pageId, headless = false, space = null }: any = config;
 
-	const page: any = pages.find((page: { id: string; path: string }) => page.id === pageId);
+	const page: any = pages.find((page: { id: string; path: string }) => page?.id === pageId);
 
 	const spaceUrl = (urlPatterns([page]) ?? [])[0];
 

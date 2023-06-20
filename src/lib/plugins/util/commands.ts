@@ -147,10 +147,20 @@ export function addGCommands(editor: any) {
 	});
 
 	editor.Commands.add('share', {
+		getRowEl(editor) {
+			return editor.getContainer().closest('.editor-row');
+		},
+		getLayersEl(row) {
+			return row.querySelector('.share-container');
+		},
+
 		run(editor, sender) {
-			editor.Modal.open({
-				title: `<div  >Share</div>` // string | HTMLElement
-			});
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = '';
+		},
+		stop(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = 'none';
 		}
 	});
 	editor.Commands.add('show-layers', {
@@ -170,7 +180,23 @@ export function addGCommands(editor: any) {
 			lmEl.style.display = 'none';
 		}
 	});
+	editor.Commands.add('show-custom-components', {
+		getRowEl(editor) {
+			return editor.getContainer().closest('.editor-row');
+		},
+		getLayersEl(row) {
+			return row.querySelector('.components-container');
+		},
 
+		run(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = '';
+		},
+		stop(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = 'none';
+		}
+	});
 	editor.Commands.add('show-styles', {
 		getRowEl(editor) {
 			return editor.getContainer().closest('.editor-row');
@@ -206,6 +232,23 @@ export function addGCommands(editor: any) {
 		}
 	});
 
+	editor.Commands.add('show-assets', {
+		getRowEl(editor) {
+			return editor.getContainer().closest('.editor-row');
+		},
+		getStyleEl(row) {
+			return row.querySelector('.assets-container');
+		},
+
+		run(editor, sender) {
+			const smEl = this.getStyleEl(this.getRowEl(editor));
+			smEl.style.display = '';
+		},
+		stop(editor, sender) {
+			const smEl = this.getStyleEl(this.getRowEl(editor));
+			smEl.style.display = 'none';
+		}
+	});
 	editor.Commands.add('show-api', {
 		getRowEl(editor) {
 			return editor.getContainer().closest('.editor-row');

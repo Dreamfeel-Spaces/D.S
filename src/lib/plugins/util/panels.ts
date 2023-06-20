@@ -64,6 +64,13 @@ export function gPanels(editor: grapesjs.Editor) {
 						label: `<button class="material-symbols-outlined "> upload </button>`
 					},
 					{
+						id: 'show-components',
+						command: 'show-custom-components',
+						// Once activated disable the possibility to turn it off
+						togglable: false,
+						label: `<button class="material-symbols-outlined "> dashboard </button>`
+					},
+					{
 						id: 'show-share',
 						command: 'share',
 						// Once activated disable the possibility to turn it off

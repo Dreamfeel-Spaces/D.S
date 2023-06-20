@@ -59,7 +59,7 @@ model PageData {
 
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String     @db.VarChar(3000)
+  sessionToken String     @db.LongText
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?
@@ -187,21 +187,46 @@ model ConfigVars {
   @@index([userId])
 }
 
+model Assets {
+  id      String @id @default(cuid())
+  space   Space  @relation(fields: [spaceId], references: [id])
+  spaceId String
+  url     String
+  type    String @default("image")
+
+  @@index([spaceId])
+}
+
+model UIComponents {
+  id               String         @id @default(cuid())
+  data             String         @db.LongText
+  version          SpaceUIVersion @relation(fields: [spaceUIVersionId], references: [id])
+  spaceUIVersionId String
+  name             String
+  space            Space          @relation(fields: [spaceId], references: [id])
+  spaceId          String
+
+  @@index([spaceUIVersionId])
+  @@index([spaceId])
+}
+
 model SpaceUIVersion {
-  id          String       @id @default(cuid())
-  version     Int
-  name        String?
-  space       SpaceUI?     @relation(fields: [spaceUIId], references: [id])
-  spaceUIId   String?
-  dateCreated DateTime     @default(now())
-  updatedAt   DateTime     @default(now()) @updatedAt
-  deleted     Boolean      @default(false)
-  status      String?      @default("draft")
-  pages       Page[]
-  default     Boolean      @default(false)
-  configVars  ConfigVars[]
-  createdBy   SpaceUser?   @relation(fields: [userId], references: [id])
-  userId      String?
+  id           String         @id @default(cuid())
+  version      Int
+  name         String?
+  space        SpaceUI?       @relation(fields: [spaceUIId], references: [id])
+  spaceUIId    String?
+  dateCreated  DateTime       @default(now())
+  updatedAt    DateTime       @default(now()) @updatedAt
+  deleted      Boolean        @default(false)
+  status       String?        @default("draft")
+  pages        Page[]
+  default      Boolean        @default(false)
+  configVars   ConfigVars[]
+  createdBy    SpaceUser?     @relation(fields: [userId], references: [id])
+  userId       String?
+  uiComponents UIComponents[]
+  pageData     String?
 
   @@index([spaceUIId])
   @@index([userId])
@@ -1018,6 +1043,8 @@ model Space {
   Report                   Report[]
   DashboardForm            DashboardForm[]
   PageData                 PageData[]
+  UIComponents             UIComponents[]
+  assets                   Assets[]
 
   @@index([userId])
   @@index([templateCategoryId])

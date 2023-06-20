@@ -212,6 +212,7 @@
 							<li class="lg:pr-2 dark:text-white" data-te-nav-item-ref>
 								<a
 									rel="external"
+									target="blank"
 									class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 									href="{$page.url.protocol}//pay.{$page.url.host}"
 									data-te-nav-link-ref>feelpay</a
@@ -220,6 +221,7 @@
 							<li class="lg:pr-2 dark:text-white" data-te-nav-item-ref>
 								<a
 									rel="external"
+									target="blank"
 									class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 									href="{$page.url.protocol}//pos.{$page.url.host}"
 									data-te-nav-link-ref>feelpos</a

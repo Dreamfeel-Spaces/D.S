@@ -3,7 +3,7 @@ import { transformRows } from '$lib/rows/transform';
 import { error } from '@sveltejs/kit';
 import type { Actions, RequestEvent } from './$types';
 
-export async function load({ params }: RequestEvent) {
+export async function load({ params, locals }: RequestEvent) {
 	const spaceId = params['app_id'];
 	const versionId = params.builder;
 
@@ -35,8 +35,8 @@ export async function load({ params }: RequestEvent) {
 				include: {
 					components: true
 				},
-				where:{
-					deleted:false
+				where: {
+					deleted: false
 				}
 			}
 		}
@@ -67,6 +67,17 @@ export async function load({ params }: RequestEvent) {
 
 	const data = JSON.parse(String(page?.pageData ?? null))?.data;
 
+	let customBlocks = await locals.db.uIComponents.findMany({
+		where: {
+			spaceId: locals.space.id
+		}
+	});
+
+	let assets = await locals.db.assets.findMany({
+		where: {
+			spaceId: locals.space.id
+		}
+	});
 
 	return {
 		space,
@@ -74,7 +85,7 @@ export async function load({ params }: RequestEvent) {
 		tables: tables?.map((tb) => ({ ...tb, rows: transformRows(tb.rows) })) ?? [],
 		rows: withRows,
 		pages: ui?.pages ?? [],
-		projectData: data ??  {
+		projectData: data ?? {
 			assets: [],
 			styles: [],
 			pages: [
@@ -151,7 +162,9 @@ export async function load({ params }: RequestEvent) {
 					id: 'WgVmnFPvY0moeWlm'
 				}
 			]
-		}
+		},
+		customBlocks,
+		assets: assets.filter((v) => Boolean(v.url))
 	};
 }
 

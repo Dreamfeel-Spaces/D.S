@@ -15,7 +15,8 @@
 		Modal,
 		Spinner,
 		Avatar,
-		Hr
+		Hr,
+		Card
 	} from 'flowbite-svelte';
 	import gBasic from 'grapesjs-blocks-basic';
 	import { onDestroy, onMount } from 'svelte';
@@ -29,26 +30,28 @@
 	import { useEffect } from '$lib/wsstore/hooks';
 	import { sineIn } from 'svelte/easing';
 	import { gDevices } from '$lib/plugins/util/devices';
+	import logo from '$lib/assets/beta-logo.png';
 	//@ts-ignore
 	import { enhance } from '$app/forms';
-	import { goto, invalidate, invalidateAll } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { get } from 'svelte/store';
 	import axios from 'axios';
 	import it from 'grapesjs/locale/it';
 	import tr from 'grapesjs/locale/tr';
+	import { forEach } from './plugins';
+	import Upload from '$lib/plugins/util/Upload.svelte';
 
-	let selectedPage = $page.data.pages[0] ?? {};
 	let pageManager: any;
 
 	let projectEndpoint = `${$page.url.origin}/editor/${$page.params.app_id}/${
 		$page.params.builder
-	}/${pageManager?.getSelected()?.getId() ?? selectedPage.id}/svr`;
+	}/${pageManager?.getSelected()?.getId()}/svr`;
+
+	console.log(projectEndpoint, pageManager?.getSelected()?.getId());
 
 	let theme = 'light';
 
 	let editor: Editor | null = null;
-
-	let mountingEditor = true;
 
 	let pages: any[] = [];
 
@@ -76,7 +79,8 @@
 							else if (theme === 'dark') theme = 'light';
 							return theme;
 						}
-					})
+					}),
+				(editor) => forEach(editor)
 			],
 			panels: gPanels(editor),
 			styleManager: gStyles(),
@@ -99,18 +103,18 @@
 			projectData: $page.data?.projectData,
 			storageManager: {
 				type: 'remote',
-				stepsBeforeSave: 3,
+				stepsBeforeSave: 1,
 				options: {
 					remote: {
-						urlLoad: projectEndpoint,
+						urlLoad: `${$page.url.origin}/editor/${$page.params.app_id}/${$page.params.builder}/"palameter"/svr`,
 						urlStore: projectEndpoint,
 						fetchOptions: (opts: any) => (opts.method === 'POST' ? { method: 'PATCH' } : {}),
 						onStore: (data) => ({
-							id: pageManager?.getSelected()?.getId() ?? selectedPage.id,
+							id: pageManager?.getSelected()?.getId(),
 							data
 						}),
-						onLoad: (result) => {
-							return result;
+						onLoad: ({ data }) => {
+							return data;
 						}
 					}
 				}
@@ -126,6 +130,27 @@
 		editor?.Commands.add('go-home', {
 			run: () => {
 				goto(`/editor/${$page.data.space.appId}`);
+			}
+		});
+
+		editor.onReady(() => {
+			if ($page.data.customBlocks.length) {
+				$page.data.customBlocks.forEach((item) => {
+					editor?.BlockManager.add(item.name, {
+						label: item.name,
+						content: item.data,
+						category: 'Custom'
+					});
+				});
+			}
+			if ($page.data.assets.length) {
+				$page.data.assets.forEach((ass, i) => {
+					editor?.BlockManager.add(`Asset ${i}`, {
+						label: `<img  src="${ass.url}" />`,
+						content: `<img  src="${ass.url}" />`,
+						category: 'Assets'
+					});
+				});
 			}
 		});
 
@@ -197,10 +222,10 @@
 	let newPageData = {};
 
 	async function handleAddPage() {
-		let addingPage = true;
-		let url = `${$page.url.origin}/editor/${$page.params.app_id}/${$page.params.builder}/${
-			pageManager?.getSelected()?.getId() ?? selectedPage.id
-		}/svr`;
+		addingPage = true;
+		let url = `${$page.url.origin}/editor/${$page.params.app_id}/${
+			$page.params.builder
+		}/${pageManager?.getSelected()?.getId()}/svr`;
 		try {
 			const response = await axios.post(url, { ...newPageData });
 			{
@@ -226,9 +251,9 @@
 	async function handleDeletePage(id: string) {
 		deleting = true;
 		deletingId = id;
-		let url = `${$page.url.origin}/editor/${$page.params.app_id}/${$page.params.builder}/${
-			pageManager?.getSelected()?.getId() ?? selectedPage.id
-		}/svr`;
+		let url = `${$page.url.origin}/editor/${$page.params.app_id}/${
+			$page.params.builder
+		}/${pageManager?.getSelected()?.getId()}/svr`;
 		const prompt = confirm('Are you sure you want to delete this page?');
 		if (prompt) {
 			try {
@@ -250,6 +275,38 @@
 			deletingId = '';
 		}
 	}
+
+	function handleClosePage(id: string) {
+		let all = { ...openPages };
+		delete all[id];
+		openPages = { ...all };
+	}
+
+	let componentName = '';
+
+	let savingComponent = false;
+
+	async function handleSaveComponentName() {
+		let url = `${$page.url.origin}/editor/${$page.params.app_id}/${
+			$page.params.builder
+		}/${pageManager?.getSelected()?.getId()}/cmps`;
+		try {
+			savingComponent = true;
+			const response = await axios.post(url, {
+				name: componentName
+			});
+			if (response) {
+				setTimeout(() => {
+					savingComponent = false;
+					invalidateAll();
+				}, 1000);
+			}
+		} catch (error) {
+			savingComponent = false;
+		}
+	}
+
+	let explorerOpen = true;
 </script>
 
 <svelte:head>
@@ -263,14 +320,15 @@
 	<div class="flex justify-center">
 		<Spinner />
 	</div>
-	<div class="text-center dark:text-white text-lg">Loading editor...</div>
 </Modal>
 
 <Modal permanent open={editor === null} class="w-full">
-	<div class="flex justify-center">
-		<Spinner />
+	<div class="flex justify-center mb-3">
+		<img loading="lazy" src={logo} width="69" alt="Dreamfeel Logo" />
 	</div>
-	<div class="text-center dark:text-white text-lg">Loading editor...</div>
+	<div class="flex justify-center">
+		<Spinner color="red" />
+	</div>
 </Modal>
 
 <section
@@ -282,10 +340,7 @@
 			<div id="panel-devices" class="flex  px-auto justify-center items-center panel__devices " />
 			<div class="flex justify-between">
 				<div id="panel-switcher" class="panel__switcher" />
-				<DarkMode
-					class={editor ? 'block' : 'hidden'}
-					on:click={() => editor?.runCommand('toggle-theme')}
-				/>
+
 				<div class="flex items-center">
 					<Avatar size="xs" class="mx-3 {editor ? 'block' : 'hidden'}" />
 				</div>
@@ -299,14 +354,18 @@
 							<button
 								on:click={() => handlePageChange(page)}
 								class="inline-block  {pageManager?.getSelected()?.getId() === page.id
-									? 'bg-green-800 text-white'
-									: 'bg-gray-300'} whitespace-nowrap pt-1 px-2 text-xs border-b-2 dark:text-black border-transparent rounded-t-lg"
+									? 'bg-green-800 text-white dark:text-gray-100'
+									: 'bg-gray-300'} whitespace-nowrap pt-1 px-2 text-xs font-extrabold border-b-2 dark:text-black border-transparent rounded-t-lg"
 							>
 								<!-- • -->
 								{page.name}
-								<span style="font-size: 12px;" class="material-symbols-outlined  text-xs">
+								<button
+									on:click|stopPropagation={() => handleClosePage(page.id)}
+									style="font-size: 12px;"
+									class="material-symbols-outlined  text-xs"
+								>
 									close
-								</span></button
+								</button></button
 							>
 						</li>
 					{/each}
@@ -317,156 +376,206 @@
 	<div class="flex-1 innitial editor-row h-full flex dark:bg-black bg-gray-100 ">
 		<div
 			id="panel-left"
-			class=" border-t flex innitial  border-gray-400 dark:bg-black panel__left  w-72 max-w-72 p-2 bg-gray-100 min-h-[100%] h-screen"
+			class=" border-t flex innitial  border-gray-400 dark:bg-black panel__left  w-{explorerOpen
+				? 72
+				: '12'} max-w-72 p-2 bg-gray-100 min-h-[100%] h-screen"
 		>
 			<div class="flex-1 left-switcher  flex h-full pb-2 innitial">
-				<div class="innitial border border-gray-200 h-full panel-controls flex flex-col" />
-				<div class="h-full flex-1">
-					<div class="pages-container innitial">
-						<div
-							class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
-						>
-							{#if editor}
-								<p>Pages</p>
-							{/if}
-							<div class="panel-add-page innitial" />
-						</div>
-						{#if editor}
-							<!-- <Pages /> -->
-							<ul
-								class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
-							>
-								{#each $page.data.pages ?? [] as _page}
-									<li
-										class="cursor-pointer {_page.id === pageManager?.getSelected()?.getId()
-											? 'bg-gray-700'
-											: ' '} hover:bg-gray-600 text-xs flex"
-									>
-										<button
-											on:click={() => handlePageChange(_page)}
-											class="p-2 flex justify-between flex-1"
-										>
-											{_page.name}
-										</button>
-										{#if deleting && deletingId === _page.id}
-											<Spinner />
-										{:else}
-											<button
-												class="p-1 m-1 rounded hover:bg-gray-400"
-												on:click|stopPropagation={() => handleDeletePage(_page.id)}
-												><span class="material-symbols-outlined text-sm"> delete </span></button
-											>
-										{/if}
-									</li>
-								{/each}
-							</ul>
-						{/if}
-					</div>
-					<div style="display: none;" class="traits-and-selectors-container">
-						<div
-							class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
-						>
-							<p>Selectors</p>
-							<div class=" innitial" />
-						</div>
-						<div class="traits-container   innitial" />
-						<div class="selector-container innitial" />
-					</div>
-					<div style="display: none;" class="styles-container" />
-					<div style="display: none;" class="db-helper p-2">
-						<div class="text-left">
+				<div class="innitial border border-gray-200 h-full panel-controls flex flex-col">
+					{#if !explorerOpen}
+						<button on:click={() => (explorerOpen = true)} class="innitial"> == </button>
+					{/if}
+				</div>
+				{#if explorerOpen}
+					<div class="h-full flex-1">
+						<div class="pages-container innitial">
 							<div
 								class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
 							>
-								<p>Collections</p>
-							</div>
-							<ul
-								class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
-							>
 								{#if editor}
-									{#each $page.data.tables as _page}
+									<p>Pages</p>
+									<button on:click={() => (explorerOpen = false)} class="panel-add-page innitial">
+										X
+									</button>
+								{/if}
+							</div>
+							{#if editor}
+								<!-- <Pages /> -->
+								<ul
+									class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
+								>
+									{#each $page.data.pages ?? [] as _page}
 										<li
 											class="cursor-pointer {_page.id === pageManager?.getSelected()?.getId()
 												? 'bg-gray-700'
-												: ' '} hover:bg-gray-600 text-xs"
+												: ' '} hover:bg-gray-600 text-xs flex"
 										>
 											<button
 												on:click={() => handlePageChange(_page)}
-												class="p-2 flex justify-between"
+												class="p-2 flex justify-between flex-1"
 											>
 												{_page.name}
 											</button>
+											{#if deleting && deletingId === _page.id}
+												<Spinner />
+											{:else}
+												<button
+													class="p-1 m-1 rounded hover:bg-gray-400"
+													on:click|stopPropagation={() => handleDeletePage(_page.id)}
+													><span class="material-symbols-outlined text-sm"> delete </span></button
+												>
+											{/if}
 										</li>
 									{/each}
-								{/if}
-							</ul>
+								</ul>
+							{/if}
+						</div>
+						<div style="display: none;" class="traits-and-selectors-container">
+							<div
+								class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
+							>
+								<p>Selectors</p>
+								<div class=" innitial" />
+							</div>
+							<div class="traits-container   innitial" />
+							<div class="selector-container innitial" />
+						</div>
+						<div style="display: none;" class="styles-container" />
+						<div style="display: none;" class="db-helper p-2">
+							<div class="text-left">
+								<div
+									class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
+								>
+									<p>Collections</p>
+								</div>
+								<ul
+									class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
+								>
+									{#if editor}
+										{#each $page.data.tables as _page}
+											<li
+												class="cursor-pointer {_page.id === pageManager?.getSelected()?.getId()
+													? 'bg-gray-700'
+													: ' '} hover:bg-gray-600 text-xs"
+											>
+												<button
+													on:click={() => handlePageChange(_page)}
+													class="p-2 flex justify-between"
+												>
+													{_page.name}
+												</button>
+											</li>
+										{/each}
+									{/if}
+								</ul>
+							</div>
+						</div>
+						<div style="display: none;" class="vcs-container">
+							<div
+								class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
+							>
+								<p>Versions</p>
+								<div class=" innitial" />
+							</div>
+							<div class="border-gray-200">lorem</div>
+						</div>
+						<div style="display: none;" class="pages-form innitial  ">
+							<div
+								class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
+							>
+								<p>Create Page</p>
+								<div class=" innitial" />
+							</div>
+							<form method="post" class="spacing-y-6 p-1" on:submit|preventDefault={handleAddPage}>
+								<Input
+									bind:value={newPageData.name}
+									size="sm"
+									required
+									name="name"
+									placeholder="Name"
+								/>
+								<Input
+									bind:value={newPageData.icon}
+									size="sm"
+									name="icon"
+									class="my-3"
+									placeholder="Icon"
+								/>
+								<Input
+									bind:value={newPageData.path}
+									size="sm"
+									required
+									name="path"
+									class="my-3"
+									placeholder="Path"
+								/>
+								<Toggle bind:value={newPageData.layout}>Layout</Toggle>
+								<Button disabled={addingPage} size="xs" type="submit" class="w-full mt-3"
+									>{#if addingPage}Saving...{:else} Save {/if}
+								</Button>
+							</form>
+						</div>
+						<div style="display: none;" class="commerce-assist innitial ">
+							<div
+								class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
+							>
+								<p>Ecommerce</p>
+								<div class=" innitial" />
+							</div>
 						</div>
 					</div>
-					<div style="display: none;" class="vcs-container">
-						<div
-							class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
-						>
-							<p>Versions</p>
-							<div class=" innitial" />
-						</div>
-						<div class="border-gray-200">lorem</div>
-					</div>
-					<div style="display: none;" class="pages-form innitial  ">
-						<div
-							class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
-						>
-							<p>Create Page</p>
-							<div class=" innitial" />
-						</div>
-						<form method="post" class="spacing-y-6 p-1" on:submit|preventDefault={handleAddPage}>
-							<Input
-								bind:value={newPageData.name}
-								size="sm"
-								required
-								name="name"
-								placeholder="Name"
-							/>
-							<Input
-								bind:value={newPageData.icon}
-								size="sm"
-								name="icon"
-								class="my-3"
-								placeholder="Icon"
-							/>
-							<Input
-								bind:value={newPageData.path}
-								size="sm"
-								required
-								name="path"
-								class="my-3"
-								placeholder="Path"
-							/>
-							<Toggle bind:value={newPageData.layout}>Layout</Toggle>
-							<Button disabled={addingPage} size="xs" type="submit" class="w-full mt-3"
-								>{#if addingPage}Saving...{:else} Save {/if}
-							</Button>
-						</form>
-					</div>
-					<div style="display: none;" class="commerce-assist innitial ">
-						<div
-							class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
-						>
-							<p>Ecommerce</p>
-							<div class=" innitial" />
-						</div>
-					</div>
-				</div>
+				{/if}
 			</div>
 		</div>
 		<div id="editor-container" class="flex-1  dark:bg-black innitial p-2 bg-gray-100" />
-
 		<div
 			id="panel-right"
 			class="w-72 border-t  border-gray-400 dark:bg-black panel__right p-2 max-w-72 bg-gray-100 min-h-[100%] overflow-auto h-screen"
 		>
-			<div class="layers-container overflow-auto" />
-			<div class="blocks-container">
+			<div class="blocks-container pb-32">
 				<div id="blocks" />
+			</div>
+			<div style="display: none;" class="assets-container  dark:text-white overflow-auto">
+				<Upload bind:editor />
+
+				<div>
+					<div class="grid gap-3 grid-cols-2">
+						{#each $page.data.assets as asset}
+							<Card>
+								<img src={asset.url} alt="" />
+							</Card>
+						{/each}
+					</div>
+				</div>
+			</div>
+			<div style="display: none;" class="layers-container overflow-auto" />
+			<div style="display: none;" class="  text-left  components-container overflow-auto">
+				<form class="space-y-6" on:submit|preventDefault={handleSaveComponentName}>
+					<Heading tag="h6">Add component</Heading>
+					<div>
+						<Input requried placeholder="Component name" bind:value={componentName} name="name" />
+					</div>
+					<Button disabled={savingComponent} type="submit" class="w-full" color="dark" size="xs"
+						>{savingComponent ? 'Saving...' : 'Save'}</Button
+					>
+				</form>
+
+				<div class="border-t border-gray-400  my-5 " />
+				Your custom Components
+				<div class="my-5 grid grid-cols-2 gap-2">
+					{#each $page.data.customBlocks as block}
+						<Card class="p-1">
+							<div class="text-xs">
+								{block.name}
+							</div>
+							{@html block.data}
+						</Card>
+					{/each}
+				</div>
+			</div>
+			<div style="display: none;" class="  text-left  share-container overflow-auto">
+				<div class="dark-white">Share</div>
+				<Input />
 			</div>
 		</div>
 	</div>
@@ -490,7 +599,7 @@
 			>
 				{#each $page.data.ui.pages as page}
 					<li
-						class="cursor-pointer {page.id === selectedPage.id
+						class="cursor-pointer {page.id === ' selectedPage.id'
 							? 'bg-gray-700'
 							: ' '} hover:dark:bg-gray-600 text-xs"
 					>
@@ -502,7 +611,7 @@
 						<button
 							on:click={() => {
 								openPages = { ...openPages, [page.id]: page };
-								selectedPage = page;
+								// selectedPage = page;
 								hidden2 = true;
 							}}
 							class="p-2 flex"
