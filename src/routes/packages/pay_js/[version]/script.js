@@ -16,7 +16,7 @@ async function initDreamfeelPay({ CLIENT_ID, CLIENT_SECRET }) {
             func()
         },
         renderBtn(id) {
-            id = id.replace("#", "")
+            id = id.replace("?", "")
             const btnContainer = document.getElementById(id)
             const btn = document.createElement("button")
             const btnContent = document.createElement("span")

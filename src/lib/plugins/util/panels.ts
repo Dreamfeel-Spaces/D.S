@@ -112,7 +112,7 @@ export function gPanels(editor: grapesjs.Editor) {
 	};
 }
 
-export function updateNewEditorPanelsConfig(editor: 	Editor) {
+export function updateNewEditorPanelsConfig(editor: Editor) {
 	editor.Panels.addPanel({
 		id: 'panel-top',
 		el: '.panel__top'
@@ -155,30 +155,6 @@ export function updateNewEditorPanelsConfig(editor: 	Editor) {
 				/>
 			</svg>`
 			},
-			{
-				id: 'show-api',
-				command: 'manual-save',
-				label: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 96 960 960" width="24"><path d="M840 373v503q0 24-18 42t-42 18H180q-24 0-42-18t-18-42V276q0-24 18-42t42-18h503l157 157Zm-60 27L656 276H180v600h600V400ZM479.765 811Q523 811 553.5 780.735q30.5-30.264 30.5-73.5Q584 664 553.735 633.5q-30.264-30.5-73.5-30.5Q437 603 406.5 633.265q-30.5 30.264-30.5 73.5Q376 750 406.265 780.5q30.264 30.5 73.5 30.5ZM233 472h358V329H233v143Zm-53-72v476-600 124Z"/></svg>`
-			},
-
-			{
-				id: 'open-actions',
-				attributes: {
-					title: 'Open projects and templates'
-				},
-				command: 'open-actions',
-				label: `<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="currentColor"
-				height="24"
-				viewBox="0 96 960 960"
-				width="24"
-				><path
-					d="m393 891 279-335H492l36-286-253 366h154l-36 255Zm-73 85 40-280H160l360-520h80l-40 320h240L400 976h-80Zm153-395Z"
-				/></svg
-			>`
-			},
-
 			{
 				id: 'visibility',
 				active: true,
@@ -242,7 +218,31 @@ export function updateNewEditorPanelsConfig(editor: 	Editor) {
 				command: 'do-pages',
 				label: navigator.onLine
 					? `<button class="material-symbols-outlined dark:hover:underline"> description </button>`
-					: 'D'
+					: 'P'
+			},
+			{
+				id: 'traits',
+				togglable: true,
+				active: true,
+				attributes: {
+					title: 'Open traits'
+				},
+				command: 'do-traits',
+				label: navigator.onLine
+					? `<button class="material-symbols-outlined dark:hover:underline"> tune </button>`
+					: 'T'
+			},
+			{
+				id: 'panel-classy',
+				attributes: {
+					title: 'Update traits and attributes'
+				},
+				command: 'do-selectors',
+				label: navigator.onLine
+					? `<span class="material-symbols-outlined">
+				tune
+				</span>`
+					: 'W'
 			},
 			{
 				id: 'panel-add-page',
@@ -254,58 +254,47 @@ export function updateNewEditorPanelsConfig(editor: 	Editor) {
 					? `<button class="material-symbols-outlined "> note_add </button>`
 					: '+'
 			},
-			{
-				id: 'traits',
-				attributes: {
-					title: 'Update traits and attributes'
-				},
-				command: 'do-traits',
-				label: navigator.onLine
-					? `<span class="material-symbols-outlined">
-				tune
-				</span>`
-					: 'S'
-			},
-			{
-				id: 'do-hehe',
-				attributes: {
-					title: 'Open projects and templates'
-				},
-				command: 'do-styles',
-				label: navigator.onLine
-					? `<button class="material-symbols-outlined "> margin </button>`
-					: 'F'
-			},
-			{
-				id: 'assets',
-				attributes: {
-					title: 'Open projects and templates'
-				},
-				command: 'do-commerce',
-				label: navigator.onLine
-					? `<button class="material-symbols-outlined "> shopping_cart </button>`
-					: 'C'
-			},
-			{
-				id: 'db',
-				attributes: {
-					title: 'Open projects and templates'
-				},
-				command: 'do-database',
-				label: navigator.onLine
-					? `<button class="material-symbols-outlined "> database </button>`
-					: 'D'
-			},
-			{
-				id: 'vcs',
-				attributes: {
-					title: 'Open projects and templates'
-				},
-				command: 'do-vcs',
-				label: navigator.onLine
-					? `<button class="material-symbols-outlined "> alt_route </button>`
-					: '+'
-			},
+
+			// {
+			// 	id: 'do-hehe',
+			// 	attributes: {
+			// 		title: 'Open projects and templates'
+			// 	},
+			// 	command: 'do-styles',
+			// 	label: navigator.onLine
+			// 		? `<button class="material-symbols-outlined "> margin </button>`
+			// 		: 'S'
+			// },
+			// {
+			// 	id: 'assets',
+			// 	attributes: {
+			// 		title: 'Open projects and templates'
+			// 	},
+			// 	command: 'do-commerce',
+			// 	label: navigator.onLine
+			// 		? `<button class="material-symbols-outlined "> shopping_cart </button>`
+			// 		: 'C'
+			// },
+			// {
+			// 	id: 'db',
+			// 	attributes: {
+			// 		title: 'Open projects and templates'
+			// 	},
+			// 	command: 'do-database',
+			// 	label: navigator.onLine
+			// 		? `<button class="material-symbols-outlined "> database </button>`
+			// 		: 'D'
+			// }
+			// {
+			// 	id: 'vcs',
+			// 	attributes: {
+			// 		title: 'Open projects and templates'
+			// 	},
+			// 	command: 'do-vcs',
+			// 	label: navigator.onLine
+			// 		? `<button class="material-symbols-outlined "> alt_route </button>`
+			// 		: 'V'
+			// }
 			// {
 			// 	id: 'ii8',
 			// 	attributes: {

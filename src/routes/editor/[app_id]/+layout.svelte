@@ -15,7 +15,7 @@
 
 <SpaceNav modalOnly={true} />
 
-{#if !/\/v\//.test($page.url.pathname) && !/\/editor\/([^/]+)\/([^/]+)\/([^/])/.test($page.url.pathname) }
+{#if !/\/v\//.test($page.url.pathname) && !/\/editor\/([^/]+)\/([^/]+)/.test($page.url.pathname) }
 	<div class="flex flex-row min-h-screen dark:bg-black bg-gray-100 text-gray-800">
 		<aside
 			out:fade
@@ -129,7 +129,7 @@
 							</form>
 						{:else}
 							<a
-								href="#"
+								href="?"
 								class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
 							>
 								<span class="flex items-center justify-center text-lg text-red-400">

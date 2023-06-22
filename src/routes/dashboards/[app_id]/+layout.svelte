@@ -202,7 +202,7 @@
 						</form>
 					{:else}
 						<a
-							href="#"
+							href="?"
 							class="flex flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-100 hover:text-gray-700"
 						>
 							<span class="flex items-center justify-center text-lg text-red-400">

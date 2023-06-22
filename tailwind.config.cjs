@@ -24,6 +24,7 @@ module.exports = {
         '9xl': '8960px',
         '10xl': '10240px'
       },
+      // w:{69:""}
     },
   },
   plugins: [

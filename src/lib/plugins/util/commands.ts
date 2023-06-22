@@ -41,6 +41,24 @@ export function addGCommands(editor: any) {
 		}
 	});
 
+	editor.Commands.add('do-traits', {
+		getRowEl(editor) {
+			return editor.getContainer().closest('.editor-row');
+		},
+		getLayersEl(row) {
+			return row.querySelector('.traits-container');
+		},
+
+		run(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = '';
+		},
+		stop(editor, sender) {
+			const lmEl = this.getLayersEl(this.getRowEl(editor));
+			lmEl.style.display = 'none';
+		}
+	});
+
 	editor.Commands.add('do-styles', {
 		getRowEl(editor) {
 			return editor.getContainer().closest('.editor-row');
@@ -64,7 +82,7 @@ export function addGCommands(editor: any) {
 			return editor.getContainer().closest('.editor-row');
 		},
 		getLayersEl(row) {
-			return row.querySelector('.traits-and-selectors-container');
+			return row.querySelector('.traits-container');
 		},
 
 		run(editor, sender) {
@@ -76,12 +94,12 @@ export function addGCommands(editor: any) {
 			lmEl.style.display = 'none';
 		}
 	});
-	editor.Commands.add('do-database', {
+	editor.Commands.add('do-selectors', {
 		getRowEl(editor) {
 			return editor.getContainer().closest('.editor-row');
 		},
 		getLayersEl(row) {
-			return row.querySelector('.db-helper');
+			return row.querySelector('.selector-container');
 		},
 
 		run(editor, sender) {

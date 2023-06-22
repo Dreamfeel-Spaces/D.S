@@ -128,9 +128,7 @@
 								<td class="px-6 py-4">
 									<a
 										rel="external"
-										href={`/editor/${$page.params['app_id']}/${version.id}/${
-											version.pages.find((page) => page.path === '/')?.id ?? version.pages[0]?.id
-										}`}
+										href={`/editor/${$page.params['app_id']}/${version.id}`}
 									>
 										<Button pill outline gradient size="xs">
 											<span class="px-3">

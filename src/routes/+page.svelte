@@ -2,7 +2,7 @@
 	//@ts-nocheck
 	import logo from '../assets/beta-logo.png';
 	export let form: any;
-	import { Alert, Button, Card, } from 'flowbite-svelte';
+	import { Alert, Button, Card } from 'flowbite-svelte';
 
 	import Cursort from './Cursort.svelte';
 	import HeroCarousel from './HeroCarousel.svelte';
@@ -80,8 +80,11 @@
 					<h1
 						class="text-2xl 4xl:my-[48rem] backgro bg-opacity-100 dark:text-gray-900 mt-36 backdrop:blur-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center   text-gray-900 font-bold leading-tight"
 					>
-						The Ultimate No-Code Framework to Bring Your Vision to Life!
+						Code Less, Create More
 					</h1>
+					<p class="text-center text-lg mt-8">
+						Fueling Boundless Innovation for Entrepreneurs in the Digital Realm!
+					</p>
 				</div>
 				<div class="flex justify-center items-center mb-10 sm:mb-20">
 					<a
@@ -256,7 +259,7 @@
 </section>
 
 <div class="dark:bg-black  ">
-	<div class="container dark:bg-black pb-24 px-6 -pt-20 mx-auto">
+	<div class="container dark:bg-black pb-18 px-6 -pt-20 mx-auto">
 		<section class="mb-20 text-gray-800">
 			<div class="dark:hidden block">
 				<div
@@ -504,11 +507,38 @@
 	</div>
 </div>
 
+<section class="bg-white dark:bg-black">
+	<div class="py-8 lg:py-16 mx-20 max-w-screen-xl px-4">
+		<h2
+			class="mb-8 lg:mb-16 text-3xl font-extrabold tracking-tight leading-tight text-center text-gray-900 dark:text-white md:text-4xl"
+		>
+			Our partners
+		</h2>
+		<div
+			class="grid  grid-cols-3 gap-8 text-gray-500 sm:gap-12 md:grid-cols-3 lg:grid-cols-6 dark:text-gray-400"
+		>
+			<a href="https://www.ku.ac.ke/iiuil/" class="flex justify-center items-center">
+				<img
+					style="height:60%"
+					alt="Kenyatta University logo"
+					src="https://res.cloudinary.com/dreamnerd/image/upload/v1682428867/ggjggj_u8g6r5.png"
+				/>
+			</a>
+			<a href="https://www.microsoft.com/en-us/startups" class="flex justify-center items-center">
+				<img
+					src="https://res.cloudinary.com/dreamnerd/image/upload/v1687421961/MS_Startups_Celebration_Badge_Dark_cp5rxq.png"
+					alt="Microsoft for startup logo"
+				/>
+			</a>
+		</div>
+	</div>
+</section>
+
 <footer style="backdrop-filter:blur(30px)" class="p-4 md:p-8 lg:p-10   dark:bg-black">
 	<div class="mx-auto max-w-screen-xl text-center">
 		<a
 			href="/"
-			class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white"
+			class="flex justify-center items-center mt-b text-2xl font-semibold text-gray-900 dark:text-white"
 		>
 			<div class="text-center">
 				<div class="flex justify-center">
@@ -517,7 +547,7 @@
 			</div>
 		</a>
 
-		<p class="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white">
+		<p class="flex flex-wrap justify-center items-center mb-1 text-gray-900 dark:text-gray-400">
 			Chandaria BIIC-Kenyatta University
 		</p>
 

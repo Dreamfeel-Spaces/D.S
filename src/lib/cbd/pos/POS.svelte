@@ -178,7 +178,7 @@
 				</a>
 				<ul class="flex flex-col space-y-2 mt-12">
 					<li>
-						<a href="#" class="flex items-center">
+						<a href="?" class="flex items-center">
 							<span
 								class="flex items-center justify-center h-12 w-12 rounded-2xl"
 								x-bind:class={`{
@@ -204,7 +204,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="#" class="flex items-center">
+						<a href="?" class="flex items-center">
 							<span
 								class="flex items-center justify-center text-black-100 hover:bg-cyan-400 h-12 w-12 rounded-2xl"
 							>
@@ -226,7 +226,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="#" class="flex items-center">
+						<a href="?" class="flex items-center">
 							<span
 								class="flex items-center justify-center text-black-100 hover:bg-cyan-400 h-12 w-12 rounded-2xl"
 							>
@@ -248,7 +248,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="#" class="flex items-center">
+						<a href="?" class="flex items-center">
 							<span
 								class="flex items-center justify-center text-black-100 hover:bg-cyan-400 h-12 w-12 rounded-2xl"
 							>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import grapesjs, { Editor } from 'grapesjs';
+	import grapesjs, { ComponentManager, Editor } from 'grapesjs';
 	import { page } from '$app/stores';
 	import 'grapesjs/dist/css/grapes.min.css';
 	import appcSS from '../../app.css?inline';
@@ -43,11 +43,7 @@
 
 	let pageManager: any;
 
-	let projectEndpoint = `${$page.url.origin}/editor/${$page.params.app_id}/${
-		$page.params.builder
-	}/${pageManager?.getSelected()?.getId()}/svr`;
-
-	console.log(projectEndpoint, pageManager?.getSelected()?.getId());
+	let projectEndpoint = `${$page.url.origin}/editor/${$page.params.app_id}/${$page.params.builder}/svr`;
 
 	let theme = 'light';
 
@@ -86,7 +82,7 @@
 			styleManager: gStyles(),
 			canvasCss: appcSS,
 			traitManager: {
-				appendTo: '#panel-left'
+				appendTo: '.traits-container'
 			},
 			selectorManager: {
 				appendTo: '.selector-container'
@@ -100,20 +96,19 @@
 				blocks: []
 			},
 			deviceManager: gDevices(),
-			projectData: $page.data?.projectData,
 			storageManager: {
 				type: 'remote',
 				stepsBeforeSave: 1,
 				options: {
 					remote: {
-						urlLoad: `${$page.url.origin}/editor/${$page.params.app_id}/${$page.params.builder}/"palameter"/svr`,
+						urlLoad: projectEndpoint,
 						urlStore: projectEndpoint,
 						fetchOptions: (opts: any) => (opts.method === 'POST' ? { method: 'PATCH' } : {}),
 						onStore: (data) => ({
 							id: pageManager?.getSelected()?.getId(),
 							data
 						}),
-						onLoad: ({ data }) => {
+						onLoad: ( data ) => {
 							return data;
 						}
 					}
@@ -123,6 +118,8 @@
 				messages: { it, tr }
 			}
 		});
+
+		// editor.on('component:selected', () => {});
 
 		updateNewEditorPanelsConfig(editor);
 		addGCommands(editor);
@@ -136,7 +133,7 @@
 		editor.onReady(() => {
 			if ($page.data.customBlocks.length) {
 				$page.data.customBlocks.forEach((item) => {
-					editor?.BlockManager.add(item.name, {
+					editor?.BlockManager.add(item.id, {
 						label: item.name,
 						content: item.data,
 						category: 'Custom'
@@ -145,7 +142,7 @@
 			}
 			if ($page.data.assets.length) {
 				$page.data.assets.forEach((ass, i) => {
-					editor?.BlockManager.add(`Asset ${i}`, {
+					editor?.BlockManager.add(`Asset ${ass.id}`, {
 						label: `<img  src="${ass.url}" />`,
 						content: `<img  src="${ass.url}" />`,
 						category: 'Assets'
@@ -186,19 +183,20 @@
 		easing: sineIn
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		editor?.loadProjectData($page.data.projectData);
-	// 	},
-	// 	() => [$page.data.projectData]
-	// );
-
 	let hidden2 = true;
 	let pageModalRadio = 'pages';
 
 	let openPages = { [($page.data.pages[0] ?? {}).id]: $page.data.pages[0] ?? {} };
 
 	let changingPage = false;
+	let addingPage = false;
+	let newPageData = {};
+	let deleting = false;
+	let deletingId = '';
+	let componentName = '';
+	let savingComponent = false;
+	let explorerOpen = true;
+	let blockyOpen = true;
 
 	function handlePageChange(_page: any) {
 		const page = pageManager.get(_page.id);
@@ -217,15 +215,9 @@
 		pageManager.select(_page.id);
 	}
 
-	let addingPage = false;
-
-	let newPageData = {};
-
 	async function handleAddPage() {
 		addingPage = true;
-		let url = `${$page.url.origin}/editor/${$page.params.app_id}/${
-			$page.params.builder
-		}/${pageManager?.getSelected()?.getId()}/svr`;
+		let url = `${$page.url.origin}/editor/${$page.params.app_id}/${$page.params.builder}/svr`;
 		try {
 			const response = await axios.post(url, { ...newPageData });
 			{
@@ -245,15 +237,10 @@
 		}
 	}
 
-	let deleting = false;
-	let deletingId = '';
-
 	async function handleDeletePage(id: string) {
 		deleting = true;
 		deletingId = id;
-		let url = `${$page.url.origin}/editor/${$page.params.app_id}/${
-			$page.params.builder
-		}/${pageManager?.getSelected()?.getId()}/svr`;
+		let url = `${$page.url.origin}/editor/${$page.params.app_id}/${$page.params.builder}/svr`;
 		const prompt = confirm('Are you sure you want to delete this page?');
 		if (prompt) {
 			try {
@@ -282,14 +269,8 @@
 		openPages = { ...all };
 	}
 
-	let componentName = '';
-
-	let savingComponent = false;
-
 	async function handleSaveComponentName() {
-		let url = `${$page.url.origin}/editor/${$page.params.app_id}/${
-			$page.params.builder
-		}/${pageManager?.getSelected()?.getId()}/cmps`;
+		let url = `${$page.url.origin}/editor/${$page.params.app_id}/${$page.params.builder}/cmps`;
 		try {
 			savingComponent = true;
 			const response = await axios.post(url, {
@@ -306,7 +287,7 @@
 		}
 	}
 
-	let explorerOpen = true;
+	function openCustomBlocks(id) {}
 </script>
 
 <svelte:head>
@@ -335,7 +316,7 @@
 	class="max-h-screen dark:bg-black dark:text-slate-200 min-h-screen overflow-hidden flex flex-col "
 >
 	<div id="panel-top" class="p-1 flex flex-col panel__top w-full">
-		<div class="flex justify-between">
+		<div class="md:flex justify-between">
 			<div id="basic-actions" class="  border-gray-100 rounded-xl  panel__basic-actions" />
 			<div id="panel-devices" class="flex  px-auto justify-center items-center panel__devices " />
 			<div class="flex justify-between">
@@ -346,63 +327,78 @@
 				</div>
 			</div>
 		</div>
-		<div class=" gap-2 panel">
-			{#if editor}
-				<ul class="flex flex- w-sc max-w-screen-2xl py-1 overflow-auto -mb-px">
-					{#each Object.keys(openPages).map((page) => openPages[page]) as page}
-						<li class="mr-2">
-							<button
-								on:click={() => handlePageChange(page)}
-								class="inline-block  {pageManager?.getSelected()?.getId() === page.id
-									? 'bg-green-800 text-white dark:text-gray-100'
-									: 'bg-gray-300'} whitespace-nowrap pt-1 px-2 text-xs font-extrabold border-b-2 dark:text-black border-transparent rounded-t-lg"
-							>
-								<!-- • -->
-								{page.name}
+		<div class="flex">
+			<div class="w-9  bg-gray-200 mr-2 rounded dark:bg-black text-black dark:text-white ">
+				{#if !explorerOpen}
+					<!-- <button on:click={() => (explorerOpen = true)} class="innitial"> == </button> -->
+				{:else}
+					<!-- <button on:click={() => (explorerOpen = false)} class="panel-add-page innitial">
+						X
+					</button> -->
+				{/if}
+			</div>
+
+			<div class="flex-1 gap-2 panel">
+				{#if editor}
+					<ul class="flex flex- w-sc max-w-screen-2xl py-1 overflow-auto -mb-px">
+						{#each Object.keys(openPages).map((page) => openPages[page]) as page}
+							<li class="mr-2">
 								<button
-									on:click|stopPropagation={() => handleClosePage(page.id)}
-									style="font-size: 12px;"
-									class="material-symbols-outlined  text-xs"
+									on:click={() => handlePageChange(page)}
+									class="inline-block  {pageManager?.getSelected()?.getId() === page.id
+										? 'bg-green-800 text-white dark:text-gray-100'
+										: 'bg-gray-300'} whitespace-nowrap pt-1 px-2 text-xs font-extrabold border-b-2 dark:text-black border-transparent rounded-t-lg"
 								>
-									close
-								</button></button
-							>
-						</li>
-					{/each}
-				</ul>
-			{/if}
+									<!-- • -->
+									{page.name}
+									<button
+										on:click|stopPropagation={() => handleClosePage(page.id)}
+										style="font-size: 12px;"
+										class="material-symbols-outlined  text-xs"
+									>
+										close
+									</button></button
+								>
+							</li>
+						{/each}
+					</ul>
+				{/if}
+			</div>
+			<!-- <div class="w-9  bg-gray-200 mr-2 rounded dark:bg-black text-black dark:text-white ">
+				{#if !blockyOpen}
+					<button on:click={() => (blockyOpen = true)}>==</button>
+				{:else}
+					<button class={blockyOpen ? '' : 'hidden'} on:click={() => (blockyOpen = false)}>X</button
+					>
+				{/if}
+			</div> -->
 		</div>
 	</div>
 	<div class="flex-1 innitial editor-row h-full flex dark:bg-black bg-gray-100 ">
 		<div
 			id="panel-left"
-			class=" border-t flex innitial  border-gray-400 dark:bg-black panel__left  w-{explorerOpen
-				? 72
-				: '12'} max-w-72 p-2 bg-gray-100 min-h-[100%] h-screen"
+			class=" border-t w-56 flex innitial  border-gray-400  dark:border-gray-800 dark:bg-black panel__left  w-{explorerOpen
+				? 56
+				: '12'} max-w-56 p-2 bg-gray-100 min-h-[100%] h-screen"
 		>
 			<div class="flex-1 left-switcher  flex h-full pb-2 innitial">
-				<div class="innitial border border-gray-200 h-full panel-controls flex flex-col">
-					{#if !explorerOpen}
-						<button on:click={() => (explorerOpen = true)} class="innitial"> == </button>
-					{/if}
-				</div>
+				<div
+					class="innitial border dark:border-gray-800 rounded-xl border-gray-200 h-full panel-controls flex flex-col"
+				/>
 				{#if explorerOpen}
 					<div class="h-full flex-1">
 						<div class="pages-container innitial">
 							<div
-								class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
+								class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  dark:border-gray-800 font-bold"
 							>
 								{#if editor}
 									<p>Pages</p>
-									<button on:click={() => (explorerOpen = false)} class="panel-add-page innitial">
-										X
-									</button>
 								{/if}
 							</div>
 							{#if editor}
 								<!-- <Pages /> -->
 								<ul
-									class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
+									class="innitial dark:text-gray-50 bg-white  overflow-auto  border-gray-200  dark:bg-black dark:border-gray-800 divide-y divide-gray-200 dark:divide-gray-600"
 								>
 									{#each $page.data.pages ?? [] as _page}
 										<li
@@ -430,14 +426,21 @@
 								</ul>
 							{/if}
 						</div>
-						<div style="display: none;" class="traits-and-selectors-container">
+						<div style="display: none;" class="traits-container">
 							<div
 								class="text-left  flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
 							>
-								<p>Selectors</p>
+								<p>Attributes</p>
+								<div class="   innitial" />
+							</div>
+						</div>
+						<div style="display: none;" class="selector-container">
+							<div
+								class="text-left   flex justify-between text-xs mb-3  p-3 border-b border-gray-100  font-bold"
+							>
+								<p>Tailwind</p>
 								<div class=" innitial" />
 							</div>
-							<div class="traits-container   innitial" />
 							<div class="selector-container innitial" />
 						</div>
 						<div style="display: none;" class="styles-container" />
@@ -477,7 +480,13 @@
 								<p>Versions</p>
 								<div class=" innitial" />
 							</div>
-							<div class="border-gray-200">lorem</div>
+							<div class="grid gap-2 grid-cols-2">
+								{#each $page.data.assets as asset}
+									<Card>
+										<img src={asset.url} alt="" />
+									</Card>
+								{/each}
+							</div>
 						</div>
 						<div style="display: none;" class="pages-form innitial  ">
 							<div
@@ -528,56 +537,65 @@
 			</div>
 		</div>
 		<div id="editor-container" class="flex-1  dark:bg-black innitial p-2 bg-gray-100" />
-		<div
-			id="panel-right"
-			class="w-72 border-t  border-gray-400 dark:bg-black panel__right p-2 max-w-72 bg-gray-100 min-h-[100%] overflow-auto h-screen"
-		>
-			<div class="blocks-container pb-32">
-				<div id="blocks" />
-			</div>
-			<div style="display: none;" class="assets-container  dark:text-white overflow-auto">
-				<Upload bind:editor />
+		{#if true}
+			<div
+				id="panel-right"
+				class="w-72 dark:border-gray-800 border-t {blockyOpen
+					? ''
+					: 'hidden'}  border-gray-400  dark:border-gray-800 dark:bg-black panel__right p-2 max-w-72 bg-gray-100 min-h-[100%] overflow-auto h-screen"
+			>
+				{#if editor}
+					<div class="h-9 flex  {blockyOpen ? '' : 'hidden'} justify-between">
+						<p>Components</p>
+					</div>
+				{/if}
+				<div class="blocks-container {blockyOpen ? '' : 'hidden'} pb-32">
+					<div id="blocks" />
+				</div>
+				<div style="display: none;" class="assets-container  dark:text-white overflow-auto">
+					<Upload bind:editor />
 
-				<div>
-					<div class="grid gap-3 grid-cols-2">
-						{#each $page.data.assets as asset}
-							<Card>
-								<img src={asset.url} alt="" />
-							</Card>
+					<div>
+						<div class="grid gap-3 grid-cols-2">
+							{#each $page.data.assets as asset}
+								<Card>
+									<img src={asset.url} alt="" />
+								</Card>
+							{/each}
+						</div>
+					</div>
+				</div>
+				<div style="display: none;" class="layers-container overflow-auto" />
+				<div style="display: none;" class="  text-left  components-container overflow-auto">
+					<form class="space-y-6" on:submit|preventDefault={handleSaveComponentName}>
+						<Heading tag="h6">Add component</Heading>
+						<div>
+							<Input requried placeholder="Component name" bind:value={componentName} name="name" />
+						</div>
+						<Button disabled={savingComponent} type="submit" class="w-full" color="dark" size="xs"
+							>{savingComponent ? 'Saving...' : 'Save'}</Button
+						>
+					</form>
+
+					<div class="border-t border-gray-400  dark:border-gray-800  my-5 " />
+					Your custom Components
+					<div class="my-5 grid grid-cols-2 gap-2">
+						{#each $page.data.customBlocks as block}
+							<button on:click={console.log} class="p-2 rounded-xl dark:bg-gray-900">
+								<div class="text-xs">
+									{block.name}
+								</div>
+								{@html block.data}
+							</button>
 						{/each}
 					</div>
 				</div>
-			</div>
-			<div style="display: none;" class="layers-container overflow-auto" />
-			<div style="display: none;" class="  text-left  components-container overflow-auto">
-				<form class="space-y-6" on:submit|preventDefault={handleSaveComponentName}>
-					<Heading tag="h6">Add component</Heading>
-					<div>
-						<Input requried placeholder="Component name" bind:value={componentName} name="name" />
-					</div>
-					<Button disabled={savingComponent} type="submit" class="w-full" color="dark" size="xs"
-						>{savingComponent ? 'Saving...' : 'Save'}</Button
-					>
-				</form>
-
-				<div class="border-t border-gray-400  my-5 " />
-				Your custom Components
-				<div class="my-5 grid grid-cols-2 gap-2">
-					{#each $page.data.customBlocks as block}
-						<Card class="p-1">
-							<div class="text-xs">
-								{block.name}
-							</div>
-							{@html block.data}
-						</Card>
-					{/each}
+				<div style="display: none;" class="  text-left  share-container overflow-auto">
+					<div class="dark-white">Share</div>
+					<Input />
 				</div>
 			</div>
-			<div style="display: none;" class="  text-left  share-container overflow-auto">
-				<div class="dark-white">Share</div>
-				<Input />
-			</div>
-		</div>
+		{/if}
 	</div>
 </section>
 

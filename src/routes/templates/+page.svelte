@@ -7,7 +7,7 @@
 	<div class="flex">
 		<Heading class="flex-1" tag="h5">All templates</Heading>
 		<div>
-			<Button  href="#" >Create templates</Button>
+			<Button  href="?" >Create templates</Button>
 		</div>
 	</div>
 	<div class="grid mt-4 grid-cols-3 gap-3">
