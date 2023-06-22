@@ -82,10 +82,12 @@ export function isReservedRoute(pathname: string) {
 	let isCDN = /^\/packages/.test(pathname);
 	let isPay = /^\/pay/.test(pathname);
 	let isTemplates = /^\/templates/.test(pathname);
+	let isPartner = /^\/partner/.test(pathname);
 
 
 
 	let reservedRoutes = [
+		isPartner,
 		isVerify,
 		isFeedback,
 		isAccounts,

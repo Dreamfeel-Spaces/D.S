@@ -14,6 +14,13 @@ datasource db {
   relationMode = "prisma"
 }
 
+model partners {
+  id      String @id @default(cuid())
+  name    String
+  email   String
+  company String
+}
+
 model PageDataGroup {
   id        String             @id @default(cuid())
   name      String

@@ -530,6 +530,27 @@
 					alt="Microsoft for startup logo"
 				/>
 			</a>
+			<div class="flex h-full items-center">
+				<a
+					href="/partner"
+					class="h-[4rem] flex  text-center  justify-center text-xs items-center px-3  rounded-lg  bg-gray-300 dark:bg-gray-900"
+				>
+					<div>
+						<div class="flex mb-1 justify-center">
+							<svg
+								fill="currentColor"
+								xmlns="http://www.w3.org/2000/svg"
+								height="24"
+								viewBox="0 -960 960 960"
+								width="24"
+								><path d="M450-200v-250H200v-60h250v-250h60v250h250v60H510v250h-60Z" /></svg
+							>
+						</div>
+
+						<p>Become a partner</p>
+					</div>
+				</a>
+			</div>
 		</div>
 	</div>
 </section>
@@ -547,35 +568,11 @@
 			</div>
 		</a>
 
-		<p class="flex flex-wrap justify-center items-center mb-1 text-gray-900 dark:text-gray-400">
+		<p class="flex flex-wrap justify-center items-center mb-1 mt-3 text-gray-900 dark:text-gray-400">
 			Chandaria BIIC-Kenyatta University
 		</p>
-
-		<!-- <ul class="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white">
-			<li>
-				<a href="/" class="mr-4 hover:underline md:mr-6 ">About</a>
-			</li>
-			<li>
-				<a href="/" class="mr-4 hover:underline md:mr-6">Premium</a>
-			</li>
-			<li>
-				<a href="/" class="mr-4 hover:underline md:mr-6 ">Campaigns</a>
-			</li>
-			<li>
-				<a href="/" class="mr-4 hover:underline md:mr-6">Blog</a>
-			</li>
-			<li>
-				<a href="/" class="mr-4 hover:underline md:mr-6">Affiliate Program</a>
-			</li>
-			<li>
-				<a href="/" class="mr-4 hover:underline md:mr-6">FAQs</a>
-			</li>
-			<li>
-				<a href="/" class="mr-4 hover:underline md:mr-6">Contact</a>
-			</li>
-		</ul> -->
 		<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
-			>© {new Date().getFullYear()} <a href="/" class="hover:underline">Dreamfeel Spaces</a>. All
+			>© {new Date().getFullYear()} <a href="/" class="hover:underline text-xs">Dreamfeel Spaces</a>. All
 			Rights Reserved.</span
 		>
 	</div>
