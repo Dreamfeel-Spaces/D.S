@@ -58,7 +58,7 @@
 		uploading = true;
 		const { acceptedFiles } = e.detail;
 		files = acceptedFiles;
-		files.accepted.forEach(handleImgSrc);
+		files.forEach(handleImgSrc);
 	}
 
 	async function handleSubmit() {
