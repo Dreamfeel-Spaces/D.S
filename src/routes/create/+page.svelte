@@ -58,6 +58,7 @@
 		uploading = true;
 		const { acceptedFiles } = e.detail;
 		files = acceptedFiles;
+		files.accepted.forEach(handleImgSrc);
 	}
 
 	async function handleSubmit() {
@@ -87,6 +88,23 @@
 	onDestroy(() => {
 		if (requestTimeOut) clearTimeout(requestTimeOut);
 	});
+
+	function handleImgSrc(file) {
+		const preview = document.querySelector('#preview');
+		let image;
+		const reader = new FileReader();
+		reader.addEventListener('load', function () {
+			const image = new Image();
+			image.height = 100;
+			image.title = file.name;
+			image.src = reader.result;
+			image.style.width = '100%';
+			preview.appendChild(image);
+		});
+		reader.readAsDataURL(file);
+
+		return image;
+	}
 </script>
 
 {#if form?.error}
@@ -192,17 +210,15 @@
 				/>
 
 				<div class="flex gap-3">
-					{#if coverImage}
-						<img class="mt-4" width={81} src={coverImage} alt="Cover" />
-					{/if}
+					<div id="preview" class="max-w-xs" />
 					<Dropzone class="flex-1" accept="image/*" multiple={false} on:drop={handleFilesSelect} />
 				</div>
 
-				{#if uploading}
+				<!-- {#if uploading}
 					<div class="mt-4" role="status">
 						<svg
 							aria-hidden="true"
-							class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+							class="w-8 h-8 mr-2 text-gra	y-200 animate-spin dark:text-gray-600 fill-blue-600"
 							viewBox="0 0 100 101"
 							fill="none"
 							xmlns="http://www.w3.org/2000/svg"
@@ -218,7 +234,7 @@
 						</svg>
 						<span class="sr-only">Uploading...</span>
 					</div>
-				{/if}
+				{/if} -->
 			</div>
 			<Button
 				disabled={convertToSlug(appId ? appId : appName).length > 24}

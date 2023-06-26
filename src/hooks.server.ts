@@ -45,7 +45,7 @@ export const authHandle = SvelteKitAuth({
 		Google({ clientId: GOOGLE_ID, clientSecret: GOOGLE_SECRET }),
 		Email({
 			server: EMAIL_SERVER,
-			from: EMAIL_FROM
+			from: "Dreamfeel"
 		})
 	],
 	jwt: {
