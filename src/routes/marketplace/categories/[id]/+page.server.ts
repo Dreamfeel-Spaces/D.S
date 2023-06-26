@@ -1,6 +1,6 @@
 // src/routes/+page.server.ts
 
-import prisma from "$lib/db/page";
+import prisma from "$lib/mark/db/page";
 import type { PageServerLoad } from "./$types";
 
 export const load = (async ({ params }) => {

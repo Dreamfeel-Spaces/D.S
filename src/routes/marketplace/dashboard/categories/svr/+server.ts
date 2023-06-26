@@ -1,4 +1,4 @@
-import prisma from "$lib/db/page";
+import prisma from "$lib/mark/db/page";
 import type { RequestEvent } from "./$types";
 
 export async function POST({ request }: RequestEvent) {
