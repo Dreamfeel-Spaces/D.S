@@ -21,7 +21,6 @@
 		children: buildTree($page.data.pages)
 	};
 
-	console.log(JSON.stringify(tree, null, 2));
 </script>
 
 <div class="flex justify-left">

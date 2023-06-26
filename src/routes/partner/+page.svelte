@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { Select } from 'flowbite-svelte';
+	let role = '';
 	export let form: any;
 </script>
 
@@ -99,6 +101,23 @@
 					class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
 					placeholder="email-id@company.domain"
 					required
+				/>
+			</div>
+
+			<div>
+				<label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+					>Your role</label
+				>
+				<Select
+					placeholder="What is your role?"
+					value={role}
+					name="role"
+					required
+					items={[
+						{ name: 'Service Provider', value: 'service_provider' },
+						{ name: 'Investor', value: 'investor' },
+						{ name: 'Other', value: 'other' }
+					]}
 				/>
 			</div>
 

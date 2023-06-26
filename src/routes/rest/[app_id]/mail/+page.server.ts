@@ -19,7 +19,6 @@ export async function load({ locals }: RequestEvent) {
 		values = JSON.parse(configVars?.value ?? '{}');
 	}
 
-    console.log(values)
 
 	return { configVars, values };
 }

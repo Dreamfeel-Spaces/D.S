@@ -1,6 +1,6 @@
 <script lang="ts">
 	//@ts-nocheck
-	import { Card, Button, Alert, Label, DarkMode, Avatar } from 'flowbite-svelte';
+	import { Card, Button, Alert, Avatar } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import DemoCredentials from './DemoCredentials.svelte';
@@ -180,6 +180,9 @@
 				<div class="footer-content">
 					<p class="text-xs my-3 text-gray-600 text-center">
 						Powered by <a rel="external" target="blank" href="/">Dreamfeel Spaces</a>
+					</p>
+					<p class="text-xs my-3 text-gray-600 text-center">
+					 <a rel="external" target="blank" href="/create">Create your space</a>
 					</p>
 				</div>
 			</footer>

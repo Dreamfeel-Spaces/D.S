@@ -21,7 +21,6 @@
 						{ label: 'Item 3', kind: monaco.languages.CompletionItemKind.Text }
 					];
 
-					console.log(suggestions);
 					return { suggestions };
 				}
 

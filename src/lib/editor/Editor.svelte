@@ -108,7 +108,7 @@
 							id: pageManager?.getSelected()?.getId(),
 							data
 						}),
-						onLoad: ( data ) => {
+						onLoad: ( {data} ) => {
 							return data;
 						}
 					}

@@ -17,6 +17,7 @@ export const actions: Actions = {
 					email,
 					name,
 					company,
+					partnershipType: role
 				}
 			});
 

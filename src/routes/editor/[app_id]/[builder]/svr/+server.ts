@@ -170,7 +170,7 @@ export async function PATCH({ request, params, locals }: RequestEvent) {
 	</html>
 	`;
 
-	return new Response(pagePreset);
+	return new Response(JSON.stringify(pageData));
 }
 
 export async function GET({ params }: RequestEvent) {

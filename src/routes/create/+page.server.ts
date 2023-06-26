@@ -1,13 +1,11 @@
 import { prisma } from '$lib/db/prisma';
-import { Token } from '$lib/token/Token';
-import { convertToSlug } from '$lib/util/slugit';
-import { error, redirect } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
 export async function load({ locals }: RequestEvent) {
 	//@ts-ignore
 	const session = await locals.getSession();
-	if (!session?.user) throw redirect(302, '/accounts');
+	if (!session?.user) throw redirect(302, '/accounts?next=/create');
 
 	const user = await prisma.user.findUnique({
 		where: {

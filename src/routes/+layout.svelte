@@ -79,7 +79,7 @@
 		{@html $page.data.html}
 	{/if}
 
-	{#if /\/a$/.test($page.url.pathname) || /\/templates/.test($page.url.pathname) || (isPreview && !subdomain)}
+	{#if /\/a$/.test($page.url.pathname) || /\/templates/.test($page.url.pathname) || (isPreview && !subdomain) || /\/marketplace/.test($page.url.pathname)}
 		<slot />
 	{/if}
 
@@ -193,14 +193,14 @@
 									</Dropdown>
 								</Dropdown>
 							</li> -->
-							<li class="lg:pr-2 " data-te-nav-item-ref>
+							<!-- <li class="lg:pr-2 " data-te-nav-item-ref>
 								<a
 									rel="external"
 									class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 									href="/create"
 									data-te-nav-link-ref>New project</a
 								>
-							</li>
+							</li> -->
 							<li class="lg:pr-2" data-te-nav-item-ref>
 								<a
 									rel="external"
@@ -251,6 +251,17 @@
 					<!-- Right elements -->
 					<div class="relative flex items-center">
 						<!-- Icon -->
+						<!-- <a
+							rel="external"
+							class="hidden-arrow mr-4 hidden lg:flex items-center text-black hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+							href="/marketplace"
+							id="dropdownMenuButton1"
+							role="button"
+							data-te-dropdown-toggle-ref
+							aria-expanded="false"
+						>
+							Marketplace
+						</a> -->
 						<a
 							rel="external"
 							class="hidden-arrow mr-4 hidden lg:flex items-center text-black hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
@@ -407,14 +418,14 @@
 					class="list-style-none mr-auto pt-4 space-y-4 mt-4 border-t border-gray-700 flex-col pl-0 lg:flex-row"
 					data-te-navbar-nav-ref
 				>
-					<li class="lg:pr-2 " data-te-nav-item-ref>
+					<!-- <li class="lg:pr-2 " data-te-nav-item-ref>
 						<a
 							rel="external"
 							class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 							href="/create"
 							data-te-nav-link-ref>New project</a
 						>
-					</li>
+					</li> -->
 					<li class="lg:pr-2" data-te-nav-item-ref>
 						<a
 							rel="external"

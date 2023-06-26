@@ -83,10 +83,12 @@ export function isReservedRoute(pathname: string) {
 	let isPay = /^\/pay/.test(pathname);
 	let isTemplates = /^\/templates/.test(pathname);
 	let isPartner = /^\/partner/.test(pathname);
-
-
+	let isAi = /^\/dreamAi/.test(pathname);
+	let isMarketplace = /^\/marketplace/.test(pathname)
 
 	let reservedRoutes = [
+		isMarketplace,
+		isAi,
 		isPartner,
 		isVerify,
 		isFeedback,

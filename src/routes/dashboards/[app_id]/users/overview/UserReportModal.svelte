@@ -27,7 +27,38 @@
 	let filters = [{ customValue: '' }];
 	let charts = [{ labelKey: '', valueKey: '', chartType: '' }];
 	let formType = 'manual';
-	let layout = '';
+
+	import { page } from '$app/stores';
+	import axios from 'axios';
+
+	let prompt = '';
+
+	let Aiing = false;
+	let success = false;
+	let error = false;
+	let responseData: any = null;
+	let errorMsg: any = '';
+
+	async function handleSubmit() {
+		Aiing = true;
+		error = false;
+		success = false;
+		try {
+			const response = await axios.post(`/dreamAi/${$page.params.app_id}`, {
+				prompt,
+				type: whoAmi
+			});
+			if (response) {
+				Aiing = false;
+				success = true;
+				responseData = response.data;
+			}
+		} catch (error) {
+			Aiing = false;
+			error = true;
+			errorMsg = error;
+		}
+	}
 </script>
 
 <div class="text-end">
@@ -40,7 +71,7 @@
 				<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Report</h3>
 				<div class="flex mt-4">
 					<Radio value="manual" bind:group={formType}>Manual</Radio>
-					<Radio class="ml-2" value="describe" bind:group={formType}>Describe report</Radio>
+					<Radio class="ml-2" value="describe" bind:group={formType}>Generate with AI</Radio>
 				</div>
 			</div>
 		</div>
@@ -353,21 +384,13 @@
 			</div>
 		{:else}
 			<div class="flex flex-col space-y-3">
-				<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">
-					Describe a query, projection, insight e.t.c
-				</h3>
-
-				<Alert accent
-					>Requires a PRO account. You may have to upgrade your account to use this feature.</Alert
-				>
-
 				<Label class="space-y-2">
 					<span>Name</span>
 					<Input required type="text" name="name" placeholder="name" />
 				</Label>
 				<Label class="space-y-2">
 					<Textarea
-						rows={12}
+						rows={4}
 						type="text"
 						name="description"
 						placeholder="i.e Get reports where {columns[0]
@@ -376,8 +399,11 @@
 				</Label>
 			</div>
 		{/if}
-		<Button disabled={formType === 'describe'} slot="footer" type="submit" class="w-full"
-			>Create Report</Button
+		<Button
+			disabled={Aiing}
+			slot="footer"
+			type={formType === 'describe' ? 'button' : 'submit'}
+			class="w-full">Create Report</Button
 		>
 	</Modal>
 </form>

@@ -2,23 +2,24 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// datasource db {
-//   provider     = "sqlite"
-//   url          = "file:./.sqlite"
-//   relationMode = "prisma"
-// }
-
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
+  provider     = "sqlite"
+  url          = "file:./.sqlite"
   relationMode = "prisma"
 }
 
+// datasource db {
+//   provider     = "mysql"
+//   url          = env("DATABASE_URL")
+//   relationMode = "prisma"
+// }
+
 model partners {
-  id      String @id @default(cuid())
-  name    String
-  email   String
-  company String
+  id              String @id @default(cuid())
+  name            String
+  email           String
+  company         String
+  partnershipType String
 }
 
 model PageDataGroup {
@@ -50,8 +51,8 @@ model PageData {
   id               String             @id @default(cuid())
   space            Space              @relation(fields: [spaceId], references: [id])
   spaceId          String
-  draft            String?            @db.LongText
-  published        String?            @db.LongText
+  draft            String? // @db.LongText
+  published        String? // @db.LongText
   active           Boolean            @default(false)
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
@@ -66,7 +67,7 @@ model PageData {
 
 model SpaceSession {
   id           String     @id @default(cuid())
-  sessionToken String     @db.LongText
+  sessionToken String // @db.LongText
   expires      DateTime?
   user         SpaceUser? @relation(fields: [userId], references: [id])
   userId       String?
@@ -91,7 +92,7 @@ model Event {
   targetType String
   target     String
   action     String
-  data       String  @db.LongText
+  data       String // @db.LongText
 
   @@index([spaceId])
 }
@@ -104,15 +105,15 @@ model Page {
   icon             String?
   path             String?
   components       Component[]
-  html             String?         @db.LongText
+  html             String? // @db.LongText
   pathRegexp       String?
-  uiDef            String?         @db.LongText
+  uiDef            String? // @db.LongText
   roles            UserRoles?      @relation(fields: [userRolesId], references: [id])
   userRolesId      String?
   layout           Boolean         @default(false)
-  pageData         String?         @db.LongText
+  pageData         String? // @db.LongText
   deleted          Boolean         @default(false)
-  screenshot       String?         @db.LongText
+  screenshot       String? // @db.LongText
 
   @@index([spaceUIVersionId])
   @@index([userRolesId])
@@ -206,7 +207,7 @@ model Assets {
 
 model UIComponents {
   id               String         @id @default(cuid())
-  data             String         @db.LongText
+  data             String // @db.LongText
   version          SpaceUIVersion @relation(fields: [spaceUIVersionId], references: [id])
   spaceUIVersionId String
   name             String
@@ -1113,4 +1114,111 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Media {
+  id         String    @id @default(cuid())
+  url        String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  published  Boolean   @default(false)
+  Category   Category? @relation(fields: [categoryId], references: [id])
+  Product    Product?  @relation(fields: [productId], references: [id])
+  categoryId String?
+  productId  String?
+
+  @@index([productId])
+  @@index([categoryId])
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  published   Boolean   @default(false)
+  media       Media[]
+  products    Product[]
+}
+
+model Product {
+  id                 String            @id @default(cuid())
+  title              String
+  description        String?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  published          Boolean           @default(false)
+  media              Media[]
+  category           Category          @relation(fields: [categoryId], references: [id])
+  price              Int               @default(0)
+  CarouselProducts   CarouselProducts? @relation(fields: [carouselProductsId], references: [id])
+  banner             BannerCollection? @relation(fields: [bannerCollectionId], references: [id])
+  categoryId         String
+  carouselProductsId String?
+  bannerCollectionId String?
+
+  @@index([categoryId])
+  @@index([bannerCollectionId])
+  @@index([carouselProductsId])
+}
+
+model CarouselProducts {
+  id       String    @id @default(cuid())
+  products Product[]
+}
+
+model Config {
+  id   String @id @default(cuid())
+  data String @default("{LANDING_PAGE:{}}")
+}
+
+model Socials {
+  id       String @id @default(cuid())
+  imgUrl   String
+  postUrl  String
+  platform String @default("instagram")
+}
+
+model BannerCollection {
+  id       String    @id @default(cuid())
+  imgUrl   String
+  products Product[]
+}
+
+model Order {
+  id          String     @id @default(cuid())
+  status      String     @default("pending")
+  createdAt   DateTime   @default(now())
+  updateAt    DateTime   @updatedAt
+  data        String     @default("{basket:[], total:0}")
+  deviceId    String
+  addressList Address[]
+  payments    Payments[]
+}
+
+model Payments {
+  id        String   @id @default(cuid())
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+  order     Order?   @relation(fields: [orderId], references: [id])
+  phone     String
+  amount    Int
+  orderId   String?
+
+  @@index([orderId])
+}
+
+model Address {
+  id      String @id @default(cuid())
+  phone   String
+  name    String
+  county  String
+  street  String
+  town    String
+  basket  Order  @relation(fields: [orderId], references: [id])
+  orderId String
+
+  @@index([orderId])
 }

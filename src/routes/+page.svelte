@@ -88,9 +88,9 @@
 				</div>
 				<div class="flex justify-center items-center mb-10 sm:mb-20">
 					<a
-						href="/early-access"
+						href="/create"
 						class="hover:text-black hover:bg-transparent lg:text-xl hover:border-black border bg-red-300 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ring-offset-red-700	focus:ring-white rounded text-red-600 px-4 sm:px-8 py-1 sm:py-3 text-sm"
-						>Early Access</a
+						>New project</a
 					>
 					<a
 						rel="external"
@@ -251,7 +251,7 @@
 			<p class="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">
 				No credit card required.
 			</p>
-			<a href="/accounts">
+			<a href="/create">
 				<Button size="xl" gradient color="pinkToOrange">Get started for free</Button>
 			</a>
 		</div>
@@ -568,12 +568,36 @@
 			</div>
 		</a>
 
-		<p class="flex flex-wrap justify-center items-center mb-1 mt-3 text-gray-900 dark:text-gray-400">
+		<div class="flex justify-center items-center">
+			<div class="max-w-sm flex gap-2 mt-4">
+				<a target="blank" href="https://www.linkedin.com/company/dreamfeel">
+					<img
+						width="21"
+						src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png"
+						alt="Linkedin Logo"
+					/>
+				</a>
+				<a target="blank" href="https://github.com/Dreamfeel-Spaces">
+					<img
+						width="21"
+						src="https://dreamfeel.me/_app/immutable/assets/github-c5555c19.png"
+						alt="Linkedin Logo"
+					/>
+				</a>
+				<a target="blank" href="mailto:dreamfeel.spaces@gmail.com">
+					<div class="-mt-1 font-extrabold text-xl">@</div>
+				</a>
+			</div>
+		</div>
+
+		<p
+			class="flex flex-wrap justify-center items-center mb-1 mt-3 text-gray-900 dark:text-gray-400"
+		>
 			Chandaria BIIC-Kenyatta University
 		</p>
 		<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
-			>© {new Date().getFullYear()} <a href="/" class="hover:underline text-xs">Dreamfeel Spaces</a>. All
-			Rights Reserved.</span
+			>© {new Date().getFullYear()}
+			<a href="/" class="hover:underline text-xs">Dreamfeel Spaces</a>. All Rights Reserved.</span
 		>
 	</div>
 </footer>

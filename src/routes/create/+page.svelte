@@ -1,15 +1,13 @@
 <script lang="ts">
 	//@ts-nocheck
-	import { convertToSlug } from '$lib/util/slugit';
 	import { Input, Button, Alert, Card, Heading, Spinner, Modal, A } from 'flowbite-svelte';
+	import { uploadCloudinary } from '$lib/files/upload';
+	import { convertToSlug } from '$lib/util/slugit';
 	import Dropzone from 'svelte-file-dropzone';
 	import { Confetti } from 'svelte-confetti';
-
 	import { onDestroy } from 'svelte';
 	import axios from 'axios';
-	import { useEffect } from '$lib/wsstore/hooks';
-	import { uploadCloudinary } from '$lib/files/upload';
-	// import { LottiePlayer } from '@lottiefiles/svelte-lottie-player';
+
 	let appName = '';
 	let appId = appName;
 	export let form: any;
@@ -51,29 +49,19 @@
 
 	let saveSpaceError = false;
 
-	let logoFiles: any = [];
-
-	useEffect(
-		() => {
-			console.log(logoFiles);
-		},
-		() => [logoFiles]
-	);
-
 	let coverImage = '';
 	let uploading = false;
 
+	let files = [];
+
 	function handleFilesSelect(e) {
 		uploading = true;
-		const { acceptedFiles, fileRejections } = e.detail;
-
-		uploadCloudinary([{ fileData: acceptedFiles[0], field: 'coverImage' }]).then((data) => {
-			coverImage = data[0].url;
-			uploading = false;
-		});
+		const { acceptedFiles } = e.detail;
+		files = acceptedFiles;
 	}
 
 	async function handleSubmit() {
+		let images = await uploadCloudinary([{ fileData: logos[0], field: 'coverImage' }]);
 		try {
 			saving = true;
 			saveSpaceSuccess = false;
@@ -81,7 +69,7 @@
 			const res = await axios.post(`/create/svr`, {
 				name: appName,
 				appId,
-				icon: coverImage
+				icon: images[0]?.url
 			});
 			if (res.status === 200) {
 				saveSpaceSuccess = true;
@@ -203,10 +191,13 @@
 					name="logo"
 				/>
 
-				<Dropzone accept="image/*" multiple={false} on:drop={handleFilesSelect} />
-				{#if coverImage}
-					<img class="mt-4" width={81} src={coverImage} alt="Cover" />
-				{/if}
+				<div class="flex gap-3">
+					{#if coverImage}
+						<img class="mt-4" width={81} src={coverImage} alt="Cover" />
+					{/if}
+					<Dropzone class="flex-1" accept="image/*" multiple={false} on:drop={handleFilesSelect} />
+				</div>
+
 				{#if uploading}
 					<div class="mt-4" role="status">
 						<svg

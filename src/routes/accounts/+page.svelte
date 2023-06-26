@@ -8,7 +8,6 @@
 	import github from '../../assets/github.png';
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { goto } from '$app/navigation';
-	
 </script>
 
 <svelte:head>
@@ -17,7 +16,7 @@
 
 {#if !$page.data.session}
 	<section
-		class="bg-white flex justify-center pt-20 self-center lg:px-72 min-h-screen px-5 dark:bg-black"
+		class="bg-white flex justify-center pt-9 self-center lg:px-72 min-h-screen px-5 dark:bg-black"
 	>
 		<div>
 			<Card>
@@ -25,15 +24,12 @@
 					<div class="py-4 px-4 mx-auto max-w-screen-xl  lg:py-4 ">
 						<div class="flex text-center justify-center mb-6">
 							<div>
-								<div class="flex justify-center">
+								<div  class="flex justify-center">
 									<img loading="lazy" width={'50%'} src={logo} alt="Dreamfeel Spaces Logo" />
 								</div>
 							</div>
 						</div>
-						<!-- <div class="text-center text-4xl mb-2 text-gray-600">
-							<h1>Sign in</h1>
-						</div> -->
-
+					
 						<div class="px-7">
 							<div>
 								<Button
@@ -45,20 +41,25 @@
 									color="dark"
 									class="w-full dark:bg-gray-600 dark:text-white mt-9"
 								>
-									<img class="mr-2" loading="lazy" src={github} width="20px" alt="Github logo" />
+									<img
+										class="mr-2 dark:bg-gray-100"
+										loading="lazy"
+										src={github}
+										width="20px"
+										alt="Github logo"
+									/>
 									<span />
 									Sign in with GitHub</Button
 								>
 
 								<Button
-									disabled
 									outline
 									on:click={() =>
-										signIn('github').then(() => {
+										signIn('google').then(() => {
 											if (next) goto(next);
 										})}
 									color="dark"
-									class="w-full dark:bg-gray-600 dark:text-white mt-9"
+									class="w-full gap-2 dark:bg-gray-600 dark:text-white mt-3"
 								>
 									<svg
 										class="w-5 h-5"
@@ -85,6 +86,18 @@
 									>
 									<span />
 									Sign in with Google</Button
+								>
+								<Button
+									outline
+									on:click={() =>
+										signIn('').then(() => {
+											if (next) goto(next);
+										})}
+									color="dark"
+									class="w-full gap-3 dark:bg-gray-600 dark:text-white mt-3"
+								>
+									<span class=" font-extrabold text-xl">@</span>
+									Sign in with email</Button
 								>
 							</div>
 						</div>
@@ -157,3 +170,37 @@
 		</div>
 	</div>
 {/if}
+
+<footer style="backdrop-filter:blur(30px)" class="p-4 md:p-8 lg:p-10   dark:bg-black">
+	<div class="mx-auto max-w-screen-xl text-center">
+		<a
+			href="/"
+			class="flex justify-center items-center mt-b text-2xl font-semibold text-gray-900 dark:text-white"
+		>
+			<div class="text-center">
+				<div class="flex justify-center">
+					<img src={logo} loading="lazy" width="40%" alt="" />
+				</div>
+			</div>
+		</a>
+
+		<p class="flex flex-wrap justify-center items-center mb-1 mt-3 text-gray-900 dark:text-gray-400">
+			Chandaria BIIC-Kenyatta University
+		</p>
+		<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
+			>© {new Date().getFullYear()} <a href="/" class="hover:underline text-xs">Dreamfeel Spaces</a>. All
+			Rights Reserved.</span
+		>
+	</div>
+</footer>
+
+
+
+<style>
+	.hero-bg {
+		background-color: #ffffff;
+		background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg clip-path='url(%26quot%3b%23SvgjsClipPath2025%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='url(%23SvgjsRadialGradient2026)'%3e%3c/rect%3e%3ccircle r='93.335' cx='-42.14' cy='72.73' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='93.335' cx='409.39' cy='448.57' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='93.335' cx='738.72' cy='667.58' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='86.75' cx='16.43' cy='416.66' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='124.71' cx='42.6' cy='219.28' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='59.355' cx='194.72' cy='213.66' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='57.775' cx='611.34' cy='232.73' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='175.635' cx='360.44' cy='504.72' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='154.97' cx='892.21' cy='86.43' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='121.845' cx='1063.72' cy='160.23' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='137.005' cx='1437.31' cy='495.31' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='99.37' cx='24.13' cy='266.21' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='87.815' cx='1147.53' cy='534.64' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='47.815' cx='1117.44' cy='323.62' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='182.25' cx='839.31' cy='404.95' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='171.225' cx='718.4' cy='482.81' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='81.445' cx='182.97' cy='60.94' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='126.25' cx='156.1' cy='65.36' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3ccircle r='163.435' cx='142.05' cy='232.52' stroke='%234b0707' stroke-opacity='0.25' stroke-width='2'%3e%3c/circle%3e%3c/g%3e%3cdefs%3e%3cclipPath id='SvgjsClipPath2025'%3e%3crect width='1440' height='560' x='0' y='0'%3e%3c/rect%3e%3c/clipPath%3e%3cradialGradient cx='50%25' cy='50%25' r='772.53' gradientUnits='userSpaceOnUse' id='SvgjsRadialGradient2026'%3e%3cstop stop-color='rgba(14%2c 42%2c 71%2c 0.35)' offset='0.32'%3e%3c/stop%3e%3cstop stop-color='rgba(158%2c 0%2c 42%2c 0.51)' offset='0.74'%3e%3c/stop%3e%3c/radialGradient%3e%3c/defs%3e%3c/svg%3e");
+		background-attachment: fixed;
+		background-size: cover;
+	}
+</style>

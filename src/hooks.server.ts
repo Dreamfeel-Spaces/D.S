@@ -9,7 +9,9 @@ import {
 	GITHUB_SECRET,
 	NEXTAUTH_URL,
 	EMAIL_FROM,
-	EMAIL_SERVER
+	EMAIL_SERVER,
+	GOOGLE_ID,
+	GOOGLE_SECRET
 } from '$env/static/private';
 import { prisma } from './lib/db/prisma';
 import { sequence } from '@sveltejs/kit/hooks';
@@ -20,6 +22,7 @@ import { Token } from '$lib/token/Token';
 import { dev } from '$app/environment';
 import { Space } from '$lib/djs/Space';
 import { Email } from '@auth/core/providers/email';
+import Google from '@auth/core/providers/google';
 
 export const withPrisma = ({ event, resolve }: Handle) => {
 	event.locals.db = prisma;
@@ -39,6 +42,7 @@ export const authHandle = SvelteKitAuth({
 			clientId: GITHUB_ID,
 			clientSecret: GITHUB_SECRET
 		}),
+		Google({ clientId: GOOGLE_ID, clientSecret: GOOGLE_SECRET }),
 		Email({
 			server: EMAIL_SERVER,
 			from: EMAIL_FROM
@@ -60,6 +64,10 @@ export const authHandle = SvelteKitAuth({
 				secure: !dev
 			}
 		}
+	},
+	theme: {
+		brandColor: '', // Hex color code
+		logo: 'https://dreamfeel.me/_app/immutable/assets/beta-logo-9e1f695c.png'
 	}
 });
 

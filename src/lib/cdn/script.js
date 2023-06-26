@@ -8,7 +8,6 @@ async function initDreamfeelPay({ CLIENT_ID, CLIENT_SECRET }) {
             return this
         },
         createOrder(data, action) {
-            console.log(data)
             return this
         }
     }

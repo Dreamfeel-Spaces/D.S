@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import {
 		Avatar,
 		Button,
@@ -17,13 +17,14 @@
 	const space = $page.data.space;
 	const spaceSession = $page.data.spaceSession;
 	const user = spaceSession?.user;
-	let whoAmi = 'clone_api';
+	let whoAmi = 'describe';
 	import { apiHelperModal } from '$lib/wsstore';
 	import SelectOption from './quick-setup/SelectOption.svelte';
 	let setup = (space?.apiSetup ?? [])[0];
 	import Request from './[table]/endpoints/Request.svelte';
 	import SpaceSearch from './SpaceSearch.svelte';
 	import { useEffect } from '$lib/wsstore/hooks';
+	import axios from 'axios';
 
 	const hasUser = Boolean(user?.id);
 
@@ -31,6 +32,35 @@
 		() => {},
 		() => [$page.url.pathname]
 	);
+
+	let prompt = '';
+
+	let Aiing = false;
+	let success = false;
+	let error = false;
+	let responseData: any = null;
+	let errorMsg:any = '';
+
+	async function handleSubmit() {
+		Aiing = true;
+		error = false;
+		success = false;
+		try {
+			const response = await axios.post(`/dreamAi/${$page.params.app_id}`, {
+				prompt,
+				type: whoAmi
+			});
+			if (response) {
+				Aiing = false;
+				success = true;
+				responseData = response.data;
+			}
+		} catch (error) {
+			Aiing = false;
+			error = true;
+			errorMsg = error
+		}
+	}
 </script>
 
 <svelte:head>
@@ -45,55 +75,61 @@
 
 <SpaceNav modalOnly={true} />
 
-<Modal
-	permanent
-	open={(setup?.qsWidgetOpen && setup?.complete) || $apiHelperModal.open}
-	class="w-full"
->
-	<div class="flex justify-end">
-		<SelectOption ctx={'dismiss'} />
-	</div>
-	<ul
-		class="w-full flex bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
+<form on:submit|preventDefault={handleSubmit}>
+	<Modal
+		
+		open={(setup?.qsWidgetOpen && setup?.complete) || $apiHelperModal.open}
+		class="w-full"
 	>
-		<li>
-			<Radio class="p-3" bind:group={whoAmi} value="describe">Describe API.</Radio>
-		</li>
-		<li>
-			<Radio class="p-3" bind:group={whoAmi} value="upload_existing">Upload existing.</Radio>
-		</li>
-		<li>
-			<Radio class="p-3" bind:group={whoAmi} value="clone_api">Create from existing API.</Radio>
-		</li>
-	</ul>
-	<div class="my-4">
-		{#if whoAmi === 'describe'}
-			<div class="mb-2">
-				<Alert accent
-					>This schema generator is only available for PRO users . You will need to upgrade your
-					account to use this feature</Alert
-				>
-			</div>
-			<Textarea
-				placeholder="Enter a brief description of the api. IE create a schema for a school, or create three tables, or create a table with the following columns..."
-				rows={9}
-			/>
-			<Button disabled class="mt-3">Generate</Button>
-		{/if}
-		{#if whoAmi === 'upload_existing'}
-			<Alert accent class="mb-2"
-				>This schema generator is only available for PRO users . You will need to upgrade your
-				account to use this feature</Alert
-			>
-			<Dropzone />
-			<Button disabled class="mt-3">Import</Button>
-		{/if}
-		{#if whoAmi === 'clone_api'}
-			<Request clone method="get" url="" />
-		{/if}
-	</div>
-	<SelectOption ctx="setup" />
-</Modal>
+		<div slot="header" class="flex text-2xl justify-end">Database collections</div>
+		<ul
+			class="w-full flex bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600"
+		>
+			<li>
+				<Radio class="p-3" bind:group={whoAmi} value="describe">Generate from AI.</Radio>
+			</li>
+			<li>
+				<Radio class="p-3" bind:group={whoAmi} value="upload_existing">Upload existing.</Radio>
+			</li>
+			<li>
+				<Radio class="p-3" bind:group={whoAmi} value="clone_api">Create from existing API.</Radio>
+			</li>
+		</ul>
+		<div class="my-4">
+			{#if whoAmi === 'describe'}
+				{#if success}
+					<Alert dismissable accent>Success</Alert>
+				{/if}
+
+				{#if error}
+					<Alert dismissable accent>Error <br /> {JSON.stringify(errorMsg)}  </Alert>
+				{/if}
+
+				{#if success}
+				{JSON.stringify(responseData)}
+				{/if}
+				<Textarea
+					bind:value={prompt}
+					placeholder="Enter a brief description of the api. IE create a schema for a school, or create three tables, or create a table with the following columns..."
+					rows={4}
+				/>
+				{#if Aiing}
+					<Button disabled class="mt-3">Generating...</Button>
+				{:else}
+					<Button type="submit" disabled={Aiing} class="mt-3">Generate</Button>
+				{/if}
+			{/if}
+			{#if whoAmi === 'upload_existing'}
+				<Dropzone />
+				<Button type="submit" class="mt-3">Import</Button>
+			{/if}
+			{#if whoAmi === 'clone_api'}
+				<Request clone method="get" url="" />
+			{/if}
+		</div>
+		<SelectOption ctx="setup" />
+	</Modal>
+</form>
 
 <div class="flex flex-row h-screen dark:bg-black bg-gray-100 text-gray-800">
 	<aside
