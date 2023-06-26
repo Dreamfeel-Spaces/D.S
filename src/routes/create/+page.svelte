@@ -62,7 +62,7 @@
 	}
 
 	async function handleSubmit() {
-		let images = await uploadCloudinary([{ fileData: logos[0], field: 'coverImage' }]);
+		let images = await uploadCloudinary([{ fileData: files[0], field: 'coverImage' }]);
 		try {
 			saving = true;
 			saveSpaceSuccess = false;
