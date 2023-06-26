@@ -122,11 +122,10 @@
 <!-- {/if} -->
 
 <Modal bind:open={saving} class="w-full" permanent>
-	<div class="flex">
+	<div class="flex justify-center">
 		<Spinner />
-		<Heading class="ml-3" tag="h4">Setting you up, please wait...</Heading>
 	</div>
-	<div>You will be automatically be redirected to a new page..</div>
+	<Heading class="ml-3 text-center " tag="h4">Setting you up, please wait...</Heading>
 </Modal>
 
 <div class="px-6 mx-2 lg:px-72 pb-36 pt-9  flex justify-center">
