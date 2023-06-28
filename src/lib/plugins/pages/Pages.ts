@@ -106,17 +106,17 @@ export class Pages {
 			projectData: pageData
 		});
 
-		grapesEditor.Pages.select(draft?.id);
-
 		const pageHTML = grapesEditor.Pages.get(draft.id)?.getMainComponent().toHTML();
 
-		const htmlContent = grapesEditor.getHtml();
+		// const pageJS = grapesEditor.Pages.get(draft.id)?.getMainComponent()
 
-		console.log(pageData);
+		const js = grapesEditor.getJs();
+
+		console.log('JSjsjs', js);
 
 		const pagePreset = `
 		<!doctype html>
-		<html  >
+		<html  > 
 		<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -146,7 +146,7 @@ export class Pages {
 		</style>
 			  
 		</head>
-		${pageHTML ?? "Dreamfeel Spaces"}
+		${pageHTML ?? 'Dreamfeel Spaces'}
 		</html>
 		`;
 

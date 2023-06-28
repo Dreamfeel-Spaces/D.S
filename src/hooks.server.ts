@@ -249,11 +249,15 @@ export const spaceIdHandle: Handle = async ({ event, resolve }) => {
 		} catch (error) {}
 	}
 
-	const end = performance.now();
+	const resw = await resolve(event);
+
+	let end;
+
+	if (resw) end = performance.now();
 
 	console.log(end - start, event.url.pathname);
 
-	return resolve(event);
+	return resw;
 };
 
 export const handle = sequence(

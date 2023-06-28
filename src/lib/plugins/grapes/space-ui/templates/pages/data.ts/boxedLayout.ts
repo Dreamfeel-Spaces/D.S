@@ -1,10 +1,10 @@
 export default function () {
 	return `
-  <div class="h-full w-full absolute">
+  <div data-gjs-type="boxed-layout" class="h-full w-full absolute">
   <!-- Navigation starts -->
   <!-- Mobile -->
   <div id="mobile-nav" class="w-full xl:hidden h-full absolute z-40">
-      <div class="bg-gray-800 opacity-50 inset-0 fixed w-full h-full" onclick="sidebarHandler(false)"></div>
+      <div id="spaces-id-handler-close" class="bg-gray-800 opacity-50 inset-0 fixed w-full h-full" onclick="sidebarHandler(false)"></div>
       <div class="w-64 z-20 absolute left-0 z-40 top-0 bg-white shadow flex-col justify-between transition duration-150 ease-in-out h-full">
           <div class="flex flex-col justify-between h-full">
               <div class="px-6 pt-4 overflow-y-auto">
@@ -13,7 +13,7 @@ export default function () {
                           <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/light_with_Grey_background-svg1.svg" alt="logo">
                           <p class="text-bold md:text2xl text-base pl-3 text-gray-800">The North</p>
                       </div>
-                      <button id="cross" class="hidden text-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 rounded" onclick="sidebarHandler(false)">
+                      <button id="space-cross-closer" class="hidden text-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 rounded" onclick="sidebarHandler(false)">
                           <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/light_with_Grey_background-svg2.svg" alt="cross">
                       </button>
                   </div>
@@ -169,7 +169,7 @@ export default function () {
                               <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/light_with_Grey_background-svg6.svg" alt="notifications">
                           </a>
                       </div>
-                      <div aria-haspopup="true" class="cursor-pointer w-full flex items-center justify-end relative" onclick="dropdownHandler(this)">
+                      <div aria-haspopup="true" class="cursor-pointer w-full flex items-center justify-end relative" id="spaces-dropdown-handler">
                           <button aria-haspopup="true" onclick="dropdownHandler(this)" class="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 rounded flex items-center" >
                               <img class="rounded-full h-10 w-10 object-cover" src="https://tuk-cdn.s3.amazonaws.com/assets/components/sidebar_layout/sl_1.png" alt="avatar" />
                               <p class="text-gray-800 text-sm ml-2">Jane Doe</p>
@@ -209,7 +209,7 @@ export default function () {
           </div>
           <div class="visible xl:hidden flex items-center">
               <div>
-                  <button id="menu" class="text-gray-800 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800" onclick="sidebarHandler(true) ">
+                  <button id="spaces-menu-opener" class="text-gray-800 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800" onclick="sidebarHandler(true) ">
                       <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/light_with_Grey_background-svg7.svg" alt="toggler">
                   </button>
               </div>

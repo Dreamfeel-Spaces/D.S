@@ -19,7 +19,6 @@
 	import { onDestroy, onMount } from 'svelte';
 	import axios from 'axios';
 	import type { PageData } from './$types';
-	import { goto } from '$app/navigation';
 	// import grapesTailwind from 'grapesjs-tailwind';
 	import gjsTailwind from '$lib/plugins/grapes/tailwind';
 	import { addGpanels, gPanels } from '$lib/plugins/util/panels';
