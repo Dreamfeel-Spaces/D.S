@@ -176,7 +176,7 @@
               </th>
               <td class="px-6 py-4"> {category.title} </td>
               <td class="px-6 underline text-blue-600 py-4">
-                <a href="/dashboard/products/{category.id}">View</a>
+                <a href="/marketplace/dashboard/products/{category.id}">View</a>
               </td>
             </tr>
           {/each}

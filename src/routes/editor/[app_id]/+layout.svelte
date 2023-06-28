@@ -1,5 +1,5 @@
 <script>
-	import { DarkMode, Button, SidebarDropdownItem, SidebarDropdownWrapper } from 'flowbite-svelte';
+	import { DarkMode, Button, SidebarDropdownItem, SidebarDropdownWrapper, Avatar } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import SpaceNav from '$lib/components/SpaceNav.svelte';
 	import SpaceSearch from '../../rest/[app_id]/SpaceSearch.svelte';
@@ -9,24 +9,46 @@
 	const space = $page.data.space;
 	const spaceSession = $page.data.spaceSession;
 	const user = spaceSession?.user;
-	console.log(Boolean($page.params.ui))
+	console.log(Boolean($page.params.ui));
 	let isBuilder = false;
 </script>
 
 <SpaceNav modalOnly={true} />
 
-{#if !/\/v\//.test($page.url.pathname) && !/\/editor\/([^/]+)\/([^/]+)/.test($page.url.pathname) }
+{#if !/\/v\//.test($page.url.pathname) && !/\/editor\/([^/]+)\/([^/]+)/.test($page.url.pathname)}
 	<div class="flex flex-row min-h-screen dark:bg-black bg-gray-100 text-gray-800">
 		<aside
 			out:fade
-			class="sidebar min-w-64 w-72 dark:text-gray-900   max-h-screen overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
+			class="sidebar min-w-64 w-64 dark:text-gray-900   max-h-screen overflow-auto md:shadow transform -translate-x-full md:translate-x-0 transition-transform duration-150 ease-in dark:bg-black bg-gray-50"
 		>
-			<div class="sidebar-header flex items-center   ml-7 py-4">
-				<div class="inline-flex">
+			<div class="sidebar-header border-b  border-gray-800 gap-3  flex justify-center pt-1    py-1">
+				<div class="flex gap-2  items-center">
+					{#if space?.icon}
+						<Avatar
+							size="xs"
+							class="bg-transparent dark:bg-transparent"
+							alt="Space icon"
+							src={space?.icon}
+						/>
+					{/if}
 					<a href={`/a/${space.appId}`} class="inline-flex flex-row items-center">
-						<span class="leading-10 dark:text-gray-100 text-2xl font-bold ml-1 uppercase"
+						<span class="leading-10 dark:text-gray-100 text-xl font-bold ml-1 uppercase"
 							>{space.name}</span
 						>
+						{#if space.appId === 'demo' || space.appId === 'ecommerce'}
+							<div class="pt-1 ml-1 text-blue-500">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="currentColor"
+									height="20"
+									viewBox="0 -960 960 960"
+									width="20"
+									><path
+										d="m346-60-76-130-151-31 17-147-96-112 96-111-17-147 151-31 76-131 134 62 134-62 77 131 150 31-17 147 96 111-96 112 17 147-150 31-77 130-134-62-134 62Zm27-79 107-45 110 45 67-100 117-30-12-119 81-92-81-94 12-119-117-28-69-100-108 45-110-45-67 100-117 28 12 119-81 94 81 92-12 121 117 28 70 100Zm107-341Zm-43 133 227-225-45-41-182 180-95-99-46 45 141 140Z"
+									/></svg
+								>
+							</div>
+						{/if}
 					</a>
 				</div>
 			</div>

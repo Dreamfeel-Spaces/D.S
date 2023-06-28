@@ -1,40 +1,33 @@
 <script>
-  import { basket } from "$lib/mark/cart";
-  import logo from "$lib/assets/beta-logo.png";
-  import { Drawer } from "flowbite-svelte";
-  import CategoryList from "./CategoryList.svelte";
-  const toggleSearch = () => {
-    document.getElementById("searchInput").classList.toggle("hidden");
-  };
-  const mdOptionsToggle = () => {
-    document.getElementById("md-searchbar").classList.toggle("hidden");
-    document.getElementById("md-searchbar").classList.toggle("flex");
-  };
-  const openMenu = () => {
-    document.getElementById("mobile-menu").classList.remove("hidden");
-  };
-  const closeMenu = () => {
-    document.getElementById("mobile-menu").classList.add("hidden");
-  };
+	import { basket } from '$lib/mark/cart';
+	import logo from '$lib/assets/beta-logo.png';
+	import { Drawer } from 'flowbite-svelte';
+	import CategoryList from './CategoryList.svelte';
+	const toggleSearch = () => {
+		document.getElementById('searchInput').classList.toggle('hidden');
+	};
+	const mdOptionsToggle = () => {
+		document.getElementById('md-searchbar').classList.toggle('hidden');
+		document.getElementById('md-searchbar').classList.toggle('flex');
+	};
+	const openMenu = () => {
+		document.getElementById('mobile-menu').classList.remove('hidden');
+	};
+	const closeMenu = () => {
+		document.getElementById('mobile-menu').classList.add('hidden');
+	};
 
-  let drawerHidden = true;
+	let drawerHidden = true;
 </script>
 
 <Drawer hidden={drawerHidden}>
-  <CategoryList />
+	<CategoryList />
 </Drawer>
 
 <div class="bg-gray-300 min-h-screen">
-  <div class="bg-primary-700 shadow flex justify-end">
-    <img
-      src="https://ke.jumia.is/cms/2023/JA23/Teasing/V1/KE_JA23_ACD_Tease_0523_STB.gif"
-      alt=""
-    />
-  </div>
-
-  <nav class="bg-white shadow-lg gap-14 md:flex ">
-    <div class="flex md:block justify-between">
-      <!-- <button
+	<nav class="bg-white shadow-lg gap-2 md:flex ">
+		<div class="flex md:block justify-between">
+			<!-- <button
         on:click={() => (drawerHidden = false)}
         class="md:hidden flex items-center"
       >
@@ -48,8 +41,8 @@
           /></svg
         >
       </button> -->
-      <img width={"100%"} class="h-68" src={logo} alt="" />
-      <!-- <a href="/cart" class="md:hidden relative flex items-center">
+			<img width={'50'}  src={logo} alt="" />
+			<!-- <a href="/marketplace/cart" class="md:hidden relative flex items-center">
         <div
           class="absolute bg-primary-700 right-1 top-0 text-white px-2 font-extra-bold rounded-full"
         >
@@ -65,69 +58,65 @@
           /></svg
         >
       </a> -->
-    </div>
-    <div class="flex-1 pt-1">
-      <div class="mb-3">
-        <div class="relative mb-4 flex w-full flex-wrap items-stretch">
-          <input
-            type="search"
-            class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-            placeholder="Search"
-            aria-label="Search"
-            aria-describedby="button-addon1"
-          />
+		</div>
+		<div class="flex-1 pt-1">
+			<div class="mb-3">
+				<div class="relative mb-4 flex w-full flex-wrap items-stretch">
+					<input
+						type="search"
+						class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+						placeholder="Search"
+						aria-label="Search"
+						aria-describedby="button-addon1"
+					/>
 
-          <!--Search button-->
-          <button
-            class="relative z-[2] flex items-center rounded-r bg-primary px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
-            type="button"
-            id="button-addon1"
-            data-te-ripple-init
-            data-te-ripple-color="light"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              class="h-5 w-5"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div class="hidden lg:flex relative items-center">
-        <div
-          class="absolute bg-primary-700 right-1 top-0 text-white px-2 font-extra-bold rounded-full"
-        >
-          {Object.keys($basket).length}
-        </div>
-        <a
-          href="/checkout"
-          aria-label="go to cart"
-          class="w-6 text-gray-800 dark:hover:text-gray-300 dark:text-white focus:outline-none focus:ring-2 focus:ring-gray-800"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="36"
-            viewBox="0 -960 960 960"
-            width="36"
-            ><path
-              d="M220-80q-24 0-42-18t-18-42v-520q0-24 18-42t42-18h110v-10q0-63 43.5-106.5T480-880q63 0 106.5 43.5T630-730v10h110q24 0 42 18t18 42v520q0 24-18 42t-42 18H220Zm0-60h520v-520H630v90q0 12.75-8.675 21.375-8.676 8.625-21.5 8.625-12.825 0-21.325-8.625T570-570v-90H390v90q0 12.75-8.675 21.375-8.676 8.625-21.5 8.625-12.825 0-21.325-8.625T330-570v-90H220v520Zm170-580h180v-10q0-38-26-64t-64-26q-38 0-64 26t-26 64v10ZM220-140v-520 520Z"
-            /></svg
-          >
-        </a>
-      </div>
-    </div>
-  </nav>
+					<!--Search button-->
+					<button
+						class="relative z-[2] flex items-center rounded-r bg-primary px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+						type="button"
+						id="button-addon1"
+						data-te-ripple-init
+						data-te-ripple-color="light"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 20 20"
+							fill="currentColor"
+							class="h-5 w-5"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div>
+			<div class="hidden lg:flex relative items-center">
+				<div
+					class="absolute bg-primary-700 right-1 top-0 text-white px-2 font-extra-bold rounded-full"
+				>
+					{Object.keys($basket).length}
+				</div>
+				<a
+					href="/marketplace/checkout"
+					aria-label="go to cart"
+					class="w-6 text-gray-800 dark:hover:text-gray-300 dark:text-white focus:outline-none focus:ring-2 focus:ring-gray-800"
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" height="36" viewBox="0 -960 960 960" width="36"
+						><path
+							d="M220-80q-24 0-42-18t-18-42v-520q0-24 18-42t42-18h110v-10q0-63 43.5-106.5T480-880q63 0 106.5 43.5T630-730v10h110q24 0 42 18t18 42v520q0 24-18 42t-42 18H220Zm0-60h520v-520H630v90q0 12.75-8.675 21.375-8.676 8.625-21.5 8.625-12.825 0-21.325-8.625T570-570v-90H390v90q0 12.75-8.675 21.375-8.676 8.625-21.5 8.625-12.825 0-21.325-8.625T330-570v-90H220v520Zm170-580h180v-10q0-38-26-64t-64-26q-38 0-64 26t-26 64v10ZM220-140v-520 520Z"
+						/></svg
+					>
+				</a>
+			</div>
+		</div>
+	</nav>
 
-  <!-- 
+	<!-- 
 <div>
   <div>
     <div class="relative">
@@ -190,7 +179,7 @@
       <div class="dark:bg-black bg-gray-50 px-6 py-9">
         <div class="container mx-auto flex items-center justify-between">
           <a
-            href="/"
+            href="/marketplace/"
             class="md:w-2/12 cursor-pointer text-gray-800 dark:text-white"
             aria-label="the Crib."
           >
@@ -210,7 +199,7 @@
           >
             <li>
               <a
-                href="/categories"
+                href="/marketplace/categories"
                 class="dark:text-white text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                 >All</a
               >
@@ -218,7 +207,7 @@
             {#each $page.data.categories as category}
               <li>
                 <a
-                  href="/categories/{category.title}"
+                  href="/marketplace/categories/{category.title}"
                   class="dark:text-white text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                   >{category.title}</a
                 >
@@ -234,7 +223,7 @@
                 {Object.keys($basket).length}
               </div>
               <a
-                href="/checkout"
+                href="/marketplace/checkout"
                 aria-label="go to cart"
                 class="w-6 text-gray-800 dark:hover:text-gray-300 dark:text-white focus:outline-none focus:ring-2 focus:ring-gray-800"
               >
@@ -270,7 +259,7 @@
               </button>
               <div class="relative" />
               <a
-                href="/checkout"
+                href="/marketplace/checkout"
                 aria-label="open menu"
                 class="text-black flex dark:text-white dark:hover:text-gray-300 md:hidden focus:outline-none focus:ring-2 rounded focus:ring-gray-600"
               >
@@ -339,7 +328,7 @@
             {#each $page.data.categories as category}
               <li>
                 <a
-                  href="/categories/{category.title}"
+                  href="/marketplace/categories/{category.title}"
                   class="dark:text-white text-base text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 hover:underline"
                   >{category.title}</a
                 >
@@ -377,7 +366,7 @@
     </div>
   </div>
 </div> -->
-  <div class="dark:bg-orange-300 dark:text-white min-h-screen">
-    <slot />
-  </div>
+	<div class="dark:bg-orange-300 dark:text-white min-h-screen">
+		<slot />
+	</div>
 </div>

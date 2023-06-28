@@ -34,7 +34,7 @@
 				)
 				.addTo(map);
 
-			leaflet.marker(position).addTo(map).bindPopup('').openPopup();
+			// leaflet.marker(position).addTo(map).bindPopup('').openPopup();
 		}
 	});
 
@@ -44,11 +44,15 @@
 			map.remove();
 		}
 	});
+
+	export let title: string | undefined = undefined;
 </script>
 
-<main  >
-	<div class="xl bg-gray-200 mt-9 py-9 rounded-lg p-4 mx-6">
-		<p class="text-xl mb-4 text-gray-600">Live Sessions</p>
+<main>
+	{#if title}
+		<p class="text-xl text-center mt-3 mb-1 text-gray-600">{title ?? 'Live Sessions'}</p>
+	{/if}
+	<div class="xl max-h-fit   py-5 rounded-lg p-4 mx-6">
 		<div bind:this={mapElement} />
 	</div>
 </main>
@@ -56,7 +60,7 @@
 <style>
 	@import 'leaflet/dist/leaflet.css';
 	main div {
-		height: 400px;
+		height: 500px;
 		padding-bottom: 20px;
 	}
 </style>

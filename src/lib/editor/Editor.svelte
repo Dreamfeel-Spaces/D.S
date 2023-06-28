@@ -108,7 +108,7 @@
 							id: pageManager?.getSelected()?.getId(),
 							data
 						}),
-						onLoad: ( {data} ) => {
+						onLoad: ({ data }) => {
 							return data;
 						}
 					}
@@ -288,6 +288,12 @@
 	}
 
 	function openCustomBlocks(id) {}
+
+	function onclickBlock(block) {
+
+		// const page = editor.
+
+	}
 </script>
 
 <svelte:head>
@@ -581,7 +587,7 @@
 					Your custom Components
 					<div class="my-5 grid grid-cols-2 gap-2">
 						{#each $page.data.customBlocks as block}
-							<button on:click={console.log} class="p-2 rounded-xl dark:bg-gray-900">
+							<button on:click={() => onclickBlock(block)} class="p-2 rounded-xl dark:bg-gray-900">
 								<div class="text-xs">
 									{block.name}
 								</div>

@@ -1,6 +1,6 @@
 <div class="container px-6 lg:px-48">
   <a
-    href="/dashboard/categories"
+    href="/marketplace/dashboard/categories"
     class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
   >
     <h5
@@ -10,7 +10,7 @@
     </h5>
   </a>
   <a
-    href="/dashboard/products"
+    href="/marketplace/dashboard/products"
     class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
   >
     <h5
@@ -20,7 +20,7 @@
     </h5>
   </a>
   <a
-    href="/dashboard/settings"
+    href="/marketplace/dashboard/settings"
     class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
   >
     <h5
@@ -30,7 +30,7 @@
     </h5>
   </a>
   <a
-    href="/dashboard/settings"
+    href="/marketplace/dashboard/settings"
     class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
   >
     <h5

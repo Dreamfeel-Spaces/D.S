@@ -27,7 +27,7 @@
               alt="girl"
             />
             <a
-              href="/categories/{category.title}"
+              href="/marketplace/categories/{category.title}"
               class="dark:bg-gray-800 text-center dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white"
               >{category.title}</a
             >

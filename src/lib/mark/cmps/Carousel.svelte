@@ -204,7 +204,7 @@
           <p class="text-2xl mb-4 font-bold text-white">
             No collections have been added to the carousel!
           </p>
-          <Button href="/dashboard/settings">Update Collections</Button>
+          <!-- <Button href="/dashboard/settings">Update Collections</Button> -->
         </div>
       </div>
     </div>

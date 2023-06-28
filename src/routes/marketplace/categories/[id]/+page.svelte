@@ -135,7 +135,7 @@
       <div class="mt-10 grid lg:grid-cols-2 gap-x-8 gap-y-8 items-center">
         {#each $page.data.category.products as product}
           <a
-            href="/products/{product.id}"
+            href="/marketplace/products/{product.id}"
             class="group group-hover:bg-opacity-60 transition duration-500 relative bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 sm:p-28 py-36 px-10 flex justify-center items-center"
           >
             <img

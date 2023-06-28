@@ -45,7 +45,7 @@ export const authHandle = SvelteKitAuth({
 		Google({ clientId: GOOGLE_ID, clientSecret: GOOGLE_SECRET }),
 		Email({
 			server: EMAIL_SERVER,
-			from: "Dreamfeel"
+			from: 'Dreamfeel'
 		})
 	],
 	jwt: {
@@ -78,7 +78,12 @@ export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 
 	const pageManager = new Pages({ url: event.url });
 
-	if (pageManager.sbd === 'pay' || pageManager.sbd === 'pos' || pageManager.sbd === 'cdn')
+	if (
+		pageManager.sbd === 'pay' ||
+		pageManager.sbd === 'pos' ||
+		pageManager.sbd === 'cdn' ||
+		pageManager.sbd === 'delivery'
+	)
 		return resolve(event);
 	if (isReserved && !pageManager.isValidSubdomain) return resolve(event);
 

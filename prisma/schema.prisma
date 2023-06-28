@@ -235,6 +235,7 @@ model SpaceUIVersion {
   userId       String?
   uiComponents UIComponents[]
   pageData     String?
+  preview      String?        @db.LongText
 
   @@index([spaceUIId])
   @@index([userId])

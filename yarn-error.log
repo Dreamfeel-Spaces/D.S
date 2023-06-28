@@ -116,6 +116,7 @@ npm manifest:
   		"prismjs": "^1.29.0",
   		"saos": "^1.3.1",
   		"socket.io-client": "^4.6.1",
+  		"svelecte": "^3.16.1",
   		"svelte-ace": "^1.0.21",
   		"svelte-confetti": "^1.2.2",
   		"svelte-inview": "^4.0.0",
@@ -4717,6 +4718,13 @@ Lockfile:
     resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
     integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
   
+  svelecte@^3.16.1:
+    version "3.16.1"
+    resolved "https://registry.yarnpkg.com/svelecte/-/svelecte-3.16.1.tgz#c7ed6fb30c5a345db90949ab19abfd067f801e8b"
+    integrity sha512-ShPwGmyD9Vshm8uehRbscx7RXOMhMB9H4S2ITNxLttN4BrrszGK+jcrs4d7a6nULw3qutiRI7fl0bnYxusJD7A==
+    dependencies:
+      svelte-tiny-virtual-list "^2.0.0"
+  
   svelte-ace@^1.0.21:
     version "1.0.21"
     resolved "https://registry.npmjs.org/svelte-ace/-/svelte-ace-1.0.21.tgz"
@@ -4798,6 +4806,11 @@ Lockfile:
     version "2.1.1"
     resolved "https://registry.npmjs.org/svelte-range-slider-pips/-/svelte-range-slider-pips-2.1.1.tgz"
     integrity sha512-fLkhfnyEc4uMOCZCl8IPyC0e9lujrjqdSyrKw28Y8j99YUPZR+pHnSxde7PqhM0ST6eyO4ugh2nFnLZTIoG9aQ==
+  
+  svelte-tiny-virtual-list@^2.0.0:
+    version "2.0.5"
+    resolved "https://registry.yarnpkg.com/svelte-tiny-virtual-list/-/svelte-tiny-virtual-list-2.0.5.tgz#5a88b14f2041eedc060dc799a2f146ee0355073f"
+    integrity sha512-xg9ckb8UeeIme4/5qlwCrl2QNmUZ8SCQYZn3Ji83cUsoASqRNy3KWjpmNmzYvPDqCHSZjruBBsoB7t5hwuzw5g==
   
   svelte2tsx@~0.6.0:
     version "0.6.11"

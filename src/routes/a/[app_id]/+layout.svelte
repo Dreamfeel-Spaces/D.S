@@ -281,6 +281,35 @@
 						</li>
 
 						<li class="my-px">
+							<a
+								on:click={() => {
+									recentlyViewed.set({
+										[`/a/${space.appId}/pay`]: { url: `/a/${space.appId}/pay` },
+										...$recentlyViewed
+									});
+								}}
+								href={`/a/${space.appId}/delivery`}
+								class="flex {/\/delivery/.test($page.url.pathname)
+									? 'bg-blue-900'
+									: ''} flex-row items-center h-10 px-3 rounded-lg dark:text-gray-300 hover:bg-gray-600 4xl:text-4xl 4xl:py-9 hover:text-gray-100 dark:hover:text-gray-700"
+							>
+								<span class="flex items-center justify-center text-l">
+									<svg
+										fill="currentColor"
+										xmlns="http://www.w3.org/2000/svg"
+										height="24"
+										viewBox="0 -960 960 960"
+										width="24"
+										><path
+											d="M224.118-161Q175-161 140.5-195.417 106-229.833 106-279H40v-461q0-24 18-42t42-18h579v167h105l136 181v173h-71q0 49.167-34.382 83.583Q780.235-161 731.118-161 682-161 647.5-195.417 613-229.833 613-279H342q0 49-34.382 83.5-34.383 34.5-83.5 34.5ZM224-221q24 0 41-17t17-41q0-24-17-41t-41-17q-24 0-41 17t-17 41q0 24 17 41t41 17ZM100-339h22q17-27 43.041-43 26.041-16 58-16t58.459 16.5Q308-365 325-339h294v-401H100v401Zm631 118q24 0 41-17t17-41q0-24-17-41t-41-17q-24 0-41 17t-17 41q0 24 17 41t41 17Zm-52-204h186L754-573h-75v148ZM360-529Z"
+										/></svg
+									>
+								</span>
+								<span class="ml-3">Delivery</span>
+							</a>
+						</li>
+
+						<li class="my-px">
 							<span
 								class="flex  4xl:text-3xl font-medium text-sm dark:text-gray-300 px-4 my-4 uppercase"
 								>More</span

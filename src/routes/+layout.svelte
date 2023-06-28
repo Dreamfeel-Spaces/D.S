@@ -3,13 +3,7 @@
 
 	import '../app.css';
 
-	import {
-		Drawer,
-		CloseButton,
-		Sidebar,
-		Button,
-		Toast
-	} from 'flowbite-svelte';
+	import { Drawer, CloseButton, Sidebar, Button, Toast } from 'flowbite-svelte';
 
 	import { sineIn } from 'svelte/easing';
 	let hidden2 = true;
@@ -40,6 +34,7 @@
 	import Pos from '$lib/cbd/pos/POS.svelte';
 	import Pay from '$lib/cbd/pay/Pay.svelte';
 	import QuickSetupPay from '$lib/cbd/pay/QuickSetupPay.svelte';
+	import Delivery from '$lib/cbd/pay/Delivery.svelte';
 
 	let seebdm = ($page.url.toJSON()?.split('.')[0] ?? '')?.split('//')[1];
 
@@ -68,6 +63,8 @@
 
 {#if seebdm === 'pos'}
 	<Pos />
+{:else if seebdm == 'delivery'}
+	<Delivery />
 {:else if seebdm === 'pay'}
 	{#if /\/quick-start/.test($page.url.pathname)}
 		<QuickSetupPay />
@@ -83,7 +80,7 @@
 		<slot />
 	{/if}
 
-	{#if !isPreview && !subdomain && !/\/templates/.test($page.url.pathname) && !/\/a$/.test($page.url.pathname)}
+	{#if !isPreview && !subdomain && !/\/templates/.test($page.url.pathname) && !/\/a$/.test($page.url.pathname) && !/\/marketplace/.test($page.url.pathname)}
 		<div>
 			<nav
 				class="flex-no-wrap fixed z-50 lg:flex w-full items-center justify-between bg-neutral-100   dark:bg-black pb-2 shadow-md shadow-black/5 dark:shadow-black/10 lg:flex-wrap lg:justify-start "
@@ -227,6 +224,16 @@
 									data-te-nav-link-ref>feelpos</a
 								>
 							</li>
+
+							<li class="lg:pr-2 dark:text-white" data-te-nav-item-ref>
+								<a
+									rel="external"
+									target="blank"
+									class=" hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+									href="{$page.url.protocol}//delivery.{$page.url.host}"
+									data-te-nav-link-ref>feeldelivery</a
+								>
+							</li>
 							<!--	<li class="lg:pr-2" data-te-nav-item-ref>
 							<a
 								rel="external"
@@ -251,7 +258,7 @@
 					<!-- Right elements -->
 					<div class="relative flex items-center">
 						<!-- Icon -->
-						<!-- <a
+						<a
 							rel="external"
 							class="hidden-arrow mr-4 hidden lg:flex items-center text-black hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
 							href="/marketplace"
@@ -261,7 +268,7 @@
 							aria-expanded="false"
 						>
 							Marketplace
-						</a> -->
+						</a>
 						<a
 							rel="external"
 							class="hidden-arrow mr-4 hidden lg:flex items-center text-black hover:text-neutral-700 focus:text-neutral-700 disabled:text-black/30 dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"

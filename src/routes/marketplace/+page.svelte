@@ -12,7 +12,7 @@
       <CategoryList />
     </div>
   </div>
-  <div class="flex-1 shadow-lg rounded-xl sm:px-2">
+  <div class="flex-1 overflow-auto shadow-lg rounded-xl sm:px-2">
     <Carousel />
   </div>
   <div class="w-56 hidden bg-white md:flex h-[100] rounded-xl">
@@ -36,7 +36,6 @@
 
       <img
         class="rounded-xl"
-        src="https://ke.jumia.is/cms/2023/JA23/Teasing/Countdown/3.gif"
         alt=""
       />
     </dv>
@@ -180,7 +179,7 @@
         />
       </div>
       <p class="text-sm leading-none text-gray-800 mt-4 dark:text-white">
-        Copyright © 2023 Luxe
+        Copyright © 2023 Dreamfeel Marketplace
       </p>
       <p class="text-sm leading-none text-gray-800 mt-4 dark:text-white">
         All rights reserved
