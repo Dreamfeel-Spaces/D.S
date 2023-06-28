@@ -4,7 +4,6 @@ import { transformRows } from '$lib/rows/transform';
 import { error } from '@sveltejs/kit';
 import grapesjs from 'grapesjs';
 import appCss from '../../../app.css?inline';
-import type { JsonData } from '../../../routes/editor/[app_id]/[builder]/[path]/server/+server';
 import { gSpaceApIList } from '../grapes/space-ui/spaceApiList';
 import { JSDOM } from 'jsdom';
 
@@ -41,6 +40,9 @@ export class Pages {
 		const space = await prisma.space.findUnique({
 			where: {
 				appId: renderSubdomainApp ? this.subdomain : tempId
+			},
+			include: {
+				tables: true
 			}
 		});
 
@@ -87,28 +89,30 @@ export class Pages {
 
 		tables = tables?.map((tb) => ({ ...tb, rows: transformRows(tb.rows) })) ?? [];
 
-		const ui = page?.html ?? '';
-
-		const pageData: JsonData = page.uiDef;
+		const pageData = JSON.parse(version?.pageData ?? 'null')?.data;
 
 		const grapesEditor = grapesjs.init({
 			headless: true,
 			plugins: [
 				(editor) =>
 					gSpaceApIList(editor, {
-						tables,
-						pages: [draft],
-						pageId: draft.id,
+						tables: space?.tables ?? [],
+						pages: [page],
+						pageId: page?.id ?? '',
 						headless: true,
 						space: space
 					})
-			]
+			],
+			projectData: pageData
 		});
 
-		grapesEditor.loadProjectData(pageData);
+		grapesEditor.Pages.select(draft?.id);
+
+		const pageHTML = grapesEditor.Pages.get(draft.id)?.getMainComponent().toHTML();
 
 		const htmlContent = grapesEditor.getHtml();
 
+		console.log(pageData);
 
 		const pagePreset = `
 		<!doctype html>
@@ -137,13 +141,14 @@ export class Pages {
 		<meta name="twitter:description" content="${space?.description ?? 'Dreamfeel Space'}">
 		<meta name="twitter:image" content="https://res.cloudinary.com/dreamnerd/image/upload/v1684766083/Screenshot_from_2023-05-22_17-25-47_jfiskv.png">
 	  
+		<style>
+		${appCss}
+		</style>
 			  
 		</head>
-		<style>${appCss} </style>
-		${htmlContent}
+		${pageHTML}
 		</html>
 		`;
-
 
 		const dom = new JSDOM(pagePreset);
 		const document = dom.window.document;
@@ -156,13 +161,13 @@ export class Pages {
 			}
 		}
 
-			const apiList = document.querySelectorAll('[data-type=list]');
+		const apiList = document.querySelectorAll('[data-type=list]');
 
-			for (let api of apiList) {
-				// console.log(api);
-			}
+		for (let api of apiList) {
+			// console.log(api);
+		}
 
-			const renderedPage = dom.serialize();
+		const renderedPage = dom.serialize();
 		return [renderedPage, null];
 	}
 
