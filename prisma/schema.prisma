@@ -234,7 +234,7 @@ model SpaceUIVersion {
   createdBy    SpaceUser?     @relation(fields: [userId], references: [id])
   userId       String?
   uiComponents UIComponents[]
-  pageData     String?
+  pageData     String?        @db.LongText
   preview      String?        @db.LongText
 
   @@index([spaceUIId])

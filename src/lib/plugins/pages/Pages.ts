@@ -146,7 +146,7 @@ export class Pages {
 		</style>
 			  
 		</head>
-		${pageHTML}
+		${pageHTML ?? "Dreamfeel Spaces"}
 		</html>
 		`;
 
