@@ -104,10 +104,12 @@
 						urlLoad: projectEndpoint,
 						urlStore: projectEndpoint,
 						fetchOptions: (opts: any) => (opts.method === 'POST' ? { method: 'PATCH' } : {}),
-						onStore: (data) => ({
-							id: pageManager?.getSelected()?.getId(),
-							data
-						}),
+						onStore: function (data) {
+							return {
+								id: pageManager?.getSelected()?.getId(),
+								data: { ...data, js: editor?.getJs() }
+							};
+						},
 						onLoad: ({ data }) => {
 							return data;
 						}
@@ -290,9 +292,7 @@
 	function openCustomBlocks(id) {}
 
 	function onclickBlock(block) {
-
 		// const page = editor.
-
 	}
 </script>
 

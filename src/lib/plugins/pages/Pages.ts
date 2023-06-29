@@ -108,9 +108,7 @@ export class Pages {
 
 		const pageHTML = grapesEditor.Pages.get(draft.id)?.getMainComponent().toHTML();
 
-		// const pageJS = grapesEditor.Pages.get(draft.id)?.getMainComponent()
-
-		const js = grapesEditor.getJs();
+		let js: string = pageData.js;
 
 		const pagePreset = `
 		<!doctype html>
@@ -140,16 +138,27 @@ export class Pages {
 		<meta name="twitter:image" content="https://res.cloudinary.com/dreamnerd/image/upload/v1684766083/Screenshot_from_2023-05-22_17-25-47_jfiskv.png">
 	  
 		<style>
-		${appCss}
+			${appCss}
 		</style>
-			  
 		</head>
-		${pageHTML ?? 'Dreamfeel Spaces'}
+	
+			${pageHTML ?? 'Dreamfeel Spaces'}
 		</html>
 		`;
 
 		const dom = new JSDOM(pagePreset);
 		const document = dom.window.document;
+
+		const script = document.createElement('script');
+
+		const bodyId = document.querySelector('body')?.id;
+
+		const regex = /document\.querySelectorAll\(['"]#([^'"]+)['"]\)/g;
+		js = js.replace(regex, "document.querySelectorAll('#" + bodyId + "')");
+		script.textContent = js;
+
+		document.body.append(script);
+
 		const hyperlinks = document.querySelectorAll('a');
 		for (let hyperlink of hyperlinks) {
 			const href = hyperlink.href;
