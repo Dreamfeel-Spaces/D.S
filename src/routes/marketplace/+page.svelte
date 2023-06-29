@@ -162,12 +162,12 @@
 			<div class="dark:text-white">
 				<img
 					class="dark:hidden"
-					src="https://res.cloudinary.com/dreamnerd/image/upload/c_mpad,w_81/v1686050718/WhatsApp_Image_2023-05-30_at_16.31.53-removebg-preview_yriqka_uhxqdc.png"
+					src="https://dreamfeel.me/_app/immutable/assets/beta-logo-0febf7d8.png"
 					alt="logo"
 				/>
 				<img
 					class="dark:block hidden"
-					src="https://res.cloudinary.com/dreamnerd/image/upload/c_mpad,w_81/v1686050718/WhatsApp_Image_2023-05-30_at_16.31.53-removebg-preview_yriqka_uhxqdc.png"
+					src="https://dreamfeel.me/_app/immutable/assets/beta-logo-0febf7d8.png"
 					alt="logo"
 				/>
 			</div>
