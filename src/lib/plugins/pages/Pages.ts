@@ -7,6 +7,7 @@ import appCss from '../../../app.css?inline';
 import { gSpaceApIList } from '../grapes/space-ui/spaceApiList';
 import { JSDOM } from 'jsdom';
 import { dev } from '$app/environment';
+import { spacePages } from '../grapes/space-ui/templates/pages/spacePagesPlugin';
 
 export class Pages {
 	private subdomain: string;
@@ -95,6 +96,7 @@ export class Pages {
 		const grapesEditor = grapesjs.init({
 			headless: true,
 			plugins: [
+				spacePages,
 				(editor) =>
 					gSpaceApIList(editor, {
 						tables: space?.tables ?? [],
@@ -183,9 +185,13 @@ export class Pages {
 
 		const regex = /document\.querySelectorAll\(['"]#([^'"]+)['"]\)/g;
 		js = js?.replace(regex, "document.querySelectorAll('#" + bodyId + "')") ?? '';
-		script.textContent = js;
 
-		if (draft?.id) document.body.append(script);
+		if (draft?.id) {
+			grapesEditor.Pages.select(draft?.id);
+			const cheyees = grapesEditor.getJs();
+			script.textContent = cheyees;
+			document.body.append(script);
+		}
 
 		const hyperlinks = document.querySelectorAll('a');
 		for (let hyperlink of hyperlinks) {
