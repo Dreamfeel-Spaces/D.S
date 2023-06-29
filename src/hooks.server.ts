@@ -99,13 +99,13 @@ export const withSpaceRouter = async ({ event, resolve }: Handle) => {
 			renderSubdomainApp: true,
 			subdomain: pageManager.sbd
 		});
-		if (htmlError) throw error(500, 'An internal server error occured');
+		// if (htmlError) throw error(500, 'An internal server error occured');
 		let response = new Response(html);
 		response.headers.set('content-type', 'text/html');
 		return response;
 	}
 	const [html, htmlError] = await pageManager.renderPage({});
-	if (htmlError) throw htmlError;
+	// if (htmlError) throw htmlError;
 	let response = new Response(html);
 	response.headers.set('content-type', 'text/html');
 	return response;
