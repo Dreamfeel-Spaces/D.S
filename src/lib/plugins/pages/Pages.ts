@@ -154,7 +154,7 @@ export class Pages {
 		const bodyId = document.querySelector('body')?.id;
 
 		const regex = /document\.querySelectorAll\(['"]#([^'"]+)['"]\)/g;
-		js = js.replace(regex, "document.querySelectorAll('#" + bodyId + "')");
+		js = js?.replace(regex, "document.querySelectorAll('#" + bodyId + "')") ?? '';
 		script.textContent = js;
 
 		document.body.append(script);
