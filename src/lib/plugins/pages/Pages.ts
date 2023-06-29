@@ -112,8 +112,6 @@ export class Pages {
 
 		const js = grapesEditor.getJs();
 
-		console.log('JSjsjs', js);
-
 		const pagePreset = `
 		<!doctype html>
 		<html  > 
