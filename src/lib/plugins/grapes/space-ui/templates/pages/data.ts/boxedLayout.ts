@@ -1,11 +1,10 @@
 export default function () {
 	return `
   <div data-gjs-type="boxed-layout" class="h-full w-full absolute">
-  <!-- Navigation starts -->
   <!-- Mobile -->
   <div id="mobile-nav" class="w-full xl:hidden h-full absolute z-40">
       <div id="spaces-id-handler-close" class="bg-gray-800 opacity-50 inset-0 fixed w-full h-full" onclick="sidebarHandler(false)"></div>
-      <div class="w-64 z-20 absolute left-0 z-40 top-0 bg-white shadow flex-col justify-between transition duration-150 ease-in-out h-full">
+      <div class="w-64  absolute left-0 z-40 top-0 bg-white shadow flex-col justify-between transition duration-150 ease-in-out h-full">
           <div class="flex flex-col justify-between h-full">
               <div class="px-6 pt-4 overflow-y-auto">
                   <div class="flex items-center justify-between">

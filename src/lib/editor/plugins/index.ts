@@ -1,6 +1,6 @@
 import type { Editor } from 'grapesjs';
 
-export function forEach(editor: Editor) {
+export function forEach(editor: Editor, { tables }: { tables: any[] }) {
 	editor.DomComponents.addType('foreach', {
 		model: {
 			defaults: {
@@ -8,44 +8,35 @@ export function forEach(editor: Editor) {
 				traits: [
 					{
 						type: 'select',
-						options: [
-							{ name: 'Collection', value: 'collection' },
-							{ name: 'Range', value: 'range' }
-						],
-						name: 'type'
+						options: tables.map(({ name, id }) => ({ name, value: id })),
+						name: 'collection'
 					}
 				]
 			},
-			init() {},
+			init() {
+				const traitName = this.getTrait('collection')?.getValue();
+				if (traitName) {
+					const table = tables.find((table) => table.id === traitName) ?? { rows: [] };
+					this.handleUpdateCollection(table);
+				}
+			},
 			updated(property: any) {
 				if (property === 'traits') this.updatedTraits();
 			},
 			updatedTraits() {
-				const traitName = this.getTrait('type').getValue();
-				if (traitName === 'collection') {
-					alert(traitName);
-					this.setTraits([
-						// {
-						// 	type: 'select',
-						// 	options: [
-						// 		{ name: 'Collection', value: 'collection' },
-						// 		{ name: 'Range', value: 'range' }
-						// 	],
-						// 	name: 'type'
-						// },
-						{
-							type: 'select',
-							options: [
-								{ name: 'Collection', value: 'collection' },
-								{ name: 'Range', value: 'range' }
-							],
-							name: 'collection'
-						},
-						{
-							type: 'number',
-							name: 'limit'
-						}
-					]);
+				const traitName = this.getTrait('collection')?.getValue();
+				const table = tables.find((table) => table.id === traitName) ?? { rows: [] };
+				this.handleUpdateCollection(table);
+			},
+			handleUpdateCollection(table: any) {
+				const el = this.getEl();
+				const container = el?.querySelector('#list-container');
+				container?.childNodes.forEach((n) => n.remove());
+				for (let row of table?.rows) {
+					const ell = document.createElement('div');
+					ell.className = 'text-lg m-3 p-3 border border-emarald-300';
+					ell.append('{{row.id}}'.replace('{{row.id}}', row.id));
+					container?.appendChild(ell);
 				}
 			}
 		}
@@ -58,8 +49,11 @@ export function forEach(editor: Editor) {
 		<p>
 		Update config in traits
 		</p>
-		<div class="p-2" data-space-util="list" ></div>
+		<div class="p-2" id="list-container" data-space-util="list" ></div>
 		</div>`,
 		category: 'Util'
 	});
 }
+let defaultItemContainer = (row: any) => {
+	return `<div  class="p-2 m-2 border border-zinc-200" >{{row.id}}</div>`;
+};

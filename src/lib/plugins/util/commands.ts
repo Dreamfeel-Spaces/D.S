@@ -12,8 +12,8 @@ export function addGCommands(editor: any) {
 	editor.DeviceManager.add({
 		id: 'tablet2',
 		name: 'Tablet 2',
-		width: '800px', // This width will be applied on the canvas frame
-		widthMedia: '810px', // This width that will be used for the CSS media
+		width: '500px', // This width will be applied on the canvas frame
+		widthMedia: '720px', // This width that will be used for the CSS media
 		height: '600px' // Height will be applied on the canvas frame
 	});
 

@@ -255,7 +255,7 @@ export const spaceIdHandle: Handle = async ({ event, resolve }) => {
 
 	if (resw) end = performance.now();
 
-	console.log(end - start, event.url.pathname);
+	console.log('Perf:', (end - start).toFixed(2), '(ms)', event.url.pathname);
 
 	return resw;
 };

@@ -76,7 +76,7 @@
 							return theme;
 						}
 					}),
-				(editor) => forEach(editor)
+				(editor) => forEach(editor, { tables: $page.data?.tables ??[] })
 			],
 			panels: gPanels(editor),
 			styleManager: gStyles(),
@@ -120,8 +120,6 @@
 				messages: { it, tr }
 			}
 		});
-
-		// editor.on('component:selected', () => {});
 
 		updateNewEditorPanelsConfig(editor);
 		addGCommands(editor);
