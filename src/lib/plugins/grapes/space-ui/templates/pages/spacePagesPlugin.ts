@@ -53,9 +53,9 @@ export function spacePages(editor: Editor) {
 			let sideBar = document.getElementById('mobile-nav');
 			let menu = document.getElementById('spaces-menu-opener');
 			let cross = document.getElementById('space-cross-closer');
-			sideBar?.style.transform = 'translateX(-100%)';
+			sideBar.style.transform = 'translateX(-100%)';
 			if (check) {
-				sideBar?.style?.transform = 'translateX(0px)';
+				sideBar.style.transform = 'translateX(0px)';
 				menu?.classList.add('hidden');
 				cross?.classList.remove('hidden');
 			} else {
