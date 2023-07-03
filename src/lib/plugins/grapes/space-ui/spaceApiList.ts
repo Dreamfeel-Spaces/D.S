@@ -1,11 +1,25 @@
-import { router, urlPatterns } from '$lib/router';
-import type grapesjs from 'grapesjs';
+import { urlPatterns } from '$lib/router';
+import type { Editor } from 'grapesjs';
 
 export function gSpaceApIList(
-	editor: grapesjs.Editor,
-	config: { tables: any[]; pages: any[]; pageId: string; headless: boolean; space: any }
+	editor: Editor,
+	config: {
+		tables: any[];
+		pages: any[];
+		pageId: string;
+		headless: boolean;
+		space: any;
+		blocks: any[];
+	}
 ) {
-	let { tables = [], pages = [], pageId, headless = false, space = null }: any = config;
+	let {
+		tables = [],
+		pages = [],
+		pageId,
+		headless = false,
+		space = null,
+		blocks = []
+	}: any = config;
 
 	const page: any = pages.find((page: { id: string; path: string }) => page?.id === pageId);
 
@@ -900,7 +914,9 @@ export function gSpaceApIList(
 				droppable: true,
 				attributes: {
 					'data-table': '',
-					'data-api-type': 'list'
+					'data-api-type': 'list',
+					'data-children': '',
+					'data-as': ''
 				},
 				tagName: 'div',
 				traits: [
@@ -910,15 +926,32 @@ export function gSpaceApIList(
 						name: 'data-table'
 					},
 					{
-						type: 'checkbox',
-						name: 'data-paginate'
+						type: 'text',
+						name: 'data-as'
+					},
+					{
+						type: 'select',
+						options: blocks.map((block) => ({ name: block.name, value: block.id })),
+						name: 'data-children'
 					}
 				]
 			},
 			init() {
 				this.setDefaultContent();
-				this.listenTo(this, 'change:attributes:data-table', this.resetComponents);
 				this.listenTo(this, 'change:components', this.handlePropChange);
+				this.listenTo(this, 'change:attributes:data-table', this.resetComponents);
+				this.listenTo(this, 'change:attributes:data-children', this.handleChildrenUpdated);
+			},
+			handleChildrenUpdated() {
+				const childId = this.getAttributes()['data-children'];
+
+				const cmp = blocks.find((c) => c.id === childId);
+
+				if (cmp) {
+					const html = editor.Pages.get(cmp.id)?.getMainComponent().toHTML();
+					this.empty();
+					this.updateChildren(html);
+				}
 			},
 			makeOnlyFirstEditable() {
 				const children = this.get('components');
@@ -959,10 +992,31 @@ export function gSpaceApIList(
 				if (property === 'traits') {
 					try {
 						const traits = this.getTrait('data-table');
+						const childTraits = this.getTrait('data-children');
+						const asTraits = this.getTrait('data-as');
+
 						const tableName = traits?.getValue();
+						const childId = childTraits.getValue();
+						const ass = asTraits.getValue();
+
 						if (tableName) this.setAttributes({ 'data-table': tableName });
+						if (childId) this.setAttributes({ 'data-children': childId });
+						if (ass) this.setAttributes({ 'data-as': ass });
 					} catch (error) {}
 				}
+			},
+			updateChildren(html) {
+				try {
+					const tableName = this.getAttributes()['data-table'];
+					let table: any = tables.find((tb: any) => tb.name === tableName);
+					for (let i = 0; i < table?.rows?.length; i++) {
+						const row: any = table.rows[i];
+						const el = this.getEl();
+						html = replaceRowPlaceholders(row, html);
+						console.log('html', html);
+						this.append(html);
+					}
+				} catch (error) {}
 			},
 			resetComponents() {
 				this.empty();
@@ -989,6 +1043,15 @@ export function gSpaceApIList(
 			handlePropChange() {}
 		}
 	});
+
+	function replaceRowPlaceholders(row: Record<string, any>, text: string): string {
+		return text.replace(/{{row\.(\w+)}}/g, (match, key) => {
+			if (row.hasOwnProperty(key)) {
+				return String(row[key]);
+			}
+			return match; // If the key doesn't exist in the row, return the original placeholder
+		});
+	}
 
 	editor.BlockManager.add('Api list component', {
 		label: 'API List',

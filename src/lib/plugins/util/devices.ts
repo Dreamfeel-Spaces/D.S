@@ -3,14 +3,15 @@ export function gDevices() {
 		devices: [
 			{
 				name: 'Desktop',
-				width: '' // default size
+				width: '',
+				id: 'desktop'
 			},
 			{
 				name: 'Mobile',
 				width: '320px', // this value will be used on canvas width
-				widthMedia: '480px' // this value will be used in CSS @media
-			},
-			
+				widthMedia: '480px',
+				id: 'mobile' // this value will be used in CSS @media
+			}
 		]
 	};
 }

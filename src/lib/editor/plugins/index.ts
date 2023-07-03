@@ -10,13 +10,15 @@ export function forEach(editor: Editor, { tables }: { tables: any[] }) {
 						type: 'select',
 						options: tables.map(({ name, id }) => ({ name, value: id })),
 						name: 'collection'
-					}
+					},
+					"as"
 				]
 			},
 			init() {
 				const traitName = this.getTrait('collection')?.getValue();
 				if (traitName) {
 					const table = tables.find((table) => table.id === traitName) ?? { rows: [] };
+					console.log(table)
 					this.handleUpdateCollection(table);
 				}
 			},
@@ -36,23 +38,23 @@ export function forEach(editor: Editor, { tables }: { tables: any[] }) {
 					const ell = document.createElement('div');
 					ell.className = 'text-lg m-3 p-3 border border-emarald-300';
 					ell.append('{{row.id}}'.replace('{{row.id}}', row.id));
-					container?.appendChild(ell);
+					container?.append(ell);
 				}
 			}
 		}
 	});
 
-	editor?.BlockManager.add('foreach', {
-		label: `<div  class="flex justify-center items-center "  >Each</div>`,
-		content: `<div class="px-3 py-6 space-y-3 dark:bg-black dark:text-white text-black bg-white" data-gjs-type="foreach" >
-		<h5  class="text-2xl" >Each</h5>
-		<p>
-		Update config in traits
-		</p>
-		<div class="p-2" id="list-container" data-space-util="list" ></div>
-		</div>`,
-		category: 'Util'
-	});
+	// editor?.BlockManager.add('foreach', {
+	// 	label: `<div  class="flex justify-center items-center "  >Each</div>`,
+	// 	content: `<div class="px-3 py-6 space-y-3 dark:bg-black dark:text-white text-black bg-white" data-gjs-type="foreach" >
+	// 	<h5  class="text-2xl" >Each</h5>
+	// 	<p>
+	// 	Update config in traits
+	// 	</p>
+	// 	<div class="p-2" id="list-container" data-space-util="list" ></div>
+	// 	</div>`,
+	// 	category: 'Util'
+	// });
 }
 let defaultItemContainer = (row: any) => {
 	return `<div  class="p-2 m-2 border border-zinc-200" >{{row.id}}</div>`;

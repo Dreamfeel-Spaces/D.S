@@ -8,6 +8,7 @@
 	import github from '../../assets/github.png';
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { goto } from '$app/navigation';
+	console.log($page.data.session?.user);
 </script>
 
 <svelte:head>
@@ -24,12 +25,12 @@
 					<div class="py-4 px-4 mx-auto max-w-screen-xl  lg:py-4 ">
 						<div class="flex text-center justify-center mb-6">
 							<div>
-								<div  class="flex justify-center">
+								<div class="flex justify-center">
 									<img loading="lazy" width={'50%'} src={logo} alt="Dreamfeel Spaces Logo" />
 								</div>
 							</div>
 						</div>
-					
+
 						<div class="px-7">
 							<div>
 								<Button
@@ -184,17 +185,17 @@
 			</div>
 		</a>
 
-		<p class="flex flex-wrap justify-center items-center mb-1 mt-3 text-gray-900 dark:text-gray-400">
+		<p
+			class="flex flex-wrap justify-center items-center mb-1 mt-3 text-gray-900 dark:text-gray-400"
+		>
 			Chandaria BIIC-Kenyatta University
 		</p>
 		<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
-			>© {new Date().getFullYear()} <a href="/" class="hover:underline text-xs">Dreamfeel Spaces</a>. All
-			Rights Reserved.</span
+			>© {new Date().getFullYear()}
+			<a href="/" class="hover:underline text-xs">Dreamfeel Spaces</a>. All Rights Reserved.</span
 		>
 	</div>
 </footer>
-
-
 
 <style>
 	.hero-bg {

@@ -65,7 +65,8 @@
 						pages: $page.data.pages,
 						pageId: $page.params.path,
 						space: $page.data.space,
-						headless: false
+						headless: false,
+						blocks: $page.data.customBlocks
 					}),
 				(editor) =>
 					gjsTailwind(editor, {
@@ -76,7 +77,7 @@
 							return theme;
 						}
 					}),
-				(editor) => forEach(editor, { tables: $page.data?.tables ??[] })
+				(editor) => forEach(editor, { tables: $page.data?.tables ?? [] })
 			],
 			panels: gPanels(editor),
 			styleManager: gStyles(),
@@ -200,6 +201,10 @@
 
 	function handlePageChange(_page: any) {
 		const page = pageManager.get(_page.id);
+		console.log(_page)
+		if (_page.type !== 'cmp') {
+			editor.DeviceManager.select('desktop');
+		}
 		if (!page) {
 			const newPage = pageManager?.add({
 				id: _page.id,
@@ -207,11 +212,11 @@
 				component: `<div class="my-class">${_page.name}</div>` // or a JSON of components
 			});
 
-			openPages = { ...openPages, [_page.id]: _page };
+			openPages = { ...openPages, [_page.id]: { ..._page, type: 'page' } };
 			pageManager.select(_page.id);
 			return;
 		}
-		openPages = { ...openPages, [_page.id]: _page };
+		openPages = { ...openPages, [_page.id]: { ..._page, type: 'page' } };
 		pageManager.select(_page.id);
 	}
 
@@ -290,7 +295,22 @@
 	function openCustomBlocks(id) {}
 
 	function onclickBlock(block) {
-		// const page = editor.
+		const page = pageManager.get(block.id);
+		editor.DeviceManager.select('cmp');
+
+		if (!page) {
+			const newPage = pageManager?.add({
+				id: block.id,
+				styles: `.my-class { color: red }`, // or a JSON of styles
+				component: `<div class="my-class">${block.name}</div>` // or a JSON of components
+			});
+
+			openPages = { ...openPages, [block.id]: { ...block, type: 'cmp' } };
+			pageManager.select(block.id);
+			return;
+		}
+		openPages = { ...openPages, [block.id]: { ...block, type: 'cmp' } };
+		pageManager.select(block.id);
 	}
 </script>
 

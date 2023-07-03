@@ -17,6 +17,14 @@ export function addGCommands(editor: any) {
 		height: '600px' // Height will be applied on the canvas frame
 	});
 
+	editor.DeviceManager.add({
+		id: 'cmp',
+		name: 'Tablet 2',
+		width: '360px', // This width will be applied on the canvas frame
+		widthMedia: '360px', // This width that will be used for the CSS media
+		height: '360px' // Height will be applied on the canvas frame
+	});
+
 	editor.Commands.add('set-device-tablet', {
 		run: () => {
 			editor.DeviceManager.select('tablet2');

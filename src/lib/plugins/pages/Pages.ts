@@ -102,7 +102,8 @@ export class Pages {
 						pages: [page],
 						pageId: page?.id ?? '',
 						headless: true,
-						space: space
+						space: space,
+						blocks: []
 					})
 			],
 			projectData: pageData
@@ -116,8 +117,6 @@ export class Pages {
 		}
 
 		let js: string = pageData?.js;
-
-		console.log(space);
 
 		const pagePreset = `
 		<!doctype html>
