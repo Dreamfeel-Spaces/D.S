@@ -925,10 +925,10 @@ export function gSpaceApIList(
 						options: tableNames,
 						name: 'data-table'
 					},
-					{
-						type: 'text',
-						name: 'data-as'
-					},
+					// {
+					// 	type: 'text',
+					// 	name: 'data-as'
+					// },
 					{
 						type: 'select',
 						options: blocks.map((block) => ({ name: block.name, value: block.id })),
@@ -938,7 +938,7 @@ export function gSpaceApIList(
 			},
 			init() {
 				this.setDefaultContent();
-				this.listenTo(this, 'change:components', this.handlePropChange);
+				// this.listenTo(this, 'change:components', this.handlePropChange);
 				this.listenTo(this, 'change:attributes:data-table', this.resetComponents);
 				this.listenTo(this, 'change:attributes:data-children', this.handleChildrenUpdated);
 			},
@@ -1013,7 +1013,6 @@ export function gSpaceApIList(
 						const row: any = table.rows[i];
 						const el = this.getEl();
 						html = replaceRowPlaceholders(row, html);
-						console.log('html', html);
 						this.append(html);
 					}
 				} catch (error) {}

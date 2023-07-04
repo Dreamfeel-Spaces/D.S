@@ -150,25 +150,6 @@ export class Pages {
 		</style>
 		</head>
 			${space === null ? noSpace(space) : pageHTML ?? blankPage}
-			${
-				dev
-					? `		<script type="module" data-sveltekit-hydrate="1x05cu7">
-			import { start } from "/@fs/C:/Users/User/ds/upgraded-journey/node_modules/@sveltejs/kit/src/runtime/client/start.js";
-
-			start({
-				assets: "",
-				env: {},
-				target: document.querySelector('[data-sveltekit-hydrate="1x05cu7"]').parentNode,
-				version: "1688030339474",
-					form: null,
-					error: null
-				}
-			});
-		</script>
-`
-					: ''
-			}
-
 		</html>
 		`;
 
@@ -212,7 +193,7 @@ export class Pages {
 }
 
 let blankPage = `
-<section class="bg-white dark:bg-gray-900">
+<section class="bg-white dark:bg-black min-h-screen">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
         <div class="mx-auto max-w-screen-sm text-center">
 		<div class="flex justify-center"  >
@@ -227,7 +208,7 @@ let blankPage = `
 </section>`;
 
 let noSpace = (space: any) => `
-<section class="bg-white dark:bg-gray-900">
+<section class="bg-white dark:bg-black min-h-screen">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
         <div class="mx-auto max-w-screen-sm text-center">
 		<div class="flex justify-center"  >
