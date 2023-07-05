@@ -201,7 +201,6 @@
 
 	function handlePageChange(_page: any) {
 		const page = pageManager.get(_page.id);
-		console.log(_page)
 		if (_page.type !== 'cmp') {
 			editor.DeviceManager.select('desktop');
 		}
@@ -274,7 +273,8 @@
 		openPages = { ...all };
 	}
 
-	async function handleSaveComponentName() {
+	async function handleSaveComponentName(e) {
+		e.preventDefault();
 		let url = `${$page.url.origin}/editor/${$page.params.app_id}/${$page.params.builder}/cmps`;
 		try {
 			savingComponent = true;
@@ -284,8 +284,14 @@
 			if (response) {
 				setTimeout(() => {
 					savingComponent = false;
+					console.log(response)
+					editor?.BlockManager.add(response.data.id, {
+						label: componentName,
+						content: response.data.data,
+						category:"Custom"
+					});
 					invalidateAll();
-				}, 1000);
+				}, 300);
 			}
 		} catch (error) {
 			savingComponent = false;
@@ -602,7 +608,7 @@
 					</form>
 
 					<div class="border-t border-gray-400  dark:border-gray-800  my-5 " />
-					Your custom Components
+					Added Components
 					<div class="my-5 grid grid-cols-2 gap-2">
 						{#each $page.data.customBlocks as block}
 							<button on:click={() => onclickBlock(block)} class="p-2 rounded-xl dark:bg-gray-900">
